@@ -1,0 +1,5 @@
+[phases.install]
+cmds = ["pip install -r requirements.txt"]
+
+[phases.start]
+cmds = ["python manage.py migrate", "python manage.py collectstatic --noinput", "gunicorn DevLink.wsgi:application --bind 0.0.0.0:$PORT"]

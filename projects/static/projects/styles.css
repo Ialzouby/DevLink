@@ -1,0 +1,234 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #1d1d1d;
+    color: #f1f1f1;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #111;
+    color: white;
+}
+
+.logo h1 {
+    margin-left: 10px;
+    font-size: 24px;
+}
+
+.nav-links {
+    display: flex;
+    list-style-type: none;
+}
+
+.nav-links li {
+    margin-right: 20px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.nav-buttons button {
+    background-color: #5f5fd8;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    margin-left: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.profile-btn {
+    background-color: #6b8de3;
+}
+
+/* Main Container */
+.container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+/* Forum Thread Section */
+.forum-thread {
+    width: 70%;
+}
+
+.forum-thread h2 {
+    color: #fff;
+    font-size: 24px;
+}
+
+.tags .tag {
+    background-color: #f1c40f;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.details {
+    color: #ccc;
+    margin-top: 10px;
+}
+
+/* Project Description Section */
+.project-description {
+    background-color: #222;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.project-description h3 {
+    color: #fff;
+    font-size: 20px;
+}
+
+.project-description p {
+    color: #ccc;
+    margin-top: 10px;
+}
+
+/* Comment Input Section */
+.comment-input {
+    background-color: #333;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.comment-input textarea {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #444;
+    color: white;
+    resize: none;
+    margin-bottom: 10px;
+}
+
+.comment-input button {
+    background-color: #5f5fd8;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Comments Section */
+.comments .comment {
+    background-color: #333;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.comment-header img {
+    border-radius: 50%;
+    width: 50px;
+    margin-right: 10px;
+}
+
+.user-details h4 {
+    margin: 0;
+    color: #fff;
+}
+
+.user-details p {
+    color: #aaa;
+}
+
+.comment-header .stars {
+    color: #f1c40f;
+}
+
+.comment-body {
+    color: #ccc;
+    margin-top: 10px;
+}
+
+/* Live Updates Section */
+.live-updates {
+    width: 25%;
+    background-color: #222;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.live-updates h3 {
+    color: #fff;
+}
+
+.live-updates ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.live-updates li {
+    padding: 10px;
+    background-color: #333;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.live-updates li span {
+    color: #aaa;
+}
+/* Comment Box */
+.comment-box {
+    background-color: #333;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+/* Comments Section */
+.comments .comment {
+    background-color: #444;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.comment p {
+    color: #ccc;
+}
+
+/* Comment Input Section */
+.comment-input textarea {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #555;
+    color: white;
+    resize: none;
+    margin-bottom: 10px;
+}
+
+.comment-input button {
+    background-color: #5f5fd8;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}

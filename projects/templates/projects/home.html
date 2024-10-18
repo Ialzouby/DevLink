@@ -1,0 +1,14 @@
+<html>
+<head>
+    <title>Welcome to DevLink</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'projects/styles.css' %}">
+    
+
+</head>
+<body>
+    <h1>Welcome to DevLink</h1>
+    <p>Your hub for student projects and profiles.</p>
+    <a href="{% url 'register' %}">Sign Up</a>
+</body>
+</html>

@@ -1,0 +1,101 @@
+{% load custom_filters %}
+
+
+
+
+
+{% load custom_filters %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevLink - Forum Thread</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'projects/styles.css' %}">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="{% static 'projects/logo.png' %}" alt="DevLink Logo">
+            <h1>DevLink</h1>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Blogs</a></li>
+            <li><a href="#">Forums</a></li>
+            <li><a href="#">Ask a Question</a></li>
+        </ul>
+        <div class="nav-buttons">
+            <button class="settings-btn">Settings</button>
+            <button class="profile-btn">Profile</button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Left Section (Forum Thread) -->
+        <div class="forum-thread">
+            <h2>{{ project.title }}</h2>
+            <div class="tags">
+                <span class="tag">Performance</span>
+                <span class="tag">Optimization</span>
+                <span class="tag">Discussion</span>
+            </div>
+            <p class="details">Comments: {{ comments.count }} · Views: {{ project.views }}</p>
+
+            <!-- Project Description Section -->
+            <div class="project-description">
+                <h3>Project Description</h3>
+                <p>{{ project.description }}</p>
+            </div>
+
+
+
+            <!-- Comment Box -->
+            <div class="comment-box">
+                <!-- Display Comments -->
+                <h4>Comments</h4>
+                <div class="comments">
+                    {% for comment in comments %}
+                        <div class="comment">
+                            <div class="comment-header">
+                                <p><strong>{{ comment.user.username }}</strong> ({{ comment.created_at|timesince }} ago)</p>
+                    
+                            </div>
+                            <p>{{ comment.content }}</p>
+                        </div>
+                    {% empty %}
+                        <p>No comments yet.</p>
+                    {% endfor %}
+                </div>
+
+                <!-- Comment Input Section -->
+                <div class="comment-input">
+                    <h4>Leave a Comment</h4>
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <textarea name="comment" rows="4" placeholder="Type a comment..."></textarea>
+                        <button type="submit">Post Comment</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Section (Live Updates) -->
+        <div class="live-updates">
+            <h3>Live Updates</h3>
+            <p>GitHub Repo Name ★★★★★</p>
+            <ul>
+                {% for update in updates %}
+                    <li>{{ update.content }} <span>{{ update.created_at|timesince }} ago</span></li>
+                {% empty %}
+                    <li>No updates yet.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

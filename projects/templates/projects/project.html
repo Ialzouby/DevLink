@@ -1,38 +1,8 @@
+{% extends "projects/base.html" %}
 {% load custom_filters %}
+{% block title %}Forum Thread{% endblock %}
 
-
-
-
-
-{% load custom_filters %}
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DevLink - Forum Thread</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'projects/styles.css' %}">
-</head>
-<body>
-    <!-- Navbar -->
-    <nav class="navbar">
-        <div class="logo">
-            <img src="{% static 'projects/logo.png' %}" alt="DevLink Logo">
-            <h1>DevLink</h1>
-        </div>
-        <ul class="nav-links">
-            <li><a href="#">Homee</a></li>
-            <li><a href="#">Blogs</a></li>
-            <li><a href="#">Forums</a></li>
-            <li><a href="#">Ask a Question</a></li>
-        </ul>
-        <div class="nav-buttons">
-            <button class="settings-btn">Settings</button>
-            <button class="profile-btn">Profile</button>
-        </div>
-    </nav>
+{% block content %}
 
     <!-- Main Content -->
     <div class="container">
@@ -56,21 +26,29 @@
 
             <!-- Comment Box -->
             <div class="comment-box">
-                <!-- Display Comments -->
-                <h4>Comments</h4>
-                <div class="comments">
-                    {% for comment in comments %}
-                        <div class="comment">
-                            <div class="comment-header">
-                                <p><strong>{{ comment.user.username }}</strong> ({{ comment.created_at|timesince }} ago)</p>
-                    
-                            </div>
-                            <p>{{ comment.content }}</p>
-                        </div>
-                    {% empty %}
-                        <p>No comments yet.</p>
-                    {% endfor %}
-                </div>
+                
+<!-- Display Comments -->
+<h4>Comments</h4>
+<div class="comments">
+    {% for comment in comments %}
+        <div class="comment">
+            <div class="comment-header">
+                <p><strong>{{ comment.user.username }}</strong> ({{ comment.created_at|timesince }} ago)</p>
+                {% if comment.user == request.user %}
+                    <!-- Delete button for user's own comment -->
+                    <form action="{% url 'comment-delete' comment.id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="delete-btn">Delete</button>
+                    </form>
+                {% endif %}
+            </div>
+            <p>{{ comment.content }}</p>
+        </div>
+    {% empty %}
+        <p>No comments yet.</p>
+    {% endfor %}
+</div>
+
 
                 <!-- Comment Input Section -->
                 <div class="comment-input">
@@ -97,5 +75,4 @@
             </ul>
         </div>
     </div>
-</body>
-</html>
+    {% endblock %}

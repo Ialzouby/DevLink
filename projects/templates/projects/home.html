@@ -1,14 +1,16 @@
-<html>
-<head>
-    <title>Welcome to DevLink</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'projects/styles.css' %}">
-    
+{% extends "projects/base.html" %}
 
-</head>
-<body>
-    <h1>Welcome to DevLink</h1>
-    <p>Your hub for student projects and profiles.</p>
-    <a href="{% url 'register' %}">Sign Up</a>
-</body>
-</html>
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="project-list">
+    <h2>Projects</h2>
+    {% for project in projects %}
+        <div class="project-item">
+            <h3>{{ project.title }}</h3>
+            <p>{{ project.description|truncatewords:20 }}</p>
+            <a href="{% url 'project' project.id %}" class="view-btn">View Project</a>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

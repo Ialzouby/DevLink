@@ -1,20 +1,61 @@
-<html>
-<head>
-    <title>Register</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'projects/styles.css' %}">
-    
-</head>
-<body>
-    <h2>Create an Account</h2>
-    <form method="POST">
-        <label for="username">Username:</label>
-        <input type="text" name="username" id="username">
-        <label for="email">Email:</label>
-        <input type="email" name="email" id="email">
-        <label for="password">Password:</label>
-        <input type="password" name="password" id="password">
-        <button type="submit">Register</button>
+{% extends "projects/base.html" %}
+{% load static %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2>Sign Up</h2>
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="id_first_name">First Name:</label>
+            <input type="text" name="first_name" id="id_first_name" required>
+
+        </div>
+        <div class="form-group">
+            <label for="id_last_name">Last Name:</label>
+            {{ form.last_name }}
+        </div>
+        <div class="form-group">
+            <label for="id_email">Email:</label>
+            {{ form.email }}
+        </div>
+        <div class="form-group">
+            <label for="id_username">Username:</label>
+            {{ form.username }}
+        </div>
+        <div class="form-group">
+            <label for="id_grade_level">Grade Level:</label>
+            {{ form.grade_level }}
+        </div>
+        <div class="form-group">
+            <label for="id_concentration">Concentration:</label>
+            {{ form.concentration }}
+        </div>
+        <div class="form-group">
+            <label for="id_linkedin">LinkedIn (Optional):</label>
+            {{ form.linkedin }}
+        </div>
+        <div class="form-group">
+            <label for="id_github">GitHub (Optional):</label>
+            {{ form.github }}
+        </div>
+        <div class="form-group">
+            <label for="id_bio">Bio (Optional):</label>
+            {{ form.bio }}
+        </div>
+        <div class="form-group">
+            <label for="id_password1">Password:</label>
+            {{ form.password1 }}
+        </div>
+        <div class="form-group">
+            <label for="id_password2">Confirm Password:</label>
+            {{ form.password2 }}
+        </div>
+        
+        <button type="submit" class="btn">Register</button>
     </form>
-</body>
-</html>
+</div>
+{% endblock %}

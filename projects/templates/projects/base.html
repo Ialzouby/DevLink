@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevLink - {% block title %}Home{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'projects/styles.css' %}">
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo">
+            <h1>DevLink</h1>
+        </div>
+        <ul class="nav-links">
+            <li><a href="{% url 'home' %}">Projects</a></li>
+            <li><a href="#">Network</a></li>
+            <li><a href="#">Ask a Question</a></li>
+        </ul>
+        <div class="nav-buttons">
+            {% if user.is_authenticated %}
+                <button><a href="{% url 'logout' %}">Logout</a></button>
+                <button class="profile-btn">Profile</button>
+            {% else %}
+                <button><a href="{% url 'login' %}">Login</a></button>
+                <button><a href="{% url 'register' %}">Sign Up</a></button>
+            {% endif %}
+        </div>
+        
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        {% block content %}
+        <!-- Page-specific content will go here -->
+        {% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 DevLink. All rights reserved.</p>
+    </footer>
+</body>
+</html>

@@ -55,6 +55,7 @@ body {
     display: flex;
     justify-content: space-between;
     padding: 20px;
+    width: 100%; 
 }
 
 /* Forum Thread Section */
@@ -68,7 +69,7 @@ body {
 }
 
 .tags .tag {
-    background-color: #f1c40f;
+    background-color: #037304;
     padding: 5px 10px;
     border-radius: 5px;
     margin-right: 10px;
@@ -155,7 +156,7 @@ body {
 }
 
 .comment-header .stars {
-    color: #f1c40f;
+    color: #019e01;
 }
 
 .comment-body {
@@ -231,4 +232,147 @@ body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+}
+
+.delete-btn {
+    background-color: #f44336;  /* Red color for delete */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    background-color: #d32f2f;  /* Darker red for hover */
+}
+
+/* Project List Section */
+.project-list {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.project-item {
+    background-color: #222;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+.project-item h3 {
+    color: #fff;
+    font-size: 22px;
+}
+
+.project-item p {
+    color: #ccc;
+    margin: 10px 0;
+}
+
+.view-btn {
+    background-color: #5f5fd8;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.view-btn:hover {
+    background-color: #4e4ec7;
+}
+
+/* Footer */
+footer {
+    background-color: #111;  /* Same as navbar background */
+    color: #f1f1f1;
+    text-align: center;
+    padding: 10px 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+/* form styling */
+
+.form-container {
+    width: 300px;
+    margin: 50px auto;
+    background-color: #222;
+    padding: 20px;
+    border-radius: 10px;
+    color: #fff;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.btn {
+    background-color: #5f5fd8;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+
+/* General Styles for Inputs and Textareas */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="url"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #333;  /* Dark theme for input fields */
+    color: #f1f1f1;  /* White text */
+    margin-bottom: 15px;  /* Space between input fields */
+}
+
+input::placeholder, textarea::placeholder {
+    color: #aaa;  /* Placeholder text color */
+}
+
+/* Button Styles */
+.btn {
+    background-color: #5f5fd8;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn:hover {
+    background-color: #4e4ec7;
+}
+
+/* Form Container Styling */
+.form-container {
+    width: 400px;  /* Adjust width as needed */
+    margin: 50px auto;  /* Centers the form */
+    background-color: #222;  /* Matches dark theme */
+    padding: 20px;
+    border-radius: 10px;
+    color: #f1f1f1;  /* White text for readability */
+}
+
+/* Label Styles */
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #f1f1f1;  /* Matches theme */
 }

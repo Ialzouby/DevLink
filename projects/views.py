@@ -1,48 +1,49 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth import get_user_model
-from .models import Project, Comment
-from .forms import RatingForm
-from django.shortcuts import render, get_object_or_404, redirect
-from .models import Project, Comment
-from .forms import RatingForm
-from django.shortcuts import get_object_or_404, redirect
+from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.contrib import messages
-from .models import Comment
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic.edit import DeleteView
-from django.shortcuts import get_object_or_404, redirect
-from django.contrib import messages
-from .models import Comment
-from django.shortcuts import render, get_object_or_404, redirect
-from .models import Project, Comment
-from .forms import RatingForm
-from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib import messages
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from .forms import CustomUserCreationForm
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from .forms import CustomUserCreationForm
+from django.urls import reverse
+from .models import Project, Comment, UserProfile
+from .forms import RatingForm, CustomUserCreationForm
 
+
+# Profile view
+def profile(request, username):
+    user = get_object_or_404(User, username=username)
+    return render(request, 'projects/profile.html', {'profile_user': user})
+
+
+# Register view
 def register(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
-            user.first_name = form.cleaned_data['first_name']
-            user.last_name = form.cleaned_data['last_name']
-            user.email = form.cleaned_data['email']
-            user.save()
-            messages.success(request, f'Account created for {user.username}! You can now log in.')
-            return redirect('login')
+            print("Form is valid")  # Debugging
+            user = form.save()  # Save the user to the database
+            # The UserProfile is automatically created by the post_save signal, so no need to manually create it
+            
+            # Log in the user immediately after registration
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=password)
+            
+            if user is not None:
+                print("User authenticated successfully")  # Debugging
+                login(request, user)
+                messages.success(request, f'Account created for {username}! You are now logged in.')
+                # Redirect to the user's profile page
+                return redirect(reverse('profile', kwargs={'username': user.username}))
+            else:
+                print("User authentication failed")  # Debugging
+        else:
+            print(form.errors)  # Print form errors for debugging
     else:
         form = CustomUserCreationForm()
+    
     return render(request, 'projects/register.html', {'form': form})
 
-
+# Project view
 def project(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
     comments = project.comments.all().order_by('-created_at')  # Get all comments for the project
@@ -70,19 +71,21 @@ def project(request, project_id):
     return render(request, 'projects/project.html', context)
 
 
+# Home view
 def home(request):
     projects = Project.objects.all()
     return render(request, 'projects/home.html', {'projects': projects})
 
+def network(request):
+    users = User.objects.all()  # Fetch all users
+    return render(request, 'projects/network.html', {'users': users})
 
-def register(request):
-    return render(request, 'projects/register.html')
 
-
+# Delete comment view
 @login_required
 def delete_comment(request, pk):
     comment = get_object_or_404(Comment, pk=pk, user=request.user)
     project_id = comment.project.id  # Get the associated project ID before deleting the comment
     comment.delete()
     messages.success(request, 'Comment deleted successfully.')
-    return redirect('project', project_id=project_id) 
+    return redirect('project', project_id=project_id)

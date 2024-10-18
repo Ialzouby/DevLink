@@ -1,0 +1,25 @@
+{% extends "projects/base.html" %}
+
+{% block content %}
+<div class="container1 mt-5">
+    <h1 class="text-center mb-4">Our Network</h1>
+
+    <div class="row">
+        {% for user in users %}
+        <div class="col-md-6 mb-4">
+            <div class="card p-3 shadow-sm d-flex flex-row align-items-center">
+                <!-- Placeholder for headshot -->
+                <img src="https://via.placeholder.com/100" class="rounded-circle mr-3" alt="User Headshot" width="100" height="100">
+
+                <div class="user-info ml-3">
+                    <h5>{{ user.username }}</h5>
+                    <p>Email: {{ user.email }}</p>
+                    <p>Grade Level: {{ user.userprofile.grade_level }}</p>
+                    <p>Concentration: {{ user.userprofile.concentration }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

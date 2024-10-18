@@ -376,3 +376,31 @@ input::placeholder, textarea::placeholder {
     font-weight: bold;
     color: #f1f1f1;  /* Matches theme */
 }
+
+
+/* network */
+
+.container1 {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.card {
+    display: flex;
+    align-items: center;
+}
+
+.card img {
+    border: 5px solid #ccc;
+}
+
+.user-info h5 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.user-info p {
+    margin: 0;
+    color: #666;
+}

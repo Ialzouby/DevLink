@@ -1,0 +1,32 @@
+{% extends "projects/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-3">
+            <!-- You can add a placeholder for profile picture -->
+            <img src="https://via.placeholder.com/150" alt="Profile Picture" class="img-fluid rounded-circle mb-3">
+        </div>
+
+        <div class="col-md-9">
+            <h1>{{ profile_user.username }}'s Profile</h1>
+            <hr>
+
+            <div class="profile-info">
+                <p><strong>Email:</strong> {{ profile_user.email }}</p>
+                <p><strong>Grade Level:</strong> {{ profile_user.userprofile.grade_level }}</p>
+                <p><strong>Concentration:</strong> {{ profile_user.userprofile.concentration }}</p>
+                {% if profile_user.userprofile.linkedin %}
+                    <p><strong>LinkedIn:</strong> <a href="{{ profile_user.userprofile.linkedin }}" target="_blank">{{ profile_user.userprofile.linkedin }}</a></p>
+                {% endif %}
+                {% if profile_user.userprofile.github %}
+                    <p><strong>GitHub:</strong> <a href="{{ profile_user.userprofile.github }}" target="_blank">{{ profile_user.userprofile.github }}</a></p>
+                {% endif %}
+                {% if profile_user.userprofile.bio %}
+                    <p><strong>Bio:</strong> {{ profile_user.userprofile.bio }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

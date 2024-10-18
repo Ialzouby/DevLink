@@ -15,13 +15,13 @@
         </div>
         <ul class="nav-links">
             <li><a href="{% url 'home' %}">Projects</a></li>
-            <li><a href="#">Network</a></li>
+            <li><a href="{% url 'network' %}">Network</a></li>
             <li><a href="#">Ask a Question</a></li>
         </ul>
         <div class="nav-buttons">
             {% if user.is_authenticated %}
                 <button><a href="{% url 'logout' %}">Logout</a></button>
-                <button class="profile-btn">Profile</button>
+                <a href="{% url 'profile' user.username %}">Profile</a>
             {% else %}
                 <button><a href="{% url 'login' %}">Login</a></button>
                 <button><a href="{% url 'register' %}">Sign Up</a></button>

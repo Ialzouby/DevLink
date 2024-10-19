@@ -1,23 +1,25 @@
 /* General Styles */
-body {
-    font-family: Arial, sans-serif;
+html, body {
+    height: 100%;  /* Make sure the body and html take up the full height of the viewport */
     margin: 0;
-    background-color: #1d1d1d;
-    color: #f1f1f1;
+    padding: 0;
+    display: flex;
+    flex-direction: column;  /* Use flexbox */
 }
 
 /* Navbar */
+/* Navbar (Header) */
 .navbar {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
+    align-items: center;  /* Vertically centers the text */
+    padding: 20px 40px;   /* Increased padding for more space */
     background-color: #111;
     color: white;
 }
 
 .logo h1 {
-    margin-left: 10px;
+    margin: 0;            /* Remove default margin for proper alignment */
     font-size: 24px;
 }
 
@@ -27,7 +29,7 @@ body {
 }
 
 .nav-links li {
-    margin-right: 20px;
+    margin-right: 30px;   /* More space between nav items */
 }
 
 .nav-links a {
@@ -36,8 +38,22 @@ body {
     font-weight: bold;
 }
 
+/* Footer */
+footer {
+    background-color: #111;  /* Same dark background as navbar */
+    color: #f1f1f1;
+    text-align: center;       /* Horizontally centers the text */
+    padding: 20px 0;          /* Increased padding for top and bottom */
+    display: flex;
+    justify-content: center;  /* Centers content horizontally */
+    align-items: center;      /* Centers content vertically */
+    width: 100%;
+    font-size: 14px;          /* Slightly smaller text */
+}
+
+
 .nav-buttons button {
-    background-color: #5f5fd8;
+    background-color: #049a1b;
     border: none;
     color: white;
     padding: 10px 20px;
@@ -45,6 +61,27 @@ body {
     cursor: pointer;
     border-radius: 5px;
 }
+
+/* Logout and Profile Buttons */
+.nav-buttons button{
+    background-color: #28a745;  /* Green background for both buttons */
+    color: white;               /* White text */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;      /* Remove the underline from the link */
+    font-weight: bold;
+    display: inline-block;      /* Ensure it's displayed as a button */
+    margin-left: 10px;          /* Space between buttons */
+}
+
+/* Hover effect for both buttons */
+.nav-buttons button:hover{
+    background-color: #218838;  /* Darker green on hover */
+    color: white;
+}
+
 
 .profile-btn {
     background-color: #6b8de3;
@@ -56,6 +93,7 @@ body {
     justify-content: space-between;
     padding: 20px;
     width: 100%; 
+    flex: 1;
 }
 
 /* Forum Thread Section */
@@ -296,32 +334,7 @@ footer {
 
 /* form styling */
 
-.form-container {
-    width: 300px;
-    margin: 50px auto;
-    background-color: #222;
-    padding: 20px;
-    border-radius: 10px;
-    color: #fff;
-}
 
-.form-group {
-    margin-bottom: 15px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-}
-
-.btn {
-    background-color: #5f5fd8;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
 
 
 
@@ -378,29 +391,210 @@ input::placeholder, textarea::placeholder {
 }
 
 
-/* network */
 
-.container1 {
+/* Card Styling */
+/* General Styles */
+body {
+    background-color: #1b1b1b;  /* Dark background */
+    color: #f1f1f1;  /* White text */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container for the Network Page */
+.container {
+    padding: 40px 20px;
     max-width: 1200px;
     margin: 0 auto;
 }
 
+/* Card Styling */
 .card {
     display: flex;
-    align-items: center;
+    align-items: center;  /* Vertically align the image and text */
+    flex-direction: row;   /* Ensure image is on the left, text on the right */
+    padding: 20px;
+    background-color: #222;
+    border-radius: 10px;
+    margin-bottom: 20px;
 }
 
-.card img {
-    border: 5px solid #ccc;
+.card:hover {
+    transform: translateY(-5px);  /* Lift card slightly on hover */
 }
 
-.user-info h5 {
+.profile-pic-container img {
+    width: 100px !important;
+    height: 100px !important;
+    object-fit: cover !important;
+    border-radius: 50% !important;
+    border: 2px solid #444 !important;
+}
+
+
+.profile-pic-container {
+    width: 100px;
+    height: 100px;
+    margin-right: 30px;  /* Space between image and text */
+    flex-shrink: 0;      /* Prevent shrinking */
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+h5 {
     margin: 0;
-    font-size: 1.25rem;
+    font-size: 1.5rem;
+    color: #f1f1f1;  /* White text */
+}
+
+p {
+    margin: 5px 0;
+    color: #ccc;  /* Lighter gray for text details */
+    font-size: 1rem;
+}
+
+/* Layout for Two-Column Grid */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.col-md-6 {
+    width: calc(30% - 10px);  /* Two columns with spacing */
+    margin-bottom: 20px;  /* Space between rows */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .col-md-6 {
+        width: 100%;  /* Full width on small screens */
+    }
+}
+
+
+/* Styling for col-md-3 that contains the profile picture */
+/* Profile Picture Container */
+.profile-page-pic {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 100px;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 100px; 
+}
+
+/* Fix for Profile Picture */
+.profile-page-pic img {
+    width: 150px;               /* Fixed width */
+    height: 150px;              /* Fixed height */
+    object-fit: cover;          /* Ensure the image covers the container without stretching */
+    border-radius: 50%;         /* Circular shape */
+    border: 2px solid #444;     /* Optional border for better visibility */
+}
+
+
+/* Optional - for smaller screens */
+@media (max-width: 768px) {
+    .col-md-3 img {
+        width: 120px;             /* Slightly smaller image for small screens */
+        height: 120px;
+    }
+}
+
+
+/* General button styling for the logout button */
+.nav-buttons form button {
+    background-color: #28a745;  /* Green background */
+    color: white;               /* White text */
+    padding: 10px 20px;         /* Same padding as other buttons */
+    border: none;               /* Remove default border */
+    border-radius: 5px;         /* Rounded corners */
+    cursor: pointer;            /* Pointer cursor on hover */
+    font-weight: bold;          /* Bold text */
+    text-align: center;         /* Center text inside the button */
+    display: inline-block;      /* Make sure it's inline */
+    margin-left: 10px;          /* Space between buttons */
+}
+
+/* Hover effect for logout button */
+.nav-buttons form button:hover {
+    background-color: #218838;  /* Darker green on hover */
+    color: white;
+}
+
+/* Make sure form doesn't have extra margin/padding */
+.nav-buttons form {
+    display: inline;            /* Make form inline like the other buttons */
+    margin: 0;
+    padding: 0;
+}
+/* Form Container */
+.form-container {
+    max-width: 900px;           /* Expanded width */
+    margin: 30px auto;          /* Center form and reduce top margin */
+    padding: 20px 30px;         /* Adjust padding to fit content better */
+    background-color: #222;     /* Dark background */
+    border-radius: 10px;
+    color: #f1f1f1;
+}
+
+/* Form Fields */
+.form-group {
+    margin-bottom: 15px;        /* Reduce space between fields */
+}
+
+.form-group label {
+    font-size: 14px;            /* Slightly smaller labels */
+}
+
+.form-group input, .form-group textarea {
+    padding: 8px 10px;          /* Smaller padding to reduce height */
+    border-radius: 5px;
+    background-color: #333;
+    border: 1px solid #444;
+    color: white;
+}
+
+textarea {
+    resize: vertical;           /* Allow vertical resizing only */
+}
+
+/* Submit Button */
+.btn-primary {
+    background-color: #5f5fd8;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
     font-weight: bold;
 }
 
-.user-info p {
-    margin: 0;
-    color: #666;
+.btn-primary:hover {
+    background-color: #4e4ec7;
+}
+
+/* Two-column Layout */
+.col-md-6 {
+    padding: 0 10px;            /* Reduce padding between columns */
+}
+
+/* Adjust for Smaller Screens */
+@media (max-width: 768px) {
+    .col-md-6 {
+        width: 100%;            /* Make columns full width on small screens */
+    }
+    .form-container {
+        padding: 20px;          /* Adjust padding for smaller screens */
+    }
 }

@@ -4,100 +4,70 @@
 {% block title %}Sign Up{% endblock %}
 
 {% block content %}
-<div class="form-container">
+<div class="container form-container">
     <h2>Sign Up</h2>
-
-    {% if form.errors %}
-    <div class="alert alert-danger">
-        <ul>
-            {% for field in form %}
-                {% for error in field.errors %}
-                    <li>{{ field.label }}: {{ error }}</li>
-                {% endfor %}
-            {% endfor %}
-            {% for error in form.non_field_errors %}
-                <li>{{ error }}</li>
-            {% endfor %}
-        </ul>
-    </div>
-{% endif %}
-
-
-    <form method="post">
+    <!-- enctype="multipart/form-data" is necessary to handle file uploads -->
+    <form method="POST" action="{% url 'register' %}" enctype="multipart/form-data">
+        
         {% csrf_token %}
-        
-        <div class="form-group">
-            <label for="id_first_name">First Name:</label>
-            <input type="text" name="first_name" id="id_first_name" required>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="first_name">First Name:</label>
+                    <input type="text" id="first_name" name="first_name" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="grade_level">Grade Level:</label>
+                    <input type="text" id="grade_level" name="grade_level" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="linkedin">LinkedIn (Optional):</label>
+                    <input type="url" id="linkedin" name="linkedin" class="form-control">
+                </div>
+                <!-- New Field for Profile Picture -->
+                <div class="form-group">
+                    <label for="profile_picture">Profile Picture (Optional):</label>
+                    <input type="file" id="profile_picture" name="profile_picture" class="form-control">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="last_name">Last Name:</label>
+                    <input type="text" id="last_name" name="last_name" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="concentration">Concentration:</label>
+                    <input type="text" id="concentration" name="concentration" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="github">GitHub (Optional):</label>
+                    <input type="url" id="github" name="github" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="bio">Bio (Optional):</label>
+                    <textarea id="bio" name="bio" class="form-control" rows="2"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="password1">Password:</label>
+                    <input type="password" id="password1" name="password1" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="password2">Confirm Password:</label>
+                    <input type="password" id="password2" name="password2" class="form-control">
+                </div>
+            </div>
         </div>
-
-        <div class="form-group">
-            <label for="id_last_name">Last Name:</label>
-            <input type="text" name="last_name" id="id_last_name" required>
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn-primary">Sign Up</button>
         </div>
-
-        <div class="form-group">
-            <label for="id_email">Email:</label>
-            <input type="email" name="email" id="id_email" required>
-        </div>
-
-        <div class="form-group">
-            <label for="id_username">Username:</label>
-            <input type="text" name="username" id="id_username" required>
-        </div>
-
-        <div class="form-group">
-            <label for="id_grade_level">Grade Level:</label>
-            <input type="text" name="grade_level" id="id_grade_level" required>
-        </div>
-
-        <div class="form-group">
-            <label for="id_concentration">Concentration:</label>
-            <input type="text" name="concentration" id="id_concentration" required>
-        </div>
-
-        <div class="form-group">
-            <label for="id_linkedin">LinkedIn (Optional):</label>
-            <input type="url" name="linkedin" id="id_linkedin">
-        </div>
-
-        <div class="form-group">
-            <label for="id_github">GitHub (Optional):</label>
-            <input type="url" name="github" id="id_github">
-        </div>
-
-        <div class="form-group">
-            <label for="id_bio">Bio (Optional):</label>
-            <textarea name="bio" id="id_bio" rows="3"></textarea>
-        </div>
-
-        <div class="form-group">
-            <label for="id_password1">Password:</label>
-            <input type="password" name="password1" id="id_password1" required>
-        </div>
-
-        <div class="form-group">
-            <label for="id_password2">Confirm Password:</label>
-            <input type="password" name="password2" id="id_password2" required>
-        </div>
-        
-        <button type="submit" class="btn">Register</button>
     </form>
 </div>
 {% endblock %}
-
-{% if form.errors %}
-    <div class="alert alert-danger">
-        <ul>
-            {% for field in form %}
-                {% for error in field.errors %}
-                    <li>{{ field.label }}: {{ error }}</li>
-                {% endfor %}
-            {% endfor %}
-            {% for error in form.non_field_errors %}
-                <li>{{ error }}</li>
-            {% endfor %}
-        </ul>
-    </div>
-{% endif %}
-

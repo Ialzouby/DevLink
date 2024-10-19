@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DevLink - {% block title %}Home{% endblock %}</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'projects/styles.css' %}">
 </head>
 <body>
@@ -20,11 +21,14 @@
         </ul>
         <div class="nav-buttons">
             {% if user.is_authenticated %}
-                <button><a href="{% url 'logout' %}">Logout</a></button>
-                <a href="{% url 'profile' user.username %}">Profile</a>
+                <form method="POST" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn">Logout</button>
+                </form>
+                <a href="{% url 'profile' user.username %}" class="btn">Profile</a>
             {% else %}
-                <button><a href="{% url 'login' %}">Login</a></button>
-                <button><a href="{% url 'register' %}">Sign Up</a></button>
+                <a href="{% url 'login' %}" class="btn">Login</a>
+                <a href="{% url 'register' %}" class="btn">Sign Up</a>
             {% endif %}
         </div>
         

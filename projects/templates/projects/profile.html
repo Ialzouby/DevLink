@@ -3,16 +3,20 @@
 {% block content %}
 <div class="container mt-5">
     <div class="row">
-        <div class="col-md-3">
-            <!-- You can add a placeholder for profile picture -->
-            <img src="https://via.placeholder.com/150" alt="Profile Picture" class="img-fluid rounded-circle mb-3">
-        </div>
+        <div class="d-flex align-items-center">
+            <!-- Profile Picture Section -->
+            <div class="profile-page-pic">
+                {% if profile_user.userprofile.profile_picture %}
+                    <img src="{{ profile_user.userprofile.profile_picture.url }}" alt="Profile Picture">
+                {% else %}
+                    <img src="https://via.placeholder.com/150" alt="Default Profile Picture">
+                {% endif %}
+            </div>
 
-        <div class="col-md-9">
-            <h1>{{ profile_user.username }}'s Profile</h1>
-            <hr>
-
-            <div class="profile-info">
+            <!-- Profile Information Section -->
+            <div class="profile-info ml-5">
+                <h1>{{ profile_user.username }}'s Profile</h1>
+                <hr>
                 <p><strong>Email:</strong> {{ profile_user.email }}</p>
                 <p><strong>Grade Level:</strong> {{ profile_user.userprofile.grade_level }}</p>
                 <p><strong>Concentration:</strong> {{ profile_user.userprofile.concentration }}</p>

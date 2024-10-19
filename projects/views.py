@@ -12,17 +12,20 @@ from .forms import RatingForm, CustomUserCreationForm
 def profile(request, username):
     user = get_object_or_404(User, username=username)
     return render(request, 'projects/profile.html', {'profile_user': user})
-
-
 # Register view
 def register(request):
     if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST, request.FILES)  # Add request.FILES to handle file uploads
         if form.is_valid():
             print("Form is valid")  # Debugging
             user = form.save()  # Save the user to the database
-            # The UserProfile is automatically created by the post_save signal, so no need to manually create it
-            
+
+            # Save the profile picture to the UserProfile model (if the form includes profile picture field)
+            profile_picture = request.FILES.get('profile_picture')
+            if profile_picture:
+                user.userprofile.profile_picture = profile_picture
+                user.userprofile.save()
+
             # Log in the user immediately after registration
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password1')
@@ -42,6 +45,7 @@ def register(request):
         form = CustomUserCreationForm()
     
     return render(request, 'projects/register.html', {'form': form})
+
 
 # Project view
 def project(request, project_id):

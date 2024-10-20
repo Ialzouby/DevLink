@@ -1,35 +1,50 @@
 {% extends "projects/base.html" %}
 
 {% block content %}
-<div class="container mt-5">
-    <div class="row">
-        <div class="d-flex align-items-center">
-            <!-- Profile Picture Section -->
-            <div class="profile-page-pic">
-                {% if profile_user.userprofile.profile_picture %}
-                    <img src="{{ profile_user.userprofile.profile_picture.url }}" alt="Profile Picture">
-                {% else %}
-                    <img src="https://via.placeholder.com/150" alt="Default Profile Picture">
-                {% endif %}
-            </div>
+<div class="custom-profile-page-container">
+    <!-- Profile Information Section (Outside the gray card) -->
+    <div class="custom-profile-section">
+        <!-- Profile Picture -->
+        <div class="custom-profile-pic">
+            {% if profile_user.userprofile.profile_picture %}
+                <img src="{{ profile_user.userprofile.profile_picture.url }}" alt="Profile Picture">
+            {% else %}
+                <img src="https://via.placeholder.com/150" alt="Default Profile Picture">
+            {% endif %}
+        </div>
 
-            <!-- Profile Information Section -->
-            <div class="profile-info ml-5">
-                <h1>{{ profile_user.username }}'s Profile</h1>
-                <hr>
-                <p><strong>Email:</strong> {{ profile_user.email }}</p>
-                <p><strong>Grade Level:</strong> {{ profile_user.userprofile.grade_level }}</p>
-                <p><strong>Concentration:</strong> {{ profile_user.userprofile.concentration }}</p>
-                {% if profile_user.userprofile.linkedin %}
-                    <p><strong>LinkedIn:</strong> <a href="{{ profile_user.userprofile.linkedin }}" target="_blank">{{ profile_user.userprofile.linkedin }}</a></p>
-                {% endif %}
-                {% if profile_user.userprofile.github %}
-                    <p><strong>GitHub:</strong> <a href="{{ profile_user.userprofile.github }}" target="_blank">{{ profile_user.userprofile.github }}</a></p>
-                {% endif %}
-                {% if profile_user.userprofile.bio %}
-                    <p><strong>Bio:</strong> {{ profile_user.userprofile.bio }}</p>
-                {% endif %}
-            </div>
+        <!-- Profile Info -->
+        <div class="custom-profile-info">
+            <h1>{{ profile_user.username }}</h1>
+            <p><strong>Email:</strong> {{ profile_user.email }}</p>
+            <p><strong>Grade Level:</strong> {{ profile_user.userprofile.grade_level }}</p>
+            <p><strong>Concentration:</strong> {{ profile_user.userprofile.concentration }}</p>
+            {% if profile_user.userprofile.linkedin %}
+                <p><strong>LinkedIn:</strong> <a href="{{ profile_user.userprofile.linkedin }}" target="_blank">{{ profile_user.userprofile.linkedin }}</a></p>
+            {% endif %}
+            {% if profile_user.userprofile.github %}
+                <p><strong>GitHub:</strong> <a href="{{ profile_user.userprofile.github }}" target="_blank">{{ profile_user.userprofile.github }}</a></p>
+            {% endif %}
+            {% if profile_user.userprofile.bio %}
+                <p><strong>Bio:</strong> {{ profile_user.userprofile.bio }}</p>
+            {% endif %}
+
+            <p><strong>Points:</strong> {{ profile_user.userprofile.points }}</p>
+
+        </div>
+    </div>
+
+    <!-- Project Grid Section -->
+    <div class="custom-project-section">
+        <h2 class="custom-portfolio-heading">Portfolio</h2>
+        <div class="custom-project-grid">
+            {% for project in profile_user.owned_projects.all %}
+                <div class="custom-project-card">
+                    <h3>{{ project.title }}</h3>
+                    <p>{{ project.description|truncatewords:10 }}</p>
+                    <a href="{% url 'project' project.id %}" class="btn btn-primary">View Project</a>
+                </div>
+            {% endfor %}
         </div>
     </div>
 </div>

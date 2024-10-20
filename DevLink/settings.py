@@ -21,6 +21,8 @@ LOGOUT_REDIRECT_URL = 'login'
 # Redirect to the homepage after login
 LOGIN_REDIRECT_URL = '/'
 
+LOGIN_URL = '/login/'
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -30,10 +32,9 @@ LOGIN_REDIRECT_URL = '/'
 SECRET_KEY = 'django-insecure-(n0x*hdt0byp@g9ob90#w5yv=ie%i!wtc#0ic1cr+3ky1np+px'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['your-thinkhub-domain.com', '127.0.0.1']
 
 # Application definition
 
@@ -125,8 +126,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATICFILES_DIRS = [
     BASE_DIR / "static",

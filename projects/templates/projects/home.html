@@ -3,14 +3,64 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<div class="project-list">
+<div class="unique-layout-container">
+    <!-- Left Sidebar -->
+    <div class="unique-left-sidebar">
+        <h3>Topics</h3>
+        <ul>
+            {% for topic in topics %}
+                <li><a href="#">{{ topic }}</a></li>
+            {% empty %}
+                <li>No topics available</li>
+            {% endfor %}
+        </ul>
+    </div>
+    
+    
+    
+
+<!-- Center Content for Projects -->
+<div class="unique-project-list">
+    <div class="unique-project-header">
     <h2>Projects</h2>
+    <a href="{% url 'create_project' %}" class="add-project-btn">
+        <i class="fa fa-plus"></i>
+    </a>
+    </div>
     {% for project in projects %}
-        <div class="project-item">
-            <h3>{{ project.title }}</h3>
-            <p>{{ project.description|truncatewords:20 }}</p>
-            <a href="{% url 'project' project.id %}" class="view-btn">View Project</a>
-        </div>
+        <a href="{% url 'project' project.id %}" class="unique-project-item-link">
+            <div class="unique-project-item">
+                <h3>{{ project.title }}</h3>
+                <p>{{ project.description|truncatewords:20 }}</p>
+            </div>
+        </a>
     {% endfor %}
+</div>
+
+
+    <!-- Right Sidebar (Empty for now) -->
+    <div class="unique-right-sidebar">
+        <h3>Top Contributors</h3>
+        {% for user in top_users %}
+        
+            <div class="user-card">
+                <div class="user-avatar-container">
+                    {% if user.profile_picture %}
+                        <img src="{{ user.profile_picture.url }}" alt="{{ user.user.username }}" class="user-avatar">
+                    {% else %}
+                        <img src="https://via.placeholder.com/50" alt="{{ user.user.username }}" class="user-avatar">
+                    {% endif %}
+                </div>
+                <div class="user-info">
+                    <h4>{{ user.user.username }}</h4>
+                    <p>Grade Level: {{ user.grade_level }}</p>
+                    <p>Concentration: {{ user.concentration }}</p>
+                </div>
+
+            </div>
+       
+        {% endfor %}
+    </div>
+    
 </div>
 {% endblock %}

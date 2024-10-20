@@ -19,16 +19,25 @@
                         <p>Grade Level: {{ user.userprofile.grade_level|default_if_none:"Not available" }}</p>
                         <p>Concentration: {{ user.userprofile.concentration|default_if_none:"Not available" }}</p>
                     </div>
+                    
+                    <!-- Badge for the top three users -->
+                    {% if forloop.counter == 1 %}
+                    <div class="badge-container">
+                        <span class="badge first-badge">1st Place</span>
+                    </div>
+                    {% elif forloop.counter == 2 %}
+                    <div class="badge-container">
+                        <span class="badge second-badge">2nd Place</span>
+                    </div>
+                    {% elif forloop.counter == 3 %}
+                    <div class="badge-container">
+                        <span class="badge third-badge">3rd Place</span>
+                    </div>
+                    {% endif %}
                 </div>
             </a>
         </div>
         {% endfor %}
     </div>
 </div>
-
-
-
-
-
-
 {% endblock %}

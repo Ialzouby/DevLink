@@ -12,6 +12,7 @@ class UserProfile(models.Model):
     github = models.URLField(max_length=200, blank=True, null=True)
     bio = models.TextField(blank=True, null=True)
     profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True)  # New field for profile image
+    points = models.IntegerField(default=0)
     
 
 
@@ -19,27 +20,44 @@ class UserProfile(models.Model):
         return f'{self.user.username} Profile'
 
 
-# Signal to create and save UserProfile when a User is created or updated
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        UserProfile.objects.create(user=instance)
-
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.userprofile.save()
-
 
 # Project model
 class Project(models.Model):
+
+    TOPIC_CHOICES = [
+        ('Web Development', 'Web Development'),
+        ('AI', 'AI'),
+        ('Data Science', 'Data Science'),
+        ('Cybersecurity', 'Cybersecurity'),
+        # Add more topics as needed
+    ]
+        
     title = models.CharField(max_length=200)
     description = models.TextField()
     views = models.IntegerField(default=0)
     rating = models.FloatField(default=0.0)  # Add a rating field (can store decimal values)
     created_at = models.DateTimeField(auto_now_add=True)
+    members = models.ManyToManyField(User, related_name='joined_projects', blank=True)
+    owner = models.ForeignKey(User, related_name='owned_projects', on_delete=models.CASCADE)  # New field for project owner
+    skills_gained = models.CharField(max_length=200)
+    skill_requirements = models.CharField(max_length=200)
+    github_link = models.URLField(max_length=200)
+    topic = models.CharField(max_length=100, choices=TOPIC_CHOICES) 
+
+
 
     def __str__(self):
         return self.title
+    
+
+class JoinRequest(models.Model):
+    project = models.ForeignKey(Project, related_name='join_requests', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='join_requests', on_delete=models.CASCADE)
+    status = models.CharField(max_length=10, choices=[('pending', 'Pending'), ('approved', 'Approved'), ('rejected', 'Rejected')], default='pending')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"JoinRequest by {self.user.username} for {self.project.title}"
 
 
 # Comment model

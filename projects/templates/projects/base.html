@@ -5,37 +5,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DevLink - {% block title %}Home{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&display=swap" rel="stylesheet">
+
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="{% static 'projects/styles.css' %}">
 </head>
 <body>
     <!-- Navbar -->
-    <div class="navbar">
-        <div class="logo">
-            <h1>DevLink</h1>
-        </div>
-        <ul class="nav-links">
-            <li><a href="{% url 'home' %}">Projects</a></li>
-            <li><a href="{% url 'network' %}">Network</a></li>
-            <li><a href="#">Ask a Question</a></li>
-        </ul>
-        <div class="nav-buttons">
-            {% if user.is_authenticated %}
+<!-- Navbar -->
+<div class="navbar">
+    <div class="logo">
+        <img src="/projects/images/logo.png" alt="DevLink Logo" class="navbar-logo">
+        <h1>DevLink</h1>
+    </div>
+    <ul class="nav-links">
+        <li><a href="{% url 'home' %}">Projects</a></li>
+        <li><a href="{% url 'network' %}">Network</a></li>
+      
+    </ul>
+    <div class="nav-buttons">
+        {% if user.is_authenticated %}
+        <div class="profile-dropdown">
+            <a href="{% url 'profile' user.username %}">
+                {% if user.userprofile.profile_picture %}
+                    <img src="{{ user.userprofile.profile_picture.url }}" class="profile-img rounded-circle" alt="{{ user.username }}">
+                {% else %}
+                    <img src="{% static 'projects/images/default-profile.png' %}" class="profile-img rounded-circle" alt="{{ user.username }}">
+                {% endif %}
+            </a>
+            <div class="dropdown-content">
+                <a href="{% url 'profile' user.username %}" class="dropdown-button">Edit Profile</a>
                 <form method="POST" action="{% url 'logout' %}">
                     {% csrf_token %}
-                    <button type="submit" class="btn">Logout</button>
+                    <button type="submit" class="dropdown-button dropdown-logout">Logout</button>
                 </form>
-                <a href="{% url 'profile' user.username %}" class="btn">Profile</a>
-            {% else %}
-                <a href="{% url 'login' %}" class="btn">Login</a>
-                <a href="{% url 'register' %}" class="btn">Sign Up</a>
-            {% endif %}
+            </div>
         </div>
         
+        {% else %}
+            <a href="{% url 'login' %}" class="btn">Login</a>
+            <a href="{% url 'register' %}" class="btn">Sign Up</a>
+        {% endif %}
     </div>
+</div>
+
 
     <!-- Main Content -->
-    <div class="container">
+    <div class="page-container">
         {% block content %}
         <!-- Page-specific content will go here -->
         {% endblock %}

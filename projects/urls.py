@@ -15,6 +15,9 @@ urlpatterns = [
     path('project/<int:project_id>/', views.project, name='project'),  # URL for viewing a specific project
     path('comment/delete/<int:pk>/', views.delete_comment, name='comment-delete'),  # URL for deleting a comment
     path('network/', network, name='network'),
+    path('create_project/', views.create_project, name='create_project'),
+    path('projects/', views.project_list, name='project_list'),
+
 ]
 
 if settings.DEBUG:

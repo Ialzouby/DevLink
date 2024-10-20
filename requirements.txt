@@ -1,5 +1,6 @@
 asgiref==3.8.1
 distlib==0.3.8
+dj-database-url==2.2.0
 Django==5.1.1
 django-cors-headers==4.4.0
 djangorestframework==3.15.2
@@ -13,11 +14,10 @@ pandas==2.2.2
 pillow==10.4.0
 platformdirs==4.3.2
 psycopg2-binary==2.9.10
-==10.3.1
-
 python-dateutil==2.9.0.post0
 pytz==2024.1
 six==1.16.0
 sqlparse==0.5.1
+typing_extensions==4.12.2
 tzdata==2024.1
 virtualenv==20.26.4

@@ -13,7 +13,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import ProjectForm
 from .models import Project
-from .forms import ProjectForm
+from .forms import ProjectForm, UserProfileForm
 
 
 
@@ -29,6 +29,14 @@ def register(request):
             print("Form is valid")  # Debugging
             user = form.save()  # Save the user to the database
 
+            # Manually update the UserProfile fields after it's created by the signal
+            user.userprofile.grade_level = form.cleaned_data.get('grade_level')
+            user.userprofile.concentration = form.cleaned_data.get('concentration')
+            user.userprofile.linkedin = form.cleaned_data.get('linkedin')
+            user.userprofile.github = form.cleaned_data.get('github')
+            user.userprofile.bio = form.cleaned_data.get('bio')
+           
+            user.userprofile.save()  # Save the updated profile information
             # Save the profile picture to the UserProfile model (if the form includes profile picture field)
             profile_picture = request.FILES.get('profile_picture')
             if profile_picture:
@@ -116,19 +124,27 @@ def project(request, project_id):
 
 
 
-
-def home(request):
-    projects = Project.objects.all()
+def home(request, topic=None):
+    # Define topics for the sidebar
     topics = ["Web Development", "AI", "Data Science", "Cybersecurity"]  # Example topics
-    
+
+    # If a topic is passed through the URL, filter projects based on it
+    if topic:
+        projects = Project.objects.filter(topic__icontains=topic)
+    else:
+        projects = Project.objects.all().order_by('-created_at')
+
     # Get the top 3 users based on their points
     top_users = UserProfile.objects.order_by('-points')[:3]
 
+    # Pass the topics and filtered projects to the template
     return render(request, 'projects/home.html', {
         'projects': projects,
         'topics': topics,
-        'top_users': top_users
+        'top_users': top_users,
+        'selected_topic': topic,  # This is optional if you want to highlight the selected topic
     })
+
 
 def network(request):
     users = User.objects.all()  # Fetch all users
@@ -179,3 +195,16 @@ def network(request):
     users = User.objects.filter(userprofile__isnull=False).order_by('-userprofile__points')
 
     return render(request, 'projects/network.html', {'users': users})
+
+@login_required
+def edit_profile(request):
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, request.FILES, instance=request.user.userprofile)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your profile has been updated!')
+            return redirect('profile', username=request.user.username)
+    else:
+        form = UserProfileForm(instance=request.user.userprofile)
+
+    return render(request, 'projects/edit_profile.html', {'form': form})

@@ -9,21 +9,28 @@
 
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="{% static 'projects/main-styles.css' %}">
+    <link rel="stylesheet" href="{% static 'projects/styles.css' %}">
 </head>
 <body>
     <!-- Navbar -->
 <!-- Navbar -->
 <div class="navbar">
     <div class="logo">
+        <a href="{% url 'home' %}">
         <img src="/projects/images/logo.png" alt="DevLink Logo" class="navbar-logo">
+    </a>
+    <a href="{% url 'home' %}" class="clickable-text">
         <h1>DevLink</h1>
+    </a>
+   
+
     </div>
+    {% if user.is_authenticated %}
     <ul class="nav-links">
         <li><a href="{% url 'home' %}">Projects</a></li>
         <li><a href="{% url 'network' %}">Network</a></li>
-      
     </ul>
+    {% endif %}
     <div class="nav-buttons">
         {% if user.is_authenticated %}
         <div class="profile-dropdown">
@@ -35,7 +42,7 @@
                 {% endif %}
             </a>
             <div class="dropdown-content">
-                <a href="{% url 'profile' user.username %}" class="dropdown-button">Edit Profile</a>
+                <a href="{% url 'edit_profile' %}" class="dropdown-button">Edit Profile</a>
                 <form method="POST" action="{% url 'logout' %}">
                     {% csrf_token %}
                     <button type="submit" class="dropdown-button dropdown-logout">Logout</button>

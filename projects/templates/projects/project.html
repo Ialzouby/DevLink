@@ -111,6 +111,15 @@
 <div class="live-updates">
     <h3>Live Updates</h3>
     <p>GitHub Repo Name ★★★★★</p>
+
+    <h4>GitHub Preview</h4>
+    <a href="{{ project.github_link }}" target="_blank">
+    <div class="github-image-preview">
+       
+        <img src="https://api.urlbox.io/v1/hXXufaUIypyZYtri/png?url={{ project.github_link }}&thumb_width=800&quality=80" alt="GitHub Screenshot" class="github-preview">
+    </div>
+    </a>
+
     <ul>
         {% for update in updates %}
             <li>{{ update.content }} <span>{{ update.created_at|timesince }} ago</span></li>

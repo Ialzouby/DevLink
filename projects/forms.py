@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
-from .models import Project
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from .models import Project, UserProfile
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -105,3 +105,8 @@ class ProjectForm(forms.ModelForm):
             'skill_requirements': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Skill requirements'}),
             'github_link': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'GitHub Repository Link'}),
         }
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['grade_level', 'concentration', 'linkedin', 'github', 'bio', 'profile_picture']

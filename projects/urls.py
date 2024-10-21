@@ -16,7 +16,9 @@ urlpatterns = [
     path('comment/delete/<int:pk>/', views.delete_comment, name='comment-delete'),  # URL for deleting a comment
     path('network/', network, name='network'),
     path('create_project/', views.create_project, name='create_project'),
-    path('projects/', views.project_list, name='project_list'),
+    path('topic/<str:topic>/', views.home, name='filtered_projects'),
+    path('edit_profile/', views.edit_profile, name='edit_profile')
+    
 
 ]
 

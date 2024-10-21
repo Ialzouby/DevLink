@@ -9,7 +9,7 @@
         <h3>Topics</h3>
         <ul>
             {% for topic in topics %}
-                <li><a href="#">{{ topic }}</a></li>
+                <li><a href="{% url 'filtered_projects' topic=topic %}">{{ topic }}</a></li>
             {% empty %}
                 <li>No topics available</li>
             {% endfor %}

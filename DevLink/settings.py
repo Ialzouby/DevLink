@@ -34,7 +34,12 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'f51$yp=7wu&s6dv^eap@0*ke*h4&+$^79fk
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['https://divine-solace-production.up.railway.app']
+ALLOWED_HOSTS = [
+    'divine-solace-production.up.railway.app', 
+    'localhost',                                
+    '127.0.0.1',                                
+    '[::1]',                                    
+]
 
 # Application definition
 

@@ -89,10 +89,26 @@ WSGI_APPLICATION = 'DevLink.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
-}
 
+DATABASES = {
+
+    'default': {
+
+        'ENGINE': 'django.db.backends.postgresql',
+
+        'NAME': '<PGDATABASE>',
+
+        'USER': '<PGUSER>',
+
+        'PASSWORD': '<PGPASSWORD>',
+
+        'HOST': '<PGHOST>',
+
+        'PORT': '<PGPORT>',
+
+    }
+
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators

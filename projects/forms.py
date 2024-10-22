@@ -78,6 +78,7 @@ class CustomUserCreationForm(UserCreationForm):
         required=False
     )
     profile_picture = forms.ImageField(required=False)
+    
 
     class Meta:
         model = User

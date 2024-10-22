@@ -150,8 +150,8 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'dvah1m8du',
-    'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
-    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
+    'API_KEY': '547583998667598',
+    'API_SECRET': '-hOXeuzVlg2LrLjnML7Bzm7SnHw',
 }
 # Media files
 MEDIA_URL = '/media/'

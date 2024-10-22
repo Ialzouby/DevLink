@@ -1,1 +1,1 @@
-web: gunicorn Devlink.wsgi
+web: gunicorn DevLink.wsgi

@@ -7,7 +7,7 @@
         <!-- Profile Picture -->
         <div class="custom-profile-pic">
             {% if profile_user.userprofile.profile_picture %}
-                <img src="{{ profile_user.user.userprofile.profile_picture.url|cloudinary_url:width=300,height=300,crop='fill' }}" alt="Profile Picture">
+                <img src="{{ profile_user.userprofile.profile_picture.url|cloudinary_url:width=300,height=300,crop='fill' }}" alt="Profile Picture">
             {% else %}
                 <img src="https://via.placeholder.com/150" alt="Default Profile Picture">
             {% endif %}

@@ -137,6 +137,14 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'projects/static/projects'), 
 ]
 
+# Whitenoise configuration for static and media files
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Serve media files with whitenoise in production
+WHITENOISE_AUTOREFRESH = True  # Optional: Use this in development for easier debugging
+WHITENOISE_USE_FINDERS = True
+
+DEFAULT_FILE_STORAGE = 'projects.storage_backends.CompressedManifestMediaStorage'
 
 # Media files
 MEDIA_URL = '/media/'

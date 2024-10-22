@@ -44,10 +44,9 @@ def register(request):
            
             user.userprofile.save()  # Save the updated profile information
             # Save the profile picture to the UserProfile model (if the form includes profile picture field)
-            profile_picture = request.FILES.get('profile_picture')
-            if profile_picture:
-                user.userprofile.profile_picture = profile_picture
-                user.userprofile.save()
+        
+
+                
 
             # Log in the user immediately after registration
             username = form.cleaned_data.get('username')

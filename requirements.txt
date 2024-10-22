@@ -1,10 +1,12 @@
 asgiref==3.8.1
 certifi==2024.8.30
 charset-normalizer==2.0.12
+cloudinary==1.41.0
 decorator==5.1.1
 distlib==0.3.8
 dj-database-url==2.2.0
 Django==5.1.1
+django-cloudinary-storage==0.3.0
 django-cors-headers==4.4.0
 djangorestframework==3.15.2
 et-xmlfile==1.1.0

@@ -18,6 +18,8 @@ import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+DATABASE_URL = "postgresql://postgres:gqZbLQeIjWQAkWqmUHcHhqSmrbpXctIh@junction.proxy.rlwy.net:26941/railway"
+
 LOGOUT_REDIRECT_URL = 'login'
 # Redirect to the homepage after login
 LOGIN_REDIRECT_URL = '/'
@@ -90,7 +92,7 @@ WSGI_APPLICATION = 'DevLink.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
+    'default': dj_database_url.config(default=DATABASE_URL, conn_max_age=1800),
 }
 
 

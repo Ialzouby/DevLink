@@ -16,9 +16,9 @@ import dj_database_url
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent 
 
-DATABASE_URL = "postgresql://postgres:gqZbLQeIjWQAkWqmUHcHhqSmrbpXctIh@junction.proxy.rlwy.net:26941/railway"
+DATABASE_URL = os.getenv('DATABASE_URL', 'postgresql://postgres:qsaYzAIPQNssheBNrDfoJIqbGxQQWoTR@junction.proxy.rlwy.net:32147/railway')
 
 LOGOUT_REDIRECT_URL = 'login'
 # Redirect to the homepage after login
@@ -92,28 +92,8 @@ WSGI_APPLICATION = 'DevLink.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-
-    'default': {
-
-        #'ENGINE': 'django.db.backends.sqlite3',
-
-        'ENGINE': 'django.db.backends.postgresql',
-
-        'NAME': 'railway',
-
-        'USER': 'postgres',
-
-        'PASSWORD': 'gqZbLQeIjWQAkWqmUHcHhqSmrbpXctIh',
-
-        'HOST': 'postgres.railway.internal',
-
-        'PORT': '5432',
-
-    }
-
+    'default': dj_database_url.config(default=DATABASE_URL, conn_max_age=1800),
 }
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators

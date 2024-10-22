@@ -38,11 +38,13 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'f51$yp=7wu&s6dv^eap@0*ke*h4&+$^79fk
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    'divine-solace-production.up.railway.app', 
+    'devlink.up.railway.app', 
     'localhost',                                
     '127.0.0.1',                                
     '[::1]',                                    
 ]
+
+CSRF_TRUSTED_ORIGINS = [ 'https://devlink-production-a30b.up.railway.app']
 
 # Application definition
 

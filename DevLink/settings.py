@@ -92,14 +92,13 @@ WSGI_APPLICATION = 'DevLink.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME', 'devlinkdb'),          # Your database name
-        'USER': os.getenv('DB_USER', 'technolab'),          # Your database user
-        'PASSWORD': os.getenv('DB_PASSWORD', 'zooby'),      # Your database password
-        'HOST': os.getenv('DB_HOST', 'localhost'),          # Usually 'localhost' for local development
-        'PORT': os.getenv('DB_PORT', '5432'),               # Default PostgreSQL port
+        'NAME': os.getenv('PGDATABASE', 'railway'),  # Uses 'railway' as a fallback
+        'USER': os.getenv('POSTGRES_USER', 'postgres'),  # Uses 'postgres' as a fallback
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'your_default_password'),  # Use your actual default password or leave it to use the environment variable
+        'HOST': os.getenv('PGHOST', 'localhost'),  # Uses the host provided in the environment
+        'PORT': os.getenv('PGPORT', '5432'),  # Uses the port provided in the environment
     }
 }
-
 
 
 

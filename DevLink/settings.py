@@ -44,7 +44,7 @@ ALLOWED_HOSTS = [
     '[::1]',                                    
 ]
 
-CSRF_TRUSTED_ORIGINS = [ 'https://devlink-production-a30b.up.railway.app']
+CSRF_TRUSTED_ORIGINS = [ 'https://devlink.up.railway.app']
 
 # Application definition
 

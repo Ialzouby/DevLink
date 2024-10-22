@@ -1,1 +1,1 @@
-web: gunicorn DevLink.wsgi --log-file -
+web: gunicorn DevLink.wsgi --log-file - --workers 3

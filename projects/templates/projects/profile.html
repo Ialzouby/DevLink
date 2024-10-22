@@ -31,6 +31,10 @@
 
             <p><strong>Points:</strong> {{ profile_user.userprofile.points }}</p>
 
+            {% if request.user != profile_user %}
+            <a href="{% url 'start_message' profile_user.username %}" class="btn btn-secondary">Message {{ profile_user.username }}</a>
+            {% endif %}
+
         </div>
     </div>
 

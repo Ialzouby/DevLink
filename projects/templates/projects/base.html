@@ -17,7 +17,7 @@
 <div class="navbar">
     <div class="logo">
         <a href="{% url 'home' %}">
-        <img src="/projects/images/logo.png" alt="DevLink Logo" class="navbar-logo">
+        <img src="/static/projects/images/logo.png" alt="DevLink Logo" class="navbar-logo">
     </a>
     <a href="{% url 'home' %}" class="clickable-text">
         <h1>DevLink</h1>
@@ -29,6 +29,7 @@
     <ul class="nav-links">
         <li><a href="{% url 'home' %}">Projects</a></li>
         <li><a href="{% url 'network' %}">Network</a></li>
+        <li><a href="{% url 'active_conversations' %}">Messaging</a></li>
     </ul>
     {% endif %}
     <div class="nav-buttons">

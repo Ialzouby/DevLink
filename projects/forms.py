@@ -2,6 +2,8 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import Project, UserProfile
+from django import forms
+from .models import Message
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -110,3 +112,12 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ['grade_level', 'concentration', 'linkedin', 'github', 'bio', 'profile_picture']
+
+
+class MessageForm(forms.ModelForm):
+    class Meta:
+        model = Message
+        fields = ['content']
+        widgets = {
+            'content': forms.Textarea(attrs={'rows': 3, 'placeholder': 'Type your message...'}),
+        }

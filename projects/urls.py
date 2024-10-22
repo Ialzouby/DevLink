@@ -17,8 +17,11 @@ urlpatterns = [
     path('network/', network, name='network'),
     path('create_project/', views.create_project, name='create_project'),
     path('topic/<str:topic>/', views.home, name='filtered_projects'),
-    path('edit_profile/', views.edit_profile, name='edit_profile')
-    
+    path('edit_profile/', views.edit_profile, name='edit_profile'),
+    path('messages/<str:username>/', views.message_thread, name='message_thread'),
+    path('messages/start/<str:username>/', views.message_thread, name='start_message'),
+    path('conversations/', views.active_conversations, name='active_conversations'),
+
 
 ]
 

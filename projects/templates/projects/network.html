@@ -2,6 +2,18 @@
 
 {% block content %}
 <div class="network-container">
+
+    <div class="search-bar-container d-flex justify-content-center mb-4">
+        <form method="GET" action="{% url 'network' %}" class="search-bar-form d-flex">
+            <input type="text" name="q" class="form-control me-2" placeholder="Search by username, grade level, or concentration" value="{{ request.GET.q }}">
+            <button type="submit" class="btn btn-primary me-2">Search</button>
+            <!-- Clear Filter Button -->
+            <a href="{% url 'network' %}" class="btn btn-secondary">Clear</a>
+        </form>
+    </div>
+
+
+
     <div class="row">
         {% for user in users %}
         <div class="col-md-6">

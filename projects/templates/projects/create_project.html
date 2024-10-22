@@ -1,54 +1,93 @@
 {% extends "projects/base.html" %}
-
 {% block title %}Create Project{% endblock %}
 
 {% block content %}
-  <div class="container create-project-container d-flex justify-content-center align-items-center">
+<div class="container create-project-container d-flex justify-content-center align-items-center">
     <div class="form-wrapper">
-      <div class="form-box">
-        <h2 class="text-center">Create a New Project</h2>
-        <form method="POST">
-          {% csrf_token %}
-          <div class="row">
-            <!-- Left Column (Title, Description, Topic) -->
-            <div class="col-md-6 left-side">
-              <div class="form-group">
-                <label for="id_title">Title:</label>
-                {{ form.title }}
-              </div>
-              <div class="form-group">
-                <label for="id_description">Description:</label>
-                {{ form.description }}
-              </div>
-              <div class="form-group">
-                <label for="id_topic">Topic:</label>
-                {{ form.topic }}
-              </div>
-            </div>
+        <div class="form-box">
+            <h2 class="text-center">Create a New Project</h2>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="row">
+                    <!-- Left Column (Title, Description, Topic) -->
+                    <div class="col-md-6 left-side">
+                        <div class="form-group">
+                            <label for="id_title">Title:</label>
+                            {{ form.title }}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_description">Description:</label>
+                            {{ form.description }}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_topic">Topic:</label>
+                            {{ form.topic }}
+                        </div>
+                    </div>
 
-            <!-- Right Column (Skills Gained, Requirements, GitHub) -->
-            <div class="col-md-6 right-side">
-              <div class="form-group">
-                <label for="id_skills_gained">Skills gained:</label>
-                {{ form.skills_gained }}
-              </div>
-              <div class="form-group">
-                <label for="id_requirements">Requirements:</label>
-                {{ form.skill_requirements }}
-              </div>
-              <div class="form-group">
-                <label for="id_github">GitHub:</label>
-                {{ form.github_link }}
-              </div>
-            </div>
-          </div>
+                    <!-- Right Column (Skills Gained, Requirements, GitHub) -->
+                    <div class="col-md-6 right-side">
+                        <div class="form-group">
+                            <label for="id_skills_gained">Skills gained:</label>
+                            <input type="text" id="skills-gained-input" class="form-control" placeholder="Type a skill and press Enter">
+                            <ul id="skills-gained-list" class="skills-list"></ul>
+                            <input type="hidden" id="skills_gained" name="skills_gained">
+                        </div>
 
-          <!-- Centered Button -->
-          <div class="text-center">
-            <button type="submit" class="btn btn-primary">Create Project</button>
-          </div>
-        </form>
-      </div>
+                        <div class="form-group">
+                            <label for="id_requirements">Requirements:</label>
+                            <input type="text" id="skills-requirements-input" class="form-control" placeholder="Type a skill and press Enter">
+                            <ul id="skills-requirements-list" class="skills-list"></ul>
+                            <input type="hidden" id="requirements" name="skill_requirements">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="id_github">GitHub:</label>
+                            {{ form.github_link }}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Centered Button -->
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Create Project</button>
+                </div>
+            </form>
+        </div>
     </div>
-  </div>
+</div>
+
+<script>
+    function handleSkillInput(inputFieldId, listId, hiddenFieldId) {
+        const inputField = document.getElementById(inputFieldId);
+        const skillList = document.getElementById(listId);
+        const hiddenField = document.getElementById(hiddenFieldId);
+
+        inputField.addEventListener('keypress', function (event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();  // Prevent form submission on Enter
+
+                const skill = inputField.value.trim();
+                if (skill) {
+                    // Create a new list item for the skill
+                    const listItem = document.createElement('li');
+                    listItem.textContent = skill;
+                    skillList.appendChild(listItem);
+
+                    // Clear the input field
+                    inputField.value = '';
+
+                    // Update the hidden input field with comma-separated values
+                    let skillsArray = hiddenField.value ? hiddenField.value.split(',') : [];
+                    skillsArray.push(skill);
+                    hiddenField.value = skillsArray.join(',');
+                }
+            }
+        });
+    }
+
+    // Initialize the skill inputs for both "Skills gained" and "Requirements"
+    handleSkillInput('skills-gained-input', 'skills-gained-list', 'skills_gained');
+    handleSkillInput('skills-requirements-input', 'skills-requirements-list', 'requirements');
+</script>
 {% endblock %}

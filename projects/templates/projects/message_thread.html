@@ -1,0 +1,53 @@
+{% extends "projects/base.html" %}
+
+{% block content %}
+<div class="chat-container">
+    <!-- Back to Profile Button -->
+    <div class="chat-header">
+        <h2>Chat with {{ recipient.username }}</h2>
+        <button onclick="window.history.back()" class="btn btn-secondary back-to-profile-btn">Go Back</button>
+    </div>
+    
+
+<!-- Chat messages -->
+<!-- Chat messages -->
+<div class="message-thread">
+    {% for message in messages %}
+    <div class="message {% if message.sender == request.user %}sent-message{% else %}received-message{% endif %}">
+        <div class="message-info">
+            <strong>{{ message.sender.username }}</strong>
+            <small>{{ message.timestamp|date:"M d, Y H:i" }}</small>
+        </div>
+        <p>{{ message.content }}</p>
+    </div>
+    {% empty %}
+    <p>No messages yet. Start a conversation with {{ recipient.username }}!</p>
+    {% endfor %}
+</div>
+
+
+
+    <div class="message-input-container">
+        <form method="post" class="message-form">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.content }}
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary send-message-btn">Send</button>
+            </div>
+        </form>
+    </div>
+    
+</div>
+
+<script>
+    window.onload = function() {
+        var messageThread = document.querySelector('.message-thread');
+        messageThread.scrollTop = messageThread.scrollHeight;  // Scroll to the bottom
+    };
+</script>
+
+
+{% endblock %}
+

@@ -1,0 +1,23 @@
+{% extends "projects/base.html" %}
+
+{% block content %}
+<div class="conversation-list-container">
+    <h2>Your Active Conversations</h2>
+
+    <div class="conversation-list">
+        {% if conversation_users %}
+            <ul class="list-group">
+                {% for user in conversation_users %}
+                <li class="list-group-item">
+                    <a href="{% url 'message_thread' user.username %}">
+                        {{ user.username }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>You don't have any active conversations yet.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

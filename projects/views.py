@@ -14,6 +14,12 @@ from django.contrib.auth.decorators import login_required
 from .forms import ProjectForm
 from .models import Project
 from .forms import ProjectForm, UserProfileForm
+from django.db.models import Q
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from .models import User, Message
+from .forms import MessageForm
+from .models import Message
 
 
 
@@ -192,7 +198,15 @@ def project_detail(request, pk):
 
 def network(request):
     # Fetch all users and order them by the points field in descending order
-    users = User.objects.filter(userprofile__isnull=False).order_by('-userprofile__points')
+    query = request.GET.get('q', '')  # Get the search query from the request
+    if query:
+        users = User.objects.filter(
+            Q(username__icontains=query) |
+            Q(userprofile__grade_level__icontains=query) |
+            Q(userprofile__concentration__icontains=query)
+        )
+    else:
+        users = User.objects.all()  # Show all users if no search query
 
     return render(request, 'projects/network.html', {'users': users})
 
@@ -208,3 +222,55 @@ def edit_profile(request):
         form = UserProfileForm(instance=request.user.userprofile)
 
     return render(request, 'projects/edit_profile.html', {'form': form})
+
+
+@login_required
+def message_thread(request, username):
+    recipient = get_object_or_404(User, username=username)
+    # Fetch messages exchanged between the current user and the recipient
+    messages = Message.objects.filter(
+        (Q(sender=request.user) & Q(recipient=recipient)) | 
+        (Q(sender=recipient) & Q(recipient=request.user))
+    ).order_by('timestamp')  # Order messages by timestamp (oldest to newest)
+
+    previous_url = request.META.get('HTTP_REFERER')
+
+    if request.method == 'POST':
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            new_message = form.save(commit=False)
+            new_message.sender = request.user
+            new_message.recipient = recipient
+            new_message.save()
+            return redirect('message_thread', username=recipient.username)
+    else:
+        form = MessageForm()
+
+    return render(request, 'projects/message_thread.html', {
+        'messages': messages,
+        'recipient': recipient,
+        'form': form,
+        'previous_url': previous_url
+    })
+
+
+@login_required
+def active_conversations(request):
+    # Get all unique users the logged-in user has had a conversation with (either as sender or recipient)
+    sent_conversations = Message.objects.filter(sender=request.user).values('recipient').distinct()
+    received_conversations = Message.objects.filter(recipient=request.user).values('sender').distinct()
+
+    # Get the unique user IDs of people the logged-in user has communicated with
+    conversation_user_ids = set(
+        user['recipient'] for user in sent_conversations
+    ).union(
+        user['sender'] for user in received_conversations
+    )
+
+    # Get the actual User objects of the conversation partners
+    from django.contrib.auth.models import User
+    conversation_users = User.objects.filter(id__in=conversation_user_ids)
+
+    return render(request, 'projects/active_conversations.html', {
+        'conversation_users': conversation_users
+    })

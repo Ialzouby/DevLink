@@ -51,22 +51,32 @@
                 <p>{{ project.description }}</p>
             </div>
 
-            <!-- Skills Section -->
-<div class="skills-section">
-    <!-- Skills You Can Learn Block -->
-    <div class="skills-learn">
-        <h4>Skills You Can Learn:</h4>
-        <p>{{ project.skills_gained }}</p>
-    </div>
+           <!-- Skills Section -->
+           <div class="skills-section">
+            <!-- Skills You Can Learn Block -->
+            <div class="skills-learn">
+                <h4>Skills You Can Learn:</h4>
+                <ul>
+                    {% for skill in project.skills_gained|split:"," %}
+                        <li>{{ skill }}</li>
+                    {% empty %}
+                        <li>No skills listed.</li>
+                    {% endfor %}
+                </ul>
+            </div>
 
-    <!-- Required Skills Block -->
-    <div class="skills-required">
-        <h4>Required Skills:</h4>
-        <p>{{ project.skill_requirements }}</p>
-    </div>
-
-    </div>
-
+            <!-- Required Skills Block -->
+            <div class="skills-required">
+                <h4>Required Skills:</h4>
+                <ul>
+                    {% for skill in project.skill_requirements|split:"," %}
+                        <li>{{ skill }}</li>
+                    {% empty %}
+                        <li>No requirements listed.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
 
 
             <!-- Comment Box -->

@@ -2,6 +2,10 @@ from django.db import models
 from django.contrib.auth.models import User  # For user relationships
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.utils import timezone
+from django.db.models import Q
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 
 # UserProfile model
 class UserProfile(models.Model):
@@ -80,3 +84,17 @@ class Update(models.Model):
 
     def __str__(self):
         return f'Update on {self.project.title}'
+
+
+class Message(models.Model):
+    sender = models.ForeignKey(User, related_name="sent_messages", on_delete=models.CASCADE)
+    recipient = models.ForeignKey(User, related_name="received_messages", on_delete=models.CASCADE)
+    content = models.TextField()
+    timestamp = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        ordering = ['-timestamp']
+
+    def __str__(self):
+        return f"Message from {self.sender} to {self.recipient} at {self.timestamp}"
+    

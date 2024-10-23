@@ -16,7 +16,7 @@ class UserProfile(models.Model):
     linkedin = models.URLField(max_length=200, blank=True, null=True)
     github = models.URLField(max_length=200, blank=True, null=True)
     bio = models.TextField(blank=True, null=True)
-    profile_picture = CloudinaryField('image', blank=True, null=True)  # New field for profile image
+    profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True)  # New field for profile image
     points = models.IntegerField(default=0)
     
 

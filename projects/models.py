@@ -6,6 +6,7 @@ from django.utils import timezone
 from django.db.models import Q
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from cloudinary.models import CloudinaryField
 
 # UserProfile model
 class UserProfile(models.Model):

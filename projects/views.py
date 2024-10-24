@@ -229,12 +229,29 @@ def network(request):
 
     return render(request, 'projects/network.html', {'users': users})
 
+
+
 @login_required
 def edit_profile(request):
     if request.method == 'POST':
         form = UserProfileForm(request.POST, request.FILES, instance=request.user.userprofile)
         if form.is_valid():
-            form.save()
+            user_profile = form.save(commit=False)
+            
+            # Check if a new profile picture is uploaded
+            if 'profile_picture' in request.FILES:
+                try:
+                    result = upload(request.FILES['profile_picture'], upload_preset='ml_default')
+                    print("Cloudinary upload result:", result)
+                    
+                    # Assign the Cloudinary URL to the user's profile_picture field
+                    user_profile.profile_picture = result['url']
+                except Exception as e:
+                    print(f"Error uploading to Cloudinary: {e}")
+                    messages.error(request, "There was an issue uploading the profile picture. Please try again.")
+
+            # Save the updated profile information
+            user_profile.save()
             messages.success(request, 'Your profile has been updated!')
             return redirect('profile', username=request.user.username)
     else:

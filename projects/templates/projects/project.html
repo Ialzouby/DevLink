@@ -19,13 +19,19 @@
             <div class="contributors-section">
                 <p>Contributors:</p>
                 <div class="contributors-list">
+
+                    
                     <a href="{% url 'profile' project.owner.username %}">
-                        <img src="{{ project.owner.user.userprofile.profile_picture|safe }}" alt="{{ project.owner.username }}" class="contributor-pic">
-                    </a>
+                        {% if project.owner.userprofile.profile_picture %}
+                        <img src="{{ project.owner.userprofile.profile_picture|safe }}" alt="{{ project.owner.username }}" class="contributor-pic">
+                    {% else %}
+                        <img src="{% static 'default_profile_pic.png' %}" alt="Default Profile Picture" class="contributor-pic"> <!-- Fallback image -->
+                    {% endif %}
+                     </a>
 
                     {% for member in project.members.all %}
                         <a href="{% url 'profile' member.username %}">
-                            <img src="{{ member.user.userprofile.profile_picture|safe }}" alt="{{ member.username }}" class="contributor-pic">
+                            <img src="{{ member.userprofile.profile_picture|safe }}" alt="{{ member.username }}" class="contributor-pic">
                         </a>
                     {% endfor %}
                 </div>

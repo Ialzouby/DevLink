@@ -18,6 +18,7 @@ class UserProfile(models.Model):
     bio = models.TextField(blank=True, null=True)
     profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True)  # New field for profile image
     points = models.IntegerField(default=0)
+    birthdate = models.DateField(null=True, blank=True)
     
 
 

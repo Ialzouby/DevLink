@@ -154,6 +154,13 @@ CLOUDINARY_STORAGE = {
     'API_KEY': '547583998667598',
     'API_SECRET': '-hOXeuzVlg2LrLjnML7Bzm7SnHw',
 }
+
+cloudinary.config(
+    cloud_name='dvah1m8du',
+    api_key='547583998667598',
+    api_secret='-hOXeuzVlg2LrLjnML7Bzm7SnHw'
+)
+
 # Media files
 MEDIA_URL = '/media/'
 #MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

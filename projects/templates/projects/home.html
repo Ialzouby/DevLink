@@ -43,14 +43,14 @@
         <h3>Top Contributors</h3>
         {% for user in top_users %}
         
-            <div class="user-card">
-                <div class="user-avatar-container">
-                    {% if user.profile_picture %}
-                        <img src="{{ user.userprofile.profile_picture|safe }}" alt="{{ user.username }}" class="user-avatar">
-                    {% else %}
-                        <img src="https://via.placeholder.com/50" alt="{{ user.user.username }}" class="user-avatar">
-                    {% endif %}
-                </div>
+        <div class="user-avatar-container">
+            {% if user.profile_picture %}
+                <img src="{{ user.profile_picture|safe }}" alt="{{ user.user.username }}" class="user-avatar">
+            {% else %}
+                <img src="https://via.placeholder.com/50" alt="{{ user.user.username }}" class="user-avatar">
+            {% endif %}
+        </div>
+        
                 <div class="user-info">
                     <h4>{{ user.user.username }}</h4>
                     <p>Grade Level: {{ user.grade_level }}</p>

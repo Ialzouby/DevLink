@@ -145,9 +145,7 @@ STATICFILES_DIRS = [
 # Whitenoise configuration for static and media files
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Serve media files with whitenoise in production
-WHITENOISE_AUTOREFRESH = True  # Optional: Use this in development for easier debugging
-WHITENOISE_USE_FINDERS = True
+
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 

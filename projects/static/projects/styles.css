@@ -1739,15 +1739,16 @@ html, body {
 
 
 /* Container for the page */
+/* General Styles for Network Page */
 .network-page-container {
     padding: 20px;
     background-color: #2c2c2e;
     color: #ffffff;
-    min-height: 100vh;
     font-family: Arial, sans-serif;
+    min-height: 100vh;
 }
 
-/* Search bar styling */
+/* Search Bar Styling */
 .network-search-bar {
     display: flex;
     justify-content: center;
@@ -1757,6 +1758,8 @@ html, body {
 .network-search-form {
     display: flex;
     gap: 10px;
+    max-width: 600px;
+    width: 100%;
 }
 
 .network-search-input {
@@ -1766,13 +1769,14 @@ html, body {
     background-color: #404042;
     color: #ffffff;
     font-size: 16px;
-    width: 300px;
+    width: 100%;
+    flex-grow: 1;
 }
 
 .network-search-btn, .network-clear-btn {
     padding: 10px 20px;
     border-radius: 5px;
-    background-color: #b08d57; /* Gold color */
+    background-color: #b08d57;
     color: #ffffff;
     border: none;
     font-size: 16px;
@@ -1782,10 +1786,18 @@ html, body {
 }
 
 .network-search-btn:hover, .network-clear-btn:hover {
-    background-color: #8c6d47; /* Darker gold on hover */
+    background-color: #8c6d47;
 }
 
-/* User list and card layout */
+.network-clear-btn {
+    background-color: #444;
+}
+
+.network-clear-btn:hover {
+    background-color: #666;
+}
+
+/* User List and Card Layout */
 .network-user-list {
     display: flex;
     flex-wrap: wrap;
@@ -1795,14 +1807,14 @@ html, body {
 
 .network-user-card {
     background-color: #404042;
-    padding: 15px;
+    padding: 20px;
     border-radius: 10px;
-    width: 300px;
+    width: 280px;
     display: flex;
     flex-direction: column;
     align-items: center;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .network-user-card:hover {
@@ -1810,16 +1822,9 @@ html, body {
     box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
 }
 
-.network-user-link {
-    text-decoration: none;
-    color: inherit;
-    width: 100%;
-    text-align: center;
-}
-
-/* Profile picture styling */
+/* Profile Picture Styling */
 .network-profile-pic {
-    flex-shrink: 0;
+    margin-bottom: 10px;
 }
 
 .network-profile-img {
@@ -1827,19 +1832,20 @@ html, body {
     height: 100px;
     border-radius: 50%;
     object-fit: cover;
-    margin-bottom: 10px;
+    border: 3px solid #b08d57;
 }
 
-/* User info section */
+/* User Info Styling */
 .network-user-info {
-    margin: 0;
+    text-align: center;
+    margin-top: 10px;
 }
 
 .network-username {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
-    margin: 0;
     color: #ffffff;
+    margin-bottom: 5px;
 }
 
 .network-user-grade,
@@ -1849,7 +1855,7 @@ html, body {
     color: #cccccc;
 }
 
-/* Badge for rankings */
+/* Badge Section for Rankings */
 .network-badge-section {
     margin-top: 10px;
 }
@@ -1864,22 +1870,30 @@ html, body {
 }
 
 .gold {
-    background-color: #b08d57; /* Gold color for 1st place */
+    background-color: #b08d57;
 }
 
 .silver {
-    background-color: #c0c0c0; /* Silver color for 2nd place */
+    background-color: #c0c0c0;
 }
 
 .bronze {
-    background-color: #cd7f32; /* Bronze color for 3rd place */
+    background-color: #cd7f32;
 }
 
-/* Footer */
-.footer {
-    text-align: center;
-    padding: 20px 0;
-    background-color: #2c2c2e;
-    color: #666666;
-    font-size: 14px;
+/* Responsive Styling for Smaller Screens */
+@media (max-width: 768px) {
+    .network-user-card {
+        width: 100%;
+    }
+
+    .network-search-input {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .network-search-btn, .network-clear-btn {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
 }

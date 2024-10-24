@@ -42,6 +42,11 @@ def register(request):
             user.userprofile.github = form.cleaned_data.get('github')
             user.userprofile.bio = form.cleaned_data.get('bio')
            
+
+            if form.cleaned_data.get('profile_picture'):
+                user.userprofile.profile_picture = form.cleaned_data.get('profile_picture')
+            
+
             user.userprofile.save()  # Save the updated profile information
             # Save the profile picture to the UserProfile model (if the form includes profile picture field)
         

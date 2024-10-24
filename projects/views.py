@@ -21,7 +21,7 @@ from .models import User, Message
 from .forms import MessageForm
 from .models import Message
 from cloudinary.uploader import upload
-
+import cloudinary
 
 # Profile view
 def profile(request, username):
@@ -34,6 +34,13 @@ def register(request):
         if form.is_valid():
             print("Form is valid")  # Debugging
             user = form.save()  # Save the user to the database
+
+            cloudinary.config(
+                cloud_name='dvah1m8du',
+                api_key='547583998667598',
+                api_secret='-hOXeuzVlg2LrLjnML7Bzm7SnHw'
+            )
+
 
             if 'profile_picture' in request.FILES:
                 try:

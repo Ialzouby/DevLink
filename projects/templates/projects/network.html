@@ -21,7 +21,7 @@
                 <div class="card">
                     <div class="profile-pic-container">
                         {% if user.userprofile.profile_picture %}
-                            <img src="{{ user.userprofile.profile_picture.url }}" alt="{{ user.username }}">
+                            <img src="{{ user.userprofile.profile_picture|safe }}" alt="{{ user.username }}">
                         {% else %}
                             <img src="https://via.placeholder.com/100" alt="{{ user.username }}">
                         {% endif %}

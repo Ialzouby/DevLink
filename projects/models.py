@@ -7,6 +7,7 @@ from django.db.models import Q
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from cloudinary.models import CloudinaryField
+from django.core.exceptions import ValidationError
 
 # UserProfile model
 class UserProfile(models.Model):
@@ -100,4 +101,29 @@ class Message(models.Model):
 
     def __str__(self):
         return f"Message from {self.sender} to {self.recipient} at {self.timestamp}"
-    
+
+    def save(self, *args, **kwargs):
+        # Save the message first
+        super().save(*args, **kwargs)
+        
+        # Try to create a notification and catch any errors
+        try:
+            Notification.objects.create(
+                user=self.recipient,
+                message=f"You've received a new message from {self.sender.username}.",
+                link=f"/messages/{self.sender.username}/",  # Adjust the link to fit your URL structure
+                is_read=False  # Mark as unread
+            )
+        except Exception as e:
+            # Log the error for further inspection
+            print(f"Error creating notification: {e}")
+
+
+class Notification(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    message = models.CharField(max_length=255)
+    is_read = models.BooleanField(default=False)
+    timestamp = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f'Notification for {self.user.username} - {self.message}'

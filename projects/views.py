@@ -17,7 +17,7 @@ from .forms import ProjectForm, UserProfileForm
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import User, Message
+from .models import User, Message, Notification
 from .forms import MessageForm
 from .models import Message
 from cloudinary.uploader import upload
@@ -310,3 +310,22 @@ def active_conversations(request):
     return render(request, 'projects/active_conversations.html', {
         'conversation_users': conversation_users
     })
+
+def navbar_view(request):
+    # Sample logic to fetch notifications for the logged-in user
+    if request.user.is_authenticated:
+        notifications = Notification.objects.filter(user=request.user, is_read=False).order_by('-timestamp')
+    else:
+        notifications = []
+
+    return {
+        'notifications': notifications,
+    }
+
+
+@login_required
+def view_notification(request, notification_id):
+    notification = get_object_or_404(Notification, id=notification_id, user=request.user)
+    notification.is_read = True
+    notification.save()
+    return redirect(notification.link)

@@ -15,16 +15,15 @@
 <body>
     <!-- Navbar -->
 <!-- Navbar -->
+<!-- Navbar -->
 <div class="navbar">
     <div class="logo">
         <a href="{% url 'home' %}">
-        <img src="/static/projects/images/logo.png" alt="DevLink Logo" class="navbar-logo">
-    </a>
-    <a href="{% url 'home' %}" class="clickable-text">
-        <h1>DevLink</h1>
-    </a>
-   
-
+            <img src="/static/projects/images/logo.png" alt="DevLink Logo" class="navbar-logo">
+        </a>
+        <a href="{% url 'home' %}" class="clickable-text">
+            <h1>DevLink</h1>
+        </a>
     </div>
     {% if user.is_authenticated %}
     <ul class="nav-links">
@@ -36,6 +35,30 @@
     <div class="nav-buttons">
         {% if user.is_authenticated %}
         <div class="profile-dropdown">
+            <!-- Notification Icon with Dropdown -->
+            <div class="notification-dropdown">
+                <i class="fas fa-bell notification-icon"></i>
+                {% if notifications.count %}
+                    <span class="notification-count">{{ notifications.count }}</span>
+                {% endif %}
+                <div class="dropdown-content">
+                    {% if notifications %}
+                        <ul class="notification-list">
+                            {% for notification in notifications %}
+                                <li>
+                                    <a href="{{ notification.link }}">
+                                        {{ notification.message }} - {{ notification.timestamp|timesince }} ago
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>No new notifications</p>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Profile Icon with Dropdown -->
             <a href="{% url 'profile' user.username %}">
                 {% if user.userprofile.profile_picture %}
                     <img src="{{ user.userprofile.profile_picture|safe }}" class="profile-img rounded-circle" alt="{{ user.username }}">

@@ -37,7 +37,7 @@
         <div class="profile-dropdown">
             <a href="{% url 'profile' user.username %}">
                 {% if user.userprofile.profile_picture %}
-                    <img src="{{ user.userprofile.profile_picture.url }}" class="profile-img rounded-circle" alt="{{ user.username }}">
+                    <img src="{{ user.userprofile.profile_picture|safe }}" class="profile-img rounded-circle" alt="{{ user.username }}">
                 {% else %}
                     <img src="{% static 'projects/images/default-profile.png' %}" class="profile-img rounded-circle" alt="{{ user.username }}">
                 {% endif %}

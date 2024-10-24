@@ -1,50 +1,46 @@
 {% extends "projects/base.html" %}
-
 {% block content %}
-<div class="network-container">
+<style>
 
-    <div class="search-bar-container d-flex justify-content-center mb-4">
-        <form method="GET" action="{% url 'network' %}" class="search-bar-form d-flex">
-            <input type="text" name="q" class="form-control me-2" placeholder="Search by username, grade level, or concentration" value="{{ request.GET.q }}">
-            <button type="submit" class="btn btn-primary me-2">Search</button>
-            <!-- Clear Filter Button -->
-            <a href="{% url 'network' %}" class="btn btn-secondary">Clear</a>
+</style>
+
+<div class="network-page-container">
+    <!-- Search Bar Section -->
+    <div class="network-search-bar">
+        <form method="GET" action="{% url 'network' %}" class="network-search-form">
+            <input type="text" name="q" class="network-search-input" placeholder="Search by username, grade level, or concentration" value="{{ request.GET.q }}">
+            <button type="submit" class="network-search-btn">Search</button>
+            <a href="{% url 'network' %}" class="network-clear-btn">Clear</a>
         </form>
     </div>
 
-
-
-    <div class="row">
+    <!-- User List Section -->
+    <div class="network-user-list">
         {% for user in users %}
-        <div class="col-md-6">
-            <a href="{% url 'profile' user.username %}" class="card-link">
-                <div class="card">
-                    <div class="profile-pic-container">
+        <div class="network-user-card">
+            <a href="{% url 'profile' user.username %}" class="network-user-link">
+                <div class="network-user-profile">
+                    <div class="network-profile-pic">
                         {% if user.userprofile.profile_picture %}
-                            <img src="{{ user.userprofile.profile_picture|safe }}" alt="{{ user.username }}">
+                            <img src="{{ user.userprofile.profile_picture|safe }}" alt="{{ user.username }}" class="network-profile-img">
                         {% else %}
-                            <img src="https://via.placeholder.com/100" alt="{{ user.username }}">
+                            <img src="https://via.placeholder.com/100" alt="{{ user.username }}" class="network-profile-img">
                         {% endif %}
                     </div>
-                    <div class="user-info">
-                        <h5>{{ user.username }}</h5>
-                        <p>Grade Level: {{ user.userprofile.grade_level|default_if_none:"Not available" }}</p>
-                        <p>Concentration: {{ user.userprofile.concentration|default_if_none:"Not available" }}</p>
+                    <div class="network-user-info">
+                        <h5 class="network-username">{{ user.username }}</h5>
+                        <p class="network-user-grade">Grade Level: {{ user.userprofile.grade_level|default_if_none:"Not available" }}</p>
+                        <p class="network-user-concentration">Concentration: {{ user.userprofile.concentration|default_if_none:"Not available" }}</p>
                     </div>
-                    
-                    <!-- Badge for the top three users -->
-                    {% if forloop.counter == 1 %}
-                    <div class="badge-container">
-                        <span class="badge first-badge">1st Place</span>
-                    </div>
+                </div>
+                <!-- Badge based on position -->
+                <div class="network-badge-section">
+                    {% if forloop.first %}
+                        <span class="network-badge gold">1st Place</span>
                     {% elif forloop.counter == 2 %}
-                    <div class="badge-container">
-                        <span class="badge second-badge">2nd Place</span>
-                    </div>
+                        <span class="network-badge silver">2nd Place</span>
                     {% elif forloop.counter == 3 %}
-                    <div class="badge-container">
-                        <span class="badge third-badge">3rd Place</span>
-                    </div>
+                        <span class="network-badge bronze">3rd Place</span>
                     {% endif %}
                 </div>
             </a>

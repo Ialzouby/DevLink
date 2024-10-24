@@ -1345,7 +1345,7 @@ footer {
 /* General Styles for Network Page */
 .network-page-container {
     padding: 20px;
-    background-color: #2c2c2e;
+    background-color: #3a3a3a;
     color: #ffffff;
     font-family: Arial, sans-serif;
     min-height: 100vh;
@@ -1508,3 +1508,36 @@ footer {
         height: 100px;
     }
 }
+
+/* Ensure the entire card is clickable, but without default link styles */
+.network-user-card-link {
+    text-decoration: none; /* Remove underline from links */
+    color: inherit; /* Inherit the card's color (prevent the default blue link color) */
+    display: block; /* Make the anchor fill the card block */
+}
+.network-user-link:hover {
+    color: inherit;         /* Keep the text color on hover */
+    text-decoration: none;  /* Ensure underline doesn't appear on hover */
+}
+.network-user-card-link:hover {
+    color: inherit;         /* Keep the text color on hover */
+    text-decoration: none;  /* Ensure underline doesn't appear on hover */
+}
+/* Additional styling to keep text and other elements looking natural */
+.network-user-card h5, .network-user-card p {
+    color: #ffffff; /* Ensure the text remains white or the desired color */
+    text-decoration: none; /* Remove any text underline */
+}
+
+/* Hover effect for the card itself */
+.network-user-card {
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Make the card lift on hover */
+.network-user-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3); /* Add shadow effect */
+}
+

@@ -1340,6 +1340,8 @@ footer {
     border: 2px solid #fff;  /* Add a white border around the image for contrast */
 }
 
+
+
 .join-btn {
     background-color: #005035;
     color: #fff;
@@ -1598,4 +1600,108 @@ footer {
 .clickable-text:hover {
     cursor: pointer; /* Make it clear the text is clickable */
     color: #a49e9e; 
+}
+
+
+/* General Styles */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    background-color: #343434;
+    color: #f1f1f1;
+    font-family: Arial, sans-serif;
+}
+
+/* Flexbox Layout for Main Page */
+.unique-layout-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0;
+}
+
+/* Projects Section */
+.unique-project-list {
+    width: 100%; /* Initially full width */
+    padding: 20px;
+    height: calc(100vh - 280px); /* Set height based on viewport minus header and footer */
+    overflow-y: auto; /* Enable scrolling */
+}
+
+/* Individual Project Item Styling */
+.unique-project-item {
+    background-color: #222;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    color: #fff;
+    transition: transform 0.3s ease;
+}
+
+.unique-project-item:hover {
+    transform: translateY(-5px);  /* Add hover effect */
+    background-color: #333;
+}
+
+.unique-view-btn {
+    background-color: #a49665;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Topics Section (Left Sidebar) */
+.unique-left-sidebar {
+    width: 250px;
+    background-color: #4b4b4b;
+    color: #ecf0f1;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    display: block; /* Visible on desktop */
+}
+
+.unique-left-sidebar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.unique-left-sidebar li {
+    margin-bottom: 15px;
+}
+
+.unique-left-sidebar a {
+    color: #ecf0f1;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #2a2a2a;
+    padding: 10px;
+    display: block;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.unique-left-sidebar a:hover {
+    background-color: #34495e;
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 768px) {
+    .unique-left-sidebar, .unique-right-sidebar {
+        display: none;
+    }
+
+    /* Make the center project list take full width on mobile */
+    .unique-project-list {
+        width: 100%;
+    }
 }

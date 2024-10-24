@@ -9,10 +9,9 @@ from .models import UserProfile, Project, Comment
 @receiver(post_save, sender=User)
 def create_or_update_user_profile(sender, instance, created, **kwargs):
     if created:
-        # Create the UserProfile only if it's a new user
-        UserProfile.objects.get_or_create(user=instance)
+        UserProfile.objects.create(user=instance)
     else:
-        # Update the UserProfile if it already exists
+        UserProfile.objects.get_or_create(user=instance)  # Ensure UserProfile always exists
         instance.userprofile.save()
 
 # Signal to add points when a user joins a project

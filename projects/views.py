@@ -20,7 +20,7 @@ from django.contrib.auth.decorators import login_required
 from .models import User, Message
 from .forms import MessageForm
 from .models import Message
-
+from cloudinary.uploader import upload
 
 
 # Profile view
@@ -35,6 +35,17 @@ def register(request):
             print("Form is valid")  # Debugging
             user = form.save()  # Save the user to the database
 
+            if 'profile_picture' in request.FILES:
+                try:
+                    result = upload(request.FILES['profile_picture'], upload_preset='ml_default')
+                    print("Cloudinary upload result:", result)
+                    
+                    # Assign the Cloudinary URL to the user's profile_picture field
+                    user.userprofile.profile_picture = result['url']
+                    user.userprofile.save()
+                except Exception as e:
+                    print(f"Error uploading to Cloudinary: {e}")
+
             # Manually update the UserProfile fields after it's created by the signal
             user.userprofile.grade_level = form.cleaned_data.get('grade_level')
             user.userprofile.concentration = form.cleaned_data.get('concentration')
@@ -43,9 +54,6 @@ def register(request):
             user.userprofile.bio = form.cleaned_data.get('bio')
            
 
-            if form.cleaned_data.get('profile_picture'):
-                user.userprofile.profile_picture = form.cleaned_data.get('profile_picture')
-            
 
             user.userprofile.save()  # Save the updated profile information
             # Save the profile picture to the UserProfile model (if the form includes profile picture field)

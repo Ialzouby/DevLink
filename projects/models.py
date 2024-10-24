@@ -49,7 +49,8 @@ class Project(models.Model):
     skill_requirements = models.CharField(max_length=200)
     github_link = models.URLField(max_length=200)
     topic = models.CharField(max_length=100, choices=TOPIC_CHOICES) 
-    
+    birthdate = models.DateField(null=True, blank=True)
+
 
 
 

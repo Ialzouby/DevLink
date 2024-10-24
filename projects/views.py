@@ -22,6 +22,8 @@ from .forms import MessageForm
 from .models import Message
 from cloudinary.uploader import upload
 import cloudinary
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # Profile view
 def profile(request, username):
@@ -329,3 +331,13 @@ def view_notification(request, notification_id):
     notification.is_read = True
     notification.save()
     return redirect(notification.link)
+
+@receiver(post_save, sender=Message)
+def create_message_notification(sender, instance, created, **kwargs):
+    if created:  # Only create a notification when a new message is created
+        Notification.objects.create(
+            user=instance.recipient,
+            message=f"You've received a new message from {instance.sender.username}.",
+            link=f"/messages/{instance.sender.username}/",
+            is_read=False
+        )

@@ -6,7 +6,7 @@ from django.contrib import admin
 from django.contrib.auth.models import User
 from django.db import models
 from django.contrib.auth.models import User
-
+from .models import Notification
 
 class UserProfileInline(admin.StackedInline):
     model = UserProfile
@@ -36,3 +36,8 @@ class CommentAdmin(admin.ModelAdmin):
 @admin.register(Update)
 class UpdateAdmin(admin.ModelAdmin):
     list_display = ('project', 'content', 'created_at')
+
+class NotificationAdmin(admin.ModelAdmin):
+    list_display = ('user', 'message', 'is_read', 'timestamp')
+    search_fields = ('user__username', 'message')
+    list_filter = ('is_read', 'timestamp')

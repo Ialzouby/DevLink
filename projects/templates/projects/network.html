@@ -10,27 +10,23 @@
             <a href="{% url 'network' %}" class="network-clear-btn">Clear</a>
         </form>
     </div>
-
-    <!-- User List Section -->
     <div class="network-user-list">
         {% for user in users %}
         <div class="network-user-card">
-            <a href="{% url 'profile' user.username %}" class="network-user-link">
-                <div class="network-user-profile">
-                    <div class="network-profile-pic">
-                        {% if user.userprofile.profile_picture %}
-                            <img src="{{ user.userprofile.profile_picture|safe }}" alt="{{ user.username }}" class="network-profile-img">
-                        {% else %}
-                            <img src="https://via.placeholder.com/100" alt="{{ user.username }}" class="network-profile-img">
-                        {% endif %}
-                    </div>
-                    <div class="network-user-info">
-                        <h5 class="network-username">{{ user.username }}</h5>
-                        <p class="network-user-grade">Grade Level: {{ user.userprofile.grade_level|default_if_none:"Not available" }}</p>
-                        <p class="network-user-concentration">Concentration: {{ user.userprofile.concentration|default_if_none:"Not available" }}</p>
-                    </div>
-                </div>
-                <!-- Badge based on position -->
+            <!-- Profile Picture -->
+            <div class="network-profile-pic">
+                {% if user.userprofile.profile_picture %}
+                    <img src="{{ user.userprofile.profile_picture|safe }}" alt="{{ user.username }}" class="network-profile-img">
+                {% else %}
+                    <img src="https://via.placeholder.com/100" alt="{{ user.username }}" class="network-profile-img">
+                {% endif %}
+            </div>
+            <!-- User Info -->
+            <div class="network-user-info">
+                <h5 class="network-username">{{ user.username }}</h5>
+                <p class="network-user-grade">Grade Level: {{ user.userprofile.grade_level|default_if_none:"Not available" }}</p>
+                <p class="network-user-concentration">Concentration: {{ user.userprofile.concentration|default_if_none:"Not available" }}</p>
+                <!-- Badge Section -->
                 <div class="network-badge-section">
                     {% if forloop.first %}
                         <span class="network-badge gold">1st Place</span>
@@ -40,9 +36,10 @@
                         <span class="network-badge bronze">3rd Place</span>
                     {% endif %}
                 </div>
-            </a>
+            </div>
         </div>
         {% endfor %}
     </div>
+    
 </div>
 {% endblock %}

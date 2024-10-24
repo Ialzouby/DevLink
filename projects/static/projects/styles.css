@@ -1,6 +1,3 @@
-/* General Styles */
-
-
 html, body {
     height: 100%;  /* Make sure the body and html take up the full height of the viewport */
     margin: 0;
@@ -12,8 +9,6 @@ html, body {
     
     
 }
-
-
 body {
     background-color: #343434;  /* Dark background */
     color: #f1f1f1;  /* White text */
@@ -21,21 +16,15 @@ body {
     margin: 0;
     padding: 0;
 }
-
 body, h1, h2, h3, h4, h5, h6, p, a {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
-
 h1, h2, h3 {
     font-weight: 600; /* Semi-bold for headings */
 }
-
 p, a {
     font-weight: 400; /* Normal weight for body text */
 }
-
-
-
 .logo h1 {
     margin: 0;            /* Remove default margin for proper alignment */
     font-size: 24px;
@@ -46,11 +35,9 @@ p, a {
     margin-right: -600px; 
     margin-top: 15px; 
 }
-
 .nav-links li {
     margin-right: 20px;   /* More space between nav items */
 }
-
 .nav-links a {
     color: white; /* Text color for the button */
     text-decoration: none; /* Remove underline */
@@ -60,15 +47,11 @@ p, a {
     border-radius: 5px; /* Rounded corners for a button-like look */
     transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition on hover */
 }
-
 .nav-links a:hover {
     background-color: #847c5e; /* Darker shade of gold on hover */
     transform: scale(1.1); /* Slight zoom effect on hover */
     cursor: pointer; /* Change cursor to pointer */
 }
-
-
-
 /* Style for the Approve and Reject buttons *//* Style the list to make it a flex container */
 .join-request-item {
     display: flex;
@@ -79,17 +62,14 @@ p, a {
     border-radius: 8px;
     margin-bottom: 10px;
 }
-
 .join-request-item span {
     margin-right: 10px;
 }
-
 /* Form layout adjustments */
 .join-request-form {
     display: flex;  /* Ensure the buttons stay on the same line */
     gap: 10px;      /* Add space between the buttons */
 }
-
 /* Button styles for the checkmark and X */
 .approve-btn, .reject-btn {
     border: none;
@@ -100,24 +80,18 @@ p, a {
     margin-right: 5px;
     margin-top: -6px; 
 }
-
 .approve-btn i {
     color: #28a745;  /* Green */
 }
-
 .approve-btn:hover i {
     color: #218838;  /* Darker green */
 }
-
 .reject-btn i {
     color: #dc3545;  /* Red */
 }
-
 .reject-btn:hover i {
     color: #c82333;  /* Darker red */
 }
-
-
 .nav-buttons button {
     background-color: #a49665;
     border: none;
@@ -127,7 +101,6 @@ p, a {
     cursor: pointer;
     border-radius: 5px;
 }
-
 /* Logout and Profile Buttons */
 .nav-buttons button{
     background-color: #a49665;  /* Green background for both buttons */
@@ -141,49 +114,38 @@ p, a {
     display: inline-block;      /* Ensure it's displayed as a button */
     margin-left: 10px;          /* Space between buttons */
 }
-
 /* Hover effect for both buttons */
 .nav-buttons button:hover{
     background-color: #a49665;  /* Darker green on hover */
     color: white;
 }
-
-
 .profile-btn {
     background-color: #a49665;
 }
-
-
-
 /* Forum Thread Section */
 .forum-thread {
     width: 70%;
 }
-
 .forum-thread h2 {
     color: #fff;
     font-size: 24px;
 }
-
 .tags .tag {
     background-color: #037304;
     padding: 5px 10px;
     border-radius: 5px;
     margin-right: 10px;
 }
-
 .details {
     color: #ccc;
     margin-top: 10px;
 }
-
 .skills-section {
     display: flex;
     justify-content: space-between;
     gap: 20px; /* Adds space between the two blocks */
     margin-top: 20px; /* Adds spacing between the description and skills blocks */
 }
-
 .skills-learn, .skills-required {
     background-color: #212020; /* Dark background to match your theme */
     color: #f1f1f1; /* White text color */
@@ -192,18 +154,14 @@ p, a {
     width: 48%; /* Each block takes up nearly half the width */
     margin-bottom: 22px;
 }
-
 .skills-learn h4, .skills-required h4 {
     font-size: 1.2rem;
     margin-bottom: 10px;
 }
-
 .skills-learn p, .skills-required p {
     font-size: 1rem;
     color: #ccc; /* Slightly lighter color for the text */
 }
-
-
 /* Project Description Section */
 .project-description {
     background-color: #222;
@@ -211,17 +169,14 @@ p, a {
     border-radius: 10px;
     margin-bottom: 20px;
 }
-
 .project-description h3 {
     color: #fff;
     font-size: 20px;
 }
-
 .project-description p {
     color: #ccc;
     margin-top: 10px;
 }
-
 /* Comment Input Section */
 .comment-input {
     background-color: #333;
@@ -229,7 +184,6 @@ p, a {
     border-radius: 10px;
     margin-bottom: 20px;
 }
-
 .comment-input textarea {
     width: 100%;
     padding: 10px;
@@ -240,7 +194,6 @@ p, a {
     resize: none;
     margin-bottom: 10px;
 }
-
 .comment-input button {
     background-color: #a49665;
     color: white;
@@ -249,7 +202,6 @@ p, a {
     border-radius: 5px;
     cursor: pointer;
 }
-
 /* Comments Section */
 .comments .comment {
     background-color: #1c1c1c;
@@ -257,37 +209,30 @@ p, a {
     margin-bottom: 20px;
     border-radius: 8px;
 }
-
 .comment-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-
 .comment-header img {
     border-radius: 50%;
     width: 50px;
     margin-right: 10px;
 }
-
 .user-details h4 {
     margin: 0;
     color: #fff;
 }
-
 .user-details p {
     color: #aaa;
 }
-
 .comment-header .stars {
     color: #019e01;
 }
-
 .comment-body {
     color: #ccc;
     margin-top: 10px;
 }
-
 /* Live Updates Section */
 .live-updates {
     width: 25%;
@@ -295,16 +240,13 @@ p, a {
     padding: 15px;
     border-radius: 8px;
 }
-
 .live-updates h3 {
     color: #fff;
 }
-
 .live-updates ul {
     list-style-type: none;
     padding: 0;
 }
-
 .live-updates li {
     padding: 10px;
     background-color: #333;
@@ -313,7 +255,6 @@ p, a {
     display: flex;
     justify-content: space-between;
 }
-
 .live-updates li span {
     color: #aaa;
 }
@@ -324,7 +265,6 @@ p, a {
     border-radius: 10px;
     margin-bottom: 20px;
 }
-
 /* Comments Section */
 .comments .comment {
     background-color: #242424;
@@ -332,11 +272,9 @@ p, a {
     border-radius: 5px;
     margin-bottom: 10px;
 }
-
 .comment p {
     color: #929292;
 }
-
 /* Comment Input Section */
 .comment-input textarea {
     width: 100%;
@@ -348,7 +286,6 @@ p, a {
     resize: none;
     margin-bottom: 10px;
 }
-
 .comment-input button {
     background-color: #a49665;
     color: white;
@@ -357,7 +294,6 @@ p, a {
     border-radius: 5px;
     cursor: pointer;
 }
-
 .delete-btn {
     background-color: #a49665;  /* Red color for delete */
     color: white;
@@ -365,34 +301,28 @@ p, a {
     padding: 5px 10px;
     cursor: pointer;
 }
-
 .delete-btn:hover {
     background-color: #d32f2f;  /* Darker red for hover */
 }
-
 /* Project List Section */
 .project-list {
     width: 100%;
     margin-top: 20px;
 }
-
 .project-item {
     background-color: #222;
     padding: 20px;
     margin-bottom: 20px;
     border-radius: 10px;
 }
-
 .project-item h3 {
     color: #fff;
     font-size: 22px;
 }
-
 .project-item p {
     color: #ccc;
     margin: 10px 0;
 }
-
 .view-btn {
     background-color: #a49665;
     color: white;
@@ -402,19 +332,10 @@ p, a {
     text-decoration: none;
     font-weight: bold;
 }
-
 .view-btn:hover {
     background-color: #a49665;
 }
-
-
-
 /* form styling */
-
-
-
-
-
 /* General Styles for Inputs and Textareas */
 input[type="text"],
 input[type="email"],
@@ -429,11 +350,9 @@ textarea {
     color: #f1f1f1;  /* White text */
     margin-bottom: 15px;  /* Space between input fields */
 }
-
 input::placeholder, textarea::placeholder {
     color: #aaa;  /* Placeholder text color */
 }
-
 /* Button Styles */
 .btn {
     background-color: #a49665;
@@ -444,11 +363,9 @@ input::placeholder, textarea::placeholder {
     cursor: pointer;
     font-weight: bold;
 }
-
 .btn:hover {
     background-color: #a49665;
 }
-
 /* Form Container Styling */
 .form-container {
     width: 400px;  /* Adjust width as needed */
@@ -458,7 +375,6 @@ input::placeholder, textarea::placeholder {
     border-radius: 10px;
     color: #f1f1f1;  /* White text for readability */
 }
-
 /* Label Styles */
 .form-group label {
     display: block;
@@ -466,13 +382,8 @@ input::placeholder, textarea::placeholder {
     font-weight: bold;
     color: #f1f1f1;  /* Matches theme */
 }
-
-
-
 /* Card Styling */
 /* General Styles */
-
-
 /* Card Styling */
 .card {
     display: flex;
@@ -483,14 +394,12 @@ input::placeholder, textarea::placeholder {
     border-radius: 10px;
     margin-bottom: 20px;
 }
-
 .badge-container {
     position: absolute;
     right: 20px;  /* Position the badge to the right */
     top: 50%;     /* Vertically center the badge */
     transform: translateY(-50%);
 }
-
 /* Badge styling */
 .badge {
     background-color: #a49665;
@@ -502,11 +411,9 @@ input::placeholder, textarea::placeholder {
     font-size: 0.9rem;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
-
 .card:hover {
     transform: translateY(-5px);  /* Lift card slightly on hover */
 }
-
 .profile-pic-container img {
     width: 100px !important;
     height: 100px !important;
@@ -514,60 +421,45 @@ input::placeholder, textarea::placeholder {
     border-radius: 50% !important;
     border: 2px solid #444 !important;
 }
-
-
 .profile-pic-container {
     width: 100px;
     height: 100px;
     margin-right: 30px;  /* Space between image and text */
     flex-shrink: 0;      /* Prevent shrinking */
 }
-
 .user-info {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
-
 h5 {
     margin: 0;
     font-size: 1.5rem;
     color: #f1f1f1;  /* White text */
 }
-
 p {
     margin: 5px 0;
     color: #ccc;  /* Lighter gray for text details */
     font-size: 1rem;
 }
-
 /* Layout for Two-Column Grid */
 .row {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between; /* Spread columns across the row */
-    width: 100%; /* Ensure row takes up full width */
+    justify-content: space-between;
 }
-
 .col-md-6 {
-    flex: 1 1 30%; /* Ensure columns take equal space */
-    margin-bottom: 20px;
-    max-width: 30%; /* You can tweak this percentage to fit your design */
+    width: calc(30% - 10px);  /* Two columns with spacing */
+    margin-bottom: 20px;  /* Space between rows */
 }
-
 /* Responsive Adjustments */
 @media (max-width: 768px) {
     .col-md-6 {
         width: 100%;  /* Full width on small screens */
     }
 }
-
-
 /* Styling for col-md-3 that contains the profile picture */
 /* Profile Picture Container */
-
-
-
 /* Optional - for smaller screens */
 @media (max-width: 768px) {
     .col-md-3 img {
@@ -575,8 +467,6 @@ p {
         height: 120px;
     }
 }
-
-
 /* General button styling for the logout button */
 .nav-buttons form button {
     background-color: #a49665;  /* Green background */
@@ -590,13 +480,11 @@ p {
     display: inline-block;      /* Make sure it's inline */
     margin-left: 10px;          /* Space between buttons */
 }
-
 /* Hover effect for logout button */
 .nav-buttons form button:hover {
     background-color: #a49665;  /* Darker green on hover */
     color: white;
 }
-
 /* Make sure form doesn't have extra margin/padding */
 .nav-buttons form {
     display: inline;            /* Make form inline like the other buttons */
@@ -612,16 +500,13 @@ p {
     border-radius: 10px;
     color: #f1f1f1;
 }
-
 /* Form Fields */
 .form-group {
     margin-bottom: 15px;        /* Reduce space between fields */
 }
-
 .form-group label {
     font-size: 14px;            /* Slightly smaller labels */
 }
-
 .form-group input, .form-group textarea {
     padding: 8px 10px;          /* Smaller padding to reduce height */
     border-radius: 5px;
@@ -629,11 +514,9 @@ p {
     border: 1px solid #444;
     color: white;
 }
-
 textarea {
     resize: vertical;           /* Allow vertical resizing only */
 }
-
 /* Submit Button */
 .btn-primary {
     background-color: #a49665;
@@ -642,16 +525,13 @@ textarea {
     border-radius: 5px;
     font-weight: bold;
 }
-
 .btn-primary:hover {
     background-color: #a49665;
 }
-
 /* Two-column Layout */
 .col-md-6 {
     padding: 0 10px;            /* Reduce padding between columns */
 }
-
 /* Adjust for Smaller Screens */
 @media (max-width: 768px) {
     .col-md-6 {
@@ -661,8 +541,6 @@ textarea {
         padding: 20px;          /* Adjust padding for smaller screens */
     }
 }
-
-
 /* Profile Dropdown Container */
 /* Dropdown Content */
 .dropdown-content {
@@ -680,14 +558,12 @@ textarea {
     padding: 10px 0;             /* Add some padding to the dropdown container */
     text-align: center;          /* Center-align content */
 }
-
 /* Show dropdown when hovering over profile image or dropdown content */
 .profile-dropdown:hover .dropdown-content,
 .dropdown-content:hover {
     visibility: visible;
     opacity: 1;  /* Make the dropdown visible */
 }
-
 /* Styling for both Edit Profile and Logout buttons */
 .dropdown-button {
     background-color: #a49665;   /* Gold background */
@@ -703,17 +579,14 @@ textarea {
     font-weight: bold;           /* Bold text */
     margin: 5px 0;               /* Add some margin between the buttons */
 }
-
 .dropdown-button:hover {
     background-color: #8a7a56;   /* Darker gold on hover */
 }
-
 /* Styling for dropdown items on hover */
 .dropdown-content a:hover,
 .dropdown-content form:hover {
     background-color: #8a7a56;   /* Darker gold on hover for dropdown items */
 }
-
 /* Profile Image */
 .profile-dropdown .profile-img {
     width: 60px;              /* Adjust the width of the image */
@@ -724,7 +597,6 @@ textarea {
     object-fit: cover;        /* Ensures the image fits properly without stretching */
     margin-right: 50px;
 }
-
 /* Main Layout */
 .unique-layout-container {
     display: flex;
@@ -732,7 +604,6 @@ textarea {
     width: 100%;
     padding: 0;
 }
-
 /* Left Sidebar */
 /* Left Sidebar Styling */
 /* Left Sidebar Container */
@@ -744,7 +615,6 @@ textarea {
     width: 250px; /* Set width for the sidebar */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
 }
-
 /* Sidebar Heading */
 .unique-left-sidebar h3 {
     font-size: 24px;
@@ -753,18 +623,15 @@ textarea {
     padding-bottom: 10px;
     color: #8a7a56; /* Golden color for the heading */
 }
-
 /* Sidebar List */
 .unique-left-sidebar ul {
     list-style-type: none; /* Remove default bullets */
     padding: 0;
     margin: 0;
 }
-
 .unique-left-sidebar li {
     margin-bottom: 15px; /* Space between items */
 }
-
 /* Sidebar Links */
 .unique-left-sidebar a {
     color: #ecf0f1; /* Light color for text */
@@ -777,38 +644,31 @@ textarea {
     border-radius: 5px; /* Slight rounding for the links */
     transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover effects */
 }
-
 /* Hover Effect */
 .unique-left-sidebar a:hover {
     background-color: #34495e; /* Darker background on hover */
     transform: scale(1.05); /* Slight zoom on hover */
     cursor: pointer;
 }
-
 .search-bar-container {
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
 }
-
 .search-bar-form {
     display: flex;
     width: 100%;
     max-width: 600px;
 }
-
 .search-bar-form .form-control {
     flex-grow: 1;
 }
-
 .search-bar-form .btn {
     margin-left: 10px; /* Add spacing between input and button if needed */
     margin-top: -5px;
     margin-bottom: 10px;
 }
-
 /* Container for the chat view */
-
 .chat-container textarea {
     width: 100%;
     padding: 10px;
@@ -818,7 +678,6 @@ textarea {
     resize: none;
     height: 50px;
 }
-
 .send-message-btn {
     padding: 10px 20px;
     font-size: 16px;
@@ -828,8 +687,6 @@ textarea {
     cursor: pointer;
     margin-bottom: 35px; 
 }
-
-
 .chat-container {
     width: 100%;
     max-width: 800px;
@@ -839,7 +696,6 @@ textarea {
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
-
 /* Chat header */
 .chat-header {
     display: flex;
@@ -847,17 +703,14 @@ textarea {
     align-items: center;
     margin-bottom: 20px;
 }
-
 .chat-header h2 {
     margin: 0;
     font-size: 24px;
 }
-
 .back-to-profile-btn {
     padding: 8px 15px;
     font-size: 14px;
 }
-
 /* Message thread container */
 .message-thread {
     background-color: #424242;
@@ -867,7 +720,6 @@ textarea {
     overflow-y: auto;
     border: 1px solid #ddd;
 }
-
 .message-thread {
     display: flex;
     flex-direction: column;  /* Reverse the order of messages */
@@ -878,9 +730,6 @@ textarea {
     overflow-y: auto;  /* Enable scrolling */
     border: 1px solid #ddd;
 }
-
-
-
 /* Styling for each message */
 .message {
     margin-bottom: 15px;
@@ -889,40 +738,33 @@ textarea {
     max-width: 75%;
     word-wrap: break-word;
 }
-
 .message p{
     color: #000000; 
 }
-
 /* Sent and received messages */
 .sent-message {
     background-color: #dcf8c6;
     margin-left: auto;
     text-align: right;
 }
-
 .received-message {
     background-color: #f1f1f1;
     margin-right: auto;
 }
-
 /* Message info */
 .message-info {
     font-size: 12px;
     color: #555;
     margin-bottom: 5px;
 }
-
 .message-info strong {
     font-weight: bold;
     color: #333;
 }
-
 .message-info small {
     font-size: 10px;
     color: #672020;
 }
-
 .message-input-container {
     display: flex;  /* Flexbox layout */
     align-items: center;  /* Align items vertically centered */
@@ -930,7 +772,6 @@ textarea {
     margin-top: 20px;
     margin-bottom:-50px; 
 }
-
 .message-input-container textarea {
     flex-grow: 1;
     padding: 10px;
@@ -941,7 +782,6 @@ textarea {
     resize: none;
     height: 50px;
 }
-
 /* Ensure the container uses Flexbox */
 .message-form {
     display: flex;
@@ -949,13 +789,11 @@ textarea {
     align-items: center;  /* Align the textarea and button vertically in the center */
     width: 100%;
 }
-
 /* Flex-grow makes the textarea fill available space */
 .message-form .form-group {
     flex-grow: 1;  /* Make the input take up all the available space */
     margin-right: 10px;  /* Space between the textarea and the button */
 }
-
 .message-form textarea {
     width: 100%;  /* Ensure it uses the full width of the form-group */
     padding: 10px;
@@ -965,7 +803,6 @@ textarea {
     height: 50px;  /* Set a reasonable height */
     resize: none;
 }
-
 .send-message-btn {
     padding: 10px 20px;
     font-size: 16px;
@@ -975,19 +812,12 @@ textarea {
     border: none;
     cursor: pointer;
 }
-
 .send-message-btn:hover {
     background-color: #0056b3;
 }
-
-
-
-
 .send-message-btn:hover {
     background-color: #0056b3;
 }
-
-
 .conversation-list-container {
     width: 100%;
     max-width: 600px;
@@ -997,19 +827,16 @@ textarea {
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
-
 .conversation-list h2 {
     text-align: center;
     margin-bottom: 20px;
 }
-
 /* Make the whole list item block clickable */
 .conversation-link {
     text-decoration: none;
     color: inherit; /* This will ensure the text color remains unchanged */
     border-radius: 18px;
 }
-
 .conversation-link li {
     display: block;
     padding: 15px;
@@ -1018,13 +845,10 @@ textarea {
     border-radius: 18px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-
 .conversation-link:hover li {
     background-color: #929292; /* Change background on hover */
     cursor: pointer; /* Show pointer cursor on hover */
 }
-
-
 .list-group-item {
     padding: 15px 20px;
     font-size: 18px;
@@ -1034,35 +858,25 @@ textarea {
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-
 .list-group-item a {
     text-decoration: none;
     color: #333;
     font-weight: bold;
 }
-
 .list-group-item:hover {
     background-color: #e9ecef;
 }
-
-
-
 /* "No topics" style */
 .unique-left-sidebar li {
     font-style: italic; /* Italic for no topics available */
     color: #bdc3c7; /* Gray for empty state */
 }
-
-
 .unique-right-sidebar {
     width: 20vw;
     background-color: #565656;
     padding: 20px;
     border-radius: 10px;
 }
-
-
-
 .unique-project-list {
     width: 60vw;
     padding: 20px;
@@ -1071,7 +885,6 @@ textarea {
     height: calc(100vh - 280px); /* Set height based on viewport minus header and footer height */
     overflow-y: auto; /* Enable scrolling */
 }
-
 .unique-project-item {
     background-color: #222;
     padding: 20px;
@@ -1079,7 +892,6 @@ textarea {
     border-radius: 10px;
     color: #fff;
 }
-
 .unique-view-btn {
     background-color: #a49665;
     color: white;
@@ -1089,21 +901,17 @@ textarea {
     font-weight: bold;
     margin-top: 10px; 
 }
-
-
-
 /* Navbar */
 .navbar {
     width: 100vw;
     padding: 20px;
-    background-color: #000000;
+    background-color: #005035;
     color: white;
     display: flex;
     justify-content: space-between;
     margin: 0;  /* Ensure no margin is applied */
    
 }
-
 .navbar-logo {
     height: 70px; /* Adjust height as needed */
     margin-right: 10px; /* Add some space between the logo and text */
@@ -1112,25 +920,21 @@ textarea {
     margin-bottom: -10px;
     vertical-align: middle; /* Align it with the DevLink text */
 }
-
 .navbar h1 {
     font-size: 40px;
     margin-left: 11px;
 }
-
 .logo {
     display: flex;
     align-items: center;
     
 }
-
 .logo-img {
     width: 40px; /* Adjust size accordingly */
     height: 40px;
      /* Spacing between logo and text */
     
 }
-
 /* Footer */
 footer {
     width: 100%;  /* Full viewport width */
@@ -1143,7 +947,6 @@ footer {
     position: relative; /* Ensure proper placement after main content */
     bottom: 0; /* Stick to the bottom when content is short */
 }
-
 /* Container for the Network Page */
 .container {
     flex: 1; /* This makes the content container take up the available space */
@@ -1154,13 +957,11 @@ footer {
     justify-content: space-between;
    
 }
-
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
-
 .my-custom-container {
     max-width: 1200px;      /* Set a maximum width */
     width: 100%;            /* Full width on smaller screens */
@@ -1171,23 +972,19 @@ footer {
     color: #f1f1f1;         /* White text color */
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Optional shadow */
 }
-
-
 .page-container {
-    width: 100%;
-    max-width: 100vw;  /* Ensure the container uses the full width */
-    margin: 0 auto;    /* Center the container */
-    padding: 20px;     /* Optional padding */
-    box-sizing: border-box;  /* Include padding in the width */
+    flex: 1;  /* Grow to take up remaining space */
+    display: flex;
+    justify-content: space-between;
+    padding: 40px 20px; 
+    margin: 0 auto;
+    width: 100%; /* Ensure it uses full width */
 }
-
-
 .unique-project-item-link {
     text-decoration: none; /* Remove underline from links */
     color: inherit; /* Inherit text color */
     display: block; /* Make the anchor fill the project item block */
 }
-
 .unique-project-item {
     background-color: #222;
     padding: 20px;
@@ -1196,14 +993,10 @@ footer {
     color: #fff;
     transition: transform 0.3s ease;
 }
-
 .unique-project-item:hover {
     transform: translateY(-5px);  /* Add a hover effect */
     background-color: #333; /* Slight color change on hover */
 }
-
-
-
 /* Profile Page Container */
 .custom-profile-page-container {
     display: flex;
@@ -1213,7 +1006,6 @@ footer {
     padding: 30px;
     width: 100%;
 }
-
 /* Profile Section (Placed above the gray card) */
 .custom-profile-section {
     display: flex;
@@ -1223,7 +1015,6 @@ footer {
     text-align: center;
     flex-direction: column; /* Align profile pic and info vertically */
 }
-
 /* Profile Picture */
 .custom-profile-pic img {
     width: 150px;
@@ -1233,20 +1024,17 @@ footer {
     border: 2px solid #444;
     margin-bottom: 20px;
 }
-
 /* Profile Info */
 .custom-profile-info h1 {
     font-size: 2.5rem;
     font-weight: bold;
     color: #fff;
 }
-
 .custom-profile-info p {
     font-size: 1.2rem;
     margin-bottom: 8px;
     color: #ccc;
 }
-
 /* Center the Portfolio Heading */
 .custom-portfolio-heading {
     text-align: center;
@@ -1254,14 +1042,12 @@ footer {
     margin-bottom: 30px;
     color: #fff;
 }
-
 /* Project Grid */
 .custom-project-section {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-
 .custom-project-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -1269,7 +1055,6 @@ footer {
     width: 100%;
     max-width: 1200px;
 }
-
 /* Project Card Styling */
 .custom-project-card {
     background-color: #222;
@@ -1279,22 +1064,18 @@ footer {
     color: #fff;
     transition: transform 0.3s ease;
 }
-
 .custom-project-card:hover {
     transform: translateY(-5px);
 }
-
 .custom-project-card h3 {
     font-size: 1.5rem;
     margin-bottom: 10px;
     color: #fff;
 }
-
 .custom-project-card p {
     font-size: 1rem;
     color: #aaa;
 }
-
 .custom-project-card a {
     display: inline-block;
     background-color: #a49665;
@@ -1304,14 +1085,9 @@ footer {
     text-decoration: none;
     margin-top: 10px;
 }
-
 .custom-project-card a:hover {
     background-color: #8a7a56;
 }
-
-
-
-
 /* Contributors Section */
 /* Contributors Section */
 .contributors-section {
@@ -1319,19 +1095,16 @@ footer {
     align-items: center;
     margin-top: 20px;  /* Add spacing above contributors */
 }
-
 .contributors-section p {
     margin-right: 10px;
     font-size: 1rem;
     color: #fff;
 }
-
 /* Contributors list displays profile images side by side */
 .contributors-list {
     display: flex;
     gap: 10px; /* Space between the profile images */
 }
-
 /* Styling for small, round contributor images */
 .contributor-pic {
     width: 30px;   /* Small size for contributor images */
@@ -1340,9 +1113,6 @@ footer {
     object-fit: cover;   /* Ensure the image doesn't stretch */
     border: 2px solid #fff;  /* Add a white border around the image for contrast */
 }
-
-
-
 .join-btn {
     background-color: #005035;
     color: #fff;
@@ -1352,18 +1122,15 @@ footer {
     cursor: pointer;
     margin-left: 20px;
 }
-
 .join-btn:hover {
     background-color: #003822;
 }
-
 /* Pending Message Styling */
 .pending-message {
     font-size: 1rem;
     color: #f1c40f;
     margin-left: 20px;
 }
-
 .project-header {
     display: flex;
     justify-content: space-between;
@@ -1373,30 +1140,25 @@ footer {
     border-radius: 10px;
     margin-bottom: 20px;
 }
-
 /* Project Title Section */
 .project-title-section {
     display: flex;
     flex-direction: column;
 }
-
 .project-title-section h2 {
     font-size: 2rem;
     font-weight: bold;
     color: #fff;
 }
-
 .project-title-section p {
     font-size: 1rem;
     color: #ccc;
     display: flex;
     align-items: center;
 }
-
 .project-title-section i {
     margin-right: 10px;
 }
-
 .custom-title {
     font-size: 2.5rem;    /* Set custom font size */
     font-weight: bold;    /* Make it bold like a title */
@@ -1404,7 +1166,6 @@ footer {
     margin-bottom: 20px;  /* Add some space below the title */
     text-align: left;   /* Optional: Center the title */
 }
-
 /* Right Sidebar Styling */
 .unique-right-sidebar {
     width: 20vw;
@@ -1416,7 +1177,6 @@ footer {
     justify-content: flex-start; /* Place the users at the bottom */
     height: 100%; /* Full height to fill the sidebar */
 }
-
 /* User Card for Top Contributors */
 .user-card {
     display: flex;
@@ -1428,11 +1188,9 @@ footer {
     border-radius: 10px;
     width: 100%;
 }
-
 .user-avatar-container {
     flex-shrink: 0; /* Prevent shrinking */
 }
-
 .user-avatar {
     width: 50px;
     height: 50px;
@@ -1441,19 +1199,16 @@ footer {
     object-fit: cover;
     border: 2px solid #fff;
 }
-
 .user-info h4 {
     font-size: 1.2rem;
     color: #fff;
     margin: 0;
 }
-
 .user-info p {
     font-size: 1rem;
     color: #ccc;
     margin: 0;
 }
-
 .unique-project-header {
     display: flex;
     justify-content: space-between;
@@ -1461,7 +1216,6 @@ footer {
     padding: 0 20px;
     margin-bottom: 20px;
 }
-
 /* Style for the Plus button */
 .add-project-btn {
     background-color: #a49665;
@@ -1475,16 +1229,12 @@ footer {
     font-size: 1.5rem;
     cursor: pointer;
 }
-
 .add-project-btn:hover {
     background-color: #8a7a56; /* Darker shade on hover */
 }
-
 .add-project-btn i {
     font-size: 1.5rem;
 }
-
-
 /* Badge Styling */
 .badge {
     background-color: #a49665;
@@ -1493,15 +1243,12 @@ footer {
     border-radius: 5px;
     font-weight: bold;
 }
-
 .badge.gold {
     background-color: #d4af37; /* Gold */
 }
-
 .badge.silver {
     background-color: #c0c0c0; /* Silver */
 }
-
 .badge.bronze {
     background-color: #cd7f32; /* Bronze */
 }
@@ -1560,7 +1307,6 @@ footer {
   }
   
  
-
   .github-btn {
     display: inline-block;
     background-color: #333;
@@ -1571,174 +1317,31 @@ footer {
     margin-bottom: 15px;
     font-size: 16px;
 }
-
 .github-btn:hover {
     background-color: #24292e;
 }
-
 .github-image-preview {
     margin-top: 20px;
 }
-
 .github-preview {
     width: 100%;
     height: auto;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
-
-
 .live-updates h4{
-
     margin-top: 15px; 
 }
-
 .clickable-text {
     text-decoration: none; /* Remove any underline */
     color: #fff; /* Inherit the color of the parent element */
 }
-
 .clickable-text:hover {
     cursor: pointer; /* Make it clear the text is clickable */
     color: #a49e9e; 
 }
-
-
-/* General Styles */
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    width: 100vw;
-    background-color: #343434;
-    color: #f1f1f1;
-    font-family: Arial, sans-serif;
-}
-
-/* Flexbox Layout for Main Page */
-.unique-layout-container {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    padding: 0;
-}
-
-/* Projects Section */
-.unique-project-list {
-    width: 100%; /* Initially full width */
-    padding: 20px;
-    height: calc(100vh - 280px); /* Set height based on viewport minus header and footer */
-    overflow-y: auto; /* Enable scrolling */
-}
-
-/* Individual Project Item Styling */
-.unique-project-item {
-    background-color: #222;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 10px;
-    color: #fff;
-    transition: transform 0.3s ease;
-}
-
-.unique-project-item:hover {
-    transform: translateY(-5px);  /* Add hover effect */
-    background-color: #333;
-}
-
-.unique-view-btn {
-    background-color: #a49665;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-/* Topics Section (Left Sidebar) */
-.unique-left-sidebar {
-    width: 250px;
-    background-color: #4b4b4b;
-    color: #ecf0f1;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
-    display: block; /* Visible on desktop */
-}
-
-.unique-left-sidebar ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-
-.unique-left-sidebar li {
-    margin-bottom: 15px;
-}
-
-.unique-left-sidebar a {
-    color: #ecf0f1;
-    text-decoration: none;
-    font-size: 18px;
-    font-weight: bold;
-    background-color: #2a2a2a;
-    padding: 10px;
-    display: block;
-    border-radius: 5px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.unique-left-sidebar a:hover {
-    background-color: #34495e;
-    transform: scale(1.05);
-    cursor: pointer;
-}
-
-@media only screen and (max-width: 768px) {
-    .unique-left-sidebar, .unique-right-sidebar {
-        display: none;
-    }
-
-    /* Make the center project list take full width on mobile */
-    .unique-project-list {
-        width: 100%;
-    }
-}
-
-.row-custom {
-    display: flex !important;
-    flex-wrap: wrap !important;
-    justify-content: space-between !important; /* Ensure the columns are spaced evenly */
-    width: 100%!important;
-    gap: 20px!important; /* Adds space between the columns */
-    margin-left: 0 !important;  /* Reset Bootstrap's negative margins */
-    margin-right: 0 !important; /* Reset Bootstrap's negative margins */
-    padding-left: 0 !important; /* Adjust or reset as needed */
-    padding-right: 0 !important;
-}
-
-.col-custom {
-    flex: 1 1 calc(33.333% - 20px)!important; /* Ensure three columns per row with space in between */
-    margin-bottom: 20px!important;
-    box-sizing: border-box!important; /* Ensure padding/margins do not affect the width */
-}
-
-@media (max-width: 1200px) {
-    .col-custom {
-        flex: 1 1 calc(50% - 20px); /* Two columns for medium screens */
-    }
-}
-
-@media (max-width: 768px) {
-    .col-custom {
-        flex: 1 1 100%; /* Single column layout for small screens */
-    }
-}
-
-
 /* Container for the page */
+/* General Styles for Network Page */
 /* General Styles for Network Page */
 .network-page-container {
     padding: 20px;
@@ -1746,40 +1349,41 @@ html, body {
     color: #ffffff;
     font-family: Arial, sans-serif;
     min-height: 100vh;
+    width: 100vw; /* Full viewport width */
 }
 
 /* Search Bar Styling */
 .network-search-bar {
     display: flex;
     justify-content: center;
-    margin-bottom: 20px;
+    margin-bottom: 30px; /* Slightly more space below the search bar */
 }
 
 .network-search-form {
     display: flex;
-    gap: 10px;
-    max-width: 600px;
+    gap: 15px; /* Add more gap between input and buttons */
+    max-width: 80%; /* Make search bar take 80% of the width */
     width: 100%;
 }
 
 .network-search-input {
-    padding: 10px;
-    border-radius: 5px;
+    padding: 15px; /* Increase padding for a larger input field */
+    border-radius: 8px;
     border: 1px solid #666666;
     background-color: #404042;
     color: #ffffff;
-    font-size: 16px;
+    font-size: 18px; /* Increase font size */
     width: 100%;
     flex-grow: 1;
 }
 
 .network-search-btn, .network-clear-btn {
-    padding: 10px 20px;
-    border-radius: 5px;
+    padding: 15px 25px; /* Larger buttons */
+    border-radius: 8px;
     background-color: #b08d57;
     color: #ffffff;
     border: none;
-    font-size: 16px;
+    font-size: 18px; /* Increase font size */
     cursor: pointer;
     transition: background-color 0.3s ease;
     text-decoration: none;
@@ -1798,33 +1402,38 @@ html, body {
 }
 
 /* User List and Card Layout */
+/* User List and Card Layout */
 .network-user-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
+    gap: 30px;
+    justify-content: space-around;
+    width: 100%;
+    max-width: 90vw;
+    margin: 0 auto;
 }
 
 .network-user-card {
     background-color: #404042;
     padding: 20px;
-    border-radius: 10px;
-    width: 280px;
+    border-radius: 15px;
+    width: 400px; /* Wider cards */
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    flex-direction: row; /* Align image and info horizontally */
+    align-items: center; /* Vertically center content */
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .network-user-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+    transform: translateY(-8px);
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.4);
 }
 
 /* Profile Picture Styling */
 .network-profile-pic {
-    margin-bottom: 10px;
+    flex-shrink: 0; /* Prevent the image from shrinking */
+    margin-right: 20px; /* Add space between the image and info */
 }
 
 .network-profile-img {
@@ -1837,8 +1446,7 @@ html, body {
 
 /* User Info Styling */
 .network-user-info {
-    text-align: center;
-    margin-top: 10px;
+    text-align: left; /* Align text to the left */
 }
 
 .network-username {
@@ -1858,16 +1466,10 @@ html, body {
 /* Badge Section for Rankings */
 .network-badge-section {
     margin-top: 10px;
+    text-align: right; /* Align badge to the right */
+    width: 100%;
 }
 
-.network-badge {
-    background-color: #b08d57;
-    padding: 5px 10px;
-    border-radius: 5px;
-    color: #ffffff;
-    font-size: 14px;
-    font-weight: bold;
-}
 
 .gold {
     background-color: #b08d57;
@@ -1884,16 +1486,25 @@ html, body {
 /* Responsive Styling for Smaller Screens */
 @media (max-width: 768px) {
     .network-user-card {
-        width: 100%;
+        width: 100%; /* Full width for user cards on mobile */
     }
 
     .network-search-input {
-        font-size: 14px;
-        padding: 8px;
+        font-size: 16px;
+        padding: 12px;
     }
 
     .network-search-btn, .network-clear-btn {
-        padding: 8px 15px;
-        font-size: 14px;
+        padding: 12px 20px;
+        font-size: 16px;
+    }
+
+    .network-user-list {
+        gap: 20px;
+    }
+
+    .network-profile-img {
+        width: 100px;
+        height: 100px;
     }
 }

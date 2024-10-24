@@ -22,6 +22,9 @@ urlpatterns = [
     path('messages/<str:username>/', views.message_thread, name='message_thread'),
     path('messages/start/<str:username>/', views.message_thread, name='start_message'),
     path('conversations/', views.active_conversations, name='active_conversations'),
+    path('notifications/', views.notifications_view, name='notifications'),
+    path('notifications/mark-read/<int:notification_id>/', views.mark_as_read, name='mark_as_read'),
+    
 
 
 ]

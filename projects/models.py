@@ -2,12 +2,13 @@ from django.db import models
 from django.contrib.auth.models import User  # For user relationships
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.urls import reverse
 from django.utils import timezone
 from django.db.models import Q
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from cloudinary.models import CloudinaryField
-from django.core.exceptions import ValidationError
+from django.utils import timezone
 
 # UserProfile model
 class UserProfile(models.Model):
@@ -101,29 +102,25 @@ class Message(models.Model):
 
     def __str__(self):
         return f"Message from {self.sender} to {self.recipient} at {self.timestamp}"
+    
 
-    def save(self, *args, **kwargs):
-        # Save the message first
-        super().save(*args, **kwargs)
-        
-        # Try to create a notification and catch any errors
-        try:
-            Notification.objects.create(
-                user=self.recipient,
-                message=f"You've received a new message from {self.sender.username}.",
-                link=f"/messages/{self.sender.username}/",  # Adjust the link to fit your URL structure
-                is_read=False  # Mark as unread
-            )
-        except Exception as e:
-            # Log the error for further inspection
-            print(f"Error creating notification: {e}")
 
 
 class Notification(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    message = models.CharField(max_length=255)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)  # User who receives the notification
+    related_message = models.ForeignKey(Message, on_delete=models.CASCADE, null=True, blank=True)  # Message related to the notification
     is_read = models.BooleanField(default=False)
     timestamp = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return f'Notification for {self.user.username} - {self.message}'
+        if self.related_message:
+            return f"Notification for {self.user.username}: {self.related_message.content}"
+        return f"Notification for {self.user.username}"
+
+
+    def get_message_thread_url(self):
+        if self.related_message:
+            # Ensure the username is passed correctly from related_message's sender
+            return reverse('message_thread', kwargs={'username': self.related_message.sender.username})
+        return reverse('active_conversations')  # Redirect to conversations page if no message is associated
+

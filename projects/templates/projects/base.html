@@ -14,73 +14,79 @@
 </head>
 <body>
     <!-- Navbar -->
-<!-- Navbar -->
-<!-- Navbar -->
-<div class="navbar">
-    <div class="logo">
-        <a href="{% url 'home' %}">
-            <img src="/static/projects/images/logo.png" alt="DevLink Logo" class="navbar-logo">
-        </a>
-        <a href="{% url 'home' %}" class="clickable-text">
-            <h1>DevLink</h1>
-        </a>
-    </div>
-    {% if user.is_authenticated %}
-    <ul class="nav-links">
-        <li><a href="{% url 'home' %}">Projects</a></li>
-        <li><a href="{% url 'network' %}">Network</a></li>
-        <li><a href="{% url 'active_conversations' %}">Messaging</a></li>
-    </ul>
-    {% endif %}
-    <div class="nav-buttons">
+    <div class="navbar">
+        <div class="logo">
+            <a href="{% url 'home' %}">
+                <img src="/static/projects/images/logo.png" alt="DevLink Logo" class="navbar-logo">
+            </a>
+            <a href="{% url 'home' %}" class="clickable-text">
+                <h1>DevLink</h1>
+            </a>
+        </div>
+        
         {% if user.is_authenticated %}
-        <div class="profile-dropdown">
-            <!-- Notification Icon with Dropdown -->
+        <ul class="nav-links">
+            <li><a href="{% url 'home' %}">Projects</a></li>
+            <li><a href="{% url 'network' %}">Network</a></li>
+            <li><a href="{% url 'active_conversations' %}">Messaging</a></li>
+        </ul>
+        {% endif %}
+        
+        <div class="nav-buttons">
+            {% if user.is_authenticated %}
+            
+            <!-- Notification Dropdown -->
             <div class="notification-dropdown">
                 <i class="fas fa-bell notification-icon"></i>
-                {% if notifications.count %}
+                {% if notifications %}
                     <span class="notification-count">{{ notifications.count }}</span>
                 {% endif %}
                 <div class="dropdown-content">
                     {% if notifications %}
-                        <ul class="notification-list">
-                            {% for notification in notifications %}
-                                <li>
-                                    <a href="{{ notification.link }}">
-                                        {{ notification.message }} - {{ notification.timestamp|timesince }} ago
+                    <ul class="notification-list">
+                        {% for notification in notifications %}
+                            <li>
+                                {% if notification.related_message %}
+                                    <a href="{{ notification.get_message_thread_url }}">
+                                        {{ notification.related_message.content }} - {{ notification.timestamp|timesince }} ago
                                     </a>
-                                </li>
-                            {% endfor %}
-                        </ul>
+                                {% else %}
+                                    <p>Notification without a related message</p>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    
                     {% else %}
                         <p>No new notifications</p>
                     {% endif %}
                 </div>
             </div>
             
-            <!-- Profile Icon with Dropdown -->
-            <a href="{% url 'profile' user.username %}">
-                {% if user.userprofile.profile_picture %}
-                    <img src="{{ user.userprofile.profile_picture|safe }}" class="profile-img rounded-circle" alt="{{ user.username }}">
-                {% else %}
-                    <img src="{% static 'projects/images/default-profile.png' %}" class="profile-img rounded-circle" alt="{{ user.username }}">
-                {% endif %}
-            </a>
-            <div class="dropdown-content">
-                <a href="{% url 'edit_profile' %}" class="dropdown-button">Edit Profile</a>
-                <form method="POST" action="{% url 'logout' %}">
-                    {% csrf_token %}
-                    <button type="submit" class="dropdown-button dropdown-logout">Logout</button>
-                </form>
+            <!-- Profile Dropdown -->
+            <div class="profile-dropdown">
+                <a href="{% url 'profile' user.username %}">
+                    {% if user.userprofile.profile_picture %}
+                        <img src="{{ user.userprofile.profile_picture|safe }}" class="profile-img" alt="{{ user.username }}">
+                    {% else %}
+                        <img src="{% static 'projects/images/default-profile.png' %}" class="profile-img" alt="{{ user.username }}">
+                    {% endif %}
+                </a>
+                <div class="dropdown-content">
+                    <a href="{% url 'edit_profile' %}" class="dropdown-button">Edit Profile</a>
+                    <form method="POST" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="dropdown-button">Logout</button>
+                    </form>
+                </div>
             </div>
+            
+            {% else %}
+                <a href="{% url 'login' %}" class="btn">Login</a>
+                <a href="{% url 'register' %}" class="btn">Sign Up</a>
+            {% endif %}
         </div>
-        
-        {% else %}
-            <a href="{% url 'login' %}" class="btn">Login</a>
-            <a href="{% url 'register' %}" class="btn">Sign Up</a>
-        {% endif %}
     </div>
-</div>
 
 
     <!-- Main Content -->
@@ -89,7 +95,6 @@
         <!-- Page-specific content will go here -->
         {% endblock %}
     </div>
-
     <!-- Footer -->
     <footer>
         <p>&copy; 2024 DevLink. All rights reserved.</p>

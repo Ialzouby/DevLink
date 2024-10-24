@@ -4,7 +4,11 @@ from django.contrib.auth.models import User
 from .models import UserProfile
 from django.db.models.signals import post_save, m2m_changed
 from django.dispatch import receiver
-from .models import UserProfile, Project, Comment
+from .models import UserProfile, Project, Comment, Message
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from .models import Message, Notification
+from django.utils import timezone
 
 @receiver(post_save, sender=User)
 def create_or_update_user_profile(sender, instance, created, **kwargs):
@@ -45,3 +49,20 @@ def update_points_for_profile_picture(sender, instance, **kwargs):
     if instance.profile_picture and not instance.points >= 50:  # Add points once
         instance.points += 50  # Award points for having a profile picture
         instance.save()
+
+
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.utils import timezone
+from .models import Notification, Message
+
+@receiver(post_save, sender=Message)
+def create_message_notification(sender, instance, created, **kwargs):
+    if created:
+        # Create a notification when a new message is received
+        Notification.objects.create(
+            user=instance.recipient,
+            related_message=instance,  # Pass the Message instance, not a string
+            is_read=False,  # Initially unread
+            timestamp=timezone.now()
+        )

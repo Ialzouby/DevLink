@@ -563,6 +563,8 @@ textarea {
 .dropdown-content:hover {
     visibility: visible;
     opacity: 1;  /* Make the dropdown visible */
+
+    margin-right: 20px;
 }
 /* Styling for both Edit Profile and Logout buttons */
 .dropdown-button {
@@ -597,6 +599,7 @@ textarea {
     object-fit: cover;        /* Ensures the image fits properly without stretching */
     margin-right: 50px;
 }
+
 /* Main Layout */
 .unique-layout-container {
     display: flex;
@@ -1541,59 +1544,143 @@ footer {
     box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3); /* Add shadow effect */
 }
 
-/* Notification Dropdown */
+
+    /* Profile Dropdown */
+    .profile-dropdown {
+        position: relative;
+        display: inline-block;
+    }
+    .profile-dropdown .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #222;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+        border-radius: 5px;
+        padding: 10px;
+        top: 50px; /* Ensure dropdown is below the profile image */
+        right: 0;
+    }
+    /* Ensure only profile dropdown expands on hover */
+    .profile-dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .notification-dropdown .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #222;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+        border-radius: 5px;
+        padding: 10px;
+        top: 50px; /* Ensure dropdown is below the profile image */
+        right: 0;
+    }
+    /* Ensure only profile dropdown expands on hover */
+    .notification-dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+
+    .profile-img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        cursor: pointer;
+        margin-right: 50px;
+    }
+
+    /* General Dropdown Button Styling */
+    .dropdown-button {
+        background-color: #a49665;
+        border: none;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        text-align: center;
+        display: block;
+        text-decoration: none;
+        font-weight: bold;
+        margin: 5px 0;
+    }
+    .dropdown-button:hover {
+        background-color: #8a7a56;
+    }
+
+    /* General Styling for Notification Dropdown */
 .notification-dropdown {
     position: relative;
     display: inline-block;
-    margin-right: 20px; /* Space between notification icon and profile image */
+    cursor: pointer;  /* Adds pointer cursor */
+    padding: 5px;
 }
 
 .notification-icon {
     font-size: 24px;
     color: white;
-    cursor: pointer;
-    margin-right: 30px; 
+    margin-right: 80px; 
 }
 
 .notification-count {
-    background-color: red;
-    color: white;
-    font-size: 12px;
-    border-radius: 50%;
-    padding: 4px 8px;
     position: absolute;
     top: -5px;
-    right: -10px;
+    right: -5px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 4px 6px;
+    font-size: 12px;
+    margin-right: 80px; 
+
 }
 
-.notification-dropdown:hover .dropdown-content {
-    display: block;
-}
-
-/* Dropdown Content for Notifications */
+/* Dropdown Content (Initially Hidden) */
 .notification-dropdown .dropdown-content {
     display: none;
     position: absolute;
     background-color: #222;
     min-width: 250px;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-    border-radius: 5px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    border-radius: 8px;
     padding: 10px;
-}
-
-.notification-dropdown .dropdown-content ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.notification-dropdown .dropdown-content li {
-    padding: 10px;
+    top: 40px;  /* Adjusts space below the icon */
+    right: 0;
     color: white;
-    border-bottom: 1px solid #444;
+    transition: all 0.3s ease;  /* Adds smooth transition */
 }
 
-.notification-dropdown .dropdown-content li:hover {
+/* Show dropdown on hover */
+.notification-dropdown:hover .dropdown-content {
+    visibility: visible;
+    opacity: 1;
+}
+
+
+/* Notification List */
+.notification-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.notification-list li {
+    padding: 10px;
+    border-bottom: 1px solid #444;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.notification-list li:hover {
     background-color: #333;
+}
+
+/* No Notification Message */
+.notification-empty {
+    color: #999;
+    padding: 10px;
 }

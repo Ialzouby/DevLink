@@ -27,17 +27,19 @@
 
 
 
-    <div class="message-input-container">
-        <form method="post" class="message-form">
-            {% csrf_token %}
-            <div class="form-group">
-                {{ form.content }}
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary send-message-btn">Send</button>
-            </div>
-        </form>
-    </div>
+<div class="message-input-container">
+    <form method="post" class="message-form">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.content }}  <!-- This must match the 'content' field in your MessageForm -->
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary send-message-btn">Send</button>
+        </div>
+    </form>
+    
+</div>
+
     
 </div>
 

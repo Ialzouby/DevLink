@@ -22,8 +22,6 @@ from .forms import MessageForm
 from .models import Message
 from cloudinary.uploader import upload
 import cloudinary
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 
 # Profile view
 def profile(request, username):
@@ -265,13 +263,11 @@ def edit_profile(request):
 @login_required
 def message_thread(request, username):
     recipient = get_object_or_404(User, username=username)
-    # Fetch messages exchanged between the current user and the recipient
+
     messages = Message.objects.filter(
         (Q(sender=request.user) & Q(recipient=recipient)) | 
         (Q(sender=recipient) & Q(recipient=request.user))
-    ).order_by('timestamp')  # Order messages by timestamp (oldest to newest)
-
-    previous_url = request.META.get('HTTP_REFERER')
+    ).order_by('timestamp')
 
     if request.method == 'POST':
         form = MessageForm(request.POST)
@@ -280,15 +276,20 @@ def message_thread(request, username):
             new_message.sender = request.user
             new_message.recipient = recipient
             new_message.save()
+            print(f"New message created: {new_message}")
+            Notification.objects.create(user=recipient, related_message=new_message)
+
+
             return redirect('message_thread', username=recipient.username)
+        else:
+            print(f"Form errors: {form.errors}")
     else:
         form = MessageForm()
 
     return render(request, 'projects/message_thread.html', {
         'messages': messages,
         'recipient': recipient,
-        'form': form,
-        'previous_url': previous_url
+        'form': form
     })
 
 
@@ -313,31 +314,18 @@ def active_conversations(request):
         'conversation_users': conversation_users
     })
 
-def navbar_view(request):
-    # Sample logic to fetch notifications for the logged-in user
-    if request.user.is_authenticated:
-        notifications = Notification.objects.filter(user=request.user, is_read=False).order_by('-timestamp')
-    else:
-        notifications = []
-
-    return {
-        'notifications': notifications,
-    }
 
 
 @login_required
-def view_notification(request, notification_id):
+def notifications_view(request):
+    # Fetch unread notifications for the logged-in user
+    notifications = Notification.objects.filter(user=request.user, is_read=False).order_by('-timestamp')
+    return render(request, 'projects/notifications.html', {'notifications': notifications})
+
+@login_required
+def mark_as_read(request, notification_id):
     notification = get_object_or_404(Notification, id=notification_id, user=request.user)
     notification.is_read = True
     notification.save()
-    return redirect(notification.link)
+    return redirect('notifications')  # Redirect back to notifications or wherever
 
-@receiver(post_save, sender=Message)
-def create_message_notification(sender, instance, created, **kwargs):
-    if created:  # Only create a notification when a new message is created
-        Notification.objects.create(
-            user=instance.recipient,
-            message=f"You've received a new message from {instance.sender.username}.",
-            link=f"/messages/{instance.sender.username}/",
-            is_read=False
-        )

@@ -7,6 +7,7 @@
     <title>DevLink - {% block title %}Home{% endblock %}</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="icon" href="/static/projects/images/logo.png" type="image/x-icon">
+    <link rel="manifest" href="{% static 'manifest.json' %}">
 
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
@@ -128,6 +129,18 @@
 
     <!-- Custom JS for hover-triggered notification dropdown -->
     <script>
+
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+                console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            }, function(error) {
+                console.log('ServiceWorker registration failed: ', error);
+            });
+        });
+    }
+
+
 document.addEventListener('DOMContentLoaded', function () {
     const notificationDropdown = document.querySelector('.notification-dropdown');
     const dropdownContent = notificationDropdown.querySelector('.dropdown-content');
@@ -140,6 +153,9 @@ document.addEventListener('DOMContentLoaded', function () {
         dropdownContent.style.display = 'none'; // Hide on mouse leave
     });
 });
+
+
+
 
     </script>
     

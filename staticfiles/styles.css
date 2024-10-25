@@ -32,7 +32,7 @@ p, a {
 .nav-links {
     display: flex;
     list-style-type: none;
-    margin-right: -600px; 
+
     margin-top: 15px; 
 }
 .nav-links li {
@@ -79,6 +79,23 @@ p, a {
     padding: 0;
     margin-right: 5px;
     margin-top: -6px; 
+}
+
+.btn{
+    margin-right:10px; 
+}
+
+/* Media Query for mobile screens */
+@media (max-width: 768px) {
+    .btn-container {
+        flex-direction: row; /* Align buttons in a row on mobile */
+    }
+}
+
+@media (max-width: 480px) {
+    .btn-container {
+        flex-direction: column; /* Stack buttons on very small screens */
+    }
 }
 .approve-btn i {
     color: #28a745;  /* Green */
@@ -563,8 +580,8 @@ textarea {
 .dropdown-content:hover {
     visibility: visible;
     opacity: 1;  /* Make the dropdown visible */
-
-    margin-right: 20px;
+margin-top: 10px; 
+    margin-right: 0px;
 }
 /* Styling for both Edit Profile and Logout buttons */
 .dropdown-button {
@@ -594,10 +611,11 @@ textarea {
     width: 60px;              /* Adjust the width of the image */
     height: 60px;             /* Adjust the height of the image */
     cursor: pointer;
+    margin-right: 50px; 
     border: 2px solid #444;
     border-radius: 50%;       /* Ensure the image stays circular */
     object-fit: cover;        /* Ensures the image fits properly without stretching */
-    margin-right: 50px;
+   
 }
 
 /* Main Layout */
@@ -908,7 +926,7 @@ textarea {
 .navbar {
     width: 100vw;
     padding: 20px;
-    background-color: #005035;
+    background-color: #005035 !important;
     color: white;
     display: flex;
     justify-content: space-between;
@@ -1567,22 +1585,7 @@ footer {
         display: block;
     }
 
-    .notification-dropdown .dropdown-content {
-        display: none;
-        position: absolute;
-        background-color: #222;
-        min-width: 160px;
-        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-        z-index: 1;
-        border-radius: 5px;
-        padding: 10px;
-        top: 50px; /* Ensure dropdown is below the profile image */
-        right: 0;
-    }
-    /* Ensure only profile dropdown expands on hover */
-    .notification-dropdown:hover .dropdown-content {
-        display: block;
-    }
+
 
 
     .profile-img {
@@ -1590,7 +1593,7 @@ footer {
         height: 60px;
         border-radius: 50%;
         cursor: pointer;
-        margin-right: 50px;
+    
     }
 
     /* General Dropdown Button Styling */
@@ -1604,14 +1607,122 @@ footer {
         display: block;
         text-decoration: none;
         font-weight: bold;
-        margin: 5px 0;
+        margin-top: 20px; 
+        
     }
     .dropdown-button:hover {
         background-color: #8a7a56;
     }
 
     /* General Styling for Notification Dropdown */
-.notification-dropdown {
+
+
+/* Home Mobile */
+
+/* Mobile view */
+@media (max-width: 768px) {
+    /* Hide left and right sidebars on mobile */
+    .unique-left-sidebar, .unique-right-sidebar {
+        display: none;
+    }
+
+    /* Make the project list take full width */
+    .unique-project-list {
+        width: 100%;
+    }
+
+    /* Adjust project item styling for mobile */
+    .unique-project-item {
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    .unique-project-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .add-project-btn {
+        font-size: 24px;
+        padding: 5px 10px;
+    }
+}
+
+/*  navbar in mobile */
+
+/* Ensure the navbar is responsive */
+.navbar-toggler {
+    display: none;
+}
+
+.navbar-nav {
+    display: flex;
+}
+
+
+
+
+
+.dropdown-menu {
+    transition: all 0.3s ease;
+}
+
+
+
+.navbar-nav.ml-auto {
+    display: flex;
+    align-items: center;
+}
+
+.navbarNavDropdown{
+    margin-right: 2000px; 
+}
+
+
+
+
+/* Dropdown styling */
+.dropdown-menu {
+    background-color: #222;
+    color: white;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Hover effect for dropdown list items */
+.dropdown-item:hover {
+    background-color: #333;
+    color: #fff;
+}
+
+
+
+
+
+
+.dropdown-content {
+    display: none; /* Hidden by default */
+    position: absolute;
+    background-color: #222; /* Background for dropdown */
+    min-width: 200px; /* Width of dropdown */
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3); /* Shadow effect */
+    z-index: 1000;
+    color: white;
+    transition: all 0.3s ease;
+    padding: 10px;
+}
+
+
+/* Ensure only profile dropdown expands on hover */
+.notification-dropdown:hover .dropdown-content {
+    display: block;
+}
+
+ /* General Styling for Notification Dropdown */
+ .notification-dropdown {
     position: relative;
     display: inline-block;
     cursor: pointer;  /* Adds pointer cursor */
@@ -1653,6 +1764,18 @@ footer {
     transition: all 0.3s ease;  /* Adds smooth transition */
 }
 
+.notification-dropdown .dropdown-content {
+    position: absolute;
+    background-color: #222;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 5px;
+    padding: 10px;
+    top: 30px; /* Ensure dropdown is below the profile image */
+    right: 0;
+}
+
 /* Show dropdown on hover */
 .notification-dropdown:hover .dropdown-content {
     visibility: visible;
@@ -1683,4 +1806,202 @@ footer {
 .notification-empty {
     color: #999;
     padding: 10px;
+}
+
+/* CSS to hide live updates section on mobile devices */
+@media (max-width: 768px) {
+    .live-updates {
+        display: none; /* Hides the live updates section on screens smaller than 768px */
+    }
+}
+
+
+@media (max-width: 768px) {
+    .forum-thread {
+        width: 100%; /* Make the forum thread take full width */
+        float: none; /* Remove float for full width display */
+    }
+
+    .live-updates {
+        display: none; /* Hide the live updates section on mobile */
+    }
+}
+
+
+@media (max-width: 768px) {
+    .custom-project-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .custom-project-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar-icons-container {
+        justify-content: flex-end; /* Align icons to the right on mobile */
+    }
+}
+
+/* Mobile version styling */
+@media (max-width: 768px) {
+    .navbar-nav.d-flex.align-items-center {
+        justify-content: flex-end; /* Align items to the right */
+        margin-left: 0;
+    }
+
+    /* Ensure that the dropdown menu or profile-related items also align right */
+    .profile-dropdown,
+    .notification-dropdown {
+        text-align: right; /* Align dropdown content to the right on mobile */
+    }
+}
+
+.navbar-nav.d-flex.align-items-center {
+    justify-content: flex-end; /* Align items to the right */
+}
+
+
+@media (max-width: 768px) {
+    /* Navbar icons container (notification and profile) */
+    .navbar-icons-container {
+        display: flex;
+        align-items: center;
+        gap: 5px; /* Reduce the gap between the icons */
+        justify-content: flex-end; /* Ensure the icons are aligned to the right */
+    }
+
+    /* Adjust the margin of the notification icon to avoid extra space */
+    .notification-icon {
+        margin-right: 10px; /* Remove extra right margin */
+    }
+
+    .notification-count{
+        margin-right: 10px; /* Remove extra right margin */
+
+    }
+
+    /* Profile Image */
+    .profile-img {
+        width: 40px;
+        height: 40px;
+        margin-right: 20px;
+    }
+}
+
+
+/* Show the navbar-toggler on mobile */
+@media (max-width: 768px) {
+    .navbar-toggler {
+        display: block; /* Display hamburger icon on mobile */
+        background-color: transparent;
+        border: none;
+        font-size: 30px;
+        cursor: pointer;
+    }
+
+    /* Collapse the navbar by default on mobile */
+
+
+    /* When the collapse class is triggered */
+    .navbar-collapse.show {
+        display: flex; /* Show the menu */
+        flex-direction: column;
+        text-align: center; /* Center align the menu items */
+    }
+
+    /* Align the nav items in the center */
+    .navbar-nav {
+        flex-direction: column; /* Stack the links vertically */
+    }
+
+    /* Ensure icons are aligned properly on mobile */
+    .navbar-icons-container {
+        justify-content: flex-end; /* Align icons to the right on mobile */
+    }
+}
+
+
+/* Fullscreen-style navbar menu on mobile when collapsed */
+@media (max-width: 768px) {
+    /* Ensure the collapse content takes up the full screen */
+    .navbar-collapse {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh; /* Take up full screen height */
+        background-color: rgba(0, 0, 0, 0.9); /* Dark transparent background */
+        justify-content: center; /* Center content */
+        align-items: center; /* Vertically center the links */
+        display: flex;
+        flex-direction: column;
+        text-align: center; /* Center the text */
+        z-index: 1000; /* Ensure it appears above other elements */
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    }
+
+    /* When the navbar is expanded (collapse.show), make it visible */
+    .navbar-collapse.show {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Style the nav links to be more prominent */
+    .navbar-nav .nav-link {
+        color: white; /* White text color */
+        font-size: 1.5rem; /* Increase font size */
+        padding: 10px 0; /* Add padding for space between links */
+        text-transform: uppercase;
+        transition: color 0.3s;
+        margin-top: 20px; 
+    }
+
+    /* Change link hover color */
+    .navbar-nav .nav-link:hover {
+        color: #a49665; /* Gold color on hover */
+    }
+
+    /* Style the navbar-toggler (hamburger icon) */
+    .navbar-toggler {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        z-index: 1100; /* Keep it above the collapse menu */
+    }
+}
+
+
+/* Ensure the navbar collapse is visible when expanded */
+@media (max-width: 768px) {
+    .navbar-toggler {
+        display: block;
+        background-color: transparent;
+        border: none;
+        font-size: 30px;
+        cursor: pointer;
+        z-index: 1100; /* Keep it above the collapse menu */
+    }
+
+    /* Collapse the navbar by default on mobile */
+    .navbar-collapse {
+        display: none; /* Hide the collapse initially */
+    }
+
+    /* Show the collapse when the toggler is clicked */
+    .navbar-collapse.show {
+        display: flex; /* Display the collapse */
+        flex-direction: column;
+        text-align: center; /* Center-align the links */
+    }
+
+    /* Ensure icons are aligned properly on mobile */
+    .navbar-icons-container {
+        justify-content: flex-end; /* Align icons to the right */
+    }
 }

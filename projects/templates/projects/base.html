@@ -8,86 +8,105 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="icon" href="/static/projects/images/logo.png" type="image/x-icon">
 
+    <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-<link rel="stylesheet" href="{% static 'projects/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'projects/styles.css' %}">
 </head>
 <body>
     <!-- Navbar -->
-    <div class="navbar">
-        <div class="logo">
-            <a href="{% url 'home' %}">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid d-flex justify-content-between">
+            <!-- Logo and Title -->
+            <a class="navbar-brand" href="{% url 'home' %}">
                 <img src="/static/projects/images/logo.png" alt="DevLink Logo" class="navbar-logo">
+                DevLink
             </a>
-            <a href="{% url 'home' %}" class="clickable-text">
-                <h1>DevLink</h1>
-            </a>
-        </div>
-        
-        {% if user.is_authenticated %}
-        <ul class="nav-links">
-            <li><a href="{% url 'home' %}">Projects</a></li>
-            <li><a href="{% url 'network' %}">Network</a></li>
-            <li><a href="{% url 'active_conversations' %}">Messaging</a></li>
-        </ul>
-        {% endif %}
-        
-        <div class="nav-buttons">
-            {% if user.is_authenticated %}
-            
-            <!-- Notification Dropdown -->
-            <div class="notification-dropdown">
-                <i class="fas fa-bell notification-icon"></i>
-                {% if notifications %}
-                    <span class="notification-count">{{ notifications.count }}</span>
+    
+            <!-- Navbar Toggler Button (for mobile) -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Center the nav links and collapse for mobile -->
+        <!-- Center the nav links and collapse for mobile -->
+        <div class="collapse navbar-collapse justify-content-center" id="navbarNavDropdown">
+            <ul class="navbar-nav nav-links">
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'home' %}">Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'network' %}">Network</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'active_conversations' %}">Messaging</a>
+                    </li>
                 {% endif %}
-                <div class="dropdown-content">
-                    {% if notifications %}
-                    <ul class="notification-list">
-                        {% for notification in notifications %}
-                            <li>
-                                {% if notification.related_message %}
-                                    <a href="{{ notification.get_message_thread_url }}">
-                                        {{ notification.related_message.content }} - {{ notification.timestamp|timesince }} ago
-                                    </a>
-                                {% else %}
-                                    <p>Notification without a related message</p>
-                                {% endif %}
-                            </li>
-                        {% endfor %}
-                    </ul>
-                    
-                    {% else %}
-                        <p>No new notifications</p>
-                    {% endif %}
-                </div>
-            </div>
-            
-            <!-- Profile Dropdown -->
-            <div class="profile-dropdown">
-                <a href="{% url 'profile' user.username %}">
-                    {% if user.userprofile.profile_picture %}
-                        <img src="{{ user.userprofile.profile_picture|safe }}" class="profile-img" alt="{{ user.username }}">
-                    {% else %}
-                        <img src="{% static 'projects/images/default-profile.png' %}" class="profile-img" alt="{{ user.username }}">
-                    {% endif %}
-                </a>
-                <div class="dropdown-content">
-                    <a href="{% url 'edit_profile' %}" class="dropdown-button">Edit Profile</a>
-                    <form method="POST" action="{% url 'logout' %}">
-                        {% csrf_token %}
-                        <button type="submit" class="dropdown-button">Logout</button>
-                    </form>
-                </div>
-            </div>
-            
-            {% else %}
-                <a href="{% url 'login' %}" class="btn">Login</a>
-                <a href="{% url 'register' %}" class="btn">Sign Up</a>
-            {% endif %}
+            </ul>
         </div>
-    </div>
-
+    
+            <!-- Profile or Login/Signup Buttons -->
+            <ul class="navbar-nav d-flex align-items-center">
+                {% if user.is_authenticated %}
+                    <!-- Notification Dropdown -->
+                    <div class="navbar-icons-container">
+                        <!-- Notification Dropdown -->
+                        <div class="notification-dropdown">
+                            <a href="#" class="notification-link">
+                                <i class="fas fa-bell notification-icon"></i>
+                                {% if notifications %}
+                                    <span class="notification-count">{{ notifications.count }}</span>
+                                {% endif %}
+                            </a>
+                            <div class="dropdown-content">
+                                {% if notifications %}
+                                    <ul class="notification-list">
+                                        {% for notification in notifications %}
+                                            <li>
+                                                {% if notification.related_message %}
+                                                    <a href="{{ notification.get_message_thread_url }}">
+                                                        {{ notification.related_message.content }} - {{ notification.timestamp|timesince }} ago
+                                                    </a>
+                                                {% else %}
+                                                    <p>Notification without a related message</p>
+                                                {% endif %}
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    <p>No new notifications</p>
+                                {% endif %}
+                            </div>
+                        </div>
+    
+                        <!-- Profile Dropdown -->
+                        <div class="profile-dropdown">
+                            <a href="{% url 'profile' user.username %}">
+                                {% if user.userprofile.profile_picture %}
+                                    <img src="{{ user.userprofile.profile_picture|safe }}" class="profile-img" alt="{{ user.username }}">
+                                {% else %}
+                                    <img src="{% static 'projects/images/default-profile.png' %}" class="profile-img" alt="{{ user.username }}">
+                                {% endif %}
+                            </a>
+                            <div class="dropdown-content">
+                                <a href="{% url 'edit_profile' %}" class="dropdown-button">Edit Profile</a>
+                                <form method="POST" action="{% url 'logout' %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="dropdown-button">Logout</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                <div class="button-container">
+                    <a href="{% url 'login' %}" class="btn">Login</a>
+                    <a href="{% url 'register' %}" class="btn">Sign Up</a>
+                </div>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+    
 
     <!-- Main Content -->
     <div class="page-container">
@@ -95,9 +114,34 @@
         <!-- Page-specific content will go here -->
         {% endblock %}
     </div>
+
     <!-- Footer -->
     <footer>
         <p>&copy; 2024 DevLink. All rights reserved.</p>
     </footer>
+
+    <!-- Bootstrap JS and Dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+
+    <!-- Custom JS for hover-triggered notification dropdown -->
+    <script>
+document.addEventListener('DOMContentLoaded', function () {
+    const notificationDropdown = document.querySelector('.notification-dropdown');
+    const dropdownContent = notificationDropdown.querySelector('.dropdown-content');
+
+    notificationDropdown.addEventListener('mouseenter', function () {
+        dropdownContent.style.display = 'block'; // Show on mouse enter
+    });
+
+    notificationDropdown.addEventListener('mouseleave', function () {
+        dropdownContent.style.display = 'none'; // Hide on mouse leave
+    });
+});
+
+    </script>
+    
 </body>
 </html>

@@ -2016,7 +2016,7 @@ footer {
 
 ul.navbar-nav {
     display: flex;
-    flex-direction: row; /* This ensures that items are in a row */
+    /* This ensures that items are in a row */
     align-items: center; /* Vertically aligns items in the center */
     margin-right: 60px;
 }

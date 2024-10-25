@@ -611,7 +611,7 @@ margin-top: 10px;
     width: 60px;              /* Adjust the width of the image */
     height: 60px;             /* Adjust the height of the image */
     cursor: pointer;
-    margin-right: 50px; 
+    margin-right: 0px; 
     border: 2px solid #444;
     border-radius: 50%;       /* Ensure the image stays circular */
     object-fit: cover;        /* Ensures the image fits properly without stretching */
@@ -1732,7 +1732,7 @@ footer {
 .notification-icon {
     font-size: 24px;
     color: white;
-    margin-right: 80px; 
+    margin-right: 70px; 
 }
 
 .notification-count {
@@ -1744,7 +1744,7 @@ footer {
     border-radius: 50%;
     padding: 4px 6px;
     font-size: 12px;
-    margin-right: 80px; 
+    margin-right: 70px; 
 
 }
 
@@ -1876,11 +1876,11 @@ footer {
 
     /* Adjust the margin of the notification icon to avoid extra space */
     .notification-icon {
-        margin-right: 10px; /* Remove extra right margin */
+        margin-right: 0px; /* Remove extra right margin */
     }
 
     .notification-count{
-        margin-right: 10px; /* Remove extra right margin */
+        margin-right: 0px; /* Remove extra right margin */
 
     }
 
@@ -1888,7 +1888,6 @@ footer {
     .profile-img {
         width: 40px;
         height: 40px;
-        margin-right: 20px;
     }
 }
 
@@ -2004,4 +2003,20 @@ footer {
     .navbar-icons-container {
         justify-content: flex-end; /* Align icons to the right */
     }
+
+    .navbar-logo {
+        height: 70px; /* Adjust height as needed */
+        margin-right: 10px; /* Add some space between the logo and text */
+        margin-left: 0px;
+        margin-top: -10px; 
+        margin-bottom: -10px;
+        vertical-align: middle; /* Align it with the DevLink text */
+    }
+}
+
+ul.navbar-nav {
+    display: flex;
+    flex-direction: row; /* This ensures that items are in a row */
+    align-items: center; /* Vertically aligns items in the center */
+    margin-right: 60px;
 }

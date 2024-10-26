@@ -4,6 +4,8 @@
     {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+
     <title>DevLink - {% block title %}Home{% endblock %}</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="icon" href="/static/projects/images/logo.png" type="image/x-icon">
@@ -64,13 +66,6 @@
                                 <ul class="notification-list">
                                     {% for notification in notifications %}
                                         <li id="notification-{{ notification.id }}">
-                                            <div class="notification-icon">
-                                                {% if notification.related_message %}
-                                                    <i class="fas fa-envelope"></i>
-                                                {% else %}
-                                                    <i class="fas fa-user-plus"></i>
-                                                {% endif %}
-                                            </div>
                                             <div class="notification-text">
                                                 {% if notification.related_message %}
                                                     <a href="{{ notification.get_message_thread_url }}">
@@ -84,10 +79,13 @@
                                             <div class="notification-timestamp">
                                                 {{ notification.timestamp|timesince }} ago
                                             </div>
-                                            <button onclick="deleteNotification({{ notification.id }})" class="delete-notification-btn">&times;</button>
+                                            <div>                                            
+                                                <button data-id="{{ notification.id }}" class="delete-notification-btn">&times;</button>
+                                            </div>
                                         </li>
                                     {% endfor %}
                                 </ul>
+                                
                                 
                                 {% else %}
                                     <p>No new notifications</p>
@@ -137,6 +135,7 @@
     <footer>
         <p>&copy; 2024 DevLink. All rights reserved.</p>
     </footer>
+    <script src="{% static 'projects/scripts.js' %}"></script>
 
     <!-- Bootstrap JS and Dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -145,57 +144,8 @@
     
 
     <!-- Custom JS for hover-triggered notification dropdown -->
-    <script>
 
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-            navigator.serviceWorker.register('/static/projects/service-worker.js').then(function(registration) {
-                console.log('ServiceWorker registration successful with scope: ', registration.scope);
-            }, function(error) {
-                console.log('ServiceWorker registration failed: ', error);
-            });
-        });
-    }
+    <script src="{% static 'projects/scripts.js' %}"></script>
 
-
-document.addEventListener('DOMContentLoaded', function () {
-    const notificationDropdown = document.querySelector('.notification-dropdown');
-    const dropdownContent = notificationDropdown.querySelector('.dropdown-content');
-
-    notificationDropdown.addEventListener('mouseenter', function () {
-        dropdownContent.style.display = 'block'; // Show on mouse enter
-    });
-
-    notificationDropdown.addEventListener('mouseleave', function () {
-        dropdownContent.style.display = 'none'; // Hide on mouse leave
-    });
-});
-
-
-function deleteNotification(notificationId) {
-    fetch(`/notification/delete/${notificationId}/`, {
-        method: 'DELETE',
-        headers: {
-            'X-CSRFToken': '{{ csrf_token }}',  // Django CSRF token
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(response => {
-        if (response.ok) {
-            // Remove the notification element from the DOM
-            const notificationElement = document.getElementById(`notification-${notificationId}`);
-            if (notificationElement) {
-                notificationElement.remove();
-            }
-        } else {
-            console.error('Failed to delete notification');
-        }
-    })
-    .catch(error => console.error('Error:', error));
-}
-
-
-    </script>
-    
 </body>
 </html>

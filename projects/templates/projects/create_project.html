@@ -57,37 +57,5 @@
     </div>
 </div>
 
-<script>
-    function handleSkillInput(inputFieldId, listId, hiddenFieldId) {
-        const inputField = document.getElementById(inputFieldId);
-        const skillList = document.getElementById(listId);
-        const hiddenField = document.getElementById(hiddenFieldId);
 
-        inputField.addEventListener('keypress', function (event) {
-            if (event.key === 'Enter') {
-                event.preventDefault();  // Prevent form submission on Enter
-
-                const skill = inputField.value.trim();
-                if (skill) {
-                    // Create a new list item for the skill
-                    const listItem = document.createElement('li');
-                    listItem.textContent = skill;
-                    skillList.appendChild(listItem);
-
-                    // Clear the input field
-                    inputField.value = '';
-
-                    // Update the hidden input field with comma-separated values
-                    let skillsArray = hiddenField.value ? hiddenField.value.split(',') : [];
-                    skillsArray.push(skill);
-                    hiddenField.value = skillsArray.join(',');
-                }
-            }
-        });
-    }
-
-    // Initialize the skill inputs for both "Skills gained" and "Requirements"
-    handleSkillInput('skills-gained-input', 'skills-gained-list', 'skills_gained');
-    handleSkillInput('skills-requirements-input', 'skills-requirements-list', 'requirements');
-</script>
 {% endblock %}

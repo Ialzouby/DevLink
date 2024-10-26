@@ -1755,6 +1755,7 @@ footer {
     right: 0;
     color: white;
     transition: all 0.3s ease;  /* Adds smooth transition */
+    margin-right: -20px;
 }
 
 .notification-dropdown .dropdown-content {

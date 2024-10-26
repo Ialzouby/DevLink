@@ -12,6 +12,30 @@ if ('serviceWorker' in navigator) {
     });
 }
 
+// Single window load event to handle all initialization
+window.onload = function() {
+    // Scroll to bottom of message thread on page load
+    const messageThread = document.querySelector('.message-thread');
+    if (messageThread) {
+        messageThread.scrollTop = messageThread.scrollHeight;
+    }
+
+    // Attach delete function to notification buttons
+    document.querySelectorAll(".delete-notification-btn").forEach(button => {
+        button.addEventListener("click", function() {
+            const notificationId = button.getAttribute("data-id");
+            deleteNotification(notificationId);
+        });
+    });
+
+    // Initialize the first step in multi-step form
+    showStep(1);
+
+    // Initialize skill input fields
+    handleSkillInput('skills-gained-input', 'skills-gained-list', 'skills_gained');
+    handleSkillInput('skills-requirements-input', 'skills-requirements-list', 'requirements');
+};
+
 // Function to delete a notification
 function deleteNotification(notificationId) {
     fetch(`/notification/delete/${notificationId}/`, {
@@ -39,17 +63,6 @@ function deleteNotification(notificationId) {
     .catch(error => console.error("Error:", error));
 }
 
-// Attach delete function to notification buttons on DOM load
-window.onload = function() {
-    setTimeout(() => {
-        const messageThread = document.querySelector('.message-thread');
-        if (messageThread) {
-            messageThread.scrollTop = messageThread.scrollHeight;
-        }
-    }, 100);  // Adjust the delay as needed
-};
-
-
 // Multi-step form navigation
 let currentStep = 1;
 
@@ -74,16 +87,6 @@ function prevStep() {
         showStep(currentStep);
     }
 }
-
-showStep(1);  // Initialize the first step
-
-// Scroll to bottom of message thread on page load
-window.onload = function() {
-    const messageThread = document.querySelector('.message-thread');
-    if (messageThread) {
-        messageThread.scrollTop = messageThread.scrollHeight;
-    }
-};
 
 // Handle skill input for dynamically adding skills
 function handleSkillInput(inputFieldId, listId, hiddenFieldId) {
@@ -110,7 +113,3 @@ function handleSkillInput(inputFieldId, listId, hiddenFieldId) {
         }
     });
 }
-
-// Initialize skill input fields
-handleSkillInput('skills-gained-input', 'skills-gained-list', 'skills_gained');
-handleSkillInput('skills-requirements-input', 'skills-requirements-list', 'requirements');

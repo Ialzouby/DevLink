@@ -576,26 +576,7 @@ textarea {
     text-align: center;          /* Center-align content */
     margin-right: 50px;
 }
-/* Show dropdown when hovering over profile image or dropdown content */
 
-/* Styling for both Edit Profile and Logout buttons */
-.dropdown-button {
-    background-color: #a49665;   /* Gold background */
-    border: none;
-    color: white;
-    width: 80%;                  /* Set a consistent width for the buttons */
-    text-align: center;           /* Center-align the text */
-    padding: 10px 0;             /* Padding to make it look like a button */
-    border-radius: 5px;          /* Rounded corners */
-    text-decoration: none;
-    display: inline-block;        /* Ensure buttons stay inline */
-    cursor: pointer;
-    font-weight: bold;           /* Bold text */
-    margin: 5px 0;               /* Add some margin between the buttons */
-}
-.dropdown-button:hover {
-    background-color: #8a7a56;   /* Darker gold on hover */
-}
 /* Styling for dropdown items on hover */
 .dropdown-content a:hover,
 .dropdown-content form:hover {
@@ -1567,13 +1548,13 @@ footer {
         display: none;
         position: absolute;
         background-color: #222;
-        min-width: 160px;
+        min-width: 100px;
         box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
         z-index: 1;
         border-radius: 5px;
         padding: 10px;
-        top: 50px; /* Ensure dropdown is below the profile image */
-        margin-right: 50px;
+        top: 40px; /* Ensure dropdown is below the profile image */
+        margin-right: 0px;
     }
     /* Ensure only profile dropdown expands on hover */
     .profile-dropdown:hover .dropdown-content {
@@ -1585,7 +1566,7 @@ footer {
         visibility: visible;
         opacity: 1;  /* Make the dropdown visible */
     margin-top: 10px; 
-        margin-right: 50px;
+        margin-right: -30px;
     }
 
 
@@ -1596,29 +1577,40 @@ footer {
         cursor: pointer;
     
     }
-
+    .dropdown-button {
+        background-color: #a49665;   /* Gold background */
+        border: none;
+        color: white;
+        width: 80%;                  /* Set a consistent width for the buttons */
+        text-align: center;           /* Center-align the text */
+        padding: 10px 0;             /* Padding to make it look like a button */
+        border-radius: 5px;          /* Rounded corners */
+        text-decoration: none;
+        display: inline-block;        /* Ensure buttons stay inline */
+        cursor: pointer;
+        font-weight: bold;           /* Bold text */
+        margin: 5px 0;               /* Add some margin between the buttons */
+    }
+    .dropdown-button:hover {
+        background-color: #8a7a56;   /* Darker gold on hover */
+    }
     /* General Dropdown Button Styling */
     .dropdown-button {
         background-color: #a49665;
         border: none;
+        width: 100px; 
         color: white;
-        padding: 10px 15px;
+        padding: 10px 5px;
         border-radius: 5px;
         text-align: center;
         display: block;
         text-decoration: none;
         font-weight: bold;
         margin-top: 20px; 
-        margin-right: 50px;
     }
     .dropdown-button:hover {
         background-color: #8a7a56;
     }
-
-    /* General Styling for Notification Dropdown */
-
-
-/* Home Mobile */
 
 /* Mobile view */
 @media (max-width: 768px) {
@@ -1733,7 +1725,7 @@ footer {
 .notification-icon {
     font-size: 24px;
     color: white;
-    margin-right: 70px; 
+    margin-right: 30px; 
 }
 
 .notification-count {
@@ -2019,7 +2011,7 @@ ul.navbar-nav {
     display: flex;
     /* This ensures that items are in a row */
     align-items: center; /* Vertically aligns items in the center */
-    margin-right: 60px;
+    margin-right: 30px;
 }
 
 

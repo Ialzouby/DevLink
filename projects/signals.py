@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from .models import UserProfile
 from django.db.models.signals import post_save, m2m_changed
 from django.dispatch import receiver
-from .models import UserProfile, Project, Comment, Message
+from .models import UserProfile, Project, Comment, Message, JoinRequest
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from .models import Message, Notification
@@ -62,3 +62,16 @@ def create_message_notification(sender, instance, created, **kwargs):
                 is_read=False,
                 timestamp=timezone.now()
             )
+
+# signals.py
+@receiver(post_save, sender=JoinRequest)
+def notify_project_owner_on_join_request(sender, instance, created, **kwargs):
+    if created:
+        project_owner = instance.project.owner
+        user_requesting = instance.user
+        Notification.objects.create(
+            user=project_owner,
+            is_read=False,
+            timestamp=timezone.now(),
+            content=f"{user_requesting.username} has requested to join your project '{instance.project.title}'"
+        )

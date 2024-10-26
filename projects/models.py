@@ -111,6 +111,7 @@ class Notification(models.Model):
     related_message = models.ForeignKey(Message, on_delete=models.CASCADE, null=True, blank=True)  # Message related to the notification
     is_read = models.BooleanField(default=False)
     timestamp = models.DateTimeField(default=timezone.now)
+    content = models.TextField(blank=True)
 
     def __str__(self):
         if self.related_message:

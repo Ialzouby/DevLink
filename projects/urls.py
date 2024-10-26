@@ -24,9 +24,7 @@ urlpatterns = [
     path('conversations/', views.active_conversations, name='active_conversations'),
     path('notifications/', views.notifications_view, name='notifications'),
     path('notifications/mark-read/<int:notification_id>/', views.mark_as_read, name='mark_as_read'),
-    
-
-
+    path('notification/delete/<int:notification_id>/', views.delete_notification, name='delete_notification'),
 ]
 
 

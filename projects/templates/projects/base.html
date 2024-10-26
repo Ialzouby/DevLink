@@ -64,13 +64,30 @@
                                     <ul class="notification-list">
                                         {% for notification in notifications %}
                                             <li>
-                                                {% if notification.related_message %}
-                                                    <a href="{{ notification.get_message_thread_url }}">
-                                                        {{ notification.related_message.content }} - {{ notification.timestamp|timesince }} ago
-                                                    </a>
-                                                {% else %}
-                                                    <p>Notification without a related message</p>
-                                                {% endif %}
+                                                <div class="notification-icon">
+                                                    {% if notification.related_message %}
+                                                        <i class="fas fa-envelope"></i> <!-- Icon for message notifications -->
+                                                    {% else %}
+                                                        <i class="fas fa-user-plus"></i> <!-- Icon for join request notifications -->
+                                                    {% endif %}
+                                                </div>
+                                                <div class="notification-text">
+                                                    {% if notification.related_message %}
+                                                        <a href="{{ notification.get_message_thread_url }}">
+                                                            {{ notification.related_message.content }}
+                                                        </a>
+                                                    {% endif %}
+                                                    {% if notification.content %}
+                                                        <p>{{ notification.content }}</p>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="notification-timestamp">
+                                                    {{ notification.timestamp|timesince }} ago
+                                                </div>
+                                                <form method="POST" action="{% url 'delete_notification' notification.id %}" style="display: inline;">
+                                                    {% csrf_token %}
+                                                    <button type="submit" class="delete-notification-btn">&times;</button>
+                                                </form>
                                             </li>
                                         {% endfor %}
                                     </ul>
@@ -78,6 +95,8 @@
                                     <p>No new notifications</p>
                                 {% endif %}
                             </div>
+                            
+                            
                         </div>
     
                         <!-- Profile Dropdown -->

@@ -51,18 +51,14 @@ def update_points_for_profile_picture(sender, instance, **kwargs):
         instance.save()
 
 
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-from django.utils import timezone
-from .models import Notification, Message
-
 @receiver(post_save, sender=Message)
 def create_message_notification(sender, instance, created, **kwargs):
     if created:
-        # Create a notification when a new message is received
-        Notification.objects.create(
-            user=instance.recipient,
-            related_message=instance,  # Pass the Message instance, not a string
-            is_read=False,  # Initially unread
-            timestamp=timezone.now()
-        )
+        # Check if a notification for this message already exists
+        if not Notification.objects.filter(user=instance.recipient, related_message=instance).exists():
+            Notification.objects.create(
+                user=instance.recipient,
+                related_message=instance,
+                is_read=False,
+                timestamp=timezone.now()
+            )

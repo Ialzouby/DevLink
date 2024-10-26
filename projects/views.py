@@ -269,6 +269,13 @@ def message_thread(request, username):
         (Q(sender=recipient) & Q(recipient=request.user))
     ).order_by('timestamp')
 
+    Notification.objects.filter(
+        user=request.user,
+        related_message__sender=recipient,
+        related_message__recipient=request.user,
+        is_read=False
+    ).update(is_read=True)
+
     if request.method == 'POST':
         form = MessageForm(request.POST)
         if form.is_valid():
@@ -277,7 +284,6 @@ def message_thread(request, username):
             new_message.recipient = recipient
             new_message.save()
             print(f"New message created: {new_message}")
-            Notification.objects.create(user=recipient, related_message=new_message)
 
 
             return redirect('message_thread', username=recipient.username)
@@ -315,12 +321,10 @@ def active_conversations(request):
     })
 
 
-
 @login_required
 def notifications_view(request):
-    # Fetch unread notifications for the logged-in user
-    notifications = Notification.objects.filter(user=request.user, is_read=False).order_by('-timestamp')
-    return render(request, 'projects/notifications.html', {'notifications': notifications})
+    return render(request, 'projects/notifications.html')
+
 
 @login_required
 def mark_as_read(request, notification_id):

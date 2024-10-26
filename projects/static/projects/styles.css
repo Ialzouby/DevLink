@@ -566,7 +566,7 @@ textarea {
     position: absolute;
     top: 90px;                   /* Below the profile image */
     right: 0;
-    background-color: #222;
+    background-color: #636363;
     min-width: 160px;            /* Adjust width to fit content */
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
     z-index: 1;
@@ -574,15 +574,10 @@ textarea {
     transition: opacity 0.3s ease, visibility 0.3s ease;  /* Smooth transition */
     padding: 10px 0;             /* Add some padding to the dropdown container */
     text-align: center;          /* Center-align content */
+    margin-right: 50px;
 }
 /* Show dropdown when hovering over profile image or dropdown content */
-.profile-dropdown:hover .dropdown-content,
-.dropdown-content:hover {
-    visibility: visible;
-    opacity: 1;  /* Make the dropdown visible */
-margin-top: 10px; 
-    margin-right: 0px;
-}
+
 /* Styling for both Edit Profile and Logout buttons */
 .dropdown-button {
     background-color: #a49665;   /* Gold background */
@@ -1578,14 +1573,20 @@ footer {
         border-radius: 5px;
         padding: 10px;
         top: 50px; /* Ensure dropdown is below the profile image */
-        right: 0;
+        margin-right: 50px;
     }
     /* Ensure only profile dropdown expands on hover */
     .profile-dropdown:hover .dropdown-content {
         display: block;
     }
 
-
+    .profile-dropdown:hover .dropdown-content,
+    .dropdown-content:hover {
+        visibility: visible;
+        opacity: 1;  /* Make the dropdown visible */
+    margin-top: 10px; 
+        margin-right: 50px;
+    }
 
 
     .profile-img {
@@ -1608,7 +1609,7 @@ footer {
         text-decoration: none;
         font-weight: bold;
         margin-top: 20px; 
-        
+        margin-right: 50px;
     }
     .dropdown-button:hover {
         background-color: #8a7a56;

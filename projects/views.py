@@ -219,19 +219,20 @@ def project_detail(request, pk):
 
 
 def network(request):
-    # Fetch all users and order them by the points field in descending order
-    query = request.GET.get('q', '')  # Get the search query from the request
+    # Get the search query from the request
+    query = request.GET.get('q', '')
+
+    # Fetch all users and order them by points in descending order, with a filter for the search query
     if query:
         users = User.objects.filter(
             Q(username__icontains=query) |
             Q(userprofile__grade_level__icontains=query) |
             Q(userprofile__concentration__icontains=query)
-        )
+        ).order_by('-userprofile__points')
     else:
-        users = User.objects.all()  # Show all users if no search query
+        users = User.objects.all().order_by('-userprofile__points')  # Show all users, ordered by points
 
     return render(request, 'projects/network.html', {'users': users})
-
 
 
 @login_required

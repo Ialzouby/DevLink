@@ -61,36 +61,34 @@
                             </a>
                             <div class="dropdown-content">
                                 {% if notifications %}
-                                    <ul class="notification-list">
-                                        {% for notification in notifications %}
-                                            <li>
-                                                <div class="notification-icon">
-                                                    {% if notification.related_message %}
-                                                        <i class="fas fa-envelope"></i> <!-- Icon for message notifications -->
-                                                    {% else %}
-                                                        <i class="fas fa-user-plus"></i> <!-- Icon for join request notifications -->
-                                                    {% endif %}
-                                                </div>
-                                                <div class="notification-text">
-                                                    {% if notification.related_message %}
-                                                        <a href="{{ notification.get_message_thread_url }}">
-                                                            {{ notification.related_message.content }}
-                                                        </a>
-                                                    {% endif %}
-                                                    {% if notification.content %}
-                                                        <p>{{ notification.content }}</p>
-                                                    {% endif %}
-                                                </div>
-                                                <div class="notification-timestamp">
-                                                    {{ notification.timestamp|timesince }} ago
-                                                </div>
-                                                <form method="POST" action="{% url 'delete_notification' notification.id %}" style="display: inline;">
-                                                    {% csrf_token %}
-                                                    <button type="submit" class="delete-notification-btn">&times;</button>
-                                                </form>
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
+                                <ul class="notification-list">
+                                    {% for notification in notifications %}
+                                        <li id="notification-{{ notification.id }}">
+                                            <div class="notification-icon">
+                                                {% if notification.related_message %}
+                                                    <i class="fas fa-envelope"></i>
+                                                {% else %}
+                                                    <i class="fas fa-user-plus"></i>
+                                                {% endif %}
+                                            </div>
+                                            <div class="notification-text">
+                                                {% if notification.related_message %}
+                                                    <a href="{{ notification.get_message_thread_url }}">
+                                                        {{ notification.related_message.content }}
+                                                    </a>
+                                                {% endif %}
+                                                {% if notification.content %}
+                                                    <p>{{ notification.content }}</p>
+                                                {% endif %}
+                                            </div>
+                                            <div class="notification-timestamp">
+                                                {{ notification.timestamp|timesince }} ago
+                                            </div>
+                                            <button onclick="deleteNotification({{ notification.id }})" class="delete-notification-btn">&times;</button>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                                
                                 {% else %}
                                     <p>No new notifications</p>
                                 {% endif %}
@@ -174,6 +172,27 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
+function deleteNotification(notificationId) {
+    fetch(`/notification/delete/${notificationId}/`, {
+        method: 'DELETE',
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}',  // Django CSRF token
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            // Remove the notification element from the DOM
+            const notificationElement = document.getElementById(`notification-${notificationId}`);
+            if (notificationElement) {
+                notificationElement.remove();
+            }
+        } else {
+            console.error('Failed to delete notification');
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
 
 
     </script>

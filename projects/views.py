@@ -23,7 +23,9 @@ from .models import Message
 from cloudinary.uploader import upload
 import cloudinary
 from django.http import HttpResponseForbidden
-
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST, require_http_methods
+from django.shortcuts import get_object_or_404
 # Profile view
 def profile(request, username):
     user = get_object_or_404(User, username=username)
@@ -336,9 +338,10 @@ def mark_as_read(request, notification_id):
 
 
 @login_required
+@require_http_methods(["DELETE"])
 def delete_notification(request, notification_id):
     notification = get_object_or_404(Notification, id=notification_id, user=request.user)
     if notification.user == request.user:
         notification.delete()
-        return redirect(request.META.get('HTTP_REFERER', 'home'))  # Redirect back to the previous page
-    return HttpResponseForbidden("You do not have permission to delete this notification.")
+        return JsonResponse({'success': True})
+    return JsonResponse({'error': 'Unauthorized'}, status=403)

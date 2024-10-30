@@ -38,7 +38,7 @@ LOGIN_URL = '/login/'
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'b)2(07%(p#u+0w)xzg2obwkc3%cmbn&7zc--xk@*8&@boms&lf')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     'devlink.up.railway.app', 
@@ -46,6 +46,10 @@ ALLOWED_HOSTS = [
     '127.0.0.1',                                
     '[::1]',                                    
 ]
+
+SECURE_SSL_REDIRECT = True
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 CSRF_TRUSTED_ORIGINS = [ 'https://devlink.up.railway.app']
 

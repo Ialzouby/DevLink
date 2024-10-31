@@ -20,12 +20,12 @@
                 <p>Contributors:</p>
                 <div class="contributors-list">
                     <a href="{% url 'profile' project.owner.username %}">
-                        <img src="{{ project.owner.userprofile.profile_picture.url|safe }}" alt="{{ project.owner.username }}" class="contributor-pic">
+                        <img src="{{ project.owner.userprofile.profile_picture|safe }}" alt="{{ project.owner.username }}" class="contributor-pic">
                     </a>
 
                     {% for member in project.members.all %}
                         <a href="{% url 'profile' member.username %}">
-                            <img src="{{ member.userprofile.profile_picture.url|safe }}" alt="{{ member.username }}" class="contributor-pic">
+                            <img src="{{ member.userprofile.profile_picture|safe }}" alt="{{ member.username }}" class="contributor-pic">
                         </a>
                     {% endfor %}
                 </div>

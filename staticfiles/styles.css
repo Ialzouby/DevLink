@@ -1,3 +1,8 @@
+/* UNCC GOLD a49665 */
+/* UNCC GREEN 005035 */
+/* Main Backround Color 343434 */
+
+
 html, body {
     height: 100%;  /* Make sure the body and html take up the full height of the viewport */
     margin: 0;
@@ -1240,15 +1245,7 @@ footer {
     border-radius: 5px;
     font-weight: bold;
 }
-.badge.gold {
-    background-color: #d4af37; /* Gold */
-}
-.badge.silver {
-    background-color: #c0c0c0; /* Silver */
-}
-.badge.bronze {
-    background-color: #cd7f32; /* Bronze */
-}
+
 .create-project-container {
     min-height: 60vh; /* Use min-height to ensure it fits without extra space */
     display: flex;
@@ -1468,17 +1465,7 @@ footer {
 }
 
 
-.gold {
-    background-color: #b08d57;
-}
 
-.silver {
-    background-color: #c0c0c0;
-}
-
-.bronze {
-    background-color: #cd7f32;
-}
 
 /* Responsive Styling for Smaller Screens */
 @media (max-width: 768px) {
@@ -2063,4 +2050,34 @@ ul.navbar-nav {
 
 .delete-notification-btn:hover {
     color: #ff4d4f;
+}
+
+
+
+/* Optional: Add hover effects */
+.network-badge:hover {
+    opacity: 0.9;
+    transform: scale(1.05);
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.network-badge.gold {
+    background-color: #a49665; /* Gold color */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 5px; 
+    border-radius: 10px;
+}
+
+.network-badge.silver {
+    background-color: #C0C0C0; /* Silver color */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 5px; 
+    border-radius: 10px;
+}
+
+.network-badge.bronze {
+    background-color: #CD7F32; /* Bronze color */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 5px; 
+    border-radius: 10px;
 }

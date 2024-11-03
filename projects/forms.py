@@ -77,7 +77,8 @@ class CustomUserCreationForm(UserCreationForm):
         }),
         required=False
     )
-    profile_picture = forms.ImageField(required=False)
+    #Make profile_picture a required field to fix profile picture bugs
+    profile_picture = forms.ImageField(required=True)
     
 
     class Meta:
@@ -85,6 +86,13 @@ class CustomUserCreationForm(UserCreationForm):
         fields = (
             'username', 'first_name', 'last_name', 'email', 'grade_level', 'concentration', 'linkedin', 'github', 'bio', 'password1', 'password2', 'profile_picture'
         )
+
+    #validation that user uploaded required profile picture
+    #def clean_profile_picture(self):
+        #profile_picture = self.cleaned_data.get('profile_picture')
+        #if not profile_picture:
+            #raise forms.ValidationError("Please upload a profile picture.")
+        #return profile_picture
 
 
 class RatingForm(forms.Form):

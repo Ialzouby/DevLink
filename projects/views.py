@@ -86,6 +86,7 @@ def register(request):
                 print("User authentication failed")  # Debugging
         else:
             print(form.errors)  # Print form errors for debugging
+            
     else:
         form = CustomUserCreationForm()
     

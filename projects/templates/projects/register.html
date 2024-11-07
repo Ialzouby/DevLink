@@ -6,102 +6,12 @@
 {% block content %}
 <div class="container form-container">
     <h2>Sign Up</h2>
-    <!-- enctype="multipart/form-data" is necessary to handle file uploads -->
     <form method="POST" action="{% url 'register' %}" enctype="multipart/form-data">
-        
+
         {% csrf_token %}
+        {{ form.as_p }}
 
-        <!-- Step 1 -->
-        <div class="step" id="step-1">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="first_name">First Name:</label>
-                        <input type="text" id="first_name" name="first_name" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" name="email" class="form-control">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="last_name">Last Name:</label>
-                        <input type="text" id="last_name" name="last_name" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="username">Username:</label>
-                        <input type="text" id="username" name="username" class="form-control">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Step 2 -->
-        <div class="step" id="step-2" style="display:none;">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="grade_level">Grade Level:</label>
-                        <input type="text" id="grade_level" name="grade_level" class="form-control">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="concentration">Concentration:</label>
-                        <input type="text" id="concentration" name="concentration" class="form-control">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Step 3 -->
-<!-- Step 3 -->
-<div class="step" id="step-3" style="display:none;">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="linkedin">LinkedIn (Optional):</label>
-                <input type="url" id="linkedin" name="linkedin" class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="profile_picture">Profile Picture (Required):</label>
-                <input type="file" id="profile_picture" name="profile_picture" class="form-control" required>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="github">GitHub (Optional):</label>
-                <input type="url" id="github" name="github" class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="bio">Bio (Optional):</label>
-                <textarea id="bio" name="bio" class="form-control" rows="2"></textarea>
-            </div>
-        </div>
-        <!-- Add password fields here in Step 3 -->
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="password1">Password:</label>
-                <input type="password" id="password1" name="password1" class="form-control" required>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="password2">Confirm Password:</label>
-                <input type="password" id="password2" name="password2" class="form-control" required>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-        <div class="form-group text-center">
-            <!-- Buttons for navigating steps -->
-            <button type="button" class="btn btn-primary" id="prevBtn" onclick="prevStep()" style="display:none;">Previous</button>
-            <button type="button" class="btn btn-primary" id="nextBtn" onclick="nextStep()">Next</button>
-            <button type="submit" class="btn btn-primary" id="submitBtn" style="display:none;">Sign Up</button>
-        </div>
+        <button type="submit" class="btn btn-primary">Sign Up</button>
     </form>
 </div>
 

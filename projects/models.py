@@ -59,7 +59,7 @@ class Project(models.Model):
     def __str__(self):
         return self.title
     
-
+# JoinRequest model
 class JoinRequest(models.Model):
     project = models.ForeignKey(Project, related_name='join_requests', on_delete=models.CASCADE)
     user = models.ForeignKey(User, related_name='join_requests', on_delete=models.CASCADE)
@@ -90,7 +90,7 @@ class Update(models.Model):
     def __str__(self):
         return f'Update on {self.project.title}'
 
-
+# Message model
 class Message(models.Model):
     sender = models.ForeignKey(User, related_name="sent_messages", on_delete=models.CASCADE)
     recipient = models.ForeignKey(User, related_name="received_messages", on_delete=models.CASCADE)
@@ -103,9 +103,7 @@ class Message(models.Model):
     def __str__(self):
         return f"Message from {self.sender} to {self.recipient} at {self.timestamp}"
     
-
-
-
+# Notification model
 class Notification(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)  # User who receives the notification
     related_message = models.ForeignKey(Message, on_delete=models.CASCADE, null=True, blank=True)  # Message related to the notification

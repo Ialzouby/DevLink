@@ -1,6 +1,9 @@
 /* UNCC GOLD a49665 */
 /* UNCC GREEN 005035 */
 /* Main Backround Color 343434 */
+ /* Blue color for nav bar - 2daba6 */ 
+ /* PURPLE FOR OTHER - 6571ff */ 
+ /* Main Backround Color 343434 */
 
 
 html, body {
@@ -17,12 +20,12 @@ html, body {
 body {
     background-color: #343434;  /* Dark background */
     color: #f1f1f1;  /* White text */
-    font-family: Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
     margin: 0;
     padding: 0;
 }
 body, h1, h2, h3, h4, h5, h6, p, a {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
 }
 h1, h2, h3 {
     font-weight: 600; /* Semi-bold for headings */
@@ -47,7 +50,7 @@ p, a {
     color: white; /* Text color for the button */
     text-decoration: none; /* Remove underline */
     font-weight: bold; 
-    background-color: #a49665; /* Gold background */
+    background-color: #2C3E50; /* Gold background */
     padding: 10px 20px; /* Padding to make it look like a button */
     border-radius: 5px; /* Rounded corners for a button-like look */
     transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition on hover */
@@ -906,8 +909,8 @@ textarea {
 /* Navbar */
 .navbar {
     width: 100vw;
-    padding: 20px;
-    background-color: #005035 !important;
+    padding: 4px;
+    background-color: #87CEEB !important;
     color: white;
     display: flex;
     justify-content: space-between;
@@ -922,6 +925,26 @@ textarea {
     margin-bottom: -10px;
     vertical-align: middle; /* Align it with the DevLink text */
 }
+
+/* Adding title variable for styling found in base.html line 24 */
+.navbar-title {
+    font-size: 35px; /* Adjust the font size */
+    font-weight: normal; /*Make the text bold */
+    color: #ffffff; /* Change the text color */
+    /* margin-left: px; Add some space between the logo and the text */
+    display: flex;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    align-items: center; /* Align the text vertically with the logo */
+}
+
+.navbar-title:hover {
+    color: #ffffff; /* Ensure the color stays white on hover */
+    background-color: transparent; /* Ensure no background color change */
+    transform: none; /* Ensure no transform effect */
+    cursor: pointer; /* Ensure cursor does not change */
+}
+
+
 .navbar h1 {
     font-size: 40px;
     margin-left: 11px;
@@ -940,8 +963,8 @@ textarea {
 /* Footer */
 footer {
     width: 100%;  /* Full viewport width */
-    padding: 20px 40px;  /* Add padding for spacing */
-    background-color: #005035;
+    padding: 11px;  /* Add padding for spacing */
+    background-color: #6571ff;
     color: #f1f1f1;
     text-align: center;
     margin-top: 20px;  /* Add space above the footer */
@@ -1116,7 +1139,7 @@ footer {
     border: 2px solid #fff;  /* Add a white border around the image for contrast */
 }
 .join-btn {
-    background-color: #005035;
+    background-color: #6571ff;
     color: #fff;
     padding: 10px 20px;
     border: none;
@@ -1341,7 +1364,7 @@ footer {
     padding: 20px;
     background-color: #3a3a3a;
     color: #ffffff;
-    font-family: Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
     min-height: 100vh;
     width: 100vw; /* Full viewport width */
 }

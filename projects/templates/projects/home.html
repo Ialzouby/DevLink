@@ -41,12 +41,12 @@
     {% endfor %}
 </div>
 
-
-    <!-- Right Sidebar (Empty for now) -->
-    <div class="unique-right-sidebar">
-        <h3>Top Contributors</h3>
-        {% for user in top_users %}
-        
+<!-- Right Sidebar -->
+<div class="unique-right-sidebar">
+    <h3>Top Contributors</h3>
+    {% for user in top_users %}
+        <!-- Wrap the user-card div with an anchor tag -->
+        <a href="{% url 'profile' user.user.username %}" class="user-card-link">
             <div class="user-card">
                 <div class="user-avatar-container">
                     {% if user.profile_picture %}
@@ -58,13 +58,13 @@
                 <div class="user-info">
                     <h4>{{ user.user.username }}</h4>
                     <p>Grade Level: {{ user.grade_level }}</p>
-                    <p>Concentration: {{ user.concentration }}</p>
+                    <p>{{ user.concentration }}</p>
                 </div>
-
             </div>
-       
-        {% endfor %}
-    </div>
+        </a>
+    {% endfor %}
+</div>
+
     
 </div>
 {% endblock %}

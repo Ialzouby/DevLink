@@ -1,136 +1,114 @@
-from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import login, authenticate
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.urls import reverse
-from .models import Project, Comment, UserProfile, JoinRequest
-from .forms import RatingForm, CustomUserCreationForm
-from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from .forms import ProjectForm
-from .models import Project
-from .forms import ProjectForm, UserProfileForm
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
-from .models import User, Message, Notification
-from .forms import MessageForm
-from .models import Message
+from django.contrib import messages
+from django.http import HttpResponseForbidden, JsonResponse
+from django.views.decorators.http import require_POST, require_http_methods
+
+from .forms import RatingForm, CustomUserCreationForm, MessageForm, ProjectForm, UserProfileForm
+from .models import Project, Comment, UserProfile, JoinRequest, Message, User, Notification
+
 from cloudinary.uploader import upload
 import cloudinary
-from django.http import HttpResponseForbidden
-from django.http import JsonResponse
-from django.views.decorators.http import require_POST, require_http_methods
-from django.shortcuts import get_object_or_404
-# Profile view
+
+# Profile view to display a user's profile
 def profile(request, username):
-    user = get_object_or_404(User, username=username)
-    return render(request, 'projects/profile.html', {'profile_user': user})
-# Register view
+    user = get_object_or_404(User, username=username)  # Fetch the user by username or return 404
+    return render(request, 'projects/profile.html', {'profile_user': user})  # Render the profile template
+
+# Register view for new user sign-ups
 def register(request):
     if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST, request.FILES)  # Add request.FILES to handle file uploads
+        form = CustomUserCreationForm(request.POST, request.FILES)  # Include file uploads
         if form.is_valid():
-            print("Form is valid")  # Debugging
-            user = form.save()  # Save the user to the database
+            print("Form is valid")  # Debugging statement
+            user = form.save()  # Save the new user
 
+            # Configure Cloudinary for image uploads
             cloudinary.config(
                 cloud_name='dvah1m8du',
                 api_key='547583998667598',
                 api_secret='-hOXeuzVlg2LrLjnML7Bzm7SnHw'
             )
 
-
+            # Check if a profile picture is uploaded
             if 'profile_picture' in request.FILES:
                 try:
+                    # Upload the profile picture to Cloudinary
                     result = upload(request.FILES['profile_picture'], upload_preset='ml_default')
                     print("Cloudinary upload result:", result)
                     
-                    # Assign the Cloudinary URL to the user's profile_picture field
+                    # Save the Cloudinary URL to the user's profile
                     user.userprofile.profile_picture = result['url']
                     user.userprofile.save()
                 except Exception as e:
                     print(f"Error uploading to Cloudinary: {e}")
 
-            # Manually update the UserProfile fields after it's created by the signal
+            # Update other UserProfile fields
             user.userprofile.grade_level = form.cleaned_data.get('grade_level')
             user.userprofile.concentration = form.cleaned_data.get('concentration')
             user.userprofile.linkedin = form.cleaned_data.get('linkedin')
             user.userprofile.github = form.cleaned_data.get('github')
             user.userprofile.bio = form.cleaned_data.get('bio')
-           
+            user.userprofile.save()  # Save the updated profile
 
-
-            user.userprofile.save()  # Save the updated profile information
-            # Save the profile picture to the UserProfile model (if the form includes profile picture field)
-        
-
-                
-
-            # Log in the user immediately after registration
+            # Authenticate and log in the user
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=password)
             
             if user is not None:
-                print("User authenticated successfully")  # Debugging
+                print("User authenticated successfully")  # Debugging statement
                 login(request, user)
                 messages.success(request, f'Account created for {username}! You are now logged in.')
-                # Redirect to the user's profile page
-                return redirect(reverse('profile', kwargs={'username': user.username}))
+                return redirect(reverse('profile', kwargs={'username': user.username}))  # Redirect to profile
             else:
-                print("User authentication failed")  # Debugging
+                print("User authentication failed")  # Debugging statement
         else:
-            print(form.errors)  # Print form errors for debugging
+            print(form.errors)  # Print errors for debugging
             
     else:
         form = CustomUserCreationForm()
     
     return render(request, 'projects/register.html', {'form': form})
 
-
-# Project view
-
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
-
+# View for a single project and handling actions like rating, commenting, and joining
 @login_required
 def project(request, project_id):
-    project = get_object_or_404(Project, pk=project_id)
-    comments = project.comments.all().order_by('-created_at')
-    join_requests = project.join_requests.filter(status='pending')
+    project = get_object_or_404(Project, pk=project_id)  # Fetch project or return 404
+    comments = project.comments.all().order_by('-created_at')  # Get all comments, newest first
+    join_requests = project.join_requests.filter(status='pending')  # Get pending join requests
 
     if request.method == "POST":
-        if "rating" in request.POST:
+        if "rating" in request.POST:  # Handle rating submission
             form = RatingForm(request.POST)
             if form.is_valid():
                 rating = int(form.cleaned_data['rating'])
-                project.rating = (project.rating + rating) / 2
+                project.rating = (project.rating + rating) / 2  # Update project rating
                 project.save()
                 return redirect('project', project_id=project_id)
-        elif "comment" in request.POST:
+        elif "comment" in request.POST:  # Handle comment submission
             content = request.POST.get('comment')
             if content:
-                Comment.objects.create(project=project, user=request.user, content=content)
+                Comment.objects.create(project=project, user=request.user, content=content)  # Create comment
                 return redirect('project', project_id=project_id)
-        elif "join_project" in request.POST:
+        elif "join_project" in request.POST:  # Handle join request
             if request.user not in project.members.all():
-                JoinRequest.objects.create(user=request.user, project=project)
+                JoinRequest.objects.create(user=request.user, project=project)  # Create join request
                 messages.success(request, "Join request sent. Awaiting approval.")
                 return redirect('project', project_id=project_id)
-        elif "approve_request" in request.POST:
+        elif "approve_request" in request.POST:  # Approve a join request
             join_request_id = request.POST.get('approve_request')
             join_request = get_object_or_404(JoinRequest, pk=join_request_id, project=project)
             join_request.status = 'approved'
             join_request.save()
-            project.members.add(join_request.user)
+            project.members.add(join_request.user)  # Add user to project members
             messages.success(request, f"{join_request.user.username} has been added to the project.")
             return redirect('project', project_id=project_id)
-        elif "reject_request" in request.POST:
+        elif "reject_request" in request.POST:  # Reject a join request
             join_request_id = request.POST.get('reject_request')
             join_request = get_object_or_404(JoinRequest, pk=join_request_id, project=project)
             join_request.status = 'rejected'
@@ -146,134 +124,105 @@ def project(request, project_id):
         'form': form,
         'is_owner': project.members.filter(pk=request.user.pk).exists(),
         'is_pending_request': is_pending_request,
-        'join_requests': join_requests if request.user == project.owner else None,  # Only visible to project owner
+        'join_requests': join_requests if request.user == project.owner else None,  # Only for project owner
     }
     return render(request, 'projects/project.html', context)
 
-
-
-
+# Home view to display projects and topics
 def home(request, topic=None):
-    # Define topics for the sidebar
     topics = ["Web Development", "AI", "Data Science", "Cybersecurity"]  # Example topics
 
-    # If a topic is passed through the URL, filter projects based on it
-    if topic:
+    if topic:  # Filter projects by topic if provided
         projects = Project.objects.filter(topic__icontains=topic)
-    else:
+    else:  # Otherwise, show all projects
         projects = Project.objects.all().order_by('-created_at')
 
-    # Get the top 3 users based on their points
-    top_users = UserProfile.objects.order_by('-points')[:3]
-
-    # Pass the topics and filtered projects to the template
+    top_users = UserProfile.objects.order_by('-points')[:3]  # Top 3 users based on points
     return render(request, 'projects/home.html', {
         'projects': projects,
         'topics': topics,
         'top_users': top_users,
-        'selected_topic': topic,  # This is optional if you want to highlight the selected topic
+        'selected_topic': topic,  # Optional for highlighting the selected topic
     })
 
-
+# Network view to list all users
 def network(request):
     users = User.objects.all()  # Fetch all users
     return render(request, 'projects/network.html', {'users': users})
 
-
 # Delete comment view
 @login_required
 def delete_comment(request, pk):
-    comment = get_object_or_404(Comment, pk=pk, user=request.user)
-    project_id = comment.project.id  # Get the associated project ID before deleting the comment
-    comment.delete()
+    comment = get_object_or_404(Comment, pk=pk, user=request.user)  # Ensure the comment belongs to the user
+    project_id = comment.project.id  # Get project ID before deleting
+    comment.delete()  # Delete the comment
     messages.success(request, 'Comment deleted successfully.')
     return redirect('project', project_id=project_id)
 
-
+# View to create a new project
 @login_required
 def create_project(request):
     if request.method == 'POST':
         form = ProjectForm(request.POST)
         if form.is_valid():
             project = form.save(commit=False)
-            project.owner = request.user  # Assign the logged-in user as the owner of the project
+            project.owner = request.user  # Set the owner to the logged-in user
             project.save()
-            return redirect('home')  # Redirect to the home page or any other desired page
+            return redirect('home')  # Redirect to home
     else:
         form = ProjectForm()
     return render(request, 'projects/create_project.html', {'form': form})
 
-
-def project_list(request):
-    # Get all unique topics from the projects
-    topics = Project.objects.values_list('topic', flat=True).distinct()
-    
-    projects = Project.objects.all()
-    return render(request, 'your_template.html', {'projects': projects, 'topics': topics})
-
-from django.shortcuts import render, get_object_or_404
-from .models import Project
-
+# View to display project details
 def project_detail(request, pk):
-    project = get_object_or_404(Project, pk=pk)
+    project = get_object_or_404(Project, pk=pk)  # Fetch project or return 404
     return render(request, 'projects/project_detail.html', {'project': project})
 
-
+# Network view with search functionality
 def network(request):
-    # Get the search query from the request
-    query = request.GET.get('q', '')
-
-    # Fetch all users and order them by points in descending order, with a filter for the search query
+    query = request.GET.get('q', '')  # Get search query
     if query:
         users = User.objects.filter(
             Q(username__icontains=query) |
             Q(userprofile__grade_level__icontains=query) |
             Q(userprofile__concentration__icontains=query)
-        ).order_by('-userprofile__points')
+        ).order_by('-userprofile__points')  # Filter and order users
     else:
-        users = User.objects.all().order_by('-userprofile__points')  # Show all users, ordered by points
-
+        users = User.objects.all().order_by('-userprofile__points')  # Order users by points
     return render(request, 'projects/network.html', {'users': users})
 
-
+# View to edit a user's profile
 @login_required
 def edit_profile(request):
     if request.method == 'POST':
         form = UserProfileForm(request.POST, request.FILES, instance=request.user.userprofile)
         if form.is_valid():
             user_profile = form.save(commit=False)
-            
-            # Check if a new profile picture is uploaded
-            if 'profile_picture' in request.FILES:
+            if 'profile_picture' in request.FILES:  # Check for new profile picture
                 try:
                     result = upload(request.FILES['profile_picture'], upload_preset='ml_default')
                     print("Cloudinary upload result:", result)
-                    
-                    # Assign the Cloudinary URL to the user's profile_picture field
                     user_profile.profile_picture = result['url']
                 except Exception as e:
                     print(f"Error uploading to Cloudinary: {e}")
-                    messages.error(request, "There was an issue uploading the profile picture. Please try again.")
-
-            # Save the updated profile information
-            user_profile.save()
+                    messages.error(request, "Issue uploading the profile picture.")
+            user_profile.save()  # Save profile updates
             messages.success(request, 'Your profile has been updated!')
             return redirect('profile', username=request.user.username)
     else:
         form = UserProfileForm(instance=request.user.userprofile)
-
     return render(request, 'projects/edit_profile.html', {'form': form})
 
-
+# Message thread view for private messaging
 @login_required
 def message_thread(request, username):
-    recipient = get_object_or_404(User, username=username)
-
+    recipient = get_object_or_404(User, username=username)  # Get the recipient user
     messages = Message.objects.filter(
         (Q(sender=request.user) & Q(recipient=recipient)) | 
         (Q(sender=recipient) & Q(recipient=request.user))
-    ).order_by('timestamp')
+    ).order_by('timestamp')  # Fetch messages in chronological order
 
+    # Mark related notifications as read
     Notification.objects.filter(
         user=request.user,
         related_message__sender=recipient,
@@ -287,63 +236,59 @@ def message_thread(request, username):
             new_message = form.save(commit=False)
             new_message.sender = request.user
             new_message.recipient = recipient
-            new_message.save()
+            new_message.save()  # Save the message
             print(f"New message created: {new_message}")
-
-
             return redirect('message_thread', username=recipient.username)
         else:
             print(f"Form errors: {form.errors}")
     else:
         form = MessageForm()
-
+    
     return render(request, 'projects/message_thread.html', {
         'messages': messages,
         'recipient': recipient,
         'form': form
     })
 
-
+# View to display all active conversations
 @login_required
 def active_conversations(request):
-    # Get all unique users the logged-in user has had a conversation with (either as sender or recipient)
+    # Fetch unique users the logged-in user has had a conversation with
     sent_conversations = Message.objects.filter(sender=request.user).values('recipient').distinct()
     received_conversations = Message.objects.filter(recipient=request.user).values('sender').distinct()
 
-    # Get the unique user IDs of people the logged-in user has communicated with
+    # Combine the unique user IDs from sent and received conversations
     conversation_user_ids = set(
         user['recipient'] for user in sent_conversations
     ).union(
         user['sender'] for user in received_conversations
     )
 
-    # Get the actual User objects of the conversation partners
-    from django.contrib.auth.models import User
+    # Fetch the User objects for these IDs
     conversation_users = User.objects.filter(id__in=conversation_user_ids)
-
     return render(request, 'projects/active_conversations.html', {
         'conversation_users': conversation_users
     })
 
-
+# View to render notifications
 @login_required
 def notifications_view(request):
     return render(request, 'projects/notifications.html')
 
-
+# Mark a notification as read
 @login_required
 def mark_as_read(request, notification_id):
     notification = get_object_or_404(Notification, id=notification_id, user=request.user)
     notification.is_read = True
     notification.save()
-    return redirect('notifications')  # Redirect back to notifications or wherever
+    return redirect('notifications')  # Redirect to notifications page
 
-
+# Delete a notification
 @login_required
 @require_http_methods(["DELETE"])
 def delete_notification(request, notification_id):
     notification = get_object_or_404(Notification, id=notification_id, user=request.user)
     if notification.user == request.user:
         notification.delete()
-        return JsonResponse({'success': True})
-    return JsonResponse({'error': 'Unauthorized'}, status=403)
+        return JsonResponse({'success': True})  # Return success response
+    return JsonResponse({'error': 'Unauthorized'}, status=403)  # Return error if unauthorized

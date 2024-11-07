@@ -32,12 +32,9 @@
             </button>
             <!-- Center the nav links and collapse for mobile -->
         <!-- Center the nav links and collapse for mobile -->
-        <div class="collapse navbar-collapse justify-content-center" id="navbarNavDropdown">
-            <ul class="navbar-nav nav-links">
+        <div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
+            <ul class="navbar-nav nav-links align-items-">
                 {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'home' %}">Projects</a>
-                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'network' %}">Network</a>
                     </li>

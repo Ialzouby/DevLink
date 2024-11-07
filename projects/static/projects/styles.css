@@ -37,12 +37,14 @@ p, a {
     margin: 0;            /* Remove default margin for proper alignment */
     font-size: 24px;
 }
+
+/* IMPORTANT FOR NAV LINK */
 .nav-links {
     display: flex;
     list-style-type: none;
-
-    margin-top: 15px; 
+    vertical-align: middle;  /* center the nav links vertically */
 }
+
 .nav-links li {
     margin-right: 20px;   /* More space between nav items */
 }
@@ -50,13 +52,13 @@ p, a {
     color: white; /* Text color for the button */
     text-decoration: none; /* Remove underline */
     font-weight: bold; 
-    background-color: #a49665; /* Gold background */
-    padding: 10px 20px; /* Padding to make it look like a button */
+    padding: 2px 2px; /* Padding to make it look like a button */
     border-radius: 5px; /* Rounded corners for a button-like look */
+    vertical-align: middle;
     transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition on hover */
 }
 .nav-links a:hover {
-    background-color: #847c5e; /* Darker shade of gold on hover */
+    background-color: #72716b3d; /* Darker shade of gold on hover */
     transform: scale(1.1); /* Slight zoom effect on hover */
     cursor: pointer; /* Change cursor to pointer */
 }
@@ -118,7 +120,7 @@ p, a {
     color: #c82333;  /* Darker red */
 }
 .nav-buttons button {
-    background-color: #a49665;
+    background-color: #0a5480;
     border: none;
     color: white;
     padding: 10px 20px;
@@ -576,7 +578,7 @@ textarea {
     right: 0;
     background-color: #636363;
     min-width: 160px;            /* Adjust width to fit content */
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.144);
     z-index: 1;
     border-radius: 5px;
     transition: opacity 0.3s ease, visibility 0.3s ease;  /* Smooth transition */
@@ -592,10 +594,10 @@ textarea {
 }
 /* Profile Image */
 .profile-dropdown .profile-img {
-    width: 60px;              /* Adjust the width of the image */
-    height: 60px;             /* Adjust the height of the image */
+    width: 50px;              /* Adjust the width of the image */
+    height: 50px;             /* Adjust the height of the image */
     cursor: pointer;
-    margin-right: 0px; 
+    margin-right: 20px; 
     border: 2px solid #444;
     border-radius: 50%;       /* Ensure the image stays circular */
     object-fit: cover;        /* Ensures the image fits properly without stretching */
@@ -615,18 +617,20 @@ textarea {
 .unique-left-sidebar {
     background-color: #4b4b4b; /* Dark background for sidebar */
     color: #ecf0f1; /* Light text color */
-    padding: 20px;
+    padding: 15px;
     border-radius: 8px; /* Rounded corners */
     width: 250px; /* Set width for the sidebar */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+
 }
 /* Sidebar Heading */
 .unique-left-sidebar h3 {
+    text-align: center;
     font-size: 24px;
     margin-bottom: 20px;
     border-bottom: 2px solid #ecf0f1; /* Line under the heading */
     padding-bottom: 10px;
-    color: #8a7a56; /* Golden color for the heading */
+    color: #f2f7f8; /* Golden color for the heading */
 }
 /* Sidebar List */
 .unique-left-sidebar ul {
@@ -909,18 +913,19 @@ textarea {
 /* Navbar */
 .navbar {
     width: 100vw;
-    padding: 4px;
-    background-color: #6571ff !important;
-    color: white;
+    padding: 0px;
+    background: linear-gradient(rgb(59, 35, 146), rgb(85, 14, 68)) !important;
+    /* background-color: #202a5a !important; */
+    /* color: white; */
     display: flex;
-    justify-content: space-between;
     margin: 0;  /* Ensure no margin is applied */
+    justify-content: flex-end;
    
 }
 .navbar-logo {
-    height: 70px; /* Adjust height as needed */
+    height: 55px; /* Adjust height as needed */
     margin-right: 10px; /* Add some space between the logo and text */
-    margin-left: 60px;
+    margin-left: 30px;
     margin-top: -10px; 
     margin-bottom: -10px;
     vertical-align: middle; /* Align it with the DevLink text */
@@ -933,7 +938,7 @@ textarea {
     color: #ffffff; /* Change the text color */
     /* margin-left: px; Add some space between the logo and the text */
     display: flex;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    font-family: "Helvetica Neue";
     align-items: center; /* Align the text vertically with the logo */
 }
 
@@ -963,11 +968,11 @@ textarea {
 /* Footer */
 footer {
     width: 100%;  /* Full viewport width */
-    padding: 11px;  /* Add padding for spacing */
-    background-color: #6571ff;
+    padding: 8px;  /* Add padding for spacing */
+    background: linear-gradient(rgb(85, 14, 68), rgb(59, 35, 146)) !important;
     color: #f1f1f1;
     text-align: center;
-    margin-top: 20px;  /* Add space above the footer */
+    margin-top: 15px;  /* Add space above the footer */
     flex-shrink: 0;  /* Ensure the footer doesn't shrink */
     position: relative; /* Ensure proper placement after main content */
     bottom: 0; /* Stick to the bottom when content is short */
@@ -1488,34 +1493,6 @@ footer {
 }
 
 
-
-
-/* Responsive Styling for Smaller Screens */
-@media (max-width: 768px) {
-    .network-user-card {
-        width: 100%; /* Full width for user cards on mobile */
-    }
-
-    .network-search-input {
-        font-size: 16px;
-        padding: 12px;
-    }
-
-    .network-search-btn, .network-clear-btn {
-        padding: 12px 20px;
-        font-size: 16px;
-    }
-
-    .network-user-list {
-        gap: 20px;
-    }
-
-    .network-profile-img {
-        width: 100px;
-        height: 100px;
-    }
-}
-
 /* Ensure the entire card is clickable, but without default link styles */
 .network-user-card-link {
     text-decoration: none; /* Remove underline from links */
@@ -1622,40 +1599,6 @@ footer {
         background-color: #8a7a56;
     }
 
-/* Mobile view */
-@media (max-width: 768px) {
-    /* Hide left and right sidebars on mobile */
-    .unique-left-sidebar, .unique-right-sidebar {
-        display: none;
-    }
-
-    /* Make the project list take full width */
-    .unique-project-list {
-        width: 100%;
-    }
-
-    /* Adjust project item styling for mobile */
-    .unique-project-item {
-        padding: 10px;
-        margin-bottom: 10px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-    }
-
-    .unique-project-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .add-project-btn {
-        font-size: 24px;
-        padding: 5px 10px;
-    }
-}
-
-/*  navbar in mobile */
-
 /* Ensure the navbar is responsive */
 .navbar-toggler {
     display: none;
@@ -1663,17 +1606,13 @@ footer {
 
 .navbar-nav {
     display: flex;
+    align-items: right;
+    vertical-align: middle;
 }
-
-
-
-
 
 .dropdown-menu {
     transition: all 0.3s ease;
 }
-
-
 
 .navbar-nav.ml-auto {
     display: flex;
@@ -1683,8 +1622,6 @@ footer {
 .navbarNavDropdown{
     margin-right: 2000px; 
 }
-
-
 
 
 /* Dropdown styling */
@@ -1700,11 +1637,6 @@ footer {
     background-color: #333;
     color: #fff;
 }
-
-
-
-
-
 
 .dropdown-content {
     display: none; /* Hidden by default */
@@ -1728,14 +1660,16 @@ footer {
  .notification-dropdown {
     position: relative;
     display: inline-block;
+    vertical-align: middle;
     cursor: pointer;  /* Adds pointer cursor */
     padding: 5px;
 }
 
 .notification-icon {
-    font-size: 24px;
+    font-size: 20px;
     color: white;
-    margin-right: 30px; 
+    margin-right: 20px; 
+    vertical-align: center;
 }
 
 .notification-count {
@@ -1745,7 +1679,7 @@ footer {
     background-color: red;
     color: white;
     border-radius: 50%;
-    padding: 4px 6px;
+    padding: 4px 4px;
     font-size: 12px;
     margin-right: 70px; 
 
@@ -1792,6 +1726,7 @@ footer {
     list-style-type: none;
     margin: 0;
     padding: 0;
+    vertical-align: middle;
 }
 
 .notification-list li {
@@ -1812,6 +1747,10 @@ footer {
     padding: 10px;
 }
 
+/* FOLLOWING SECTION STARTS WITH MOBILE IMPLEMENTATION
+BE CAUTIOUS WHEN EDITING */
+
+
 /* CSS to hide live updates section on mobile devices */
 @media (max-width: 768px) {
     .live-updates {
@@ -1819,6 +1758,63 @@ footer {
     }
 }
 
+/* Responsive Styling for Smaller Screens */
+@media (max-width: 768px) {
+    .network-user-card {
+        width: 100%; /* Full width for user cards on mobile */
+    }
+
+    .network-search-input {
+        font-size: 16px;
+        padding: 12px;
+    }
+
+    .network-search-btn, .network-clear-btn {
+        padding: 12px 20px;
+        font-size: 16px;
+    }
+
+    .network-user-list {
+        gap: 20px;
+    }
+
+    .network-profile-img {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+/* Mobile view */
+@media (max-width: 768px) {
+    /* Hide left and right sidebars on mobile */
+    .unique-left-sidebar, .unique-right-sidebar {
+        display: none;
+    }
+
+    /* Make the project list take full width */
+    .unique-project-list {
+        width: 100%;
+    }
+
+    /* Adjust project item styling for mobile */
+    .unique-project-item {
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    .unique-project-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .add-project-btn {
+        font-size: 24px;
+        padding: 5px 10px;
+    }
+}
 
 @media (max-width: 768px) {
     .forum-thread {
@@ -1868,7 +1864,7 @@ footer {
     justify-content: flex-end; /* Align items to the right */
 }
 
-
+/*  MOBILE NO TOUCH FOR WEBSITE */
 @media (max-width: 768px) {
     /* Navbar icons container (notification and profile) */
     .navbar-icons-container {
@@ -1895,7 +1891,7 @@ footer {
     }
 }
 
-
+/* MOBILE NOT TOUCH WHEN DEVELOPING FOR WEBSITE */
 /* Show the navbar-toggler on mobile */
 @media (max-width: 768px) {
     .navbar-toggler {
@@ -1959,10 +1955,11 @@ footer {
     .navbar-nav .nav-link {
         color: white; /* White text color */
         font-size: 1.5rem; /* Increase font size */
-        padding: 10px 0; /* Add padding for space between links */
+        padding: 0px 0; /* Add padding for space between links */
         text-transform: uppercase;
         transition: color 0.3s;
         margin-top: 20px; 
+        align-items: center;
     }
 
     /* Change link hover color */
@@ -2021,8 +2018,9 @@ footer {
 ul.navbar-nav {
     display: flex;
     /* This ensures that items are in a row */
-    align-items: center; /* Vertically aligns items in the center */
-    margin-right: 30px;
+    vertical-align: middle; /* Vertically aligns items in the center */
+    margin-right: 2px;
+    justify-content: flex-end;
 }
 
 

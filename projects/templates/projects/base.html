@@ -26,11 +26,12 @@
                 DevLink
             </a>
     
-            <!-- Navbar Toggler Button (for mobile) -->
+            <!-- Navbar Toggler Button (for mobile)
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <!-- Center the nav links and collapse for mobile -->
+             -->
+
         <!-- Center the nav links and collapse for mobile -->
         <div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
             <ul class="navbar-nav nav-links align-items-">
@@ -132,6 +133,30 @@
     <footer>
         <p>&copy; 2024 DevLink. All rights reserved.</p>
     </footer>
+    <footer class="mobile-nav">
+        <ul class="nav-list">
+            <li class="nav-item">
+                <a class="nav-link-mobile" href="{% url 'home' %}">
+                    <i class="fa fa-home"></i> <!-- FontAwesome Home Icon -->
+                    <span>Projects</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link-mobile" href="{% url 'network' %}">
+                    <i class="fa fa-users"></i> <!-- FontAwesome Users Icon -->
+                    <span>Network</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link-mobile" href="{% url 'active_conversations' %}">
+                    <i class="fa fa-comments"></i> <!-- FontAwesome Comments Icon -->
+                    <span>Messaging</span>
+                </a>
+            </li>
+        </ul>
+    </footer>
+    
+    
     <script src="{% static 'projects/scripts.js' %}"></script>
 
     <!-- Bootstrap JS and Dependencies -->

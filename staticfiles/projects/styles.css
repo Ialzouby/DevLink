@@ -52,7 +52,12 @@ p, a {
     color: white; /* Text color for the button */
     text-decoration: none; /* Remove underline */
     font-weight: bold; 
+<<<<<<< HEAD
     padding: 2px 2px; /* Padding to make it look like a button */
+=======
+    background-color: #2C3E50; /* Gold background */
+    padding: 10px 20px; /* Padding to make it look like a button */
+>>>>>>> ee970ff835162c65fef8c154feaf110e7d9588d1
     border-radius: 5px; /* Rounded corners for a button-like look */
     vertical-align: middle;
     transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition on hover */
@@ -913,10 +918,16 @@ textarea {
 /* Navbar */
 .navbar {
     width: 100vw;
+<<<<<<< HEAD
     padding: 0px;
     background: linear-gradient(rgb(59, 35, 146), rgb(85, 14, 68)) !important;
     /* background-color: #202a5a !important; */
     /* color: white; */
+=======
+    padding: 4px;
+    background-color: #87CEEB !important;
+    color: white;
+>>>>>>> ee970ff835162c65fef8c154feaf110e7d9588d1
     display: flex;
     margin: 0;  /* Ensure no margin is applied */
     justify-content: flex-end;
@@ -938,7 +949,11 @@ textarea {
     color: #ffffff; /* Change the text color */
     /* margin-left: px; Add some space between the logo and the text */
     display: flex;
+<<<<<<< HEAD
     font-family: "Helvetica Neue";
+=======
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+>>>>>>> ee970ff835162c65fef8c154feaf110e7d9588d1
     align-items: center; /* Align the text vertically with the logo */
 }
 
@@ -968,8 +983,13 @@ textarea {
 /* Footer */
 footer {
     width: 100%;  /* Full viewport width */
+<<<<<<< HEAD
     padding: 8px;  /* Add padding for spacing */
     background: linear-gradient(rgb(85, 14, 68), rgb(59, 35, 146)) !important;
+=======
+    padding: 11px;  /* Add padding for spacing */
+    background-color: #6571ff;
+>>>>>>> ee970ff835162c65fef8c154feaf110e7d9588d1
     color: #f1f1f1;
     text-align: center;
     margin-top: 15px;  /* Add space above the footer */

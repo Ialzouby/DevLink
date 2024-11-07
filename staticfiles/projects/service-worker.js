@@ -4,7 +4,7 @@ const CACHE_NAME = 'devlink-cache-v1';
 // List of assets to cache
 const urlsToCache = [
     '/',
-    '/static/projects/css/styles.css',
+    '/static/projects/styles.css',
     '/static/projects/images/logo-192x192.png',
     '/static/projects/images/logo-512x512.png',
     // Add other URLs (scripts, fonts, etc.) that you want to cache

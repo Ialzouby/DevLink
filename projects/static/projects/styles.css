@@ -56,6 +56,8 @@ p, a {
     border-radius: 5px; /* Rounded corners for a button-like look */
     vertical-align: middle;
     transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition on hover */
+    margin-top: 10px; 
+    margin-bottom: 10px;
 }
 .nav-links a:hover {
     background-color: #72716b3d; /* Darker shade of gold on hover */
@@ -977,6 +979,10 @@ footer {
     position: relative; /* Ensure proper placement after main content */
     bottom: 0; /* Stick to the bottom when content is short */
 }
+
+footer p{
+    color: white; 
+}
 /* Container for the Network Page */
 .container {
     flex: 1; /* This makes the content container take up the available space */
@@ -1014,6 +1020,13 @@ footer {
     text-decoration: none; /* Remove underline from links */
     color: inherit; /* Inherit text color */
     display: block; /* Make the anchor fill the project item block */
+    text-decoration: none;
+}
+.unique-project-item-link:hover {
+    text-decoration: none; /* Remove underline from links */
+    color: inherit; /* Inherit text color */
+    display: block; /* Make the anchor fill the project item block */
+    text-decoration: none;
 }
 .unique-project-item {
     background-color: #222;
@@ -1025,7 +1038,7 @@ footer {
 }
 .unique-project-item:hover {
     transform: translateY(-5px);  /* Add a hover effect */
-    background-color: #333; /* Slight color change on hover */
+    background-color: #656565; /* Slight color change on hover */
 }
 /* Profile Page Container */
 .custom-profile-page-container {
@@ -1218,6 +1231,31 @@ footer {
     border-radius: 10px;
     width: 100%;
 }
+
+.user-card {
+
+    gap: 10px; /* Space between avatar and user info */
+}
+
+/* Ensure the link covers the entire card */
+.user-card-link {
+    text-decoration: none; /* Remove underline from the link */
+    color: inherit; /* Inherit the text color */
+    display: block; /* Make the link cover the whole card */
+    transition: transform 0.2s, box-shadow 0.2s; /* Smooth transition for hover effects */
+}
+
+/* Hover effect for the entire card */
+.user-card-link:hover .user-card {
+    transform: translateY(-5px); /* Lift the entire card slightly */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); /* Add a subtle shadow to the entire card */
+    cursor: pointer; /* Change the cursor to indicate interactivity */
+    background-color: #949494; /* Optional: change the background color for a more distinct effect */
+}
+
+
+
+
 .user-avatar-container {
     flex-shrink: 0; /* Prevent shrinking */
 }
@@ -1229,16 +1267,30 @@ footer {
     object-fit: cover;
     border: 2px solid #fff;
 }
+/* Styles for the user info within the card */
+.user-info {
+    flex: 1; /* Allow the user info to take up the remaining space */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center the text vertically */
+    color: #ffffff; /* White text for readability */
+}
+
 .user-info h4 {
-    font-size: 1.2rem;
-    color: #fff;
-    margin: 0;
+    font-size: 1.2em; /* Slightly larger font for the username */
+    font-weight: 700; /* Bold font for emphasis */
+    margin: 0; /* Remove default margin */
+    color: #f8f9fa; /* Bright white for better contrast */
 }
+
 .user-info p {
-    font-size: 1rem;
-    color: #ccc;
-    margin: 0;
+    font-size: 0.9em; /* Smaller font size for additional info */
+    margin: 2px 0; /* Minimal vertical spacing between lines */
+    color: #cfd8dc; /* Light grey color for a softer look */
 }
+
+
+
 .unique-project-header {
     display: flex;
     justify-content: space-between;
@@ -1248,7 +1300,7 @@ footer {
 }
 /* Style for the Plus button */
 .add-project-btn {
-    background-color: #a49665;
+    background-color: #36454F;
     color: white;
     padding: 10px 15px;
     border-radius: 5px;
@@ -2101,4 +2153,72 @@ ul.navbar-nav {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     padding: 5px; 
     border-radius: 10px;
+}
+
+/* navbar buttons for mobile footer*/
+
+/* Styles for the mobile nav bar */
+/* Mobile Nav Bar Styles */
+.mobile-nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #87CEEB; /* iOS-style white background */
+    border-top: 1px solid #E0E0E0; /* Light grey border at the top */
+    padding: 10px 10px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1100; /* Keep it on top */
+    height: 90px; 
+  
+  
+}
+
+.nav-list {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-item {
+    flex: 1;
+    text-align: center;
+}
+
+.nav-link-mobile {
+    color: #36454F; /* iOS blue color for active elements */
+    text-decoration: none;
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: color 0.3s;
+}
+
+.nav-link-mobile:hover {
+    color: #0e9af7; /* Darker blue on hover */
+}
+
+.nav-link-mobile i {
+    font-size: 24px; /* Icon size */
+    margin-bottom: 4px; /* Space between the icon and the text */
+    color: #36454F; /* Same iOS blue for icons */
+}
+
+.nav-link-mobile i:hover {
+    font-size: 24px; /* Icon size */
+    margin-bottom: 4px; /* Space between the icon and the text */
+    color: #0099ff; /* Same iOS blue for icons */
+}
+
+@media (min-width: 768px) {
+    .mobile-nav {
+        display: none; /* Hide the nav bar on larger screens */
+    }
 }

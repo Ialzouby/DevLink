@@ -25,20 +25,31 @@
 
 <!-- Center Content for Projects -->
 <div class="unique-project-list">
-    <div class="unique-project-header">
-    <h2>Projects</h2>
-    <a href="{% url 'create_project' %}" class="add-project-btn">
-        <i class="fa fa-plus"></i>
-    </a>
+
+    <!-- Wrapping container for consistent width -->
+    <div class="project-container">
+        <!-- Search Bar Above Header -->
+        <form method="GET" action="{% url 'home' %}" style="margin-bottom: 10px;">
+            <input type="text" name="q" placeholder="Search projects..." class="project-search-bar" value="{{ request.GET.q }}">
+        </form>
+
+        <!-- Project Header with Title and Plus Button -->
+        <div class="unique-project-header">
+            <h2>Projects</h2>
+            <a href="{% url 'create_project' %}" class="add-project-btn">
+                <i class="fa fa-plus"></i>
+            </a>
+        </div>
+
+        {% for project in projects %}
+            <a href="{% url 'project' project.id %}" class="unique-project-item-link">
+                <div class="unique-project-item">
+                    <h3>{{ project.title }}</h3>
+                    <p>{{ project.description|truncatewords:20 }}</p>
+                </div>
+            </a>
+        {% endfor %}
     </div>
-    {% for project in projects %}
-        <a href="{% url 'project' project.id %}" class="unique-project-item-link">
-            <div class="unique-project-item">
-                <h3>{{ project.title }}</h3>
-                <p>{{ project.description|truncatewords:20 }}</p>
-            </div>
-        </a>
-    {% endfor %}
 </div>
 
 <!-- Right Sidebar -->

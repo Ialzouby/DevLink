@@ -130,19 +130,30 @@ def project(request, project_id):
 
 # Home view to display projects and topics
 def home(request, topic=None):
+    # Define topics for the sidebar
     topics = ["Web Development", "AI", "Data Science", "Cybersecurity"]  # Example topics
-
-    if topic:  # Filter projects by topic if provided
+    # Get the search query from the URL if it exists
+    q = request.GET.get('q', '')
+    # If a topic is passed through the URL, filter projects based on it and the search query if present
+    if topic:
         projects = Project.objects.filter(topic__icontains=topic)
-    else:  # Otherwise, show all projects
+    else:
         projects = Project.objects.all().order_by('-created_at')
-
-    top_users = UserProfile.objects.order_by('-points')[:3]  # Top 3 users based on points
+    # Apply search filtering if there is a search query
+    if q:
+        projects = projects.filter(
+            Q(title__icontains=q) |
+            Q(description__icontains=q)
+        )
+    # Get the top 3 users based on their points
+    top_users = UserProfile.objects.order_by('-points')[:3]
+    # Pass the topics, filtered projects, and search query to the template
     return render(request, 'projects/home.html', {
         'projects': projects,
         'topics': topics,
         'top_users': top_users,
         'selected_topic': topic,  # Optional for highlighting the selected topic
+        'search_query': q,        # To retain the search query in the template
     })
 
 # Network view to list all users

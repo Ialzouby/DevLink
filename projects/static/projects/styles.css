@@ -2248,3 +2248,42 @@ ul.navbar-nav {
     justify-content: space-between;
 }
 /* End CSS for home page search bar (project search bar) */
+
+
+
+
+.custom-form {
+    max-width: 100%; /* Ensure it does not exceed the container */
+    width: 100%; /* Adjust if necessary, e.g., width: 50% for a smaller form */
+    margin: 0 auto; /* Center the form */
+}
+
+.custom-form-container {
+    display: flex;
+    justify-content: center; /* Center the form horizontally */
+    align-items: center; /* Center the form vertically if needed */
+}
+
+.custom-form-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 650px; /* Limit the width of the form */
+    margin: 20px auto; /* Center the form and add top/bottom margin */
+    background-color: #2c2c2c; /* Dark background color for contrast */
+    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    padding: 30px; /* Space inside the box */
+    border: 1px solid #444; /* Optional border */
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two equal-width columns */
+    gap: 20px; /* Space between columns and rows */
+}
+
+.form-group {
+    width: 100%; /* Ensure form groups take full width of grid cells */
+}

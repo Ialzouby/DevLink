@@ -52,15 +52,12 @@ p, a {
     color: white; /* Text color for the button */
     text-decoration: none; /* Remove underline */
     font-weight: bold; 
-<<<<<<< HEAD
     padding: 2px 2px; /* Padding to make it look like a button */
-=======
-    background-color: #2C3E50; /* Gold background */
-    padding: 10px 20px; /* Padding to make it look like a button */
->>>>>>> ee970ff835162c65fef8c154feaf110e7d9588d1
     border-radius: 5px; /* Rounded corners for a button-like look */
     vertical-align: middle;
     transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition on hover */
+    margin-top: 10px; 
+    margin-bottom: 10px;
 }
 .nav-links a:hover {
     background-color: #72716b3d; /* Darker shade of gold on hover */
@@ -918,16 +915,10 @@ textarea {
 /* Navbar */
 .navbar {
     width: 100vw;
-<<<<<<< HEAD
     padding: 0px;
     background: linear-gradient(rgb(59, 35, 146), rgb(85, 14, 68)) !important;
     /* background-color: #202a5a !important; */
     /* color: white; */
-=======
-    padding: 4px;
-    background-color: #87CEEB !important;
-    color: white;
->>>>>>> ee970ff835162c65fef8c154feaf110e7d9588d1
     display: flex;
     margin: 0;  /* Ensure no margin is applied */
     justify-content: flex-end;
@@ -949,11 +940,7 @@ textarea {
     color: #ffffff; /* Change the text color */
     /* margin-left: px; Add some space between the logo and the text */
     display: flex;
-<<<<<<< HEAD
     font-family: "Helvetica Neue";
-=======
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
->>>>>>> ee970ff835162c65fef8c154feaf110e7d9588d1
     align-items: center; /* Align the text vertically with the logo */
 }
 
@@ -983,19 +970,18 @@ textarea {
 /* Footer */
 footer {
     width: 100%;  /* Full viewport width */
-<<<<<<< HEAD
     padding: 8px;  /* Add padding for spacing */
     background: linear-gradient(rgb(85, 14, 68), rgb(59, 35, 146)) !important;
-=======
-    padding: 11px;  /* Add padding for spacing */
-    background-color: #6571ff;
->>>>>>> ee970ff835162c65fef8c154feaf110e7d9588d1
     color: #f1f1f1;
     text-align: center;
     margin-top: 15px;  /* Add space above the footer */
     flex-shrink: 0;  /* Ensure the footer doesn't shrink */
     position: relative; /* Ensure proper placement after main content */
     bottom: 0; /* Stick to the bottom when content is short */
+}
+
+footer p{
+    color: white; 
 }
 /* Container for the Network Page */
 .container {
@@ -1034,6 +1020,13 @@ footer {
     text-decoration: none; /* Remove underline from links */
     color: inherit; /* Inherit text color */
     display: block; /* Make the anchor fill the project item block */
+    text-decoration: none;
+}
+.unique-project-item-link:hover {
+    text-decoration: none; /* Remove underline from links */
+    color: inherit; /* Inherit text color */
+    display: block; /* Make the anchor fill the project item block */
+    text-decoration: none;
 }
 .unique-project-item {
     background-color: #222;
@@ -1045,7 +1038,7 @@ footer {
 }
 .unique-project-item:hover {
     transform: translateY(-5px);  /* Add a hover effect */
-    background-color: #333; /* Slight color change on hover */
+    background-color: #656565; /* Slight color change on hover */
 }
 /* Profile Page Container */
 .custom-profile-page-container {
@@ -1238,6 +1231,31 @@ footer {
     border-radius: 10px;
     width: 100%;
 }
+
+.user-card {
+
+    gap: 10px; /* Space between avatar and user info */
+}
+
+/* Ensure the link covers the entire card */
+.user-card-link {
+    text-decoration: none; /* Remove underline from the link */
+    color: inherit; /* Inherit the text color */
+    display: block; /* Make the link cover the whole card */
+    transition: transform 0.2s, box-shadow 0.2s; /* Smooth transition for hover effects */
+}
+
+/* Hover effect for the entire card */
+.user-card-link:hover .user-card {
+    transform: translateY(-5px); /* Lift the entire card slightly */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); /* Add a subtle shadow to the entire card */
+    cursor: pointer; /* Change the cursor to indicate interactivity */
+    background-color: #949494; /* Optional: change the background color for a more distinct effect */
+}
+
+
+
+
 .user-avatar-container {
     flex-shrink: 0; /* Prevent shrinking */
 }
@@ -1249,16 +1267,30 @@ footer {
     object-fit: cover;
     border: 2px solid #fff;
 }
+/* Styles for the user info within the card */
+.user-info {
+    flex: 1; /* Allow the user info to take up the remaining space */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center the text vertically */
+    color: #ffffff; /* White text for readability */
+}
+
 .user-info h4 {
-    font-size: 1.2rem;
-    color: #fff;
-    margin: 0;
+    font-size: 1.2em; /* Slightly larger font for the username */
+    font-weight: 700; /* Bold font for emphasis */
+    margin: 0; /* Remove default margin */
+    color: #f8f9fa; /* Bright white for better contrast */
 }
+
 .user-info p {
-    font-size: 1rem;
-    color: #ccc;
-    margin: 0;
+    font-size: 0.9em; /* Smaller font size for additional info */
+    margin: 2px 0; /* Minimal vertical spacing between lines */
+    color: #cfd8dc; /* Light grey color for a softer look */
 }
+
+
+
 .unique-project-header {
     display: flex;
     justify-content: space-between;
@@ -1268,7 +1300,7 @@ footer {
 }
 /* Style for the Plus button */
 .add-project-btn {
-    background-color: #a49665;
+    background-color: #36454F;
     color: white;
     padding: 10px 15px;
     border-radius: 5px;
@@ -2121,4 +2153,137 @@ ul.navbar-nav {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     padding: 5px; 
     border-radius: 10px;
+}
+
+/* navbar buttons for mobile footer*/
+
+/* Styles for the mobile nav bar */
+/* Mobile Nav Bar Styles */
+.mobile-nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #87CEEB; /* iOS-style white background */
+    border-top: 1px solid #E0E0E0; /* Light grey border at the top */
+    padding: 10px 10px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1100; /* Keep it on top */
+    height: 90px; 
+  
+  
+}
+
+.nav-list {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-item {
+    flex: 1;
+    text-align: center;
+}
+
+.nav-link-mobile {
+    color: #36454F; /* iOS blue color for active elements */
+    text-decoration: none;
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: color 0.3s;
+}
+
+.nav-link-mobile:hover {
+    color: #0e9af7; /* Darker blue on hover */
+}
+
+.nav-link-mobile i {
+    font-size: 24px; /* Icon size */
+    margin-bottom: 4px; /* Space between the icon and the text */
+    color: #36454F; /* Same iOS blue for icons */
+}
+
+.nav-link-mobile i:hover {
+    font-size: 24px; /* Icon size */
+    margin-bottom: 4px; /* Space between the icon and the text */
+    color: #0099ff; /* Same iOS blue for icons */
+}
+
+@media (min-width: 768px) {
+    .mobile-nav {
+        display: none; /* Hide the nav bar on larger screens */
+    }
+}
+
+
+
+
+
+/* Begin CSS for home page search bar (project search bar) */
+.project-container {
+    width: 100%; /* Ensures it spans the parent container */
+    max-width: 800px; /* Adjust this width to match the container width of your project list */
+    margin: 0 auto; /* Centers it horizontally */
+}
+
+.project-search-bar {
+    width: 100%; /* Make it span the width of the container */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Ensures padding doesn't exceed container width */
+}
+
+.unique-project-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+/* End CSS for home page search bar (project search bar) */
+
+
+
+
+.custom-form {
+    max-width: 100%; /* Ensure it does not exceed the container */
+    width: 100%; /* Adjust if necessary, e.g., width: 50% for a smaller form */
+    margin: 0 auto; /* Center the form */
+}
+
+.custom-form-container {
+    display: flex;
+    justify-content: center; /* Center the form horizontally */
+    align-items: center; /* Center the form vertically if needed */
+}
+
+.custom-form-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 600px; /* Limit the width of the form */
+    margin: 50px auto; /* Center the form and add top/bottom margin */
+    background-color: #2c2c2c; /* Dark background color for contrast */
+    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    padding: 30px; /* Space inside the box */
+    border: 1px solid #444; /* Optional border */
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two equal-width columns */
+    gap: 20px; /* Space between columns and rows */
+}
+
+.form-group {
+    width: 100%; /* Ensure form groups take full width of grid cells */
 }

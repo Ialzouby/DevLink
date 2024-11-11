@@ -54,22 +54,21 @@ class CustomUserCreationForm(UserCreationForm):
         }),
         required=True
     )
-    linkedin = forms.URLField(
-        widget=forms.URLInput(attrs={
+    linkedin = forms.CharField(
+        widget=forms.TextInput(attrs={
             'class': 'form-control',
             'placeholder': 'LinkedIn URL (Optional)',
-            'style': 'width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; background-color: #333; color: #f1f1f1;'
         }),
         required=False
     )
-    github = forms.URLField(
-        widget=forms.URLInput(attrs={
+    github = forms.CharField(
+        widget=forms.TextInput(attrs={
             'class': 'form-control',
             'placeholder': 'GitHub URL (Optional)',
-            'style': 'width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; background-color: #333; color: #f1f1f1;'
         }),
         required=False
     )
+
     bio = forms.CharField(
         widget=forms.Textarea(attrs={
             'class': 'form-control',
@@ -81,19 +80,20 @@ class CustomUserCreationForm(UserCreationForm):
     )
     profile_picture = forms.ImageField(required=True)
 
-    def clean_linkedin(self):
-        url = self.cleaned_data.get('linkedin')
-        if url and not urlparse(url).scheme:
-            print("Adding https:// to LinkedIn URL")  # Debugging line
-            url = 'https://' + url
-        return url
-
     def clean_github(self):
-        url = self.cleaned_data.get('github')
-        if url and not urlparse(url).scheme:
-            print("Adding https:// to GitHub URL")  # Debugging line
-            url = 'https://' + url
-        return url
+        github = self.cleaned_data.get('github')
+        if github and not github.startswith(('http://', 'https://')):
+            github = 'https://' + github
+        return github
+
+    def clean_linkedin(self):
+        linkedin = self.cleaned_data.get('linkedin')
+        if linkedin and not linkedin.startswith(('http://', 'https://')):
+            linkedin = 'https://' + linkedin
+        return linkedin
+
+
+
 
     class Meta:
         model = User

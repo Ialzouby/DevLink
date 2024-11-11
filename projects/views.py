@@ -80,11 +80,11 @@ def register(request):
     else:
         form = CustomUserCreationForm()
 
-    # Pass the current_step and form back to the template for rendering
+    # Don't access form.cleaned_data in GET requests or when the form is not valid
     return render(request, 'projects/register.html', {
         'form': form,
         'current_step': current_step,
-        'submitted_data': form.cleaned_data if not form.is_valid() else None
+        'submitted_data': {} if request.method == 'GET' else request.POST
     })
 
 

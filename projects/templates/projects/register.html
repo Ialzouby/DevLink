@@ -2,140 +2,94 @@
 {% block title %}Sign Up{% endblock %}
 
 {% block content %}
-<div class="container form-container">
-    <h2>Sign Up</h2>
-    <form method="POST" action="{% url 'register' %}" enctype="multipart/form-data">
-        {% csrf_token %}
+<div class="container custom-form-container mx-auto">
+    <div class="custom-form-wrapper">
+        <h2>Sign Up</h2>
+        <form class="custom-form" method="POST" action="{% url 'register' %}" enctype="multipart/form-data">
+            {% csrf_token %}
 
-
-        {% if form.non_field_errors %}
-    <div class="alert alert-danger">
-        {% for error in form.non_field_errors %}
-            <p>{{ error }}</p>
-        {% endfor %}
-    </div>
-{% endif %}
-
-{% if form.errors %}
-    <div class="alert alert-danger">
-        <strong>Please correct the following errors:</strong>
-        <ul>
-            {% for field, errors in form.errors.items %}
-                {% for error in errors %}
-                    <li>{{ field|capfirst }}: {{ error }}</li>
-                {% endfor %}
-            {% endfor %}
-        </ul>
-    </div>
-{% endif %}
-
-
-        <!-- Step 1 -->
-        <div class="step" id="step-1">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="first_name">First Name:</label>
-                        <input type="text" id="first_name" name="first_name" class="form-control" value="{{ submitted_data.first_name|default:'' }}" tabindex="1">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" name="email" class="form-control" value="{{ submitted_data.email|default:'' }}" tabindex="3">
-                    </div>
+            {% if form.errors %}
+                <div class="alert alert-danger">
+                    <strong>Please correct the following errors:</strong>
+                    <ul>
+                        {% for field, errors in form.errors.items %}
+                            {% for error in errors %}
+                                <li>{{ field|capfirst }}: {{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                    </ul>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="last_name">Last Name:</label>
+            {% endif %}
 
-                        <input type="text" id="last_name" name="last_name" class="form-control" value="{{ submitted_data.last_name|default:'' }}" tabindex="2">
-                    </div>
-                    <div class="form-group">
-                        <label for="username">Username:</label>
-
-                        <input type="text" id="username" name="username" class="form-control" value="{{ submitted_data.username|default:'' }}" tabindex="4">
-                    </div>
+            <!-- Step 1 -->
+            <div class="step" id="step-1" {% if current_step != 1 %}style="display:none;"{% endif %}>
+                <div class="form-group">
+                    <label for="first_name">First Name:</label>
+                    {{ form.first_name }}
+                </div>
+                <div class="form-group">
+                    <label for="last_name">Last Name:</label>
+                    {{ form.last_name }}
+                </div>
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    {{ form.username }}
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    {{ form.email }}
                 </div>
             </div>
-        </div>
 
-        <!-- Step 2 -->
-<div class="step" id="step-2" style="display:none;">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="grade_level">Grade Level:</label>
-                <select id="grade_level" name="grade_level" class="form-control" tabindex="5">
-                    <option value="">Select Grade Level</option>
-                    {% for value, display in form.grade_level.field.choices %}
-                        <option value="{{ value }}" {% if submitted_data.grade_level == value %}selected{% endif %}>{{ display }}</option>
-                    {% endfor %}
-                </select>
+            <!-- Step 2 -->
+            <div class="step" id="step-2" {% if current_step != 2 %}style="display:none;"{% endif %}>
+                <div class="form-group">
+                    <label for="grade_level">Grade Level:</label>
+                    {{ form.grade_level }}
+                </div>
+                <div class="form-group">
+                    <label for="concentration">Concentration:</label>
+                    {{ form.concentration }}
+                </div>
             </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="concentration">Concentration:</label>
-                <select id="concentration" name="concentration" class="form-control" tabindex="6">
-                    <option value="">Select Concentration</option>
-                    {% for value, display in form.concentration.field.choices %}
-                        <option value="{{ value }}" {% if submitted_data.concentration == value %}selected{% endif %}>{{ display }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-        </div>
-    </div>
-</div>
 
-
-        <!-- Step 3 -->
-        <div class="step" id="step-3" style="display:none;">
-            <div class="row">
-                <div class="col-md-6">
+            <!-- Step 3 -->
+            <div class="step" id="step-3" {% if current_step != 3 %}style="display:none;"{% endif %}>
+                <div class="form-grid">
                     <div class="form-group">
                         <label for="linkedin">LinkedIn (Optional):</label>
-                        <input type="url" id="linkedin" name="linkedin" class="form-control" value="{{ submitted_data.linkedin|default:'' }}" tabindex="7">
+                        {{ form.linkedin }}
                     </div>
-                    <div class="form-group">
-                        <label for="profile_picture">Profile Picture (Required):</label>
-      
-                        <input type="file" id="profile_picture" name="profile_picture" class="form-control" value="{{ submitted_data.profile_picture|default:'' }}" tabindex="9" required>
-                    </div>
-                </div>
-                <div class="col-md-6">
                     <div class="form-group">
                         <label for="github">GitHub (Optional):</label>
-            
-                        <input type="url" id="github" name="github" class="form-control" value="{{ submitted_data.github|default:'' }}" tabindex="8">
-
+                        {{ form.github }}
                     </div>
                     <div class="form-group">
                         <label for="bio">Bio (Optional):</label>
-                        <textarea id="bio" name="bio" class="form-control" rows="2" tabindex="10"></textarea>
-
+                        {{ form.bio }}
                     </div>
-                </div>
-                <!-- Add password fields here in Step 3 -->
-                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="profile_picture">Profile Picture (Required):</label>
+                        {{ form.profile_picture }}
+                    </div>
                     <div class="form-group">
                         <label for="password1">Password:</label>
-                        <input type="password" id="password1" name="password1" class="form-control" tabindex="11" required>
+                        {{ form.password1 }}
                     </div>
-                </div>
-                <div class="col-md-6">
                     <div class="form-group">
                         <label for="password2">Confirm Password:</label>
-                        <input type="password" id="password2" name="password2" class="form-control" tabindex="12" required>
+                        {{ form.password2 }}
                     </div>
                 </div>
             </div>
-        </div>
+            
 
-        <div class="form-group text-center">
-            <button type="button" class="btn btn-primary" id="prevBtn" onclick="prevStep()" style="display:none;">Previous</button>
-            <button type="button" class="btn btn-primary" id="nextBtn" onclick="nextStep()">Next</button>
-            <button type="submit" class="btn btn-primary" id="submitBtn" style="display:none;">Sign Up</button>
-        </div>
-    </form>
+            <div class="form-group text-center">
+                <button type="button" class="btn btn-primary" id="prevBtn" onclick="prevStep()" {% if current_step == 1 %}style="display:none;"{% endif %}>Previous</button>
+                <button type="button" class="btn btn-primary" id="nextBtn" onclick="nextStep()" {% if current_step == 3 %}style="display:none;"{% endif %}>Next</button>
+                <button type="submit" class="btn btn-primary" id="submitBtn" {% if current_step != 3 %}style="display:none;"{% endif %}>Sign Up</button>
+            </div>
+        </form>
+    </div>
 </div>
-
 {% endblock %}

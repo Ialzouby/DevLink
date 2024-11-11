@@ -12,15 +12,32 @@ from django.utils import timezone
 
 # UserProfile model
 class UserProfile(models.Model):
+    GRADE_LEVEL_CHOICES = [
+        ('Freshman', 'Freshman'),
+        ('Sophomore', 'Sophomore'),
+        ('Junior', 'Junior'),
+        ('Senior', 'Senior'),
+        ('Graduate', 'Graduate'),
+    ]
+
+    CONCENTRATION_CHOICES = [
+        ('Computer Science', 'Computer Science'),
+        ('Information Technology', 'Information Technology'),
+        ('Data Science', 'Data Science'),
+        ('Cybersecurity', 'Cybersecurity'),
+        ('Software Engineering', 'Software Engineering'),
+    ]
+
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    grade_level = models.CharField(max_length=50)
-    concentration = models.CharField(max_length=100)
+    grade_level = models.CharField(max_length=50, choices=GRADE_LEVEL_CHOICES)
+    concentration = models.CharField(max_length=100, choices=CONCENTRATION_CHOICES)
     linkedin = models.URLField(max_length=200, blank=True, null=True)
     github = models.URLField(max_length=200, blank=True, null=True)
     bio = models.TextField(blank=True, null=True)
-    profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True)  # New field for profile image
+    profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True)
     points = models.IntegerField(default=0)
     birthdate = models.DateField(null=True, blank=True)
+
     
 
 

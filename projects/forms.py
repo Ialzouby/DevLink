@@ -4,7 +4,11 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import Project, UserProfile
 from django import forms
 from .models import Message
-
+from django import forms
+from .models import Project
+import re
+from django import forms
+from urllib.parse import urlparse
 
 class CustomUserCreationForm(UserCreationForm):
     first_name = forms.CharField(
@@ -34,22 +38,20 @@ class CustomUserCreationForm(UserCreationForm):
         max_length=254,
         required=True
     )
-    grade_level = forms.CharField(
-        widget=forms.TextInput(attrs={
+    grade_level = forms.ChoiceField(
+        choices=UserProfile.GRADE_LEVEL_CHOICES,
+        widget=forms.Select(attrs={
             'class': 'form-control',
-            'placeholder': 'Grade Level',
             'style': 'width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; background-color: #333; color: #f1f1f1;'
         }),
-        max_length=50,
         required=True
     )
-    concentration = forms.CharField(
-        widget=forms.TextInput(attrs={
+    concentration = forms.ChoiceField(
+        choices=UserProfile.CONCENTRATION_CHOICES,
+        widget=forms.Select(attrs={
             'class': 'form-control',
-            'placeholder': 'Concentration',
             'style': 'width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; background-color: #333; color: #f1f1f1;'
         }),
-        max_length=100,
         required=True
     )
     linkedin = forms.URLField(
@@ -77,9 +79,21 @@ class CustomUserCreationForm(UserCreationForm):
         }),
         required=False
     )
-    #Make profile_picture a required field to fix profile picture bugs
     profile_picture = forms.ImageField(required=True)
-    
+
+    def clean_linkedin(self):
+        url = self.cleaned_data.get('linkedin')
+        if url and not urlparse(url).scheme:
+            print("Adding https:// to LinkedIn URL")  # Debugging line
+            url = 'https://' + url
+        return url
+
+    def clean_github(self):
+        url = self.cleaned_data.get('github')
+        if url and not urlparse(url).scheme:
+            print("Adding https:// to GitHub URL")  # Debugging line
+            url = 'https://' + url
+        return url
 
     class Meta:
         model = User
@@ -102,19 +116,33 @@ class RatingForm(forms.Form):
         widget=forms.RadioSelect
     )
 
+
 class ProjectForm(forms.ModelForm):
+    github_link = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'GitHub Repository Link'}),
+        required=False,  # Set required=False if it's not mandatory
+    )
+
     class Meta:
         model = Project
-        fields = ['title', 'description', 'topic', 'skills_gained', 'skill_requirements', 'github_link']  # Specify the fields you want in the form
-
+        fields = ['title', 'description', 'topic', 'skills_gained', 'skill_requirements', 'github_link']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Project Title'}),
             'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Project Description', 'rows': 4}),
             'topic': forms.Select(attrs={'class': 'form-control'}),
-            'skills_gained': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Skills that can be gained'}),
-            'skill_requirements': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Skill requirements'}),
-            'github_link': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'GitHub Repository Link'}),
+            'skills_gained': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Skills (comma-separated)'}),
+            'skill_requirements': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Requirements (comma-separated)'}),
         }
+
+    def clean_github_link(self):
+        github_link = self.cleaned_data.get('github_link')
+        if github_link:
+            # Prepend https:// if the link does not start with http:// or https://
+            if not re.match(r'^(http://|https://)', github_link):
+                github_link = 'https://' + github_link
+        return github_link
+
+
 
 class UserProfileForm(forms.ModelForm):
     class Meta:

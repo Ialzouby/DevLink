@@ -113,3 +113,4 @@ function handleSkillInput(inputFieldId, listId, hiddenFieldId) {
         }
     });
 }
+

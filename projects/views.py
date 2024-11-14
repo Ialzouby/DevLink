@@ -239,21 +239,18 @@ def edit_profile(request):
     return render(request, 'projects/edit_profile.html', {'form': form})
 
 # Message thread view for private messaging
+from django.shortcuts import get_object_or_404
+
 @login_required
 def message_thread(request, username):
-    recipient = get_object_or_404(User, username=username)  # Get the recipient user
-    messages = Message.objects.filter(
-        (Q(sender=request.user) & Q(recipient=recipient)) | 
-        (Q(sender=recipient) & Q(recipient=request.user))
-    ).order_by('timestamp')  # Fetch messages in chronological order
+    # Fetch the recipient user object based on the username parameter
+    recipient = get_object_or_404(User, username=username)
 
-    # Mark related notifications as read
-    Notification.objects.filter(
-        user=request.user,
-        related_message__sender=recipient,
-        related_message__recipient=request.user,
-        is_read=False
-    ).update(is_read=True)
+    # Fetch messages between the logged-in user and the recipient
+    messages = Message.objects.filter(
+        (Q(sender=request.user) & Q(recipient=recipient)) |
+        (Q(sender=recipient) & Q(recipient=request.user))
+    ).order_by('timestamp')
 
     if request.method == 'POST':
         form = MessageForm(request.POST)
@@ -261,38 +258,59 @@ def message_thread(request, username):
             new_message = form.save(commit=False)
             new_message.sender = request.user
             new_message.recipient = recipient
-            new_message.save()  # Save the message
-            print(f"New message created: {new_message}")
+            new_message.save()
+            # Redirect to the same URL to avoid form resubmission issues
             return redirect('message_thread', username=recipient.username)
-        else:
-            print(f"Form errors: {form.errors}")
     else:
         form = MessageForm()
-    
+
     return render(request, 'projects/message_thread.html', {
         'messages': messages,
         'recipient': recipient,
         'form': form
     })
 
+
 # View to display all active conversations
 @login_required
 def active_conversations(request):
-    # Fetch unique users the logged-in user has had a conversation with
     sent_conversations = Message.objects.filter(sender=request.user).values('recipient').distinct()
     received_conversations = Message.objects.filter(recipient=request.user).values('sender').distinct()
 
-    # Combine the unique user IDs from sent and received conversations
     conversation_user_ids = set(
         user['recipient'] for user in sent_conversations
     ).union(
         user['sender'] for user in received_conversations
     )
 
-    # Fetch the User objects for these IDs
     conversation_users = User.objects.filter(id__in=conversation_user_ids)
+
+    recipient_username = request.GET.get('recipient')
+    recipient = None
+    messages = []
+    form = MessageForm()
+
+    if recipient_username:
+        recipient = get_object_or_404(User, username=recipient_username)
+        messages = Message.objects.filter(
+            (Q(sender=request.user) & Q(recipient=recipient)) |
+            (Q(sender=recipient) & Q(recipient=request.user))
+        ).select_related('sender', 'recipient').order_by('timestamp')[:50]  # Load the last 50 messages
+
+        if request.method == 'POST':
+            form = MessageForm(request.POST)
+            if form.is_valid():
+                new_message = form.save(commit=False)
+                new_message.sender = request.user
+                new_message.recipient = recipient
+                new_message.save()
+                return redirect(f'/conversations/?recipient={recipient.username}')
+
     return render(request, 'projects/active_conversations.html', {
-        'conversation_users': conversation_users
+        'conversation_users': conversation_users,
+        'recipient': recipient,
+        'messages': messages,
+        'form': form
     })
 
 # View to render notifications

@@ -12,6 +12,7 @@
     <div class="unique-left-sidebar">
         <h3>Topics</h3>
         <ul>
+            <li><a href="{% url 'home' %}">All Topics</a></li>
             {% for topic in topics %}
                 <li><a href="{% url 'filtered_projects' topic=topic %}">{{ topic }}</a></li>
             {% empty %}
@@ -42,13 +43,15 @@
         </div>
 
         {% for project in projects %}
-            <a href="{% url 'project' project.id %}" class="unique-project-item-link">
-                <div class="unique-project-item">
-                    <h3>{{ project.title }}</h3>
-                    <p>{{ project.description|truncatewords:20 }}</p>
-                </div>
-            </a>
-        {% endfor %}
+        <a href="{% url 'project' project.id %}" class="unique-project-item-link">
+            <div class="unique-project-item">
+                <div class="project-topic">{{ project.topic }}</div> <!-- New Topic Element -->
+                <h3>{{ project.title }}</h3>
+                <p>{{ project.description|truncatewords:20 }}</p>
+            </div>
+        </a>
+    {% endfor %}
+    
     </div>
 </div>
 
@@ -67,7 +70,7 @@
                     {% endif %}
                 </div>
                 <div class="user-info">
-                    <h4>{{ user.user.username }}</h4>
+                    <h4>{{ user.first_name }} {{ user.last_name }}</h4>
                     <p>Grade Level: {{ user.grade_level }}</p>
                     <p>{{ user.concentration }}</p>
                 </div>

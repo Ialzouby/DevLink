@@ -28,6 +28,8 @@ class UserProfile(models.Model):
         ('Software Engineering', 'Software Engineering'),
     ]
 
+    first_name = models.CharField(max_length=30, blank=False)
+    last_name = models.CharField(max_length=30, blank=False)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     grade_level = models.CharField(max_length=50, choices=GRADE_LEVEL_CHOICES)
     concentration = models.CharField(max_length=100, choices=CONCENTRATION_CHOICES)

@@ -1,22 +1,56 @@
 {% extends "projects/base.html" %}
 
 {% block content %}
-<div class="conversation-list-container">
-    <h2>Your Active Conversations</h2>
+<div class="chat-page-container">
+    <!-- Left: Conversation List -->
+    <div class="conversation-list-container">
+        <h2>Your Active Conversations</h2>
+        <ul class="list-group">
+            {% for user in conversation_users %}
+            <li class="list-group-item">
+                <a href="?recipient={{ user.username }}" class="conversation-link">
+                    {{ user.first_name }} {{ user.last_name }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
 
-    <div class="conversation-list">
-        {% if conversation_users %}
-            <ul class="list-group">
-                {% for user in conversation_users %}
-                <li class="list-group-item">
-                    <a href="{% url 'message_thread' user.username %}">
-                        {{ user.username }}
-                    </a>
-                </li>
+    <!-- Right: Chat Container -->
+    <div class="chat-container">
+        {% if recipient %}
+            <div class="chat-header">
+                <h2>Chat with {{ recipient.username }}</h2>
+                <button onclick="window.history.back()" class="btn btn-secondary back-to-profile-btn">Go Back</button>
+            </div>
+
+            <div class="message-thread">
+                {% for message in messages %}
+                <div class="message {% if message.sender == request.user %}sent-message{% else %}received-message{% endif %}">
+                    <div class="message-info">
+                        <strong>{{ message.sender.username }}</strong>
+                        <small>{{ message.timestamp|date:"M d, Y H:i" }}</small>
+                    </div>
+                    <p>{{ message.content }}</p>
+                </div>
+                {% empty %}
+                <p>No messages yet. Start a conversation with {{ recipient.username }}!</p>
                 {% endfor %}
-            </ul>
+            </div>
+
+            <div class="message-input-container">
+                <form method="post" class="message-form">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        {{ form.content }}
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary send-message-btn">Send</button>
+                    </div>
+                </form>
+            </div>
         {% else %}
-            <p>You don't have any active conversations yet.</p>
+            <p>Select a conversation to start chatting.</p>
         {% endif %}
     </div>
 </div>

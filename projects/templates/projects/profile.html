@@ -15,7 +15,7 @@
 
         <!-- Profile Info -->
         <div class="custom-profile-info">
-            <h1>{{ profile_user.username }}</h1>
+            <h1>{{ profile_user.first_name }} {{ profile_user.last_name }}</h1>
             <p><strong>Email:</strong> {{ profile_user.email }}</p>
             <p><strong>Grade Level:</strong> {{ profile_user.userprofile.grade_level }}</p>
             <p><strong>Concentration:</strong> {{ profile_user.userprofile.concentration }}</p>

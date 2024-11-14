@@ -1,5 +1,6 @@
 {% extends "projects/base.html" %}
 {% load static %}
+{% load socialaccount %}
 
 {% block title %}Login{% endblock %}
 
@@ -19,5 +20,8 @@
         <button type="submit" class="btn">Login</button>
     </form>
     <p>Don't have an account? <a href="{% url 'register' %}">Sign up here</a></p>
+    <a href="{% provider_login_url 'google' %}" class="btn btn-google">
+        Sign in with Google
+    </a>
 </div>
 {% endblock %}

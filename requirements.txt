@@ -3,6 +3,8 @@ certifi==2024.8.30
 charset-normalizer==2.0.12
 cloudinary==1.41.0
 django-allauth
+cryptography
+PyJWT
 decorator==5.1.1
 distlib==0.3.8
 dj-database-url==2.2.0

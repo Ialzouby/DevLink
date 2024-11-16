@@ -10,18 +10,8 @@ import cloudinary.api
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent 
 
-
 DATABASE_URL = "postgresql://postgres:qsaYzAIPQNssheBNrDfoJIqbGxQQWoTR@junction.proxy.rlwy.net:32147/railway"
 
-DJANGO_ENV = os.getenv('DJANGO_ENV', 'development')
-
-# Set SITE_ID based on environment
-if DJANGO_ENV == 'production':
-    SITE_ID = 2  # Production
-else:
-    SITE_ID = 3  # Localhost
-
-    
 LOGOUT_REDIRECT_URL = '/'
 # Redirect to the homepage after login
 LOGIN_REDIRECT_URL = '/'
@@ -84,7 +74,7 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 
-SITE_ID = int(os.getenv('SITE_ID', 3))
+SITE_ID = 2
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',  # Default authentication
     'allauth.account.auth_backends.AuthenticationBackend',  # allauth backend

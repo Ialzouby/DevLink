@@ -21,17 +21,6 @@ self.addEventListener('install', (event) => {
     );
 });
 
-// Fetch event: Serve cached resources if available
-self.addEventListener('fetch', (event) => {
-    event.respondWith(
-        caches.match(event.request)
-            .then((response) => {
-                // Return cached response if found, or fetch from network
-                return response || fetch(event.request);
-            })
-    );
-});
-
 // Activate event: Clean up old caches
 self.addEventListener('activate', (event) => {
     const cacheWhitelist = [CACHE_NAME];
@@ -46,4 +35,26 @@ self.addEventListener('activate', (event) => {
             );
         })
     );
+});
+
+// Fetch event: Handle caching and bypass for specific URLs
+self.addEventListener('fetch', (event) => {
+    // List of URLs to exclude from caching
+    const urlsToExclude = [
+        '/accounts/google/login/',
+        '/accounts/google/login/callback/',
+    ];
+
+    // Check if the URL is in the list of URLs to exclude
+    if (urlsToExclude.some((url) => event.request.url.includes(url))) {
+        // Bypass the Service Worker for these URLs and fetch from the network
+        event.respondWith(fetch(event.request));
+    } else {
+        // Use caching strategy for other requests
+        event.respondWith(
+            caches.match(event.request).then((response) => {
+                return response || fetch(event.request);
+            })
+        );
+    }
 });

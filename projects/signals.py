@@ -73,16 +73,3 @@ def notify_project_owner_on_join_request(sender, instance, created, **kwargs):
         )
 
 
-@receiver(social_account_added)
-def update_profile_picture(request, sociallogin, **kwargs):
-    if sociallogin.account.provider == 'google':
-        user = sociallogin.user
-        profile = UserProfile.objects.get(user=user)  # Adjust based on your setup
-
-        # Get the profile picture URL from the social account
-        social_account = SocialAccount.objects.get(user=user, provider='google')
-        profile_pic_url = social_account.extra_data.get('picture')
-
-        if profile_pic_url:
-            profile.profile_picture = profile_pic_url  # Assuming profile_picture is a URL field or can handle URLs
-            profile.save()

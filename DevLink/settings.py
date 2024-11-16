@@ -156,6 +156,8 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
+print("GOOGLE_CLIENT_ID:", os.getenv('GOOGLE_CLIENT_ID'))
+print("GOOGLE_CLIENT_SECRET:", os.getenv('GOOGLE_CLIENT_SECRET'))
 
 
 # Internationalization

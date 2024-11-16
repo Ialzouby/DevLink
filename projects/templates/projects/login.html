@@ -22,29 +22,10 @@
     <p class="login-page">Don't have an account? <a href="{% url 'register' %}">Sign up here</a></p>
 
     <!-- Sign-In Button with Google's Styling -->
-    <a href="{% provider_login_url 'google' %}" class="google-signin-btn" onclick="openGoogleLoginPopup(event)">
+    <a href="{% provider_login_url 'google' %}" class="google-signin-btn">
         <span class="google-logo"></span> Sign in with Google
     </a>
 </div>
 
-<script>
-    function openGoogleLoginPopup(event) {
-        event.preventDefault(); // Prevent the default link behavior
-        const googleLoginUrl = event.target.href; // Get the URL from the link
-        
-        // Open a popup window
-        const popup = window.open(
-            googleLoginUrl,
-            'googleLoginPopup',
-            'width=600,height=600'
-        );
 
-        // Focus on the popup
-        if (popup) {
-            popup.focus();
-        } else {
-            alert('Please allow popups for this website');
-        }
-    }
-</script>
 {% endblock %}

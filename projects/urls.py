@@ -26,7 +26,6 @@ urlpatterns = [
     path('notifications/mark-read/<int:notification_id>/', views.mark_as_read, name='mark_as_read'),
     path('notification/delete/<int:notification_id>/', views.delete_notification, name='delete_notification'),
     path('check-username-email/', views.check_username_email, name='check_username_email'),
-    path('accounts/', include('allauth.urls')),
 ]
 
 

@@ -1545,6 +1545,36 @@ textarea {
     margin-bottom: 8px; /* Reduce margin */
 }
 
+/* Add this CSS to your stylesheet */
+.google-signin-btn {
+    display: inline-flex;
+    align-items: center;
+    background-color: #ffffff;
+    color: #757575;
+    border: 1px solid #dcdcdc;
+    border-radius: 5px;
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.google-signin-btn:hover {
+    background-color: #f7f7f7;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.google-logo {
+    background-image: url('https://developers.google.com/identity/images/g-logo.png'); /* Google's logo */
+    background-size: cover;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+
 .chat-header h2 {
     font-size: 14px; /* Reduce font size */
     color: #333;

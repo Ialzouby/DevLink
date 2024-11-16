@@ -30,8 +30,11 @@
     <!-- Wrapping container for consistent width -->
     <div class="project-container">
         <!-- Search Bar Above Header -->
-        <form method="GET" action="{% url 'home' %}" style="margin-bottom: 10px;">
+        <form method="GET" action="{% url 'home' %}" style="margin-bottom: 10px; display: flex; align-items: center;">
             <input type="text" name="q" placeholder="Search projects..." class="project-search-bar" value="{{ request.GET.q }}">
+            <button type="submit" class="search-btn">
+                <i class="fa fa-search"></i>
+            </button>
         </form>
 
         <!-- Project Header with Title and Plus Button -->

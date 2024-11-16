@@ -1184,31 +1184,56 @@ p, a {
 /* ==========================================================================
    18 PROJECT SEARCH AND CONTAINER
    ========================================================================== */
-   .project-container {     
+.project-container {
     width: 100%;
     max-width: 800px;
     margin: 0 auto;
-}  
+}
 
-.project-search-bar {     
-    width: 100%;
-    padding: 8px;     
-    border: 1px solid #ccc;     
-    border-radius: 4px;     
+.project-search-bar {
+    width: calc(100% - 100px); /* Adjust to make space for the button */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px 0 0 4px; /* Rounded corners, only on left side */
     box-sizing: border-box;
-    background-color: #b5b5b5!important;
-}  
+    background-color: #b5b5b5 !important;
+}
+
 .project-search-bar::placeholder {
-    color: black; /* Change the placeholder text color to black */
+    color: black;
     opacity: 1; /* Ensure the placeholder text is fully opaque */
 }
 
+.search-btn {
+    background-color: #36454F;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border: none; /* Remove default button border */
+    height: 100%; /* Ensure it aligns with the search bar height */
+    margin-top: -15px; /* Move up by 5px */
+    /* margin-left: -20px;  Move left by 10px */
+}
 
-.unique-project-header {     
-    display: flex;     
-    align-items: center;     
-    justify-content: space-between; 
-} 
+.search-btn:hover {
+    background-color: #8a7a56;
+}
+
+.search-btn i {
+    font-size: 1.5rem;
+}
+
+.unique-project-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 
 /* ==========================================================================
    19 PROJECT LIST

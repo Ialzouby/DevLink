@@ -37,6 +37,7 @@ class UserProfile(models.Model):
     github = models.CharField(max_length=200, blank=True, null=True)
     bio = models.TextField(blank=True, null=True)
     profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True)
+    profile_picture_url = models.URLField(blank=True, null=True)
     points = models.IntegerField(default=0)
     birthdate = models.DateField(null=True, blank=True)
 

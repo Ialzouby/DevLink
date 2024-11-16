@@ -1,5 +1,4 @@
 // Fetch CSRF token from meta tag
-const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
 // Register service worker
 if ('serviceWorker' in navigator) {

@@ -93,7 +93,7 @@ ROOT_URLCONF = 'DevLink.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [BASE_DIR / 'projects' / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

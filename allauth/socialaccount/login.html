@@ -1,4 +1,4 @@
-{% extends "projects/base.html" %}
+{% extends "projects/base_google.html" %}
 {% load static %}
 {% load socialaccount %}
 
@@ -8,16 +8,13 @@
 {% block content %}
 <div class="google-signin-container">
     <div class="google-signin-card">
-        <h1 class="google-signin-heading">Sign In Via Google</h1>
+        <h1 class="google-signin-heading">Sign In Viaa Google</h1>
 
         <p class="google-signin-text">You are about to sign in using a third-party account from Google.</p>
         <a href="{% provider_login_url 'google' %}" class="google-signin-button">
             <span class="google-icon"></span> Continue with Google
         </a>
-        <div class="menu">
-            <a href="{% url 'account_login' %}">Sign In</a>
-            <a href="{% url 'account_signup' %}">Sign Up</a>
-        </div>
+
     </div>
 </div>
 {% endblock %}

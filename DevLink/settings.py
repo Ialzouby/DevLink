@@ -94,7 +94,7 @@ ROOT_URLCONF = 'DevLink.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'allauth'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

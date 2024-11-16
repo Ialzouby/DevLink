@@ -131,12 +131,3 @@ function getCookie(name) {
 
 const csrftoken = getCookie('csrftoken');
 
-// Use the csrf token in AJAX requests
-fetch('/your-url/', {
-    method: 'POST',
-    headers: {
-        'X-CSRFToken': csrftoken,
-        'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ key: 'value' })
-});

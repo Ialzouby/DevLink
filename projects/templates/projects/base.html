@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="{% static 'projects/styles.css' %}">
 </head>
 <body>
+    {% block header %}
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg bg-light">
         <div class="container-fluid d-flex justify-content-between">
@@ -123,14 +124,14 @@
         </div>
     </nav>
     
-
+    {% endblock %}
     <!-- Main Content -->
     <div class="page-container">
         {% block content %}
         <!-- Page-specific content will go here -->
         {% endblock %}
     </div>
-
+    {% block footer %}
     <!-- Footer -->
     <footer>
         <p>&copy; 2024 DevLink. All rights reserved.</p>
@@ -158,7 +159,7 @@
         </ul>
     </footer>
     
-    
+    {% endblock %}
     <script src="{% static 'projects/scripts.js' %}"></script>
 
     <!-- Bootstrap JS and Dependencies -->

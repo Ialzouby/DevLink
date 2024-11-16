@@ -1,4 +1,3 @@
-
 from pathlib import Path
 import os
 import dj_database_url
@@ -12,13 +11,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 DATABASE_URL = "postgresql://postgres:qsaYzAIPQNssheBNrDfoJIqbGxQQWoTR@junction.proxy.rlwy.net:32147/railway"
 
-LOGOUT_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = 'login'
 # Redirect to the homepage after login
 LOGIN_REDIRECT_URL = '/'
 
-LOGIN_URL = '/accounts/login/'  # URL for login
-
-#LOGIN_URL = '/'
+LOGIN_URL = '/login/'
 
 
 
@@ -74,7 +71,7 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 
-SITE_ID = 2
+SITE_ID = 1
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',  # Default authentication
     'allauth.account.auth_backends.AuthenticationBackend',  # allauth backend
@@ -96,7 +93,7 @@ ROOT_URLCONF = 'DevLink.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'projects/templates')],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

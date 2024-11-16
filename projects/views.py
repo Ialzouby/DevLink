@@ -349,3 +349,16 @@ def check_username_email(request):
         'username_exists': username_exists,
         'email_exists': email_exists,
     })
+
+
+def landing_page(request):
+    # Add any dynamic data to be passed to the template here
+    context = {
+        'title': 'Welcome to My Website',
+        'features': [
+            {'title': 'Collaborate easily', 'description': 'Work seamlessly with your team.'},
+            {'title': 'Secure code', 'description': 'Your projects are safe with us.'},
+            {'title': 'Build together', 'description': 'Join forces to create something amazing.'},
+        ]
+    }
+    return render(request, 'projects/landing.html', context)

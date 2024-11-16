@@ -2438,6 +2438,182 @@ footer p {
     width: 100%;
 }
 
+/* landing page */ 
+/* Unique Landing Page Wrapper */
+.landing-page {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Playfair Display', serif;
+    color: white;
+    background-color: #1b2838; /* Background for the whole page */
+}
+
+/* Hero Section */
+.landing-page .hero {
+    position: relative;
+    background: linear-gradient(135deg, #2c3e50, #4ca1af);
+    color: white;
+    text-align: center;
+    padding: 100px 20px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+    transition: opacity 0.5s ease-out, background-color 0.5s ease-out; /* Smooth fading effect */
+}
+
+.landing-page .hero.hidden {
+    opacity: 0.8; /* Slightly visible when scrolling */
+    background-color: rgba(0, 0, 0, 0.85); /* Darker background during fade-out */
+}
+
+.landing-page .hero h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.landing-page .hero p {
+    font-size: 1.4rem;
+    margin-bottom: 30px;
+    max-width: 600px;
+}
+
+.landing-page .hero-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.landing-page .cta-button,
+.landing-page .secondary-button {
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.landing-page .cta-button {
+    background-color: #28a745;
+    color: white;
+}
+
+.landing-page .cta-button:hover {
+    background-color: #218838;
+}
+
+.landing-page .secondary-button {
+    background-color: transparent;
+    color: #28a745;
+    border: 2px solid #28a745;
+}
+
+.landing-page .secondary-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Showcase Section */
+.landing-page .showcase {
+    background-color: black; /* Keep the background for contrast */
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.landing-page .showcase-image {
+    width: 90%;
+    max-width: 1200px;
+    opacity: 0;
+    transform: scale(0.95); /* Start with a slightly smaller scale */
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    border-radius: 10px;
+}
+
+.landing-page .showcase-image.visible {
+    opacity: 1; /* Fade in when visible */
+    transform: scale(1); /* Full size */
+}
+
+/* Tabs Section */
+.landing-page .tabs {
+    background-color: #24292f;
+    color: white;
+    text-align: center;
+    padding: 50px 20px;
+    min-height: 50vh;
+}
+
+.landing-page .tab-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.landing-page .tab-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: white;
+    background-color: #333;
+    border: 1px solid #444;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.landing-page .tab-button.active {
+    background-color: #28a745;
+    border-color: #218838;
+    color: white;
+}
+
+.landing-page .tab-button:hover {
+    background-color: #444;
+    color: #ddd;
+}
+
+.landing-page .tab-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 20px;
+}
+
+.landing-page .tab-pane {
+    display: none;
+    text-align: center;
+}
+
+.landing-page .tab-pane.active {
+    display: block;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.landing-page .tab-pane img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* Utility Classes */
+.landing-page .hidden {
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+}
+
+.landing-page .visible {
+    opacity: 1;
+    transition: opacity 0.5s ease-out;
+}
+
+
 /*
 -------------------------------------------------------------------------,
 [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [

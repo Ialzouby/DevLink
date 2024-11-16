@@ -1,0 +1,107 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'projects/styles.css' %}">
+</head>
+<body class="landing-page">
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-lighting"></div> <!-- Lighting effect -->
+        <div class="hero-content">
+            <h1>Create and grow projects on a vibrant, collaborative platform.</h1>
+            <p>Connect with your community to bring your innovative ideas to life.</p>
+            <div class="hero-buttons">
+                <a href="{% url 'account_login' %}" class="cta-button">Try Devlink Connect</a>
+                <a href="{% url 'home' %}" class="secondary-button">Explore active projects</a>
+        
+            </div>
+        </div>
+        <!-- Floating Graphics -->
+        <div class="floating-graphics">
+            <img src="{% static 'projects/images/1.png' %}" alt="Graphic 1" class="graphic graphic1">
+            <img src="{% static 'projects/images/2.png' %}" alt="Graphic 2" class="graphic graphic2">
+            <img src="{% static 'projects/images/3.png' %}" alt="Graphic 3" class="graphic graphic3">
+        </div>
+    </section>
+    
+
+
+    <!-- Tabs Section -->
+    <section class="tabs">
+        <div class="tab-buttons">
+            <button class="tab-button active" data-tab="1">Code</button>
+            <button class="tab-button" data-tab="2">Plan</button>
+            <button class="tab-button" data-tab="3">Collaborate</button>
+            <button class="tab-button" data-tab="4">Automate</button>
+            <button class="tab-button" data-tab="5">Secure</button>
+        </div>
+        <div class="tab-content">
+            <div class="tab-pane active" id="tab-1">
+                <img src="{% static 'projects/images/profile_view.png' %}" alt="Code">
+            </div>
+            <div class="tab-pane" id="tab-2">
+                <img src="{% static 'projects/images/project_view.png' %}" alt="Plan">
+            </div>
+            <div class="tab-pane" id="tab-3">
+                <img src="{% static 'projects/images/profile_view.png' %}" alt="Collaborate">
+            </div>
+            <div class="tab-pane" id="tab-4">
+                <img src="{% static 'projects/images/profile_view.png' %}" alt="Automate">
+            </div>
+            <div class="tab-pane" id="tab-5">
+                <img src="{% static 'projects/images/profile_view.png' %}" alt="Secure">
+            </div>
+        </div>
+    </section>
+
+    <!-- Inline JavaScript -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Tab switching logic
+            const tabs = document.querySelectorAll(".tab-button");
+            const tabPanes = document.querySelectorAll(".tab-pane");
+    
+            tabs.forEach((tab) => {
+                tab.addEventListener("click", () => {
+                    // Remove active class from all tabs and panes
+                    tabs.forEach((t) => t.classList.remove("active"));
+                    tabPanes.forEach((pane) => pane.classList.remove("active"));
+    
+                    // Add active class to clicked tab and corresponding pane
+                    tab.classList.add("active");
+                    const target = tab.getAttribute("data-tab");
+                    document.getElementById(`tab-${target}`).classList.add("active");
+                });
+            });
+    
+            // Scroll-based animations for the hero section
+            const heroSection = document.querySelector(".hero");
+    
+            window.addEventListener("scroll", () => {
+                const scrollPosition = window.scrollY;
+                const heroHeight = heroSection.offsetHeight;
+    
+                // Check if scroll position is more than half the hero height
+                if (scrollPosition > heroHeight / 3) {
+                    if (!heroSection.classList.contains("hidden")) {
+                        heroSection.classList.add("hidden");
+                    }
+                } else {
+                    if (heroSection.classList.contains("hidden")) {
+                        heroSection.classList.remove("hidden");
+                    }
+                }
+            });
+        });
+    </script>
+    
+    
+
+</body>
+</html>

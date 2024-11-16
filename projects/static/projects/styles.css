@@ -2465,6 +2465,301 @@ footer p {
     width: 100%;
 }
 
+/* landing page */ 
+/* Unique Landing Page Wrapper */
+.landing-page {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Playfair Display', serif;
+    color: white;
+    background-color: #1b2838; /* Background for the whole page */
+}
+
+/* Hero Section */
+/* Hero Section */
+.hero {
+    position: relative;
+    background: linear-gradient(135deg, #1c2331, #3e79b4);
+    color: white;
+    text-align: center;
+    padding-top: 100px;
+    padding-bottom: 400px;
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  /* Ensure floating graphics don't break out */
+}
+
+/* Lighting Effect */
+.hero-lighting {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300%;
+    height: 300%;
+    background: radial-gradient(circle, rgba(235, 226, 226, 0.2), rgb(0, 85, 255));
+    pointer-events: none;
+    z-index: 0; /* Behind everything */
+}
+
+.hero::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px; /* Adjust width for the light size */
+    height: 400px; /* Adjust height for the light size */
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%);
+    filter: blur(50px);
+    opacity: 0.8;
+    pointer-events: none; /* Ensure it doesn't interfere with other elements */
+}
+
+/* Content Styling */
+.hero-content {
+    z-index: 2; /* Ensure it's above graphics and lighting */
+    max-width: 800px;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 2.8rem;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.cta-button {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border: none;
+}
+
+.cta-button:hover {
+    background-color: #218838;
+}
+
+.secondary-button {
+    background: transparent;
+    color: #28a745;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: 2px solid #28a745;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.secondary-button:hover {
+    background-color: #28a745;
+    color: white;
+}
+
+/* Floating Animation */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-20px) rotate(10deg);
+    }
+}
+
+/* Showcase Section */
+.landing-page .showcase {
+    background-color: black; /* Keep the background for contrast */
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.landing-page .showcase-image {
+    width: 90%;
+    max-width: 300px;
+    opacity: 0;
+    transform: scale(0.95); /* Start with a slightly smaller scale */
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    border-radius: 10px;
+}
+
+.landing-page .showcase-image.visible {
+    opacity: 1; /* Fade in when visible */
+    transform: scale(1); /* Full size */
+}
+
+/* Tabs Section */
+.tabs {
+    background-color: #24292f; /* Keep the dark background */
+    color: white;
+    text-align: center;
+    padding: 20px 10px; /* Reduce padding to make it smaller */
+}
+
+
+
+.tab-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px; 
+
+}
+
+
+/* Style the tab-buttons container */
+.tab-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px; /* Space between buttons */
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2); 
+    border-radius: 50px; 
+    padding: 10px 20px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); 
+    width: 40%; /* Set the width to half */
+    margin: 0 auto; 
+}
+
+/* Style individual tab buttons */
+.tab-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: white;
+    background-color: transparent; /* Transparent background */
+    border: none; /* Remove button border */
+    border-radius: 25px; /* Fully rounded corners */
+    cursor: pointer;
+    transition: all 0.3s ease; /* Smooth hover effect */
+}
+
+/* Active button style */
+.tab-button.active {
+    background-color: rgba(255, 255, 255, 0.2); /* Highlighted background */
+    border: 1px solid rgba(255, 255, 255, 0.4); /* Subtle border for the active button */
+    color: white; /* Keep the text white */
+}
+
+/* Hover effect for buttons */
+.tab-button:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Slight background change on hover */
+    color: white; /* Keep text color consistent */
+}
+
+
+.tab-pane img {
+    max-width: 70%; /* Keep images smaller to fit the reduced space */
+    height: auto;
+    border-radius: 10px;
+    height: auto; /* Maintain aspect ratio */
+    margin: 0 auto; /* Center the image */
+    display: block; /* Ensure it's centered */
+    border-radius: 10px; /* Optional: rounded corners */
+    box-shadow: 0 0 30px 3px rgba(138, 43, 226, 0.8), 0 0 10px rgba(75, 0, 130, 0.6); /* Glowing effect */
+    transition: box-shadow 0.3s ease-in-out; /* Smooth transition */
+}
+
+
+
+
+
+.tab-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tab-pane {
+    display: none; /* Hide all tabs by default */
+}
+
+.tab-pane.active {
+    display: block; /* Show only the active tab */
+}
+
+
+/* Utility Classes */
+.landing-page .hidden {
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+}
+
+.landing-page .visible {
+    opacity: 1;
+    transition: opacity 0.5s ease-out;
+}
+
+
+/* Floating Graphics */
+.floating-graphics {
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.graphic {
+    position: absolute;
+    width: 100px;
+    animation: float 5s ease-in-out infinite;
+}
+
+.graphic1 {
+    top: -140px;
+    left: -50px;
+    animation-delay: 0s;
+}
+
+.graphic2 {
+    top: 0px;
+    right: 40px;
+    animation-delay: 1.5s;
+}
+
+.graphic3 {
+    bottom: -100px;
+    left: 20px;
+    animation-delay: 3s;
+}
+
+/* Animation for subtle floating effect */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px); /* Adjust float height */
+    }
+}
+
+
+
 /*
 -------------------------------------------------------------------------,
 [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [

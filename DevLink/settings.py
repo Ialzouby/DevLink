@@ -15,7 +15,7 @@ LOGOUT_REDIRECT_URL = '/'
 # Redirect to the homepage after login
 LOGIN_REDIRECT_URL = '/'
 
-LOGIN_URL = '/accounts/login/'
+LOGIN_URL = 'accounts/login/'
 
 
 
@@ -93,7 +93,7 @@ ROOT_URLCONF = 'DevLink.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'projects/templates'],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

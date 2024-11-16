@@ -12,11 +12,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 DATABASE_URL = "postgresql://postgres:qsaYzAIPQNssheBNrDfoJIqbGxQQWoTR@junction.proxy.rlwy.net:32147/railway"
 
-LOGOUT_REDIRECT_URL = 'login'
+LOGOUT_REDIRECT_URL = '/'
 # Redirect to the homepage after login
 LOGIN_REDIRECT_URL = '/'
 
-LOGIN_URL = '/login/'
+LOGIN_URL = '/accounts/login/'  # URL for login
+
+#LOGIN_URL = '/'
 
 
 
@@ -72,7 +74,7 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 
-SITE_ID = 1
+SITE_ID = int(os.getenv('SITE_ID', 3))
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',  # Default authentication
     'allauth.account.auth_backends.AuthenticationBackend',  # allauth backend
@@ -94,7 +96,7 @@ ROOT_URLCONF = 'DevLink.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'allauth'],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

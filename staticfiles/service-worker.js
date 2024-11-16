@@ -41,6 +41,8 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
     // List of URLs to exclude from caching
     const urlsToExclude = [
+        '/accounts/login/',
+        '/login/',  
         '/accounts/google/login/',
         '/accounts/google/login/callback/',
     ];

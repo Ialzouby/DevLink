@@ -97,10 +97,10 @@
                         <div class="profile-dropdown">
                             <a href="{% url 'profile' user.username %}">
                                 {% if user.userprofile.profile_picture %}
-                                <img src="{{ user.userprofile.profile_picture|safe }}" alt="{{ user.username }}" class="network-profile-img">
-                            {% else %}
-                                <img src="https://via.placeholder.com/100" alt="{{ user.username }}" class="network-profile-img">
-                            {% endif %}
+                                    <img src="{{ user.userprofile.profile_picture|safe }}" class="profile-img" alt="{{ user.username }}">
+                                {% else %}
+                                    <img src="https://via.placeholder.com/150" class="profile-img" alt="{{ user.username }}">
+                                {% endif %}
                             </a>
                             <div class="dropdown-content">
                                 <a href="{% url 'edit_profile' %}" class="dropdown-button">Edit Profile</a>

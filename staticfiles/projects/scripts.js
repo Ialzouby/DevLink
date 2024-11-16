@@ -1,5 +1,4 @@
 // Fetch CSRF token from meta tag
-const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
 // Register service worker
 if ('serviceWorker' in navigator) {
@@ -129,14 +128,3 @@ function getCookie(name) {
     return cookieValue;
 }
 
-const csrftoken = getCookie('csrftoken');
-
-// Use the csrf token in AJAX requests
-fetch('/your-url/', {
-    method: 'POST',
-    headers: {
-        'X-CSRFToken': csrftoken,
-        'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ key: 'value' })
-});

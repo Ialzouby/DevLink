@@ -1184,31 +1184,57 @@ p, a {
 /* ==========================================================================
    18 PROJECT SEARCH AND CONTAINER
    ========================================================================== */
-   .project-container {     
+.project-container {
     width: 100%;
     max-width: 800px;
     margin: 0 auto;
-}  
+}
 
-.project-search-bar {     
-    width: 100%;
-    padding: 8px;     
-    border: 1px solid #ccc;     
-    border-radius: 4px;     
+.project-search-bar {
+    width: calc(100% - 100px); /* Adjust to make space for the button */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px 0 0 4px; /* Rounded corners, only on left side */
     box-sizing: border-box;
-    background-color: #b5b5b5!important;
-}  
+    background-color: #b5b5b5 !important;
+}
+
 .project-search-bar::placeholder {
-    color: black; /* Change the placeholder text color to black */
+    color: black;
     opacity: 1; /* Ensure the placeholder text is fully opaque */
 }
 
+.search-btn {
+    background-color: #36454F;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border: none; /* Remove default button border */
+    height: 100%; /* Ensure it aligns with the search bar height */
+    margin-top: -15px; /* Move up by 5px */
+    /* margin-left: -20px;  Move left by 10px */
+}
 
-.unique-project-header {     
-    display: flex;     
-    align-items: center;     
-    justify-content: space-between; 
-} 
+.search-btn:hover {
+    background-color: #8a7a56;
+}
+
+.search-btn i {
+    font-size: 1.5rem;
+}
+
+.unique-project-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: 0px; /* Move right by 10px */
+}
 
 /* ==========================================================================
    19 PROJECT LIST
@@ -1317,7 +1343,7 @@ p, a {
 .navbar {
     width: 100vw;
     padding: 0px;
-    background: #ffffff !important;
+    background: #4bade6 !important;
     display: flex;
     margin: 0;
     justify-content: flex-end;
@@ -1369,13 +1395,13 @@ p, a {
 
 /* Updated Left Sidebar */
 .unique-left-sidebar {
-    background-color: #a6a6a6; 
+    background-color: #e4e4e4; 
     color: #333;
     padding: 10px; 
     border-radius: 6px; 
     width: 220px; 
     height: 65%; 
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); 
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.05); 
 }
 
 .unique-left-sidebar h3 {
@@ -1401,7 +1427,7 @@ p, a {
 
 .unique-left-sidebar a {
     color: #333; 
-    background-color: #e0e0e0; 
+    background-color: #bababa; 
     text-decoration: none;
     font-size: 14px; 
     font-weight: 500;
@@ -1893,7 +1919,7 @@ textarea {
    ========================================================================== */
 .unique-right-sidebar {
     width: 20vw;
-    background-color: #a6a6a6;
+    background-color: #e4e4e4;
     padding: 20px;
     border-radius: 10px;
     display: flex;
@@ -1915,7 +1941,7 @@ textarea {
 /* Right Sidebar */
 .unique-right-sidebar {
     width: 17vw;
-    background-color: #a6a6a6;
+    background-color: #e4e4e4;
     padding: 10px;
     border-radius: 10px;
 }
@@ -1926,7 +1952,7 @@ textarea {
     align-items: center;
     margin-bottom: 8px; /* Reduce the space between cards */
     padding: 6px; /* Decrease padding for a more compact design */
-    background-color: #ddd; /* Lighter background color for a clean look */
+    background-color: #bababa; /* Lighter background color for a clean look */
     border-radius: 6px; /* Slightly smaller border radius */
     width: 100%;
     gap: 6px; /* Reduce the gap between elements */
@@ -1989,6 +2015,7 @@ textarea {
     justify-content: center;
     font-size: 1.5rem;
     cursor: pointer;
+    margin-right: 35px; /* Move left by 10px */
 }
 
 .add-project-btn:hover {
@@ -2030,7 +2057,7 @@ textarea {
 footer {
     width: 100%;
     padding: 8px;
-    background: #e7e7e7 !important;
+    background: #4bade6 !important;
     color: #f1f1f1;
     text-align: center;
     margin-top: 15px;
@@ -2450,69 +2477,112 @@ footer p {
 }
 
 /* Hero Section */
-.landing-page .hero {
+/* Hero Section */
+.hero {
     position: relative;
-    background: linear-gradient(135deg, #2c3e50, #4ca1af);
+    background: linear-gradient(135deg, #1c2331, #3e79b4);
     color: white;
     text-align: center;
-    padding: 100px 20px;
-    height: 100vh;
+    padding-top: 100px;
+    padding-bottom: 400px;
+    flex: 1; 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    opacity: 1;
-    transition: opacity 0.5s ease-out, background-color 0.5s ease-out; /* Smooth fading effect */
+  /* Ensure floating graphics don't break out */
 }
 
-.landing-page .hero.hidden {
-    opacity: 0.8; /* Slightly visible when scrolling */
-    background-color: rgba(0, 0, 0, 0.85); /* Darker background during fade-out */
+/* Lighting Effect */
+.hero-lighting {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300%;
+    height: 300%;
+    background: radial-gradient(circle, rgba(235, 226, 226, 0.2), rgb(0, 85, 255));
+    pointer-events: none;
+    z-index: 0; /* Behind everything */
 }
 
-.landing-page .hero h1 {
-    font-size: 3rem;
+.hero::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px; /* Adjust width for the light size */
+    height: 400px; /* Adjust height for the light size */
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%);
+    filter: blur(50px);
+    opacity: 0.8;
+    pointer-events: none; /* Ensure it doesn't interfere with other elements */
+}
+
+/* Content Styling */
+.hero-content {
+    z-index: 2; /* Ensure it's above graphics and lighting */
+    max-width: 800px;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 2.8rem;
     margin-bottom: 20px;
 }
 
-.landing-page .hero p {
-    font-size: 1.4rem;
+.hero p {
+    font-size: 1.5rem;
     margin-bottom: 30px;
-    max-width: 600px;
+    line-height: 1.6;
 }
 
-.landing-page .hero-buttons {
+.hero-buttons {
     display: flex;
     gap: 15px;
     justify-content: center;
 }
 
-.landing-page .cta-button,
-.landing-page .secondary-button {
-    padding: 15px 30px;
-    font-size: 1.2rem;
-    border: none;
-    border-radius: 8px;
+.cta-button {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+    border: none;
 }
 
-.landing-page .cta-button {
+.cta-button:hover {
+    background-color: #218838;
+}
+
+.secondary-button {
+    background: transparent;
+    color: #28a745;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: 2px solid #28a745;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.secondary-button:hover {
     background-color: #28a745;
     color: white;
 }
 
-.landing-page .cta-button:hover {
-    background-color: #218838;
-}
-
-.landing-page .secondary-button {
-    background-color: transparent;
-    color: #28a745;
-    border: 2px solid #28a745;
-}
-
-.landing-page .secondary-button:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+/* Floating Animation */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-20px) rotate(10deg);
+    }
 }
 
 /* Showcase Section */
@@ -2528,7 +2598,7 @@ footer p {
 
 .landing-page .showcase-image {
     width: 90%;
-    max-width: 1200px;
+    max-width: 300px;
     opacity: 0;
     transform: scale(0.95); /* Start with a slightly smaller scale */
     transition: opacity 0.8s ease-out, transform 0.8s ease-out;
@@ -2541,66 +2611,96 @@ footer p {
 }
 
 /* Tabs Section */
-.landing-page .tabs {
-    background-color: #24292f;
+.tabs {
+    background-color: #24292f; /* Keep the dark background */
     color: white;
     text-align: center;
-    padding: 50px 20px;
-    min-height: 50vh;
+    padding: 20px 10px; /* Reduce padding to make it smaller */
 }
 
-.landing-page .tab-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 30px;
-}
 
-.landing-page .tab-button {
-    padding: 10px 20px;
-    font-size: 1rem;
-    color: white;
-    background-color: #333;
-    border: 1px solid #444;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
 
-.landing-page .tab-button.active {
-    background-color: #28a745;
-    border-color: #218838;
-    color: white;
-}
-
-.landing-page .tab-button:hover {
-    background-color: #444;
-    color: #ddd;
-}
-
-.landing-page .tab-content {
+.tab-content {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-top: 20px;
+    margin-top: 20px; 
+
 }
 
-.landing-page .tab-pane {
-    display: none;
-    text-align: center;
+
+/* Style the tab-buttons container */
+.tab-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px; /* Space between buttons */
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2); 
+    border-radius: 50px; 
+    padding: 10px 20px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); 
+    width: 45%; /* Set the width to half */
+    margin: 0 auto; 
 }
 
-.landing-page .tab-pane.active {
-    display: block;
-    transition: opacity 0.5s ease-in-out;
+/* Style individual tab buttons */
+.tab-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: white;
+    background-color: transparent; /* Transparent background */
+    border: none; /* Remove button border */
+    border-radius: 25px; /* Fully rounded corners */
+    cursor: pointer;
+    transition: all 0.3s ease; /* Smooth hover effect */
 }
 
-.landing-page .tab-pane img {
-    max-width: 100%;
+/* Active button style */
+.tab-button.active {
+    background-color: rgba(255, 255, 255, 0.2); /* Highlighted background */
+    border: 1px solid rgba(255, 255, 255, 0.4); /* Subtle border for the active button */
+    color: white; /* Keep the text white */
+}
+
+/* Hover effect for buttons */
+.tab-button:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Slight background change on hover */
+    color: white; /* Keep text color consistent */
+}
+
+
+.tab-pane img {
+    max-width: 70%; /* Keep images smaller to fit the reduced space */
     height: auto;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    height: auto; /* Maintain aspect ratio */
+    margin: 0 auto; /* Center the image */
+    display: block; /* Ensure it's centered */
+    border-radius: 10px; /* Optional: rounded corners */
+    box-shadow: 0 0 30px 3px rgba(138, 43, 226, 0.8), 0 0 10px rgba(75, 0, 130, 0.6); /* Glowing effect */
+    transition: box-shadow 0.3s ease-in-out; /* Smooth transition */
 }
+
+
+
+
+
+.tab-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tab-pane {
+    display: none; /* Hide all tabs by default */
+}
+
+.tab-pane.active {
+    display: block; /* Show only the active tab */
+}
+
 
 /* Utility Classes */
 .landing-page .hidden {
@@ -2612,6 +2712,52 @@ footer p {
     opacity: 1;
     transition: opacity 0.5s ease-out;
 }
+
+
+/* Floating Graphics */
+.floating-graphics {
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.graphic {
+    position: absolute;
+    width: 100px;
+    animation: float 5s ease-in-out infinite;
+}
+
+.graphic1 {
+    top: -140px;
+    left: -50px;
+    animation-delay: 0s;
+}
+
+.graphic2 {
+    top: 0px;
+    right: 40px;
+    animation-delay: 1.5s;
+}
+
+.graphic3 {
+    bottom: -100px;
+    left: 20px;
+    animation-delay: 3s;
+}
+
+/* Animation for subtle floating effect */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px); /* Adjust float height */
+    }
+}
+
 
 
 /*

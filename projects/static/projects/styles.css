@@ -2640,7 +2640,7 @@ footer p {
     border-radius: 50px; 
     padding: 10px 20px; 
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); 
-    width: 40%; /* Set the width to half */
+    width: 45%; /* Set the width to half */
     margin: 0 auto; 
 }
 

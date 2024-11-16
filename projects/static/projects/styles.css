@@ -1233,6 +1233,7 @@ p, a {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-left: 0px; /* Move right by 10px */
 }
 
 /* ==========================================================================
@@ -2014,6 +2015,7 @@ textarea {
     justify-content: center;
     font-size: 1.5rem;
     cursor: pointer;
+    margin-right: 35px; /* Move left by 10px */
 }
 
 .add-project-btn:hover {

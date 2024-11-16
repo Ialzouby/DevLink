@@ -1343,7 +1343,7 @@ p, a {
 .navbar {
     width: 100vw;
     padding: 0px;
-    background: #ffffff !important;
+    background: #4bade6 !important;
     display: flex;
     margin: 0;
     justify-content: flex-end;
@@ -1395,13 +1395,13 @@ p, a {
 
 /* Updated Left Sidebar */
 .unique-left-sidebar {
-    background-color: #a6a6a6; 
+    background-color: #e4e4e4; 
     color: #333;
     padding: 10px; 
     border-radius: 6px; 
     width: 220px; 
     height: 65%; 
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); 
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.05); 
 }
 
 .unique-left-sidebar h3 {
@@ -1427,7 +1427,7 @@ p, a {
 
 .unique-left-sidebar a {
     color: #333; 
-    background-color: #e0e0e0; 
+    background-color: #bababa; 
     text-decoration: none;
     font-size: 14px; 
     font-weight: 500;
@@ -1919,7 +1919,7 @@ textarea {
    ========================================================================== */
 .unique-right-sidebar {
     width: 20vw;
-    background-color: #a6a6a6;
+    background-color: #e4e4e4;
     padding: 20px;
     border-radius: 10px;
     display: flex;
@@ -1941,7 +1941,7 @@ textarea {
 /* Right Sidebar */
 .unique-right-sidebar {
     width: 17vw;
-    background-color: #a6a6a6;
+    background-color: #e4e4e4;
     padding: 10px;
     border-radius: 10px;
 }
@@ -1952,7 +1952,7 @@ textarea {
     align-items: center;
     margin-bottom: 8px; /* Reduce the space between cards */
     padding: 6px; /* Decrease padding for a more compact design */
-    background-color: #ddd; /* Lighter background color for a clean look */
+    background-color: #bababa; /* Lighter background color for a clean look */
     border-radius: 6px; /* Slightly smaller border radius */
     width: 100%;
     gap: 6px; /* Reduce the gap between elements */
@@ -2057,7 +2057,7 @@ textarea {
 footer {
     width: 100%;
     padding: 8px;
-    background: #e7e7e7 !important;
+    background: #4bade6 !important;
     color: #f1f1f1;
     text-align: center;
     margin-top: 15px;

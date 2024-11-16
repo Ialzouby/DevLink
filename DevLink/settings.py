@@ -71,7 +71,7 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 
-SITE_ID = 1
+SITE_ID = 2
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',  # Default authentication
     'allauth.account.auth_backends.AuthenticationBackend',  # allauth backend

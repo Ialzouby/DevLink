@@ -1,3 +1,22 @@
+// Add this function at the top of your JavaScript file
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+// Retrieve the CSRF token from the cookies
+const csrfToken = getCookie('csrftoken');
+
 document.addEventListener('DOMContentLoaded', function() {
     let currentStep = 1;  // Declare once
 
@@ -121,4 +140,27 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize skill input fields
     handleSkillInput('skills-gained-input', 'skills-gained-list', 'skills_gained');
     handleSkillInput('skills-requirements-input', 'skills-requirements-list', 'requirements');
+
+    // Logout functionality
+    const logoutButton = document.querySelector('#logout-button');
+    if (logoutButton) {
+        logoutButton.addEventListener('click', function() {
+            fetch('/logout/', {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrfToken,
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log("Logged out successfully");
+                    // Redirect or update the UI as needed
+                } else {
+                    console.error("Logout failed");
+                }
+            })
+            .catch(error => console.error("Error:", error));
+        });
+    }
 });

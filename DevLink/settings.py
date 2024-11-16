@@ -29,6 +29,9 @@ LOGIN_REDIRECT_URL = '/'
 
 LOGIN_URL = '/login/'
 
+# settings.py
+CSRF_COOKIE_SECURE = False  # Set to True if your site is served over HTTPS
+CSRF_USE_SESSIONS = False   # Default is False; True is for more secure CSRF handling
 
 
 # Quick-start development settings - unsuitable for production

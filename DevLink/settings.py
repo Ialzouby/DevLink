@@ -13,7 +13,7 @@ DATABASE_URL = "postgresql://postgres:qsaYzAIPQNssheBNrDfoJIqbGxQQWoTR@junction.
 
 LOGOUT_REDIRECT_URL = '/'
 # Redirect to the homepage after login
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/home'
 
 LOGIN_URL = '/accounts/login/'
 

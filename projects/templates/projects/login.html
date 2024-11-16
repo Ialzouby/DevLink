@@ -20,8 +20,21 @@
         <button type="submit" class="btn">Login</button>
     </form>
     <p>Don't have an account? <a href="{% url 'register' %}">Sign up here</a></p>
-    <a href="{% provider_login_url 'google' %}" class="btn btn-google">
-        Sign in with Google
-    </a>
+    <div id="g_id_onload"
+    data-client_id="663080728605-j3gkpo8r4rggg0fi7b209bkm1slqet1p.apps.googleusercontent.com"
+    data-context="signin"
+    data-ux_mode="popup"
+    data-login_uri="devlink.railway.app/auth-receiver"
+    data-itp_support="true">
+</div>
+
+<div class="g_id_signin"
+    data-type="standard"
+    data-shape="pill"
+    data-theme="outline"
+    data-text="signin_with"
+    data-size="large"
+    data-logo_alignment="left">
+</div>
 </div>
 {% endblock %}

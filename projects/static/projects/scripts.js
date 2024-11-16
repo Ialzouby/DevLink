@@ -63,7 +63,6 @@ function deleteNotification(notificationId) {
 }
 
 // Multi-step form navigation
-let currentStep = 1;
 
 function showStep(step) {
     document.querySelectorAll('.step').forEach(stepElement => stepElement.style.display = 'none');

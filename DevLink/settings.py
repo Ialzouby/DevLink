@@ -11,7 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 DATABASE_URL = "postgresql://postgres:qsaYzAIPQNssheBNrDfoJIqbGxQQWoTR@junction.proxy.rlwy.net:32147/railway"
 
-LOGOUT_REDIRECT_URL = 'login'
+LOGOUT_REDIRECT_URL = '/'
 # Redirect to the homepage after login
 LOGIN_REDIRECT_URL = '/'
 

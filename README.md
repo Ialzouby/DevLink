@@ -4,7 +4,7 @@
 </head>
 <body>
   <h1>DevLink: Connecting Developers Worldwide</h1>
-<img src=https://github.com/Ialzouby/DevLink/blob/main/projects/static/projects/images/devlink.up.railway.app.png" alt="DevLink Banner" style="width:100%;height:auto;">
+<img src="https://raw.githubusercontent.com/Ialzouby/DevLink/main/projects/static/projects/images/devlink.up.railway.app.png" alt="DevLink Banner" style="width:100%;height:auto;">
 
   <p>Welcome to <strong>DevLink</strong>! DevLink is a social platform designed for developers to connect, collaborate, and grow. Our goal is to make project collaboration seamless while creating a rich community where developers can share knowledge and resources.</p>
 

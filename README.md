@@ -108,13 +108,12 @@ GOOGLE_CLIENT_SECRET=your-google-client-secret</code></pre>
   <hr>
 
   <h2>📧 Contact</h2>
-  <p>For questions or feedback, feel free to reach out at <a href="mailto:ialzouby@example.com">ialzouby@example.com</a>.</p>
+  <p>For questions or feedback, feel free to reach out at <a href="mailto:ialzouby@gmail.com">ialzouby@gmail.com</a>.</p>
 
   <hr>
 
   <h3>⭐️ Show your support!</h3>
   <p>If you like this project, give it a star on GitHub and share it with your friends!</p>
 
-  <p><em>Note:</em> Replace the placeholder image URL at the top with your own banner image URL or a relevant image for DevLink. Add actual screenshots of your app in the "Screenshots" section to showcase the UI.</p>
 </body>
 </html>

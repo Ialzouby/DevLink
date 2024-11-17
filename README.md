@@ -9,6 +9,8 @@
 
   <p>Welcome to <strong>DevLink</strong>! DevLink is a social platform designed for developers to connect, collaborate, and grow. Our goal is to make project collaboration seamless while creating a rich community where developers can share knowledge and resources.</p>
 
+  <p><strong>DevLink</strong> is a collaborative platform developed to give UNC Charlotte College of Computing and Informatics (UNCC CCI) students access to a diverse range of peer-created projects. DevLink empowers students to showcase their own projects, discover others' work, and express interest in collaborative opportunities, fostering a supportive environment for academic and professional growth. DevLink was designed to help students build a portfolio of projects to enhance their prospects for internships and jobs.</p>
+
   <hr>
 
   <h2>🚀 Tech Stack</h2>
@@ -33,6 +35,16 @@
     <li><strong>Media Management:</strong> Profile pictures and media files are efficiently handled with Cloudinary.</li>
     <li><strong>GitHub Integration:</strong> Link your GitHub account and showcase your repositories.</li>
     <li><strong>Production-Ready:</strong> Fully hosted and maintained on Railway, ensuring uptime and reliability.</li>
+  </ul>
+
+  <hr>
+
+  <h2>## Usage</h2>
+  <ul>
+    <li><strong>Sign Up:</strong> Register as a new user and complete your profile.</li>
+    <li><strong>Create a Project:</strong> Add a new project with details like title, description, skills required, and GitHub link.</li>
+    <li><strong>Browse Projects:</strong> Engage with other users’ and providing feedback.</li>
+    <li><strong>Connect with Peers:</strong> Use the messaging feature to connect, discuss, and collaborate on projects.</li>
   </ul>
 
   <hr>
@@ -107,4 +119,3 @@ GOOGLE_CLIENT_SECRET=your-google-client-secret</code></pre>
   <p><em>Note:</em> Replace the placeholder image URL at the top with your own banner image URL or a relevant image for DevLink. Add actual screenshots of your app in the "Screenshots" section to showcase the UI.</p>
 </body>
 </html>
-

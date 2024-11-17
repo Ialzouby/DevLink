@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>DevLink: Connecting Developers Worldwide</title>
+ DevLink: Connecting Developers Worldwide
 </head>
 <body>
   <h1>DevLink: Connecting Developers Worldwide</h1>

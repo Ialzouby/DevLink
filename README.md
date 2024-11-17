@@ -4,7 +4,7 @@
 </head>
 <body>
   <h1>DevLink: Connecting Developers Worldwide</h1>
-  <img src="https://via.placeholder.com/1000x300.png?text=DevLink+-+Connecting+Developers+Worldwide" alt="DevLink Banner" style="width:100%;height:auto;">
+  <img src="[https://via.placeholder.com/1000x300.png?text=DevLink+-+Connecting+Developers+Worldwide](https://asset.cloudinary.com/dvah1m8du/90038387c8d770c592223006ed644d52)" alt="DevLink Banner" style="width:100%;height:auto;">
 
   <p>Welcome to <strong>DevLink</strong>! DevLink is a social platform designed for developers to connect, collaborate, and grow. Our goal is to make project collaboration seamless while creating a rich community where developers can share knowledge and resources.</p>
 

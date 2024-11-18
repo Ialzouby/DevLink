@@ -497,6 +497,74 @@ p, a {
 }
 
 /* ==========================================================================
+   EDIT PROFILE FORM
+   ========================================================================== */
+
+.edit-profile-form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Push the button to the bottom */
+    align-items: center;
+    height: auto;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    background-color: #2c2c2c;
+    border-radius: 16px !important; /* Ensure this is set for smoother rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    border: 1px solid #444;
+    position: absolute; /* Position relative to viewport */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.form-group {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.edit-profile-button {
+    align-self: center; /* Center the button horizontally */
+    margin-top: 20px;
+    background-color: #36454F;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.edit-profile-button:hover {
+    background-color: #8a7a56;
+}
+
+.edit-profile-form-container h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #ffffff; /* Ensures visibility on dark background */
+    font-size: 1.8rem;
+}
+
+.form-columns {
+    display: flex;
+    gap: 20px; /* Add space between columns */
+    width: 100%;
+    justify-content: space-between;
+}
+
+.form-column {
+    width: 48%; /* Each column takes half the width of the container */
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Add spacing between fields in each column */
+    align-items: stretch; /* Ensures all fields align properly */
+}
+
+
+/* ==========================================================================
    8 PROFILE and DROPDOWN 
    ========================================================================== */
    .profile-dropdown .profile-img {
@@ -2458,7 +2526,7 @@ footer p {
 
 .header-wrapper {
     text-align: center;
-    margin-bottom: 20px; /* Adjust as needed for spacing */
+    margin-bottom: 5px; /* Adjust as needed for spacing */
     width: 100%;
 }
 
@@ -3098,3 +3166,5 @@ footer p {
         vertical-align: middle; /* Align it with the DevLink text */
     }
 }
+
+

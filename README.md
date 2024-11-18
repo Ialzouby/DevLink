@@ -55,7 +55,7 @@ Start connecting, collaborating, and building your developer portfolio with DevL
 
   <hr>
 
-  <h2>## Usage</h2>
+  <h2>📃 Usage</h2>
   <ul>
     <li><strong>Sign Up:</strong> Register as a new user and complete your profile.</li>
     <li><strong>Create a Project:</strong> Add a new project with details like title, description, skills required, and GitHub link.</li>

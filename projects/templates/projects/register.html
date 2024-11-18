@@ -27,19 +27,19 @@
             <!-- Step 1 -->
             <div class="step" id="step-1" {% if current_step != 1 %}style="display:none;"{% endif %}>
                 <div class="form-group">
-                    <label for="first_name">First Name:</label>
+                    <label for="first_name">First Name: <span class="astrix-required">*</span></label>
                     {{ form.first_name }}
                 </div>
                 <div class="form-group">
-                    <label for="last_name">Last Name:</label>
+                    <label for="last_name">Last Name: <span class="astrix-required">*</span></label>
                     {{ form.last_name }}
                 </div>
                 <div class="form-group">
-                    <label for="username">Username:</label>
+                    <label for="username">Username: <span class="astrix-required">*</span></label>
                     {{ form.username }}
                 </div>
                 <div class="form-group">
-                    <label for="email">Email:</label>
+                    <label for="email">Email: <span class="astrix-required">*</span></label>
                     {{ form.email }}
                 </div>
             </div>
@@ -47,11 +47,11 @@
             <!-- Step 2 -->
             <div class="step" id="step-2" {% if current_step != 2 %}style="display:none;"{% endif %}>
                 <div class="form-group">
-                    <label for="grade_level">Grade Level:</label>
+                    <label for="grade_level">Grade Level: <span class="astrix-required">*</span></label>
                     {{ form.grade_level }}
                 </div>
                 <div class="form-group">
-                    <label for="concentration">Concentration:</label>
+                    <label for="concentration">Concentration: <span class="astrix-required">*</span></label>
                     {{ form.concentration }}
                 </div>
             </div>
@@ -72,15 +72,15 @@
                         {{ form.bio }}
                     </div>
                     <div class="form-group">
-                        <label for="profile_picture">Profile Picture (Required):</label>
+                        <label for="profile_picture">Profile Picture: <span class="astrix-required">*</span></label>
                         {{ form.profile_picture }}
                     </div>
                     <div class="form-group">
-                        <label for="password1">Password:</label>
+                        <label for="password1">Password: <span class="astrix-required">*</span></label>
                         {{ form.password1 }}
                     </div>
                     <div class="form-group">
-                        <label for="password2">Confirm Password:</label>
+                        <label for="password2">Confirm Password: <span class="astrix-required">*</span></label>
                         {{ form.password2 }}
                     </div>
                 </div>

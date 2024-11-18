@@ -21,7 +21,9 @@
         </div>
         <button type="submit" class="btn">Login</button>
     </form>
-    <p class="login-page">Don't have an account? <a href="{% url 'register' %}">Sign up here</a></p>
+    <p class="login-page">Don't have an account? <a href="{% url 'register' %}">Sign up here</a><br><a href="#">Forgot
+            your password?</a></p>
+    <!-- <p class="login-page"></p> -->
 
     <!-- Sign-In Button with Google's Styling -->
     <a href="{% provider_login_url 'google' %}" class="google-signin-btn">

@@ -3,10 +3,11 @@
 
 {% block content %}
 <div class="container custom-form-container mx-auto">
-    <div class="header-wrapper">
-        <h2>Sign Up</h2>
-    </div>
+    
     <div class="custom-form-wrapper">
+        <div>
+            <h2>Sign Up</h2>
+        </div>
         <form class="custom-form" method="POST" action="{% url 'register' %}" enctype="multipart/form-data">
             {% csrf_token %}
 

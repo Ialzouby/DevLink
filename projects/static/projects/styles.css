@@ -2511,7 +2511,8 @@ footer p {
 }  
 
 .custom-form-wrapper {     
-    display: flex;     
+    display: flex;   
+    flex-direction: column;   
     justify-content: center;     
     align-items: center;     
     width: 100%;     

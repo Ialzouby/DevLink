@@ -1991,7 +1991,7 @@ textarea {
 
 /* Project Cards */
 .custom-project-card {
-    background-color: #222;
+    background-color: #b5b5b5;
     padding: 20px;
     border-radius: 10px;
     text-align: center;
@@ -2006,7 +2006,7 @@ textarea {
 .custom-project-card h3 {
     font-size: 1.5rem;
     margin-bottom: 10px;
-    color: #fff;
+    color: #000;
 }
 
 .custom-project-card p {

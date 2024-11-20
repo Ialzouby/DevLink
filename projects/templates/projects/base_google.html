@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+
+    <title>DevLink - {% block title %}Sign In{% endblock %}</title>
+    
+    <!-- Load only the essential styles -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'projects/styles.css' %}">
+</head>
+<body>
+    {% block content %}
+    <!-- Page-specific content will go here -->
+    {% endblock %}
+
+    <!-- Load only the essential scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="{% static 'projects/scripts.js' %}"></script>
+</body>
+</html>

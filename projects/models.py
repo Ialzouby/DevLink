@@ -12,15 +12,35 @@ from django.utils import timezone
 
 # UserProfile model
 class UserProfile(models.Model):
+    GRADE_LEVEL_CHOICES = [
+        ('Freshman', 'Freshman'),
+        ('Sophomore', 'Sophomore'),
+        ('Junior', 'Junior'),
+        ('Senior', 'Senior'),
+        ('Graduate', 'Graduate'),
+    ]
+
+    CONCENTRATION_CHOICES = [
+        ('Computer Science', 'Computer Science'),
+        ('Information Technology', 'Information Technology'),
+        ('Data Science', 'Data Science'),
+        ('Cybersecurity', 'Cybersecurity'),
+        ('Software Engineering', 'Software Engineering'),
+    ]
+
+    first_name = models.CharField(max_length=30, blank=False)
+    last_name = models.CharField(max_length=30, blank=False)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    grade_level = models.CharField(max_length=50)
-    concentration = models.CharField(max_length=100)
-    linkedin = models.URLField(max_length=200, blank=True, null=True)
-    github = models.URLField(max_length=200, blank=True, null=True)
+    grade_level = models.CharField(max_length=50, choices=GRADE_LEVEL_CHOICES)
+    concentration = models.CharField(max_length=100, choices=CONCENTRATION_CHOICES)
+    linkedin = models.CharField(max_length=200, blank=True, null=True)
+    github = models.CharField(max_length=200, blank=True, null=True)
     bio = models.TextField(blank=True, null=True)
-    profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True)  # New field for profile image
+    profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True)
+    profile_picture_url = models.URLField(blank=True, null=True)
     points = models.IntegerField(default=0)
     birthdate = models.DateField(null=True, blank=True)
+
     
 
 
@@ -59,7 +79,7 @@ class Project(models.Model):
     def __str__(self):
         return self.title
     
-
+# JoinRequest model
 class JoinRequest(models.Model):
     project = models.ForeignKey(Project, related_name='join_requests', on_delete=models.CASCADE)
     user = models.ForeignKey(User, related_name='join_requests', on_delete=models.CASCADE)
@@ -90,7 +110,7 @@ class Update(models.Model):
     def __str__(self):
         return f'Update on {self.project.title}'
 
-
+# Message model
 class Message(models.Model):
     sender = models.ForeignKey(User, related_name="sent_messages", on_delete=models.CASCADE)
     recipient = models.ForeignKey(User, related_name="received_messages", on_delete=models.CASCADE)
@@ -103,9 +123,7 @@ class Message(models.Model):
     def __str__(self):
         return f"Message from {self.sender} to {self.recipient} at {self.timestamp}"
     
-
-
-
+# Notification model
 class Notification(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)  # User who receives the notification
     related_message = models.ForeignKey(Message, on_delete=models.CASCADE, null=True, blank=True)  # Message related to the notification

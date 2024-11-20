@@ -29,16 +29,12 @@
                     <div class="col-md-6 right-side">
                         <div class="form-group">
                             <label for="id_skills_gained">Skills gained:</label>
-                            <input type="text" id="skills-gained-input" class="form-control" placeholder="Type a skill and press Enter">
-                            <ul id="skills-gained-list" class="skills-list"></ul>
-                            <input type="hidden" id="skills_gained" name="skills_gained">
+                            {{ form.skills_gained }}
                         </div>
 
                         <div class="form-group">
                             <label for="id_requirements">Requirements:</label>
-                            <input type="text" id="skills-requirements-input" class="form-control" placeholder="Type a skill and press Enter">
-                            <ul id="skills-requirements-list" class="skills-list"></ul>
-                            <input type="hidden" id="requirements" name="skill_requirements">
+                            {{ form.skill_requirements }}
                         </div>
 
                         <div class="form-group">
@@ -56,6 +52,5 @@
         </div>
     </div>
 </div>
-
 
 {% endblock %}

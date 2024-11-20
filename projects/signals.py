@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save, m2m_changed
 from .models import UserProfile, Project, Comment, Message, JoinRequest, Notification
+from allauth.socialaccount.signals import social_account_added
+from allauth.socialaccount.models import SocialAccount
 from django.dispatch import receiver
 from django.utils import timezone
 
@@ -69,3 +71,5 @@ def notify_project_owner_on_join_request(sender, instance, created, **kwargs):
             timestamp=timezone.now(),
             content=f"{user_requesting.username} has requested to join your project '{instance.project.title}'"
         )
+
+

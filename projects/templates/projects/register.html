@@ -1,109 +1,98 @@
 {% extends "projects/base.html" %}
-{% load static %}
-
 {% block title %}Sign Up{% endblock %}
 
 {% block content %}
-<div class="container form-container">
-    <h2>Sign Up</h2>
-    <!-- enctype="multipart/form-data" is necessary to handle file uploads -->
-    <form method="POST" action="{% url 'register' %}" enctype="multipart/form-data">
-        
-        {% csrf_token %}
+<div class="container custom-form-container mx-auto">
+    
+    <div class="custom-form-wrapper">
+        <div>
+            <h2>Sign Up</h2>
+        </div>
+        <form class="custom-form" method="POST" action="{% url 'register' %}" enctype="multipart/form-data">
+            {% csrf_token %}
 
-        <!-- Step 1 -->
-        <div class="step" id="step-1">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="first_name">First Name:</label>
-                        <input type="text" id="first_name" name="first_name" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" name="email" class="form-control">
-                    </div>
+            {% if form.errors %}
+                <div class="alert alert-danger">
+                    <strong>Please correct the following errors:</strong>
+                    <ul>
+                        {% for field, errors in form.errors.items %}
+                            {% for error in errors %}
+                                <li>{{ field|capfirst }}: {{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                    </ul>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="last_name">Last Name:</label>
-                        <input type="text" id="last_name" name="last_name" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="username">Username:</label>
-                        <input type="text" id="username" name="username" class="form-control">
-                    </div>
-                </div>
-            </div>
-        </div>
+            {% endif %}
 
-        <!-- Step 2 -->
-        <div class="step" id="step-2" style="display:none;">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="grade_level">Grade Level:</label>
-                        <input type="text" id="grade_level" name="grade_level" class="form-control">
-                    </div>
+            <!-- Step 1 -->
+            <div class="step" id="step-1" {% if current_step != 1 %}style="display:none;"{% endif %}>
+                <div class="form-group">
+                    <label for="first_name">First Name: <span class="astrix-required">*</span></label>
+                    {{ form.first_name }}
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="concentration">Concentration:</label>
-                        <input type="text" id="concentration" name="concentration" class="form-control">
-                    </div>
+                <div class="form-group">
+                    <label for="last_name">Last Name: <span class="astrix-required">*</span></label>
+                    {{ form.last_name }}
+                </div>
+                <div class="form-group">
+                    <label for="username">Username: <span class="astrix-required">*</span></label>
+                    {{ form.username }}
+                </div>
+                <div class="form-group">
+                    <label for="email">Email: <span class="astrix-required">*</span></label>
+                    {{ form.email }}
                 </div>
             </div>
-        </div>
 
-        <!-- Step 3 -->
-<!-- Step 3 -->
-<div class="step" id="step-3" style="display:none;">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="linkedin">LinkedIn (Optional):</label>
-                <input type="url" id="linkedin" name="linkedin" class="form-control">
+            <!-- Step 2 -->
+            <div class="step" id="step-2" {% if current_step != 2 %}style="display:none;"{% endif %}>
+                <div class="form-group">
+                    <label for="grade_level">Grade Level: <span class="astrix-required">*</span></label>
+                    {{ form.grade_level }}
+                </div>
+                <div class="form-group">
+                    <label for="concentration">Concentration: <span class="astrix-required">*</span></label>
+                    {{ form.concentration }}
+                </div>
             </div>
-            <div class="form-group">
-                <label for="profile_picture">Profile Picture (Required):</label>
-                <input type="file" id="profile_picture" name="profile_picture" class="form-control" required>
+
+            <!-- Step 3 -->
+            <div class="step" id="step-3" {% if current_step != 3 %}style="display:none;"{% endif %}>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="linkedin">LinkedIn (Optional):</label>
+                        {{ form.linkedin }}
+                    </div>
+                    <div class="form-group">
+                        <label for="github">GitHub (Optional):</label>
+                        {{ form.github }}
+                    </div>
+                    <div class="form-group">
+                        <label for="bio">Bio (Optional):</label>
+                        {{ form.bio }}
+                    </div>
+                    <div class="form-group">
+                        <label for="profile_picture">Profile Picture: <span class="astrix-required">*</span></label>
+                        {{ form.profile_picture }}
+                    </div>
+                    <div class="form-group">
+                        <label for="password1">Password: <span class="astrix-required">*</span></label>
+                        {{ form.password1 }}
+                    </div>
+                    <div class="form-group">
+                        <label for="password2">Confirm Password: <span class="astrix-required">*</span></label>
+                        {{ form.password2 }}
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="github">GitHub (Optional):</label>
-                <input type="url" id="github" name="github" class="form-control">
+            
+
+            <div class="form-group text-center">
+                <button type="button" class="btn btn-primary" id="prevBtn" onclick="prevStep()" {% if current_step == 1 %}style="display:none;"{% endif %}>Previous</button>
+                <button type="button" class="btn btn-primary" id="nextBtn" onclick="nextStep()" {% if current_step == 3 %}style="display:none;"{% endif %}>Next</button>
+                <button type="submit" class="btn btn-primary" id="submitBtn" {% if current_step != 3 %}style="display:none;"{% endif %}>Sign Up</button>
             </div>
-            <div class="form-group">
-                <label for="bio">Bio (Optional):</label>
-                <textarea id="bio" name="bio" class="form-control" rows="2"></textarea>
-            </div>
-        </div>
-        <!-- Add password fields here in Step 3 -->
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="password1">Password:</label>
-                <input type="password" id="password1" name="password1" class="form-control" required>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="password2">Confirm Password:</label>
-                <input type="password" id="password2" name="password2" class="form-control" required>
-            </div>
-        </div>
+        </form>
     </div>
 </div>
-
-
-        <div class="form-group text-center">
-            <!-- Buttons for navigating steps -->
-            <button type="button" class="btn btn-primary" id="prevBtn" onclick="prevStep()" style="display:none;">Previous</button>
-            <button type="button" class="btn btn-primary" id="nextBtn" onclick="nextStep()">Next</button>
-            <button type="submit" class="btn btn-primary" id="submitBtn" style="display:none;">Sign Up</button>
-        </div>
-    </form>
-</div>
-
-
 {% endblock %}

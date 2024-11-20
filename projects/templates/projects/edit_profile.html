@@ -4,14 +4,58 @@
 
 {% block content %}
 <div class="container mt-5">
-    <h2>Edit Profile</h2>
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        
-        <!-- Display form fields -->
-        {{ form.as_p }}
 
-        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <div class="edit-profile-form-container p-4 border rounded">
+            <h2>Edit Profile</h2> <!-- Header -->
+
+            <div class="form-columns">
+                <!-- Left Column -->
+                <div class="form-column">
+                    <!-- Grade Level Field -->
+                    <div class="form-group mb-3">
+                        <label for="id_grade_level">Grade Level:</label>
+                        {{ form.grade_level }}
+                    </div>
+
+                    <!-- Concentration Field -->
+                    <div class="form-group mb-3">
+                        <label for="id_concentration">Concentration:</label>
+                        {{ form.concentration }}
+                    </div>
+
+                    <!-- LinkedIn Field -->
+                    <div class="form-group mb-3">
+                        <label for="id_linkedin">LinkedIn:</label>
+                        <input type="url" name="linkedin" id="id_linkedin" class="form-control" value="{{ form.linkedin.value }}">
+                    </div>
+
+                    <!-- GitHub Field -->
+                    <div class="form-group mb-3">
+                        <label for="id_github">GitHub:</label>
+                        <input type="url" name="github" id="id_github" class="form-control" value="{{ form.github.value }}">
+                    </div>
+                </div>
+
+                <div class="form-column">
+                    <!-- Bio Field -->
+                    <div class="form-group mb-3">
+                        <label for="id_bio">Bio:</label>
+                        <textarea name="bio" id="id_bio" class="form-control" rows="5">{{ form.bio.value }}</textarea>
+                    </div>
+                
+                    <!-- Profile Picture Field -->
+                    <div class="form-group mb-3">
+                        <label for="id_profile_picture">Profile Picture:</label>
+                        <input type="file" name="profile_picture" id="id_profile_picture" class="form-control">
+                    </div>
+                
+                    <!-- Save Changes Button -->
+                    <button type="submit" class="btn btn-primary mt-3 edit-profile-button">Save Changes</button>
+                </div>
+            </div>
+        </div>
     </form>
 </div>
 {% endblock %}

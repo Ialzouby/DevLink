@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token }}">
 
-    <title>DevLink - {% block title %}Home{% endblock %}</title>
+    <title class="main-hedder">DevLink - {% block title %}Home{% endblock %}</title>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="icon" href="/static/projects/images/logo.png" type="image/x-icon">
     <link rel="manifest" href="{% static 'manifest.json' %}">
@@ -17,6 +19,7 @@
     <link rel="stylesheet" href="{% static 'projects/styles.css' %}">
 </head>
 <body>
+    {% block header %}
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg bg-light">
         <div class="container-fluid d-flex justify-content-between">
@@ -99,7 +102,7 @@
                                 {% if user.userprofile.profile_picture %}
                                     <img src="{{ user.userprofile.profile_picture|safe }}" class="profile-img" alt="{{ user.username }}">
                                 {% else %}
-                                    <img src="{% static 'projects/images/default-profile.png' %}" class="profile-img" alt="{{ user.username }}">
+                                    <img src="https://via.placeholder.com/150" class="profile-img" alt="{{ user.username }}">
                                 {% endif %}
                             </a>
                             <div class="dropdown-content">
@@ -113,7 +116,7 @@
                     </div>
                 {% else %}
                 <div class="button-container">
-                    <a href="{% url 'login' %}" class="btn">Login</a>
+                    <a href="{% url 'account_login' %}" class="btn">Login</a>
                     <a href="{% url 'register' %}" class="btn">Sign Up</a>
                 </div>
                 {% endif %}
@@ -121,14 +124,14 @@
         </div>
     </nav>
     
-
+    {% endblock %}
     <!-- Main Content -->
     <div class="page-container">
         {% block content %}
         <!-- Page-specific content will go here -->
         {% endblock %}
     </div>
-
+    {% block footer %}
     <!-- Footer -->
     <footer>
         <p>&copy; 2024 DevLink. All rights reserved.</p>
@@ -156,7 +159,7 @@
         </ul>
     </footer>
     
-    
+    {% endblock %}
     <script src="{% static 'projects/scripts.js' %}"></script>
 
     <!-- Bootstrap JS and Dependencies -->
@@ -166,8 +169,6 @@
     
 
     <!-- Custom JS for hover-triggered notification dropdown -->
-
-    <script src="{% static 'projects/scripts.js' %}"></script>
 
 </body>
 </html>

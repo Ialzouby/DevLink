@@ -12,6 +12,7 @@
     <div class="unique-left-sidebar">
         <h3>Topics</h3>
         <ul>
+            <li><a href="{% url 'home' %}">All Topics</a></li>
             {% for topic in topics %}
                 <li><a href="{% url 'filtered_projects' topic=topic %}">{{ topic }}</a></li>
             {% empty %}
@@ -25,20 +26,36 @@
 
 <!-- Center Content for Projects -->
 <div class="unique-project-list">
-    <div class="unique-project-header">
-    <h2>Projects</h2>
-    <a href="{% url 'create_project' %}" class="add-project-btn">
-        <i class="fa fa-plus"></i>
-    </a>
-    </div>
-    {% for project in projects %}
+
+    <!-- Wrapping container for consistent width -->
+    <div class="project-container">
+        <!-- Search Bar Above Header -->
+        <form method="GET" action="{% url 'home' %}" style="margin-bottom: 10px; display: flex; align-items: center;">
+            <input type="text" name="q" placeholder="Search projects..." class="project-search-bar" value="{{ request.GET.q }}">
+            <button type="submit" class="search-btn">
+                <i class="fa fa-search"></i>
+            </button>
+        </form>
+
+        <!-- Project Header with Title and Plus Button -->
+        <div class="unique-project-header">
+            <h2>Projects</h2>
+            <a href="{% url 'create_project' %}" class="add-project-btn">
+                <i class="fa fa-plus"></i>
+            </a>
+        </div>
+
+        {% for project in projects %}
         <a href="{% url 'project' project.id %}" class="unique-project-item-link">
             <div class="unique-project-item">
+                <div class="project-topic">{{ project.topic }}</div> <!-- New Topic Element -->
                 <h3>{{ project.title }}</h3>
                 <p>{{ project.description|truncatewords:20 }}</p>
             </div>
         </a>
     {% endfor %}
+    
+    </div>
 </div>
 
 <!-- Right Sidebar -->
@@ -56,7 +73,7 @@
                     {% endif %}
                 </div>
                 <div class="user-info">
-                    <h4>{{ user.user.username }}</h4>
+                    <h4>{{ user.first_name }} {{ user.last_name }}</h4>
                     <p>Grade Level: {{ user.grade_level }}</p>
                     <p>{{ user.concentration }}</p>
                 </div>

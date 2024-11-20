@@ -1,3 +1,11 @@
+"""
+context_processors.py
+This module contains context processors  for the project. 
+
+Functions:
+    notification_processor(request): Returns unread notifications for the authenticated user.
+"""
+
 from .models import Notification
 
 def notification_processor(request):

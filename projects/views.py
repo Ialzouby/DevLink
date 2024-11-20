@@ -13,67 +13,81 @@ from .models import Project, Comment, UserProfile, JoinRequest, Message, User, N
 
 from cloudinary.uploader import upload
 import cloudinary
+from django.http import JsonResponse
+from django.contrib.auth.models import User
+from .forms import CustomUserCreationForm 
+
 
 # Profile view to display a user's profile
 def profile(request, username):
     user = get_object_or_404(User, username=username)  # Fetch the user by username or return 404
     return render(request, 'projects/profile.html', {'profile_user': user})  # Render the profile template
 
-# Register view for new user sign-ups
 def register(request):
+    current_step = 1  # Start at step 1 by default
+
     if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST, request.FILES)  # Include file uploads
+        form = CustomUserCreationForm(request.POST, request.FILES)
         if form.is_valid():
             print("Form is valid")  # Debugging statement
-            user = form.save()  # Save the new user
+            user = form.save()
 
-            # Configure Cloudinary for image uploads
             cloudinary.config(
                 cloud_name='dvah1m8du',
                 api_key='547583998667598',
                 api_secret='-hOXeuzVlg2LrLjnML7Bzm7SnHw'
             )
 
-            # Check if a profile picture is uploaded
             if 'profile_picture' in request.FILES:
                 try:
-                    # Upload the profile picture to Cloudinary
                     result = upload(request.FILES['profile_picture'], upload_preset='ml_default')
                     print("Cloudinary upload result:", result)
-                    
-                    # Save the Cloudinary URL to the user's profile
                     user.userprofile.profile_picture = result['url']
                     user.userprofile.save()
                 except Exception as e:
                     print(f"Error uploading to Cloudinary: {e}")
 
-            # Update other UserProfile fields
             user.userprofile.grade_level = form.cleaned_data.get('grade_level')
             user.userprofile.concentration = form.cleaned_data.get('concentration')
             user.userprofile.linkedin = form.cleaned_data.get('linkedin')
             user.userprofile.github = form.cleaned_data.get('github')
             user.userprofile.bio = form.cleaned_data.get('bio')
-            user.userprofile.save()  # Save the updated profile
+            user.userprofile.save()
 
-            # Authenticate and log in the user
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=password)
-            
+
             if user is not None:
                 print("User authenticated successfully")  # Debugging statement
                 login(request, user)
                 messages.success(request, f'Account created for {username}! You are now logged in.')
-                return redirect(reverse('profile', kwargs={'username': user.username}))  # Redirect to profile
+                return redirect(reverse('profile', kwargs={'username': user.username}))
             else:
                 print("User authentication failed")  # Debugging statement
         else:
             print(form.errors)  # Print errors for debugging
             
+            # Preserve form data and set the current step for error display
+            if any(field in form.errors for field in ['first_name', 'last_name', 'username', 'email']):
+                current_step = 1
+            elif any(field in form.errors for field in ['grade_level', 'concentration']):
+                current_step = 2
+            elif any(field in form.errors for field in ['linkedin', 'github', 'bio', 'profile_picture', 'password1', 'password2']):
+                current_step = 3
+            else:
+                current_step = 1  # Ensure it stays on the first step if no specific error is found
     else:
         form = CustomUserCreationForm()
-    
-    return render(request, 'projects/register.html', {'form': form})
+
+    # Don't access form.cleaned_data in GET requests or when the form is not valid
+    return render(request, 'projects/register.html', {
+        'form': form,
+        'current_step': current_step,
+        'submitted_data': {} if request.method == 'GET' else request.POST
+    })
+
+
 
 # View for a single project and handling actions like rating, commenting, and joining
 @login_required
@@ -130,19 +144,30 @@ def project(request, project_id):
 
 # Home view to display projects and topics
 def home(request, topic=None):
+    # Define topics for the sidebar
     topics = ["Web Development", "AI", "Data Science", "Cybersecurity"]  # Example topics
-
-    if topic:  # Filter projects by topic if provided
+    # Get the search query from the URL if it exists
+    q = request.GET.get('q', '')
+    # If a topic is passed through the URL, filter projects based on it and the search query if present
+    if topic:
         projects = Project.objects.filter(topic__icontains=topic)
-    else:  # Otherwise, show all projects
+    else:
         projects = Project.objects.all().order_by('-created_at')
-
-    top_users = UserProfile.objects.order_by('-points')[:3]  # Top 3 users based on points
+    # Apply search filtering if there is a search query
+    if q:
+        projects = projects.filter(
+            Q(title__icontains=q) |
+            Q(description__icontains=q)
+        )
+    # Get the top 3 users based on their points
+    top_users = UserProfile.objects.order_by('-points')[:3]
+    # Pass the topics, filtered projects, and search query to the template
     return render(request, 'projects/home.html', {
         'projects': projects,
         'topics': topics,
         'top_users': top_users,
         'selected_topic': topic,  # Optional for highlighting the selected topic
+        'search_query': q,        # To retain the search query in the template
     })
 
 # Network view to list all users
@@ -214,21 +239,18 @@ def edit_profile(request):
     return render(request, 'projects/edit_profile.html', {'form': form})
 
 # Message thread view for private messaging
+from django.shortcuts import get_object_or_404
+
 @login_required
 def message_thread(request, username):
-    recipient = get_object_or_404(User, username=username)  # Get the recipient user
-    messages = Message.objects.filter(
-        (Q(sender=request.user) & Q(recipient=recipient)) | 
-        (Q(sender=recipient) & Q(recipient=request.user))
-    ).order_by('timestamp')  # Fetch messages in chronological order
+    # Fetch the recipient user object based on the username parameter
+    recipient = get_object_or_404(User, username=username)
 
-    # Mark related notifications as read
-    Notification.objects.filter(
-        user=request.user,
-        related_message__sender=recipient,
-        related_message__recipient=request.user,
-        is_read=False
-    ).update(is_read=True)
+    # Fetch messages between the logged-in user and the recipient
+    messages = Message.objects.filter(
+        (Q(sender=request.user) & Q(recipient=recipient)) |
+        (Q(sender=recipient) & Q(recipient=request.user))
+    ).order_by('timestamp')
 
     if request.method == 'POST':
         form = MessageForm(request.POST)
@@ -236,38 +258,59 @@ def message_thread(request, username):
             new_message = form.save(commit=False)
             new_message.sender = request.user
             new_message.recipient = recipient
-            new_message.save()  # Save the message
-            print(f"New message created: {new_message}")
+            new_message.save()
+            # Redirect to the same URL to avoid form resubmission issues
             return redirect('message_thread', username=recipient.username)
-        else:
-            print(f"Form errors: {form.errors}")
     else:
         form = MessageForm()
-    
+
     return render(request, 'projects/message_thread.html', {
         'messages': messages,
         'recipient': recipient,
         'form': form
     })
 
+
 # View to display all active conversations
 @login_required
 def active_conversations(request):
-    # Fetch unique users the logged-in user has had a conversation with
     sent_conversations = Message.objects.filter(sender=request.user).values('recipient').distinct()
     received_conversations = Message.objects.filter(recipient=request.user).values('sender').distinct()
 
-    # Combine the unique user IDs from sent and received conversations
     conversation_user_ids = set(
         user['recipient'] for user in sent_conversations
     ).union(
         user['sender'] for user in received_conversations
     )
 
-    # Fetch the User objects for these IDs
     conversation_users = User.objects.filter(id__in=conversation_user_ids)
+
+    recipient_username = request.GET.get('recipient')
+    recipient = None
+    messages = []
+    form = MessageForm()
+
+    if recipient_username:
+        recipient = get_object_or_404(User, username=recipient_username)
+        messages = Message.objects.filter(
+            (Q(sender=request.user) & Q(recipient=recipient)) |
+            (Q(sender=recipient) & Q(recipient=request.user))
+        ).select_related('sender', 'recipient').order_by('timestamp')[:50]  # Load the last 50 messages
+
+        if request.method == 'POST':
+            form = MessageForm(request.POST)
+            if form.is_valid():
+                new_message = form.save(commit=False)
+                new_message.sender = request.user
+                new_message.recipient = recipient
+                new_message.save()
+                return redirect(f'/conversations/?recipient={recipient.username}')
+
     return render(request, 'projects/active_conversations.html', {
-        'conversation_users': conversation_users
+        'conversation_users': conversation_users,
+        'recipient': recipient,
+        'messages': messages,
+        'form': form
     })
 
 # View to render notifications
@@ -292,3 +335,30 @@ def delete_notification(request, notification_id):
         notification.delete()
         return JsonResponse({'success': True})  # Return success response
     return JsonResponse({'error': 'Unauthorized'}, status=403)  # Return error if unauthorized
+
+
+
+def check_username_email(request):
+    username = request.GET.get('username')
+    email = request.GET.get('email')
+
+    username_exists = User.objects.filter(username=username).exists()
+    email_exists = User.objects.filter(email=email).exists()
+
+    return JsonResponse({
+        'username_exists': username_exists,
+        'email_exists': email_exists,
+    })
+
+
+def landing_page(request):
+    # Add any dynamic data to be passed to the template here
+    context = {
+        'title': 'Welcome to My Website',
+        'features': [
+            {'title': 'Collaborate easily', 'description': 'Work seamlessly with your team.'},
+            {'title': 'Secure code', 'description': 'Your projects are safe with us.'},
+            {'title': 'Build together', 'description': 'Join forces to create something amazing.'},
+        ]
+    }
+    return render(request, 'projects/landing.html', context)

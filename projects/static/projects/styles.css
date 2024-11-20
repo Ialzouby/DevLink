@@ -224,6 +224,13 @@ Brand Colors:
   CYAN:         #2daba6 │████│ Navigation bar
   PURPLE:       #6571ff │████│ Secondary elements
 
+  $marian-blue:         #004196ff   Navigation bar
+  $caribbean-current:   #007373ff;  Tags, accent elements
+  $honolulu-blue:       #0079B2ff   Secondary elements
+  $bone:                #D4D6C7ff   
+  buttons,etc hover:    #rgb(20, 161, 161)
+  $caribbean-current-2: #007677ff   Buttons, badges, primary actions 
+
 UI Colors:
   Main Text:    #f1f1f1 │████│ Primary text color
   Dark BG Alt:  #222222 │████│ Cards, form backgrounds
@@ -300,11 +307,13 @@ h1,
 h2,
 h3 {
     font-weight: 600;
+    color:rgb(0, 0, 0)
 }
 
 p,
 a {
     font-weight: 400;
+    color:rgb(39, 19, 219)
 }
 
 .logo h1 {
@@ -326,7 +335,7 @@ a {
 }
 
 .nav-links a {
-    color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
     text-decoration: none;
     font-weight: bold;
     padding: 2px 2px;
@@ -345,7 +354,7 @@ a {
 
 /* Navigation Buttons */
 .nav-buttons button {
-    background-color: #a49665;
+    background-color: #007373ff;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -355,10 +364,11 @@ a {
     font-weight: bold;
     display: inline-block;
     margin-left: 10px;
+    margin-right: 10px; 
 }
 
 .nav-buttons button:hover {
-    background-color: #a49665;
+    background-color: #007373ff;
 }
 
 .nav-buttons form {
@@ -389,15 +399,6 @@ textarea::placeholder {
     color: #aaa;
 }
 
-.form-container {
-    width: 400px;
-    margin: 50px auto;
-    background-color: #222;
-    padding: 20px;
-    border-radius: 10px;
-    color: #f1f1f1;
-}
-
 .form-group label {
     display: block;
     margin-bottom: 5px;
@@ -409,22 +410,27 @@ textarea::placeholder {
    5 Buttons
    ========================================================================== */
 .btn {
-    background-color: #a49665;
+    background-color: #007373ff;
     color: white;
-    padding: 10px 20px;
+    padding: 8px 8px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-weight: bold;
+    font-weight: 500; 
     margin-right: 10px;
+    margin-left: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-bottom: 3px;
+    padding-top: 3px;
 }
 
 .btn:hover {
-    background-color: #a49665;
+    background-color: rgb(20, 161, 161);
 }
 
 .view-btn {
-    background-color: #a49665;
+    background-color: #007373ff;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -434,11 +440,11 @@ textarea::placeholder {
 }
 
 .view-btn:hover {
-    background-color: #a49665;
+    background-color: #007373ff;
 }
 
 .delete-btn {
-    background-color: #a49665;
+    background-color: #007373ff;
     color: white;
     border: none;
     padding: 5px 10px;
@@ -561,7 +567,7 @@ textarea::placeholder {
     margin-top: 0;
     margin-bottom: 20px;
     text-align: center;
-    color: #ffffff;
+    color: #000000;
     /* Ensures visibility on dark background */
     font-size: 1.8rem;
 }
@@ -1342,7 +1348,7 @@ textarea::placeholder {
 }
 
 .search-btn:hover {
-    background-color: #8a7a56;
+    background-color: #007373ff;
 }
 
 .search-btn i {
@@ -1467,7 +1473,7 @@ textarea::placeholder {
 .navbar {
     width: 100vw;
     padding: 0px;
-    background: #4bade6 !important;
+    background: #004196ff !important;
     display: flex;
     margin: 0;
     justify-content: flex-end;
@@ -1572,20 +1578,27 @@ textarea::placeholder {
    25 FORM COMPONENTS
    ========================================================================== */
 .form-container {
+    text-align: center;
     max-width: 900px;
-    margin: 30px auto;
+    width: 400px;
+    margin: 50px auto;
     padding: 20px 30px;
-    background-color: #222;
+    background-color: #ffffff;
     border-radius: 10px;
     color: #f1f1f1;
 }
 
 .form-group {
     margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
 }
 
 .form-group label {
-    font-size: 14px;
+    font-size: 16px;
+    color: #000;
 }
 
 .form-group input,
@@ -1605,7 +1618,7 @@ textarea {
    26 BUTTONS
    ========================================================================== */
 .btn-primary {
-    background-color: #a49665;
+    background-color: #007373ff;
     border: none;
     padding: 10px 20px;
     border-radius: 5px;
@@ -1613,11 +1626,11 @@ textarea {
 }
 
 .btn-primary:hover {
-    background-color: #a49665;
+    background-color: rgba(141, 227, 227, 0.292);
 }
 
 .unique-view-btn {
-    background-color: #a49665;
+    background-color: #007373ff;
     color: white;
     padding: 5px 10px;
     border-radius: 5px;
@@ -1667,12 +1680,14 @@ textarea {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #4285f4;
+    background-color: #1a4c9c7f;
     color: #ffffff;
     font-weight: 500;
     border: none;
     border-radius: 4px;
-    padding: 10px 15px;
+    padding: 8px 8px;
+    padding-top: 3px;
+    padding-bottom: 3px;
     text-decoration: none;
     font-size: 14px;
     transition: background-color 0.2s;
@@ -1761,7 +1776,7 @@ textarea {
 }
 
 .login-page {
-    color: white !important;
+    color: rgb(0, 0, 0) !important;
 }
 
 /* Right: Chat Container */
@@ -2207,7 +2222,7 @@ p {
 }
 
 .add-project-btn:hover {
-    background-color: #8a7a56;
+    background-color: #007373ff;
 }
 
 .add-project-btn i {
@@ -2245,7 +2260,7 @@ p {
 footer {
     width: 100%;
     padding: 8px;
-    background: #4bade6 !important;
+    background: #004196ff !important;
     color: #f1f1f1;
     text-align: center;
     margin-top: 15px;
@@ -2279,6 +2294,7 @@ footer p {
 
 .form-group {
     margin-bottom: 15px;
+    color: #000;
 }
 
 .form-group input,
@@ -2287,8 +2303,8 @@ footer p {
     padding: 10px;
     margin-bottom: 10px;
     width: 100%;
-    background-color: #444;
-    color: white;
+    background-color: #d4d4d4;
+    color: rgb(0, 0, 0);
     border: none;
     border-radius: 5px;
 }
@@ -2300,12 +2316,12 @@ footer p {
     padding: 10px 30px;
     color: white;
     border-radius: 5px;
-    background-color: #a08763;
+    background-color: #007373ff;
     margin-top: 20px;
 }
 
 .btn-primary:hover {
-    background-color: #8c754e;
+    background-color: rgba(0, 115, 115, 0.116);
 }
 
 .github-btn {
@@ -2403,7 +2419,7 @@ footer p {
 .network-clear-btn {
     padding: 15px 25px;
     border-radius: 8px;
-    background-color: #b08d57;
+    background-color: #007373ff;
     color: #ffffff;
     border: none;
     font-size: 18px;
@@ -2414,7 +2430,7 @@ footer p {
 
 .network-search-btn:hover,
 .network-clear-btn:hover {
-    background-color: #8c6d47;
+    background-color: #007373ff;
 }
 
 .network-clear-btn {

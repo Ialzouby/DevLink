@@ -224,6 +224,13 @@ Brand Colors:
   CYAN:         #2daba6 │████│ Navigation bar
   PURPLE:       #6571ff │████│ Secondary elements
 
+  $marian-blue:         #004196ff   Navigation bar
+  $caribbean-current:   #007373ff;  Tags, accent elements
+  $honolulu-blue:       #0079B2ff   Secondary elements
+  $bone:                #D4D6C7ff   
+  buttons,etc hover:    #rgb(20, 161, 161)
+  $caribbean-current-2: #007677ff   Buttons, badges, primary actions 
+
 UI Colors:
   Main Text:    #f1f1f1 │████│ Primary text color
   Dark BG Alt:  #222222 │████│ Cards, form backgrounds
@@ -262,7 +269,8 @@ Status Colors:
 /* ==========================================================================
    1 Base Styles & Reset
    ========================================================================== */
-   html, body {
+html,
+body {
     height: 100%;
     margin: 0;
     padding: 0;
@@ -283,15 +291,26 @@ body {
 /* ==========================================================================
    2 Typography
    ========================================================================== */
-   body, h1, h2, h3, h4, h5, h6, p, a {
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
     font-weight: 600;
 }
 
-p, a {
+p,
+a {
     font-weight: 400;
 }
 
@@ -333,7 +352,7 @@ p, a {
 
 /* Navigation Buttons */
 .nav-buttons button {
-    background-color: #a49665;
+    background-color: #007373ff;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -346,7 +365,7 @@ p, a {
 }
 
 .nav-buttons button:hover {
-    background-color: #a49665;
+    background-color: #007373ff;
 }
 
 .nav-buttons form {
@@ -358,60 +377,57 @@ p, a {
 /* ==========================================================================
    4 Forms & Inputs
    ========================================================================== */
-   input[type="text"],
-   input[type="email"],
-   input[type="password"],
-   input[type="url"],
-   textarea {
-       width: 100%;
-       padding: 10px;
-       border: 1px solid #ccc;
-       border-radius: 5px;
-       background-color: #333;
-       color: #f1f1f1;
-       margin-bottom: 15px;
-   }
-   
-   input::placeholder, textarea::placeholder {
-       color: #aaa;
-   }
-   
-   .form-container {
-       width: 400px;
-       margin: 50px auto;
-       background-color: #222;
-       padding: 20px;
-       border-radius: 10px;
-       color: #f1f1f1;
-   }
-   
-   .form-group label {
-       display: block;
-       margin-bottom: 5px;
-       font-weight: bold;
-       color: #f1f1f1;
-   }
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="url"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #333;
+    color: #f1f1f1;
+    margin-bottom: 15px;
+}
 
-   /* ==========================================================================
+input::placeholder,
+textarea::placeholder {
+    color: #aaa;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #f1f1f1;
+}
+
+/* ==========================================================================
    5 Buttons
    ========================================================================== */
 .btn {
-    background-color: #a49665;
+    background-color: #007373ff;
     color: white;
-    padding: 10px 20px;
+    padding: 8px 8px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-weight: bold;
+    font-weight: 500; 
     margin-right: 10px;
+    margin-left: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-bottom: 3px;
+    padding-top: 3px;
 }
 
 .btn:hover {
-    background-color: #a49665;
+    background-color: rgb(20, 161, 161);
 }
 
 .view-btn {
-    background-color: #a49665;
+    background-color: #007373ff;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -421,11 +437,11 @@ p, a {
 }
 
 .view-btn:hover {
-    background-color: #a49665;
+    background-color: #007373ff;
 }
 
 .delete-btn {
-    background-color: #a49665;
+    background-color: #007373ff;
     color: white;
     border: none;
     padding: 5px 10px;
@@ -497,9 +513,86 @@ p, a {
 }
 
 /* ==========================================================================
+   EDIT PROFILE FORM
+   ========================================================================== */
+
+.edit-profile-form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* Push the button to the bottom */
+    align-items: center;
+    height: auto;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    background-color: #2c2c2c;
+    border-radius: 16px !important;
+    /* Ensure this is set for smoother rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    border: 1px solid #444;
+    position: absolute;
+    /* Position relative to viewport */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.form-group {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.edit-profile-button {
+    align-self: center;
+    /* Center the button horizontally */
+    margin-top: 20px;
+    background-color: #36454F;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.edit-profile-button:hover {
+    background-color: #8a7a56;
+}
+
+.edit-profile-form-container h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #ffffff;
+    /* Ensures visibility on dark background */
+    font-size: 1.8rem;
+}
+
+.form-columns {
+    display: flex;
+    gap: 20px;
+    /* Add space between columns */
+    width: 100%;
+    justify-content: space-between;
+}
+
+.form-column {
+    width: 48%;
+    /* Each column takes half the width of the container */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    /* Add spacing between fields in each column */
+    align-items: stretch;
+    /* Ensures all fields align properly */
+}
+
+
+/* ==========================================================================
    8 PROFILE and DROPDOWN 
    ========================================================================== */
-   .profile-dropdown .profile-img {
+.profile-dropdown .profile-img {
     width: 50px;
     height: 50px;
     cursor: pointer;
@@ -532,46 +625,50 @@ p, a {
 }
 
 
-    /* Profile Dropdown */
-    .profile-dropdown {
-        position: relative;
-        display: inline-block;
-    }
-    .profile-dropdown .dropdown-content {
-        display: none;
-        position: absolute;
-        background-color: #222;
-        min-width: 100px;
-        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-        z-index: 1;
-        border-radius: 5px;
-        padding: 10px;
-        top: 40px; /* Ensure dropdown is below the profile image */
-        margin-right: 40px;
-    }
-    /* Ensure only profile dropdown expands on hover */
-    .profile-dropdown:hover .dropdown-content {
-        display: block;
-    }
+/* Profile Dropdown */
+.profile-dropdown {
+    position: relative;
+    display: inline-block;
+}
 
-    .profile-dropdown:hover .dropdown-content,
-    .dropdown-content:hover {
-        visibility: visible;
-        opacity: 1;  /* Make the dropdown visible */
-    margin-top: 10px; 
-        margin-right: 10px;
-    }
+.profile-dropdown .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #222;
+    min-width: 100px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 5px;
+    padding: 10px;
+    top: 40px;
+    /* Ensure dropdown is below the profile image */
+    margin-right: 40px;
+}
+
+/* Ensure only profile dropdown expands on hover */
+.profile-dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.profile-dropdown:hover .dropdown-content,
+.dropdown-content:hover {
+    visibility: visible;
+    opacity: 1;
+    /* Make the dropdown visible */
+    margin-top: 10px;
+    margin-right: 10px;
+}
 
 
-    .profile-img {
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        cursor: pointer;
-    
-    }
+.profile-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    cursor: pointer;
 
-   .profile-dropdown {
+}
+
+.profile-dropdown {
     position: relative;
     display: inline-block;
 }
@@ -644,7 +741,7 @@ p, a {
 .custom-profile-info h1 {
     font-size: 2.5rem;
     font-weight: bold;
-    color: #020202!important;
+    color: #020202 !important;
 }
 
 .custom-profile-info p {
@@ -656,7 +753,7 @@ p, a {
 /* ==========================================================================
    10 PROFILE PICTURES AND IMAGES
    ========================================================================== */
-   .network-profile-pic {
+.network-profile-pic {
     flex-shrink: 0;
     margin-right: 20px;
 }
@@ -812,7 +909,7 @@ p, a {
 /* ==========================================================================
    13 NOTIFICATIONS
    ========================================================================== */
-   .notification-dropdown {
+.notification-dropdown {
     position: relative;
     display: inline-block;
     vertical-align: middle;
@@ -888,40 +985,52 @@ p, a {
 
 
 
-    .dropdown-button {
-        background-color: #a49665;   /* Gold background */
-        border: none;
-        color: white;
-        width: 80%;                  /* Set a consistent width for the buttons */
-        text-align: center;           /* Center-align the text */
-        padding: 10px 0;             /* Padding to make it look like a button */
-        border-radius: 5px;          /* Rounded corners */
-        text-decoration: none;
-        display: inline-block;        /* Ensure buttons stay inline */
-        cursor: pointer;
-        font-weight: bold;           /* Bold text */
-        margin: 5px 0;               /* Add some margin between the buttons */
-    }
-    .dropdown-button:hover {
-        background-color: #8a7a56;   /* Darker gold on hover */
-    }
-    /* General Dropdown Button Styling */
-    .dropdown-button {
-        background-color: #a49665;
-        border: none;
-        width: 100px; 
-        color: white;
-        padding: 10px 5px;
-        border-radius: 5px;
-        text-align: center;
-        display: block;
-        text-decoration: none;
-        font-weight: bold;
-        margin-top: 20px; 
-    }
-    .dropdown-button:hover {
-        background-color: #8a7a56;
-    }
+.dropdown-button {
+    background-color: #a49665;
+    /* Gold background */
+    border: none;
+    color: white;
+    width: 80%;
+    /* Set a consistent width for the buttons */
+    text-align: center;
+    /* Center-align the text */
+    padding: 10px 0;
+    /* Padding to make it look like a button */
+    border-radius: 5px;
+    /* Rounded corners */
+    text-decoration: none;
+    display: inline-block;
+    /* Ensure buttons stay inline */
+    cursor: pointer;
+    font-weight: bold;
+    /* Bold text */
+    margin: 5px 0;
+    /* Add some margin between the buttons */
+}
+
+.dropdown-button:hover {
+    background-color: #8a7a56;
+    /* Darker gold on hover */
+}
+
+/* General Dropdown Button Styling */
+.dropdown-button {
+    background-color: #a49665;
+    border: none;
+    width: 100px;
+    color: white;
+    padding: 10px 5px;
+    border-radius: 5px;
+    text-align: center;
+    display: block;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.dropdown-button:hover {
+    background-color: #8a7a56;
+}
 
 /* Ensure the navbar is responsive */
 .navbar-toggler {
@@ -943,8 +1052,8 @@ p, a {
     align-items: center;
 }
 
-.navbarNavDropdown{
-    margin-right: 2000px; 
+.navbarNavDropdown {
+    margin-right: 2000px;
 }
 
 
@@ -963,11 +1072,15 @@ p, a {
 }
 
 .dropdown-content {
-    display: none; /* Hidden by default */
+    display: none;
+    /* Hidden by default */
     position: absolute;
-    background-color: #222; /* Background for dropdown */
-    min-width: 200px; /* Width of dropdown */
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3); /* Shadow effect */
+    background-color: #222;
+    /* Background for dropdown */
+    min-width: 200px;
+    /* Width of dropdown */
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+    /* Shadow effect */
     z-index: 1000;
     color: white;
     transition: all 0.3s ease;
@@ -980,19 +1093,20 @@ p, a {
     display: block;
 }
 
- /* General Styling for Notification Dropdown */
- .notification-dropdown {
+/* General Styling for Notification Dropdown */
+.notification-dropdown {
     position: relative;
     display: inline-block;
     vertical-align: middle;
-    cursor: pointer;  /* Adds pointer cursor */
+    cursor: pointer;
+    /* Adds pointer cursor */
     padding: 5px;
 }
 
 .notification-icon {
     font-size: 20px;
     color: white;
-    margin-right: 20px; 
+    margin-right: 20px;
     vertical-align: center;
 }
 
@@ -1005,7 +1119,7 @@ p, a {
     border-radius: 50%;
     padding: 4px 4px;
     font-size: 12px;
-    margin-right: 70px; 
+    margin-right: 70px;
 
 }
 
@@ -1019,10 +1133,12 @@ p, a {
     z-index: 1000;
     border-radius: 8px;
     padding: 10px;
-    top: 40px;  /* Adjusts space below the icon */
+    top: 40px;
+    /* Adjusts space below the icon */
     right: 0;
     color: white;
-    transition: all 0.3s ease;  /* Adds smooth transition */
+    transition: all 0.3s ease;
+    /* Adds smooth transition */
     margin-right: -20px;
 }
 
@@ -1034,7 +1150,8 @@ p, a {
     z-index: 1;
     border-radius: 5px;
     padding: 10px;
-    top: 30px; /* Ensure dropdown is below the profile image */
+    top: 30px;
+    /* Ensure dropdown is below the profile image */
     right: 0;
 }
 
@@ -1075,7 +1192,7 @@ p, a {
 /* ==========================================================================
    14 Layout & Grid
    ========================================================================== */
-   .row {
+.row {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -1089,7 +1206,7 @@ p, a {
 /* ==========================================================================
    15 LAYOUT CONTAINERS
    ========================================================================== */
-   .unique-layout-container {
+.unique-layout-container {
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -1191,17 +1308,20 @@ p, a {
 }
 
 .project-search-bar {
-    width: calc(100% - 100px); /* Adjust to make space for the button */
+    width: calc(100% - 100px);
+    /* Adjust to make space for the button */
     padding: 8px;
     border: 1px solid #ccc;
-    border-radius: 4px 0 0 4px; /* Rounded corners, only on left side */
+    border-radius: 4px 0 0 4px;
+    /* Rounded corners, only on left side */
     box-sizing: border-box;
     background-color: #b5b5b5 !important;
 }
 
 .project-search-bar::placeholder {
     color: black;
-    opacity: 1; /* Ensure the placeholder text is fully opaque */
+    opacity: 1;
+    /* Ensure the placeholder text is fully opaque */
 }
 
 .search-btn {
@@ -1215,14 +1335,17 @@ p, a {
     justify-content: center;
     font-size: 1.5rem;
     cursor: pointer;
-    border: none; /* Remove default button border */
-    height: 100%; /* Ensure it aligns with the search bar height */
-    margin-top: -15px; /* Move up by 5px */
+    border: none;
+    /* Remove default button border */
+    height: 100%;
+    /* Ensure it aligns with the search bar height */
+    margin-top: -15px;
+    /* Move up by 5px */
     /* margin-left: -20px;  Move left by 10px */
 }
 
 .search-btn:hover {
-    background-color: #8a7a56;
+    background-color: #007373ff;
 }
 
 .search-btn i {
@@ -1233,20 +1356,21 @@ p, a {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-left: 0px; /* Move right by 10px */
+    margin-left: 0px;
+    /* Move right by 10px */
 }
 
 /* ==========================================================================
    19 PROJECT LIST
    ========================================================================== */
-   .unique-project-list {
+.unique-project-list {
     width: 60vw;
     padding: 20px;
     height: calc(100vh - 220px);
     overflow-y: auto;
 }
 
-.unique-project-header h2{ 
+.unique-project-header h2 {
     color: black
 }
 
@@ -1263,7 +1387,8 @@ p, a {
     margin-top: 20px;
 }
 
-.skills-learn, .skills-required {
+.skills-learn,
+.skills-required {
     background-color: #212020;
     color: #f1f1f1;
     padding: 20px;
@@ -1272,12 +1397,14 @@ p, a {
     margin-bottom: 22px;
 }
 
-.skills-learn h4, .skills-required h4 {
+.skills-learn h4,
+.skills-required h4 {
     font-size: 1.2rem;
     margin-bottom: 10px;
 }
 
-.skills-learn p, .skills-required p {
+.skills-learn p,
+.skills-required p {
     font-size: 1rem;
     color: #ccc;
 }
@@ -1286,7 +1413,7 @@ p, a {
 /* ==========================================================================
    21 SEARCH BAR
    ========================================================================== */
-   .search-bar-container {
+.search-bar-container {
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
@@ -1343,7 +1470,7 @@ p, a {
 .navbar {
     width: 100vw;
     padding: 0px;
-    background: #4bade6 !important;
+    background: #004196ff !important;
     display: flex;
     margin: 0;
     justify-content: flex-end;
@@ -1395,22 +1522,22 @@ p, a {
 
 /* Updated Left Sidebar */
 .unique-left-sidebar {
-    background-color: #e4e4e4; 
+    background-color: #e4e4e4;
     color: #333;
-    padding: 10px; 
-    border-radius: 6px; 
-    width: 220px; 
-    height: 65%; 
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.05); 
+    padding: 10px;
+    border-radius: 6px;
+    width: 220px;
+    height: 65%;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.05);
 }
 
 .unique-left-sidebar h3 {
     text-align: left;
     font-size: 18px;
-    margin-bottom: 10px; 
-    border-bottom: 1px solid #ddd; 
-    padding-bottom: 5px; 
-    color: #444; 
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+    color: #444;
 }
 
 .unique-left-sidebar ul {
@@ -1421,25 +1548,25 @@ p, a {
 
 .unique-left-sidebar li {
     margin-bottom: 8px;
-    font-style: normal; 
+    font-style: normal;
     color: #555;
 }
 
 .unique-left-sidebar a {
-    color: #333; 
-    background-color: #bababa; 
+    color: #333;
+    background-color: #bababa;
     text-decoration: none;
-    font-size: 14px; 
+    font-size: 14px;
     font-weight: 500;
     display: block;
-    padding: 8px; 
+    padding: 8px;
     border-radius: 4px;
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .unique-left-sidebar a:hover {
     background-color: #d5d5d5;
-    transform: translateY(-2px); 
+    transform: translateY(-2px);
     cursor: pointer;
 }
 
@@ -1448,23 +1575,30 @@ p, a {
    25 FORM COMPONENTS
    ========================================================================== */
 .form-container {
+    text-align: center;
     max-width: 900px;
-    margin: 30px auto;
+    width: 400px;
+    margin: 50px auto;
     padding: 20px 30px;
-    background-color: #222;
+    background-color: #961e1e;
     border-radius: 10px;
     color: #f1f1f1;
 }
 
 .form-group {
     margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
 }
 
 .form-group label {
-    font-size: 14px;
+    font-size: 16px;
 }
 
-.form-group input, .form-group textarea {
+.form-group input,
+.form-group textarea {
     padding: 8px 10px;
     border-radius: 5px;
     background-color: #333;
@@ -1480,7 +1614,7 @@ textarea {
    26 BUTTONS
    ========================================================================== */
 .btn-primary {
-    background-color: #a49665;
+    background-color: #007373ff;
     border: none;
     padding: 10px 20px;
     border-radius: 5px;
@@ -1488,11 +1622,11 @@ textarea {
 }
 
 .btn-primary:hover {
-    background-color: #a49665;
+    background-color: rgba(141, 227, 227, 0.292);
 }
 
 .unique-view-btn {
-    background-color: #a49665;
+    background-color: #007373ff;
     color: white;
     padding: 5px 10px;
     border-radius: 5px;
@@ -1542,12 +1676,14 @@ textarea {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #4285f4;
+    background-color: #1a4c9c7f;
     color: #ffffff;
     font-weight: 500;
     border: none;
     border-radius: 4px;
-    padding: 10px 15px;
+    padding: 8px 8px;
+    padding-top: 3px;
+    padding-bottom: 3px;
     text-decoration: none;
     font-size: 14px;
     transition: background-color 0.2s;
@@ -1589,11 +1725,14 @@ textarea {
 /* Container for the entire chat page */
 .chat-page-container {
     display: flex;
-    height: 75vh; /* Slightly reduce the overall height */
-    gap: 15px; /* Reduce the gap between the two sections */
+    height: 75vh;
+    /* Slightly reduce the overall height */
+    gap: 15px;
+    /* Reduce the gap between the two sections */
     background-color: #f0f2f5;
     overflow: hidden;
-    padding: 15px; /* Reduce the padding around the page */
+    padding: 15px;
+    /* Reduce the padding around the page */
     box-sizing: border-box;
     margin: -10px;
     width: 100vw;
@@ -1603,29 +1742,37 @@ textarea {
 .conversation-list-container {
     flex: 1;
     background-color: #ffffff;
-    border-radius: 6px; /* Reduce the border radius */
-    padding: 15px; /* Reduce the padding inside */
-    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1); /* Soften the shadow */
+    border-radius: 6px;
+    /* Reduce the border radius */
+    padding: 15px;
+    /* Reduce the padding inside */
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+    /* Soften the shadow */
     overflow-y: auto;
     height: 100%;
     min-width: 0;
 }
 
 .conversation-list-container h2 {
-    font-size: 16px; /* Reduce the font size */
+    font-size: 16px;
+    /* Reduce the font size */
     color: #333;
-    margin-bottom: 10px; /* Reduce the margin */
+    margin-bottom: 10px;
+    /* Reduce the margin */
     text-align: center;
 }
 
 .list-group-item {
-    padding: 8px; /* Reduce padding for list items */
-    margin-bottom: 5px; /* Reduce margin between items */
-    border-radius: 4px; /* Soften border radius */
+    padding: 8px;
+    /* Reduce padding for list items */
+    margin-bottom: 5px;
+    /* Reduce margin between items */
+    border-radius: 4px;
+    /* Soften border radius */
 }
 
 .login-page {
-    color: white!important; 
+    color: white !important;
 }
 
 /* Right: Chat Container */
@@ -1633,7 +1780,8 @@ textarea {
     flex: 3;
     background-color: #ffffff;
     border-radius: 6px;
-    padding: 15px; /* Reduce padding */
+    padding: 15px;
+    /* Reduce padding */
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
@@ -1648,8 +1796,10 @@ textarea {
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid #e0e0e0;
-    padding-bottom: 8px; /* Reduce padding */
-    margin-bottom: 8px; /* Reduce margin */
+    padding-bottom: 8px;
+    /* Reduce padding */
+    margin-bottom: 8px;
+    /* Reduce margin */
 }
 
 /* Add this CSS to your stylesheet */
@@ -1674,7 +1824,8 @@ textarea {
 }
 
 .google-logo {
-    background-image: url('https://developers.google.com/identity/images/g-logo.png'); /* Google's logo */
+    background-image: url('https://developers.google.com/identity/images/g-logo.png');
+    /* Google's logo */
     background-size: cover;
     width: 20px;
     height: 20px;
@@ -1683,7 +1834,8 @@ textarea {
 
 
 .chat-header h2 {
-    font-size: 14px; /* Reduce font size */
+    font-size: 14px;
+    /* Reduce font size */
     color: #333;
     margin: 0;
 }
@@ -1692,10 +1844,12 @@ textarea {
 .message-thread {
     flex: 1;
     overflow-y: auto;
-    padding: 8px; /* Reduce padding */
+    padding: 8px;
+    /* Reduce padding */
     background-color: #f0f2f5;
     border-radius: 6px;
-    margin-bottom: 8px; /* Reduce margin */
+    margin-bottom: 8px;
+    /* Reduce margin */
     display: flex;
     flex-direction: column;
 }
@@ -1703,10 +1857,14 @@ textarea {
 /* Styling for messages */
 .message {
     max-width: 60%;
-    padding: 8px 12px; /* Reduce padding */
-    border-radius: 16px; /* Soften border radius */
-    margin-bottom: 8px; /* Reduce margin */
-    font-size: 13px; /* Reduce font size */
+    padding: 8px 12px;
+    /* Reduce padding */
+    border-radius: 16px;
+    /* Soften border radius */
+    margin-bottom: 8px;
+    /* Reduce margin */
+    font-size: 13px;
+    /* Reduce font size */
 }
 
 .sent-message {
@@ -1724,9 +1882,11 @@ textarea {
 }
 
 .message-info {
-    font-size: 11px; /* Reduce font size */
+    font-size: 11px;
+    /* Reduce font size */
     color: #777;
-    margin-bottom: 3px; /* Reduce margin */
+    margin-bottom: 3px;
+    /* Reduce margin */
 }
 
 /* Message Input Container */
@@ -1734,7 +1894,8 @@ textarea {
     display: flex;
     align-items: center;
     border-top: 1px solid #e0e0e0;
-    padding-top: 8px; /* Reduce padding */
+    padding-top: 8px;
+    /* Reduce padding */
 }
 
 .message-form {
@@ -1750,13 +1911,17 @@ textarea {
 
 .message-form textarea {
     width: 100%;
-    height: 30px; /* Reduce height */
+    height: 30px;
+    /* Reduce height */
     border: none;
-    border-radius: 12px; /* Soften border radius */
-    padding: 4px 8px; /* Reduce padding */
+    border-radius: 12px;
+    /* Soften border radius */
+    padding: 4px 8px;
+    /* Reduce padding */
     resize: none;
     outline: none;
-    font-size: 13px; /* Reduce font size */
+    font-size: 13px;
+    /* Reduce font size */
     background-color: #ffffff;
     color: #333;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -1766,10 +1931,14 @@ textarea {
     background-color: #007bff;
     color: #ffffff;
     border: none;
-    border-radius: 16px; /* Soften border radius */
-    width: 36px; /* Reduce size */
-    height: 36px; /* Reduce size */
-    margin-left: 8px; /* Reduce space between input and button */
+    border-radius: 16px;
+    /* Soften border radius */
+    width: 36px;
+    /* Reduce size */
+    height: 36px;
+    /* Reduce size */
+    margin-left: 8px;
+    /* Reduce space between input and button */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1785,7 +1954,7 @@ textarea {
 /* ==========================================================================
    30 Reset & Base Styles
    ========================================================================== */
-   * {
+* {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -1817,6 +1986,10 @@ textarea {
    32 Project Related Styles
    ========================================================================== */
 /* Project Grid */
+.custom-portfolio-heading {
+    color: black;
+}
+
 .custom-project-section {
     display: flex;
     flex-direction: column;
@@ -1833,7 +2006,7 @@ textarea {
 
 /* Project Cards */
 .custom-project-card {
-    background-color: #222;
+    background-color: #b5b5b5;
     padding: 20px;
     border-radius: 10px;
     text-align: center;
@@ -1848,7 +2021,7 @@ textarea {
 .custom-project-card h3 {
     font-size: 1.5rem;
     margin-bottom: 10px;
-    color: #fff;
+    color: #000;
 }
 
 .custom-project-card p {
@@ -1882,8 +2055,9 @@ textarea {
     transition: transform 0.3s ease;
 }
 
-.unique-project-item h3, p {
-    color: black!important; 
+.unique-project-item h3,
+p {
+    color: black !important;
 }
 
 .unique-project-item:hover {
@@ -1904,13 +2078,20 @@ textarea {
 
 .project-topic {
     position: absolute;
-    top: 10px; /* Adjust to control vertical position */
-    right: 10px; /* Adjust to control horizontal position */
-    background-color: #333; /* Background color for the topic label */
-    color: #fff; /* Text color */
-    padding: 5px 10px; /* Padding for the label */
-    border-radius: 5px; /* Rounded corners */
-    font-size: 12px; /* Font size for the topic text */
+    top: 10px;
+    /* Adjust to control vertical position */
+    right: 10px;
+    /* Adjust to control horizontal position */
+    background-color: #333;
+    /* Background color for the topic label */
+    color: #fff;
+    /* Text color */
+    padding: 5px 10px;
+    /* Padding for the label */
+    border-radius: 5px;
+    /* Rounded corners */
+    font-size: 12px;
+    /* Font size for the topic text */
     font-weight: bold;
 }
 
@@ -1932,10 +2113,10 @@ textarea {
 .unique-right-sidebar h3 {
     text-align: left;
     font-size: 18px;
-    margin-bottom: 10px; 
-    border-bottom: 1px solid #ddd; 
-    padding-bottom: 5px; 
-    color: #444; 
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+    color: #444;
 }
 
 /* Right Sidebar */
@@ -1950,40 +2131,57 @@ textarea {
 .user-card {
     display: flex;
     align-items: center;
-    margin-bottom: 8px; /* Reduce the space between cards */
-    padding: 6px; /* Decrease padding for a more compact design */
-    background-color: #bababa; /* Lighter background color for a clean look */
-    border-radius: 6px; /* Slightly smaller border radius */
+    margin-bottom: 8px;
+    /* Reduce the space between cards */
+    padding: 6px;
+    /* Decrease padding for a more compact design */
+    background-color: #bababa;
+    /* Lighter background color for a clean look */
+    border-radius: 6px;
+    /* Slightly smaller border radius */
     width: 100%;
-    gap: 6px; /* Reduce the gap between elements */
-    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05); /* Light shadow */
+    gap: 6px;
+    /* Reduce the gap between elements */
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+    /* Light shadow */
 }
 
 .user-avatar-container {
-    flex-shrink: 0; /* Prevent the avatar from shrinking */
+    flex-shrink: 0;
+    /* Prevent the avatar from shrinking */
 }
 
 .user-avatar {
-    width: 35px; /* Make the avatar smaller */
+    width: 35px;
+    /* Make the avatar smaller */
     height: 35px;
-    border-radius: 50%; /* Keep the avatar circular */
+    border-radius: 50%;
+    /* Keep the avatar circular */
 }
 
 .user-info {
-    font-size: 12px; /* Reduce font size for compactness */
-    line-height: 1.2; /* Adjust line height to reduce vertical spacing */
+    font-size: 12px;
+    /* Reduce font size for compactness */
+    line-height: 1.2;
+    /* Adjust line height to reduce vertical spacing */
 }
 
 .user-info h4 {
-    margin: 0; /* Remove extra margin from the heading */
-    font-size: 14px; /* Smaller font size for the name */
-    font-weight: 600; /* Slightly bolder text */
+    margin: 0;
+    /* Remove extra margin from the heading */
+    font-size: 14px;
+    /* Smaller font size for the name */
+    font-weight: 600;
+    /* Slightly bolder text */
 }
 
 .user-info p {
-    margin: 2px 0; /* Reduce margins between paragraphs */
-    font-size: 12px; /* Smaller font size for details */
-    color: #555; /* Use a subtle color for secondary text */
+    margin: 2px 0;
+    /* Reduce margins between paragraphs */
+    font-size: 12px;
+    /* Smaller font size for details */
+    color: #555;
+    /* Use a subtle color for secondary text */
 }
 
 
@@ -2015,11 +2213,12 @@ textarea {
     justify-content: center;
     font-size: 1.5rem;
     cursor: pointer;
-    margin-right: 35px; /* Move left by 10px */
+    margin-right: 35px;
+    /* Move left by 10px */
 }
 
 .add-project-btn:hover {
-    background-color: #8a7a56;
+    background-color: #007373ff;
 }
 
 .add-project-btn i {
@@ -2057,7 +2256,7 @@ textarea {
 footer {
     width: 100%;
     padding: 8px;
-    background: #4bade6 !important;
+    background: #004196ff !important;
     color: #f1f1f1;
     text-align: center;
     margin-top: 15px;
@@ -2073,7 +2272,7 @@ footer p {
 /* ==========================================================================
    37 FORM COMPONENTS
    ========================================================================== */
-   .form-box {
+.form-box {
     background-color: #3c3c3c;
     padding: 20px;
     border-radius: 10px;
@@ -2082,23 +2281,23 @@ footer p {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     margin: 0;
 }
-  
+
 .form-box h2 {
     color: #fff;
     margin-bottom: 20px;
     text-align: center;
 }
-  
+
 .form-group {
     margin-bottom: 15px;
 }
-  
-.form-group input, 
-.form-group textarea, 
+
+.form-group input,
+.form-group textarea,
 .form-group select {
     padding: 10px;
     margin-bottom: 10px;
-    width: 100%; 
+    width: 100%;
     background-color: #444;
     color: white;
     border: none;
@@ -2112,14 +2311,14 @@ footer p {
     padding: 10px 30px;
     color: white;
     border-radius: 5px;
-    background-color: #a08763;
+    background-color: #007373ff;
     margin-top: 20px;
 }
-  
+
 .btn-primary:hover {
-    background-color: #8c754e;
+    background-color: rgba(0, 115, 115, 0.116);
 }
-  
+
 .github-btn {
     display: inline-block;
     background-color: #333;
@@ -2153,7 +2352,7 @@ footer p {
    40 TEXT STYLES AND LINKS
    ========================================================================== */
 .live-updates h4 {
-    margin-top: 15px; 
+    margin-top: 15px;
 }
 
 .clickable-text {
@@ -2163,7 +2362,7 @@ footer p {
 
 .clickable-text:hover {
     cursor: pointer;
-    color: #a49e9e; 
+    color: #a49e9e;
 }
 
 /* ==========================================================================
@@ -2198,17 +2397,24 @@ footer p {
     padding: 15px;
     border-radius: 8px;
     border: 1px solid #666666;
-    background-color: #404042;
+    background-color: #b5b5b5 !important;
     color: #ffffff;
     font-size: 18px;
     width: 100%;
     flex-grow: 1;
 }
 
-.network-search-btn, .network-clear-btn {
+.network-search-input::placeholder {
+    color: black;
+    opacity: 1;
+    /* Ensure the placeholder text is fully opaque */
+}
+
+.network-search-btn,
+.network-clear-btn {
     padding: 15px 25px;
     border-radius: 8px;
-    background-color: #b08d57;
+    background-color: #007373ff;
     color: #ffffff;
     border: none;
     font-size: 18px;
@@ -2217,8 +2423,9 @@ footer p {
     text-decoration: none;
 }
 
-.network-search-btn:hover, .network-clear-btn:hover {
-    background-color: #8c6d47;
+.network-search-btn:hover,
+.network-clear-btn:hover {
+    background-color: #007373ff;
 }
 
 .network-clear-btn {
@@ -2243,7 +2450,7 @@ footer p {
 }
 
 .network-user-card {
-    background-color: #404042;
+    background-color: #b5b5b5;
     padding: 20px;
     border-radius: 15px;
     width: 400px;
@@ -2258,6 +2465,7 @@ footer p {
     transform: translateY(-8px);
     box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.4);
 }
+
 /* ==========================================================================
    44 USER INFO AND BADGES
    ========================================================================== */
@@ -2313,9 +2521,9 @@ footer p {
     display: none;
 }
 
-.main-hedder{
-    color: black!important; 
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif!important;
+.main-hedder {
+    color: black !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif !important;
 }
 
 .navbar-nav {
@@ -2340,132 +2548,154 @@ footer p {
 /* ==========================================================================
    47 BADGE STYLES AND ANIMATIONS 
    ========================================================================== */
-   .network-badge:hover {     
-    opacity: 0.9;     
-    transform: scale(1.05);     
-    transition: transform 0.2s ease, opacity 0.2s ease; 
-}  
+.network-badge:hover {
+    opacity: 0.9;
+    transform: scale(1.05);
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
 
-.network-badge.gold {     
+.network-badge.gold {
     background-color: #a49665;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);     
-    padding: 5px;      
-    border-radius: 10px; 
-}  
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 5px;
+    border-radius: 10px;
+}
 
-.network-badge.silver {     
+.network-badge.silver {
     background-color: #C0C0C0;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);     
-    padding: 5px;      
-    border-radius: 10px; 
-}  
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 5px;
+    border-radius: 10px;
+}
 
-.network-badge.bronze {     
+.network-badge.bronze {
     background-color: #CD7F32;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);     
-    padding: 5px;      
-    border-radius: 10px; 
-}  
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 5px;
+    border-radius: 10px;
+}
 
 /* ==========================================================================
    48 MOBILE NAVIGATION
    ========================================================================== */
-.mobile-nav {     
-    display: flex;     
-    justify-content: space-around;     
-    align-items: center;     
+.mobile-nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
     background-color: #87CEEB;
     border-top: 1px solid #E0E0E0;
-    padding: 10px 10px;     
-    position: fixed;     
-    bottom: 0;     
-    left: 0;     
-    right: 0;     
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);     
+    padding: 10px 10px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
     z-index: 1100;
-    height: 90px;        
-}  
+    height: 90px;
+}
 
-.nav-list {     
-    list-style: none;     
-    display: flex;     
-    justify-content: space-between;     
-    width: 100%;     
-    margin: 0;     
-    padding: 0; 
-}  
+.nav-list {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
 
-.nav-item {     
-    flex: 1;     
-    text-align: center; 
-}  
+.nav-item {
+    flex: 1;
+    text-align: center;
+}
 
-.nav-link-mobile {     
+.nav-link-mobile {
     color: #36454F;
-    text-decoration: none;     
-    font-size: 12px;     
-    display: flex;     
-    flex-direction: column;     
-    align-items: center;     
-    transition: color 0.3s; 
-}  
+    text-decoration: none;
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: color 0.3s;
+}
 
-.nav-link-mobile:hover {     
+.nav-link-mobile:hover {
     color: #0e9af7;
-}  
+}
 
-.nav-link-mobile i {     
+.nav-link-mobile i {
     font-size: 24px;
     margin-bottom: 4px;
     color: #36454F;
-}  
+}
 
-.nav-link-mobile i:hover {     
+.nav-link-mobile i:hover {
     font-size: 24px;
     margin-bottom: 4px;
     color: #0099ff;
-}  
+}
 
 /* ==========================================================================
    49 CUSTOM FORM LAYOUT
    ========================================================================== */
-.custom-form {     
+.custom-form {
     max-width: 100%;
     width: 100%;
     margin: 0 auto;
-}  
+}
 
-.custom-form-container {     
-    display: flex;     
+.custom-form-container {
+    display: flex;
+    flex-direction: column;
+    /* Stack the header and form vertically */
     justify-content: center;
     align-items: center;
-}  
+}
 
-.custom-form-wrapper {     
-    display: flex;     
-    justify-content: center;     
-    align-items: center;     
-    width: 100%;     
+.custom-form-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
     max-width: 650px;
-    margin: 20px auto;
+    margin: 0px auto;
     background-color: #2c2c2c;
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 30px;
     border: 1px solid #444;
-}  
+}
 
-.form-grid {     
-    display: grid;     
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}  
-
-.form-group {     
+.header-wrapper {
+    text-align: center;
+    margin-bottom: 5px;
+    /* Adjust as needed for spacing */
     width: 100%;
 }
 
-/* landing page */ 
+.header-wrapper h2 {
+    font-size: 2rem;
+    /* Adjust size if needed */
+    font-weight: bold;
+    color: #333;
+    /* Adjust to match the design */
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-group {
+    width: 100%;
+}
+
+.astrix-required {
+    color: #FF0000;
+}
+
+/* landing page */
 /* Unique Landing Page Wrapper */
 .landing-page {
     margin: 0;
@@ -2473,7 +2703,8 @@ footer p {
     box-sizing: border-box;
     font-family: 'Playfair Display', serif;
     color: white;
-    background-color: #1b2838; /* Background for the whole page */
+    background-color: #1b2838;
+    /* Background for the whole page */
 }
 
 /* Hero Section */
@@ -2485,12 +2716,12 @@ footer p {
     text-align: center;
     padding-top: 100px;
     padding-bottom: 400px;
-    flex: 1; 
+    flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-  /* Ensure floating graphics don't break out */
+    /* Ensure floating graphics don't break out */
 }
 
 /* Lighting Effect */
@@ -2503,7 +2734,8 @@ footer p {
     height: 300%;
     background: radial-gradient(circle, rgba(235, 226, 226, 0.2), rgb(0, 85, 255));
     pointer-events: none;
-    z-index: 0; /* Behind everything */
+    z-index: 0;
+    /* Behind everything */
 }
 
 .hero::after {
@@ -2512,17 +2744,21 @@ footer p {
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 400px; /* Adjust width for the light size */
-    height: 400px; /* Adjust height for the light size */
+    width: 400px;
+    /* Adjust width for the light size */
+    height: 400px;
+    /* Adjust height for the light size */
     background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%);
     filter: blur(50px);
     opacity: 0.8;
-    pointer-events: none; /* Ensure it doesn't interfere with other elements */
+    pointer-events: none;
+    /* Ensure it doesn't interfere with other elements */
 }
 
 /* Content Styling */
 .hero-content {
-    z-index: 2; /* Ensure it's above graphics and lighting */
+    z-index: 2;
+    /* Ensure it's above graphics and lighting */
     max-width: 800px;
     text-align: center;
 }
@@ -2577,9 +2813,12 @@ footer p {
 
 /* Floating Animation */
 @keyframes float {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: translateY(0) rotate(0deg);
     }
+
     50% {
         transform: translateY(-20px) rotate(10deg);
     }
@@ -2587,7 +2826,8 @@ footer p {
 
 /* Showcase Section */
 .landing-page .showcase {
-    background-color: black; /* Keep the background for contrast */
+    background-color: black;
+    /* Keep the background for contrast */
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -2600,22 +2840,27 @@ footer p {
     width: 90%;
     max-width: 300px;
     opacity: 0;
-    transform: scale(0.95); /* Start with a slightly smaller scale */
+    transform: scale(0.95);
+    /* Start with a slightly smaller scale */
     transition: opacity 0.8s ease-out, transform 0.8s ease-out;
     border-radius: 10px;
 }
 
 .landing-page .showcase-image.visible {
-    opacity: 1; /* Fade in when visible */
-    transform: scale(1); /* Full size */
+    opacity: 1;
+    /* Fade in when visible */
+    transform: scale(1);
+    /* Full size */
 }
 
 /* Tabs Section */
 .tabs {
-    background-color: #24292f; /* Keep the dark background */
+    background-color: #24292f;
+    /* Keep the dark background */
     color: white;
     text-align: center;
-    padding: 20px 10px; /* Reduce padding to make it smaller */
+    padding: 20px 10px;
+    /* Reduce padding to make it smaller */
 }
 
 
@@ -2624,7 +2869,7 @@ footer p {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px; 
+    margin-top: 20px;
 
 }
 
@@ -2634,14 +2879,16 @@ footer p {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 15px; /* Space between buttons */
+    gap: 15px;
+    /* Space between buttons */
     background-color: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2); 
-    border-radius: 50px; 
-    padding: 10px 20px; 
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); 
-    width: 45%; /* Set the width to half */
-    margin: 0 auto; 
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50px;
+    padding: 10px 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    width: 45%;
+    /* Set the width to half */
+    margin: 0 auto;
 }
 
 /* Style individual tab buttons */
@@ -2650,37 +2897,53 @@ footer p {
     font-size: 1rem;
     font-weight: 500;
     color: white;
-    background-color: transparent; /* Transparent background */
-    border: none; /* Remove button border */
-    border-radius: 25px; /* Fully rounded corners */
+    background-color: transparent;
+    /* Transparent background */
+    border: none;
+    /* Remove button border */
+    border-radius: 25px;
+    /* Fully rounded corners */
     cursor: pointer;
-    transition: all 0.3s ease; /* Smooth hover effect */
+    transition: all 0.3s ease;
+    /* Smooth hover effect */
 }
 
 /* Active button style */
 .tab-button.active {
-    background-color: rgba(255, 255, 255, 0.2); /* Highlighted background */
-    border: 1px solid rgba(255, 255, 255, 0.4); /* Subtle border for the active button */
-    color: white; /* Keep the text white */
+    background-color: rgba(255, 255, 255, 0.2);
+    /* Highlighted background */
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    /* Subtle border for the active button */
+    color: white;
+    /* Keep the text white */
 }
 
 /* Hover effect for buttons */
 .tab-button:hover {
-    background-color: rgba(255, 255, 255, 0.1); /* Slight background change on hover */
-    color: white; /* Keep text color consistent */
+    background-color: rgba(255, 255, 255, 0.1);
+    /* Slight background change on hover */
+    color: white;
+    /* Keep text color consistent */
 }
 
 
 .tab-pane img {
-    max-width: 70%; /* Keep images smaller to fit the reduced space */
+    max-width: 70%;
+    /* Keep images smaller to fit the reduced space */
     height: auto;
     border-radius: 10px;
-    height: auto; /* Maintain aspect ratio */
-    margin: 0 auto; /* Center the image */
-    display: block; /* Ensure it's centered */
-    border-radius: 10px; /* Optional: rounded corners */
-    box-shadow: 0 0 30px 3px rgba(138, 43, 226, 0.8), 0 0 10px rgba(75, 0, 130, 0.6); /* Glowing effect */
-    transition: box-shadow 0.3s ease-in-out; /* Smooth transition */
+    height: auto;
+    /* Maintain aspect ratio */
+    margin: 0 auto;
+    /* Center the image */
+    display: block;
+    /* Ensure it's centered */
+    border-radius: 10px;
+    /* Optional: rounded corners */
+    box-shadow: 0 0 30px 3px rgba(138, 43, 226, 0.8), 0 0 10px rgba(75, 0, 130, 0.6);
+    /* Glowing effect */
+    transition: box-shadow 0.3s ease-in-out;
+    /* Smooth transition */
 }
 
 
@@ -2694,11 +2957,13 @@ footer p {
 }
 
 .tab-pane {
-    display: none; /* Hide all tabs by default */
+    display: none;
+    /* Hide all tabs by default */
 }
 
 .tab-pane.active {
-    display: block; /* Show only the active tab */
+    display: block;
+    /* Show only the active tab */
 }
 
 
@@ -2750,11 +3015,15 @@ footer p {
 
 /* Animation for subtle floating effect */
 @keyframes float {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: translateY(0);
     }
+
     50% {
-        transform: translateY(-10px); /* Adjust float height */
+        transform: translateY(-10px);
+        /* Adjust float height */
     }
 }
 
@@ -2779,35 +3048,41 @@ footer p {
 /* Media Query for mobile screens */
 @media (max-width: 768px) {
     .btn-container {
-        flex-direction: row; /* Align buttons in a row on mobile */
+        flex-direction: row;
+        /* Align buttons in a row on mobile */
     }
 }
 
 @media (max-width: 480px) {
     .btn-container {
-        flex-direction: column; /* Stack buttons on very small screens */
+        flex-direction: column;
+        /* Stack buttons on very small screens */
     }
 }
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {
     .col-md-6 {
-        width: 100%;  /* Full width on small screens */
+        width: 100%;
+        /* Full width on small screens */
     }
 }
+
 /* Styling for col-md-3 that contains the profile picture */
 /* Profile Picture Container */
 /* Optional - for smaller screens */
 @media (max-width: 768px) {
     .col-md-3 img {
-        width: 120px;             /* Slightly smaller image for small screens */
+        width: 120px;
+        /* Slightly smaller image for small screens */
         height: 120px;
     }
 }
 
 @media (min-width: 768px) {
     .mobile-nav {
-        display: none; /* Hide the nav bar on larger screens */
+        display: none;
+        /* Hide the nav bar on larger screens */
     }
 }
 
@@ -2815,24 +3090,29 @@ footer p {
 /* Adjust for Smaller Screens */
 @media (max-width: 768px) {
     .col-md-6 {
-        width: 100%;            /* Make columns full width on small screens */
+        width: 100%;
+        /* Make columns full width on small screens */
     }
+
     .form-container {
-        padding: 20px;          /* Adjust padding for smaller screens */
+        padding: 20px;
+        /* Adjust padding for smaller screens */
     }
 }
 
 /* CSS to hide live updates section on mobile devices */
 @media (max-width: 768px) {
     .live-updates {
-        display: none; /* Hides the live updates section on screens smaller than 768px */
+        display: none;
+        /* Hides the live updates section on screens smaller than 768px */
     }
 }
 
 /* Responsive Styling for Smaller Screens */
 @media (max-width: 768px) {
     .network-user-card {
-        width: 100%; /* Full width for user cards on mobile */
+        width: 100%;
+        /* Full width for user cards on mobile */
     }
 
     .network-search-input {
@@ -2840,7 +3120,8 @@ footer p {
         padding: 12px;
     }
 
-    .network-search-btn, .network-clear-btn {
+    .network-search-btn,
+    .network-clear-btn {
         padding: 12px 20px;
         font-size: 16px;
     }
@@ -2857,8 +3138,10 @@ footer p {
 
 /* Mobile view */
 @media (max-width: 768px) {
+
     /* Hide left and right sidebars on mobile */
-    .unique-left-sidebar, .unique-right-sidebar {
+    .unique-left-sidebar,
+    .unique-right-sidebar {
         display: none;
     }
 
@@ -2889,12 +3172,15 @@ footer p {
 
 @media (max-width: 768px) {
     .forum-thread {
-        width: 100%; /* Make the forum thread take full width */
-        float: none; /* Remove float for full width display */
+        width: 100%;
+        /* Make the forum thread take full width */
+        float: none;
+        /* Remove float for full width display */
     }
 
     .live-updates {
-        display: none; /* Hide the live updates section on mobile */
+        display: none;
+        /* Hide the live updates section on mobile */
     }
 }
 
@@ -2913,45 +3199,54 @@ footer p {
 
 @media (max-width: 768px) {
     .navbar-icons-container {
-        justify-content: flex-end; /* Align icons to the right on mobile */
+        justify-content: flex-end;
+        /* Align icons to the right on mobile */
     }
 }
 
 /* Mobile version styling */
 @media (max-width: 768px) {
     .navbar-nav.d-flex.align-items-center {
-        justify-content: flex-end; /* Align items to the right */
+        justify-content: flex-end;
+        /* Align items to the right */
         margin-left: 0;
     }
 
     /* Ensure that the dropdown menu or profile-related items also align right */
     .profile-dropdown,
     .notification-dropdown {
-        text-align: right; /* Align dropdown content to the right on mobile */
+        text-align: right;
+        /* Align dropdown content to the right on mobile */
     }
 }
 
 .navbar-nav.d-flex.align-items-center {
-    justify-content: flex-end; /* Align items to the right */
+    justify-content: flex-end;
+    /* Align items to the right */
 }
 
 /*  MOBILE NO TOUCH FOR WEBSITE */
 @media (max-width: 768px) {
+
     /* Navbar icons container (notification and profile) */
     .navbar-icons-container {
         display: flex;
         align-items: center;
-        gap: 5px; /* Reduce the gap between the icons */
-        justify-content: flex-end; /* Ensure the icons are aligned to the right */
+        gap: 5px;
+        /* Reduce the gap between the icons */
+        justify-content: flex-end;
+        /* Ensure the icons are aligned to the right */
     }
 
     /* Adjust the margin of the notification icon to avoid extra space */
     .notification-icon {
-        margin-right: 0px; /* Remove extra right margin */
+        margin-right: 0px;
+        /* Remove extra right margin */
     }
 
-    .notification-count{
-        margin-right: 0px; /* Remove extra right margin */
+    .notification-count {
+        margin-right: 0px;
+        /* Remove extra right margin */
 
     }
 
@@ -2966,7 +3261,8 @@ footer p {
 /* Show the navbar-toggler on mobile */
 @media (max-width: 768px) {
     .navbar-toggler {
-        display: block; /* Display hamburger icon on mobile */
+        display: block;
+        /* Display hamburger icon on mobile */
         background-color: transparent;
         border: none;
         font-size: 30px;
@@ -2978,39 +3274,50 @@ footer p {
 
     /* When the collapse class is triggered */
     .navbar-collapse.show {
-        display: flex; /* Show the menu */
+        display: flex;
+        /* Show the menu */
         flex-direction: column;
-        text-align: center; /* Center align the menu items */
+        text-align: center;
+        /* Center align the menu items */
     }
 
     /* Align the nav items in the center */
     .navbar-nav {
-        flex-direction: column; /* Stack the links vertically */
+        flex-direction: column;
+        /* Stack the links vertically */
     }
 
     /* Ensure icons are aligned properly on mobile */
     .navbar-icons-container {
-        justify-content: flex-end; /* Align icons to the right on mobile */
+        justify-content: flex-end;
+        /* Align icons to the right on mobile */
     }
 }
 
 
 /* Fullscreen-style navbar menu on mobile when collapsed */
 @media (max-width: 768px) {
+
     /* Ensure the collapse content takes up the full screen */
     .navbar-collapse {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
-        height: 100vh; /* Take up full screen height */
-        background-color: rgba(0, 0, 0, 0.9); /* Dark transparent background */
-        justify-content: center; /* Center content */
-        align-items: center; /* Vertically center the links */
+        height: 100vh;
+        /* Take up full screen height */
+        background-color: rgba(0, 0, 0, 0.9);
+        /* Dark transparent background */
+        justify-content: center;
+        /* Center content */
+        align-items: center;
+        /* Vertically center the links */
         display: flex;
         flex-direction: column;
-        text-align: center; /* Center the text */
-        z-index: 1000; /* Ensure it appears above other elements */
+        text-align: center;
+        /* Center the text */
+        z-index: 1000;
+        /* Ensure it appears above other elements */
         opacity: 0;
         visibility: hidden;
         transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
@@ -3024,18 +3331,22 @@ footer p {
 
     /* Style the nav links to be more prominent */
     .navbar-nav .nav-link {
-        color: white; /* White text color */
-        font-size: 1.5rem; /* Increase font size */
-        padding: 0px 0; /* Add padding for space between links */
+        color: white;
+        /* White text color */
+        font-size: 1.5rem;
+        /* Increase font size */
+        padding: 0px 0;
+        /* Add padding for space between links */
         text-transform: uppercase;
         transition: color 0.3s;
-        margin-top: 20px; 
+        margin-top: 20px;
         align-items: center;
     }
 
     /* Change link hover color */
     .navbar-nav .nav-link:hover {
-        color: #a49665; /* Gold color on hover */
+        color: #a49665;
+        /* Gold color on hover */
     }
 
     /* Style the navbar-toggler (hamburger icon) */
@@ -3043,7 +3354,8 @@ footer p {
         position: absolute;
         top: 20px;
         right: 20px;
-        z-index: 1100; /* Keep it above the collapse menu */
+        z-index: 1100;
+        /* Keep it above the collapse menu */
     }
 }
 
@@ -3056,32 +3368,40 @@ footer p {
         border: none;
         font-size: 30px;
         cursor: pointer;
-        z-index: 1100; /* Keep it above the collapse menu */
+        z-index: 1100;
+        /* Keep it above the collapse menu */
     }
 
     /* Collapse the navbar by default on mobile */
     .navbar-collapse {
-        display: none; /* Hide the collapse initially */
+        display: none;
+        /* Hide the collapse initially */
     }
 
     /* Show the collapse when the toggler is clicked */
     .navbar-collapse.show {
-        display: flex; /* Display the collapse */
+        display: flex;
+        /* Display the collapse */
         flex-direction: column;
-        text-align: center; /* Center-align the links */
+        text-align: center;
+        /* Center-align the links */
     }
 
     /* Ensure icons are aligned properly on mobile */
     .navbar-icons-container {
-        justify-content: flex-end; /* Align icons to the right */
+        justify-content: flex-end;
+        /* Align icons to the right */
     }
 
     .navbar-logo {
-        height: 70px; /* Adjust height as needed */
-        margin-right: 10px; /* Add some space between the logo and text */
+        height: 70px;
+        /* Adjust height as needed */
+        margin-right: 10px;
+        /* Add some space between the logo and text */
         margin-left: 0px;
-        margin-top: -10px; 
+        margin-top: -10px;
         margin-bottom: -10px;
-        vertical-align: middle; /* Align it with the DevLink text */
+        vertical-align: middle;
+        /* Align it with the DevLink text */
     }
 }

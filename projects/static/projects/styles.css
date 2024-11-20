@@ -218,16 +218,11 @@ Line numbers are not accurate; to navigate use CMD/CTRL F and lookup the value a
 🎨 COLOR PALETTE
 ──────────────
 Brand Colors:
-  UNCC GOLD:    #a49665 │████│ Buttons, badges, primary actions
-  UNCC GREEN:   #005035 │████│ Tags, accent elements
-  DARK BG:      #343434 │████│ Main background color
-  CYAN:         #2daba6 │████│ Navigation bar
-  PURPLE:       #6571ff │████│ Secondary elements
-
   $marian-blue:         #004196ff   Navigation bar
   $caribbean-current:   #007373ff;  Tags, accent elements
   $honolulu-blue:       #0079B2ff   Secondary elements
   $bone:                #D4D6C7ff   
+  if nto white, this bk: #d4d4d4
   buttons,etc hover:    #rgb(20, 161, 161)
   $caribbean-current-2: #007677ff   Buttons, badges, primary actions 
 
@@ -270,6 +265,7 @@ Status Colors:
    1 Base Styles & Reset
    ========================================================================== */
 html,
+
 body {
     height: 100%;
     margin: 0;
@@ -300,12 +296,14 @@ h5,
 h6,
 p,
 a {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    font-family: -apple-system, "Merriweather", BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
 }
 
 h1,
 h2,
-h3 {
+h3,
+h4,
+h5 {
     font-weight: 600;
     color:rgb(0, 0, 0)
 }
@@ -316,9 +314,9 @@ a {
     color:rgb(39, 19, 219)
 }
 
-.logo h1 {
+.logo h1, h2 {
     margin: 0;
-    font-size: 24px;
+    font-size: 30px;
 }
 
 /* ==========================================================================
@@ -791,35 +789,37 @@ textarea::placeholder {
 }
 
 .tags .tag {
-    background-color: #037304;
+    background-color: #007373ff;
     padding: 5px 10px;
     border-radius: 5px;
     margin-right: 10px;
+    font-size: small;
 }
 
 .comment-box {
-    background-color: #1b1a1a;
+    background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
     margin-bottom: 20px;
 }
 
 .comments .comment {
-    background-color: #242424;
+    background-color: #d4d4d4;
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 10px;
 }
 
 .comment p {
-    color: #929292;
+    color: #000000;
 }
 
 .comment-input {
-    background-color: #333;
+    background-color: #d4d4d4;
     padding: 20px;
     border-radius: 10px;
     margin-bottom: 20px;
+
 }
 
 .comment-input textarea {
@@ -827,8 +827,8 @@ textarea::placeholder {
     padding: 10px;
     border: none;
     border-radius: 5px;
-    background-color: #444;
-    color: white;
+    background-color: #eeeeee;
+    color: rgb(0, 0, 0);
     resize: none;
     margin-bottom: 10px;
 }
@@ -1263,19 +1263,19 @@ textarea::placeholder {
    17 Project Components
    ========================================================================== */
 .project-description {
-    background-color: #222;
+    background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
     margin-bottom: 20px;
 }
 
 .project-description h3 {
-    color: #fff;
+    color: #000000;
     font-size: 20px;
 }
 
 .project-description p {
-    color: #ccc;
+    color: #000000;
     margin-top: 10px;
 }
 
@@ -1392,8 +1392,8 @@ textarea::placeholder {
 
 .skills-learn,
 .skills-required {
-    background-color: #212020;
-    color: #f1f1f1;
+    background-color: #ffffff;
+    color: #000000;
     padding: 20px;
     border-radius: 10px;
     width: 48%;
@@ -1409,7 +1409,6 @@ textarea::placeholder {
 .skills-learn p,
 .skills-required p {
     font-size: 1rem;
-    color: #ccc;
 }
 
 
@@ -2241,9 +2240,9 @@ p {
 }
 
 .custom-title {
-    font-size: 2.5rem;
+    font-size: 30px;
     font-weight: bold;
-    color: #fff;
+    color: #000000;
     margin-bottom: 20px;
     text-align: left;
 }

@@ -107,7 +107,7 @@
 
                 <!-- Comment Input Section -->
                 <div class="comment-input">
-                    <h4>Leave a Comment</h4>
+                    <h5>Leave a Comment</h5>
                     <form action="" method="post">
                         {% csrf_token %}
                         <textarea name="comment" rows="4" placeholder="Type a comment..."></textarea>
@@ -119,10 +119,10 @@
 
 <!-- Right Section (Live Updates) -->
 <div class="live-updates">
-    <h3>Live Updates</h3>
+    <h4>Live Updates</h4>
     <p>GitHub Repo Name ★★★★★</p>
 
-    <h4>GitHub Preview</h4>
+    <h5>GitHub Preview</h5>
     <a href="{{ project.github_link }}" target="_blank">
         <img src="https://api.urlbox.io/v1/hXXufaUIypyZYtri/png?url={{ project.github_link }}&thumb_width=800&quality=80">
 

@@ -2386,11 +2386,17 @@ footer p {
     padding: 15px;
     border-radius: 8px;
     border: 1px solid #666666;
-    background-color: #404042;
+    background-color: #b5b5b5 !important;
     color: #ffffff;
     font-size: 18px;
     width: 100%;
     flex-grow: 1;
+}
+
+.network-search-input::placeholder {
+    color: black;
+    opacity: 1;
+    /* Ensure the placeholder text is fully opaque */
 }
 
 .network-search-btn,
@@ -2433,7 +2439,7 @@ footer p {
 }
 
 .network-user-card {
-    background-color: #404042;
+    background-color: #b5b5b5;
     padding: 20px;
     border-radius: 15px;
     width: 400px;

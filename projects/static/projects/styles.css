@@ -1,9 +1,10 @@
-/* UNCC GOLD a49665 */
-/* UNCC GREEN 005035 */
+/* UNCC GOLD a49665 *
 /* Main Backround Color 343434 */
  /* Blue color for nav bar - 2daba6 */ 
  /* PURPLE FOR OTHER - 6571ff */ 
  /* Main Backround Color 343434 */
+ /* Hovering over navbar links - #72716b3d */
+ /* navbar color -  linear-gradient(rgb(85, 14, 68), rgb(59, 35, 146)) */
 
 
 html, body {
@@ -60,7 +61,7 @@ p, a {
     margin-bottom: 10px;
 }
 .nav-links a:hover {
-    background-color: #72716b3d; /* Darker shade of gold on hover */
+    background-color: #72716b3d; /* Darker shade  on hover */
     transform: scale(1.1); /* Slight zoom effect on hover */
     cursor: pointer; /* Change cursor to pointer */
 }

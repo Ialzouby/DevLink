@@ -610,7 +610,7 @@ textarea::placeholder {
     position: absolute;
     top: 90px;
     right: 0;
-    background-color: #636363;
+    background-color: #ffffff;
     min-width: 160px;
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.144);
     z-index: 1;
@@ -623,7 +623,7 @@ textarea::placeholder {
 
 .dropdown-content a:hover,
 .dropdown-content form:hover {
-    background-color: #8a7a56;
+    background-color: rgb(4, 92, 92);
 }
 
 
@@ -636,7 +636,7 @@ textarea::placeholder {
 .profile-dropdown .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #222;
+    background-color: #ffffff;
     min-width: 100px;
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
     z-index: 1;
@@ -689,7 +689,7 @@ textarea::placeholder {
 }
 
 .dropdown-button {
-    background-color: #a49665;
+    background-color: #007373ff;
     border: none;
     width: 100px;
     color: white;
@@ -701,9 +701,13 @@ textarea::placeholder {
     font-weight: bold;
     margin-top: 20px;
 }
-
+/* rgb(4, 92, 92) */
 .dropdown-button:hover {
-    background-color: #8a7a56;
+    background-color: rgb(4, 92, 92);
+    text-decoration: none;
+    transform: none;
+    color: #fff;
+    cursor: pointer;
 }
 
 /* ==========================================================================
@@ -987,24 +991,6 @@ textarea::placeholder {
     color: #ff4d4f;
 }
 
-/* General Dropdown Button Styling */
-.dropdown-button {
-    background-color: #007373ff;
-    border: none;
-    width: 100px;
-    color: white;
-    padding: 10px 5px;
-    border-radius: 5px;
-    text-align: center;
-    display: block;
-    text-decoration: none;
-    font-weight: bold;
-    margin-top: 20px;
-}
-
-.dropdown-button:hover {
-    background-color: rgba(0, 115, 115, 0.705);
-}
 
 /* Ensure the navbar is responsive */
 .navbar-toggler {
@@ -1097,36 +1083,22 @@ textarea::placeholder {
 
 }
 
-/* Dropdown Content (Initially Hidden) */
-.notification-dropdown .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #222;
-    min-width: 500px;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
-    z-index: 1000;
-    border-radius: 8px;
-    padding: 10px;
-    top: 40px;
-    /* Adjusts space below the icon */
-    right: 0;
-    color: white;
-    transition: all 0.3s ease;
-    /* Adds smooth transition */
-    margin-right: -20px;
-}
+
 
 .notification-dropdown .dropdown-content {
     position: absolute;
-    background-color: #222;
+    background-color: #ffffff;
     min-width: 160px;
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
     z-index: 1;
-    border-radius: 5px;
-    padding: 10px;
+    border-radius: 2px;
+    padding: 6px;
     top: 30px;
     /* Ensure dropdown is below the profile image */
     right: 0;
+    transition: all 0.3s ease;
+    /* Adds smooth transition */
+    margin-right: -20px;
 }
 
 /* Show dropdown on hover */

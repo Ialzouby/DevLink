@@ -224,6 +224,7 @@ Brand Colors:
   $bone:                #D4D6C7ff   
   if nto white, this bk: #d4d4d4
   buttons,etc hover:    #rgb(20, 161, 161)
+  buttons hovering for green: rgb(4, 92, 92)
   $caribbean-current-2: #007677ff   Buttons, badges, primary actions 
 
 UI Colors:
@@ -764,7 +765,7 @@ textarea::placeholder {
     height: 100px;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid #b08d57;
+    border: 2px solid #256c81;
 }
 
 .profile-img {
@@ -986,39 +987,9 @@ textarea::placeholder {
     color: #ff4d4f;
 }
 
-
-
-.dropdown-button {
-    background-color: #a49665;
-    /* Gold background */
-    border: none;
-    color: white;
-    width: 80%;
-    /* Set a consistent width for the buttons */
-    text-align: center;
-    /* Center-align the text */
-    padding: 10px 0;
-    /* Padding to make it look like a button */
-    border-radius: 5px;
-    /* Rounded corners */
-    text-decoration: none;
-    display: inline-block;
-    /* Ensure buttons stay inline */
-    cursor: pointer;
-    font-weight: bold;
-    /* Bold text */
-    margin: 5px 0;
-    /* Add some margin between the buttons */
-}
-
-.dropdown-button:hover {
-    background-color: #8a7a56;
-    /* Darker gold on hover */
-}
-
 /* General Dropdown Button Styling */
 .dropdown-button {
-    background-color: #a49665;
+    background-color: #007373ff;
     border: none;
     width: 100px;
     color: white;
@@ -1032,7 +1003,7 @@ textarea::placeholder {
 }
 
 .dropdown-button:hover {
-    background-color: #8a7a56;
+    background-color: rgba(0, 115, 115, 0.705);
 }
 
 /* Ensure the navbar is responsive */
@@ -1478,6 +1449,7 @@ textarea::placeholder {
     justify-content: flex-end;
 }
 
+
 .navbar h1 {
     font-size: 40px;
     margin-left: 11px;
@@ -1621,11 +1593,11 @@ textarea {
     border: none;
     padding: 10px 20px;
     border-radius: 5px;
-    font-weight: bold;
+    font-weight: bold;   
 }
 
 .btn-primary:hover {
-    background-color: rgba(141, 227, 227, 0.292);
+    background-color: rgb(4, 92, 92);
 }
 
 .unique-view-btn {
@@ -1991,6 +1963,7 @@ textarea {
 /* Project Grid */
 .custom-portfolio-heading {
     color: black;
+    margin-bottom: 14px;
 }
 
 .custom-project-section {
@@ -2009,11 +1982,10 @@ textarea {
 
 /* Project Cards */
 .custom-project-card {
-    background-color: #b5b5b5;
+    background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
     text-align: center;
-    color: #fff;
     transition: transform 0.3s ease;
 }
 
@@ -2022,28 +1994,19 @@ textarea {
 }
 
 .custom-project-card h3 {
-    font-size: 1.5rem;
+    font-size: 21px;
     margin-bottom: 10px;
     color: #000;
 }
 
 .custom-project-card p {
     font-size: 1rem;
+    margin-top: 30px;
     color: #aaa;
 }
 
-.custom-project-card a {
-    display: inline-block;
-    background-color: #a49665;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
-    text-decoration: none;
-    margin-top: 10px;
-}
-
 .custom-project-card a:hover {
-    background-color: #8a7a56;
+    background-color: rgb(4, 92, 92);
 }
 
 
@@ -2192,13 +2155,14 @@ p {
    34 Buttons & Interactive Elements
    ========================================================================== */
 .join-btn {
-    background-color: #6571ff;
+    background-color: #007373ff;
     color: #fff;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-left: 20px;
+    position: relative;
+    right: 0;
 }
 
 .join-btn:hover {
@@ -2311,17 +2275,6 @@ footer p {
 /* ==========================================================================
    38 BUTTONS AND INTERACTIVE ELEMENTS
    ========================================================================== */
-.btn-primary {
-    padding: 10px 30px;
-    color: white;
-    border-radius: 5px;
-    background-color: #007373ff;
-    margin-top: 20px;
-}
-
-.btn-primary:hover {
-    background-color: rgba(0, 115, 115, 0.116);
-}
 
 .github-btn {
     display: inline-block;
@@ -2374,8 +2327,6 @@ footer p {
    ========================================================================== */
 .network-page-container {
     padding: 20px;
-    background-color: #ffffff;
-    color: #ffffff;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
     min-height: 100vh;
     width: 100vw;
@@ -2387,6 +2338,7 @@ footer p {
 .network-search-bar {
     display: flex;
     justify-content: center;
+    align-items: center;
     margin-bottom: 30px;
 }
 
@@ -2394,18 +2346,16 @@ footer p {
     display: flex;
     gap: 15px;
     max-width: 80%;
-    width: 100%;
+    width: 50%;
 }
 
 .network-search-input {
-    padding: 15px;
     border-radius: 8px;
-    border: 1px solid #666666;
-    background-color: #b5b5b5 !important;
-    color: #ffffff;
+    border: none;
+    background-color: #ffffff !important;
+    color: #000 !important;
     font-size: 18px;
     width: 100%;
-    flex-grow: 1;
 }
 
 .network-search-input::placeholder {
@@ -2416,28 +2366,37 @@ footer p {
 
 .network-search-btn,
 .network-clear-btn {
-    padding: 15px 25px;
+    padding: 8px 16px;
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
     border-radius: 8px;
     background-color: #007373ff;
     color: #ffffff;
-    border: none;
-    font-size: 18px;
+    font-size: 16px;
+    font-family: "Merriweather";
+    height: 40px;
+    width: auto;
     cursor: pointer;
+    border: none;
     transition: background-color 0.3s ease;
     text-decoration: none;
 }
 
-.network-search-btn:hover,
-.network-clear-btn:hover {
-    background-color: #007373ff;
+.network-search-btn:hover {
+    background-color: rgb(4, 92, 92);
 }
 
 .network-clear-btn {
     background-color: #444;
+    align-items: center;
+    display: flex;
+    
 }
 
 .network-clear-btn:hover {
-    background-color: #666;
+    background-color: #000000;
+    text-decoration: none;
+    color: #ffffff;
 }
 
 /* ==========================================================================
@@ -2454,7 +2413,7 @@ footer p {
 }
 
 .network-user-card {
-    background-color: #b5b5b5;
+    background-color: #ffffff;
     padding: 20px;
     border-radius: 15px;
     width: 400px;
@@ -2480,7 +2439,7 @@ footer p {
 .network-username {
     font-size: 20px;
     font-weight: bold;
-    color: #ffffff;
+    color: #000000;
     margin-bottom: 5px;
 }
 
@@ -2488,7 +2447,7 @@ footer p {
 .network-user-concentration {
     font-size: 14px;
     margin: 3px 0;
-    color: #cccccc;
+    color: #000000;
 }
 
 .network-badge-section {
@@ -2563,6 +2522,7 @@ footer p {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     padding: 5px;
     border-radius: 10px;
+    font-size: 14px;
 }
 
 .network-badge.silver {
@@ -2570,13 +2530,15 @@ footer p {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     padding: 5px;
     border-radius: 10px;
+    font-size: 14px;
 }
 
 .network-badge.bronze {
-    background-color: #CD7F32;
+    background-color: #995a1b;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     padding: 5px;
     border-radius: 10px;
+    font-size: 14px;
 }
 
 /* ==========================================================================
@@ -2778,42 +2740,7 @@ footer p {
     line-height: 1.6;
 }
 
-.hero-buttons {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-}
 
-.cta-button {
-    background-color: #28a745;
-    color: white;
-    padding: 10px 20px;
-    font-size: 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    border: none;
-}
-
-.cta-button:hover {
-    background-color: #218838;
-}
-
-.secondary-button {
-    background: transparent;
-    color: #28a745;
-    padding: 10px 20px;
-    font-size: 1rem;
-    border: 2px solid #28a745;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.secondary-button:hover {
-    background-color: #28a745;
-    color: white;
-}
 
 /* Floating Animation */
 @keyframes float {

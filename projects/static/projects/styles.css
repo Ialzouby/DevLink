@@ -1709,7 +1709,16 @@ textarea {
     text-align: center;
 }
 
-.custom-search-form {
+.list-group-item {
+    padding: 8px;
+    /* Reduce padding for list items */
+    margin-bottom: 5px;
+    /* Reduce margin between items */
+    border-radius: 4px;
+    /* Soften border radius */
+}
+
+.message-search {
     background-color: #ffffff !important; /* White background */
     color: #000000 !important; /* Black text */
 }

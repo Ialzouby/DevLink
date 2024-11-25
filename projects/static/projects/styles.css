@@ -1709,6 +1709,10 @@ textarea {
     text-align: center;
 }
 
+.custom-search-form {
+    background-color: #ffffff !important; /* White background */
+    color: #000000 !important; /* Black text */
+}
 
 .login-page {
     color: rgb(0, 0, 0) !important;

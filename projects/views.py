@@ -285,6 +285,17 @@ def active_conversations(request):
 
     conversation_users = User.objects.filter(id__in=conversation_user_ids)
 
+    # Handle search functionality
+    search_query = request.GET.get('q', '').strip()
+    search_results = []
+    if search_query:
+        search_results = User.objects.filter(
+        Q(username__icontains=search_query) |
+        Q(first_name__icontains=search_query) |
+        Q(last_name__icontains=search_query)
+    ).exclude(id=request.user.id)
+
+
     recipient_username = request.GET.get('recipient')
     recipient = None
     messages = []
@@ -310,8 +321,10 @@ def active_conversations(request):
         'conversation_users': conversation_users,
         'recipient': recipient,
         'messages': messages,
-        'form': form
+        'form': form,
+        'search_results': search_results,  # Pass search results to template
     })
+
 
 # View to render notifications
 @login_required

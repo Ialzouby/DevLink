@@ -1709,14 +1709,6 @@ textarea {
     text-align: center;
 }
 
-.list-group-item {
-    padding: 8px;
-    /* Reduce padding for list items */
-    margin-bottom: 5px;
-    /* Reduce margin between items */
-    border-radius: 4px;
-    /* Soften border radius */
-}
 
 .login-page {
     color: rgb(0, 0, 0) !important;
@@ -3308,3 +3300,4 @@ footer p {
         /* Align it with the DevLink text */
     }
 }
+

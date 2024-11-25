@@ -31,5 +31,6 @@ urlpatterns = [
 
 
     path('', include('projects.urls')),
+    path('conversations/', custom_views.active_conversations, name='active_conversations'),
     
 ]

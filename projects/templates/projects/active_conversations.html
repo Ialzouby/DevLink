@@ -4,6 +4,37 @@
 <div class="chat-page-container">
     <!-- Left: Conversation List -->
     <div class="conversation-list-container">
+
+        <!-- Search Form -->
+        <form method="get" action="{% url 'active_conversations' %}" class="custom-search-form">
+            <input
+                type="text"
+                name="q"
+                placeholder="Search for users..."
+                class="message-search"
+                autocomplete="off"
+                value="{{ request.GET.q|default:'' }}"
+            />
+            
+        </form>
+
+        <!-- Search Results -->
+        {% if search_results %}
+        <div class="search-results mt-3">
+            <h2>Search Results</h2>
+            <ul class="list-group">
+                {% for user in search_results %}
+                <li class="list-group-item">
+                    <a href="?recipient={{ user.username }}" class="search-result-link">
+                        {{ user.get_full_name|default:user.username }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <!-- Active Conversations -->
         <h2>Your Active Conversations</h2>
         <ul class="list-group">
             {% for user in conversation_users %}

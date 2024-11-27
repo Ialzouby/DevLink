@@ -2921,6 +2921,24 @@ footer p {
     animation-delay: 3s;
 }
 
+.form-group select,
+.form-group input {
+    height: auto;
+    min-height: 38px;  /* Standard height for form controls */
+    padding: 6px 12px;
+    width: 100%;
+    line-height: 1.5;
+}
+
+/* Specifically for select elements */
+select.form-control,
+.form-group select {
+    padding: 6px 12px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
 /* Animation for subtle floating effect */
 @keyframes float {
 

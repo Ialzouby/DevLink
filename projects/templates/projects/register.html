@@ -1,15 +1,18 @@
 {% extends "projects/base.html" %}
+{% load static %}
 {% block title %}Sign Up{% endblock %}
 
 {% block content %}
-<div class="container custom-form-container mx-auto">
+<div class="container custom-form-container mx-auto" data-current-step="{{ current_step|default:1 }}">
     
     <div class="custom-form-wrapper">
         <div>
             <h2>Sign Up</h2>
         </div>
         <form class="custom-form" method="POST" action="{% url 'register' %}" enctype="multipart/form-data">
+            
             {% csrf_token %}
+            <input type="hidden" name="current_step" id="current_step" value="{{ current_step }}">
 
             {% if form.errors %}
                 <div class="alert alert-danger">
@@ -95,4 +98,10 @@
         </form>
     </div>
 </div>
+<!-- ... rest of your template ... -->
+
+
+{% endblock %}
+{% block extra_js %}
+<script src="{% static 'projects/scripts.js' %}"></script>
 {% endblock %}

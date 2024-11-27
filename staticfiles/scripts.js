@@ -17,8 +17,64 @@ function getCookie(name) {
 // Retrieve the CSRF token from the cookies
 const csrfToken = getCookie('csrftoken');
 
+console.log('Scripts.js loaded');
+let currentStep = 1;
+// These functions need to be in global scope
+function nextStep() {
+    console.log('nextStep called, currentStep:', currentStep);
+    if (currentStep < 3) {
+        currentStep++;
+        document.getElementById('current_step').value = currentStep;
+        showStep(currentStep);
+        console.log('Updated to step:', currentStep);
+    }
+}
+
+function prevStep() {
+    console.log('prevStep called, currentStep:', currentStep);
+    if (currentStep > 1) {
+        currentStep--;
+        document.getElementById('current_step').value = currentStep;
+        showStep(currentStep);
+        console.log('Updated to step:', currentStep);
+    }
+}
+
+function showStep(step) {
+    console.log('Showing step:', step);
+    
+    // Hide all steps
+    const steps = document.querySelectorAll('.step');
+    steps.forEach(stepElement => {
+        stepElement.style.display = 'none';
+    });
+
+    // Show current step
+    const currentStepElement = document.getElementById(`step-${step}`);
+    if (currentStepElement) {
+        currentStepElement.style.display = 'block';
+        console.log(`Step ${step} element displayed`);
+    } else {
+        console.error(`Could not find element step-${step}`);
+    }
+
+    // Update buttons
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const submitBtn = document.getElementById('submitBtn');
+
+    if (prevBtn) prevBtn.style.display = step > 1 ? 'inline-block' : 'none';
+    if (nextBtn) nextBtn.style.display = step < 3 ? 'inline-block' : 'none';
+    if (submitBtn) submitBtn.style.display = step === 3 ? 'inline-block' : 'none';
+
+    console.log('Button visibility updated');
+}
+
 document.addEventListener('DOMContentLoaded', function() {
-    let currentStep = 1;  // Declare once
+
+
+    currentStep = parseInt(document.querySelector('.custom-form-container').dataset.currentStep) || 1;
+    showStep(currentStep);
 
     // Scroll to bottom of message thread on page load
     const messageThread = document.querySelector('.message-thread');
@@ -59,51 +115,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         })
         .catch(error => console.error("Error:", error));
-    }
-
-    // Multi-step form navigation
-    function showStep(step) {
-        // Hide all steps
-        document.querySelectorAll('.step').forEach(stepElement => {
-            if (stepElement) {
-                stepElement.style.display = 'none';
-            }
-        });
-
-        // Show the current step
-        const stepElement = document.getElementById('step-' + step);
-        if (stepElement) {
-            stepElement.style.display = 'block';
-        }
-
-        // Update button visibility with checks
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const submitBtn = document.getElementById('submitBtn');
-
-        if (prevBtn) {
-            prevBtn.style.display = (step > 1) ? 'inline' : 'none';
-        }
-        if (nextBtn) {
-            nextBtn.style.display = (step < 3) ? 'inline' : 'none';
-        }
-        if (submitBtn) {
-            submitBtn.style.display = (step === 3) ? 'inline' : 'none';
-        }
-    }
-
-    function nextStep() {
-        if (currentStep < 3) {
-            currentStep++;
-            showStep(currentStep);
-        }
-    }
-
-    function prevStep() {
-        if (currentStep > 1) {
-            currentStep--;
-            showStep(currentStep);
-        }
     }
 
     // Call showStep for the initial step
@@ -164,5 +175,3 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
-
-

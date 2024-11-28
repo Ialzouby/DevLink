@@ -38,37 +38,40 @@ class CustomUserCreationForm(UserCreationForm):
         max_length=254,
         required=True
     )
-    grade_level = forms.ChoiceField(
-        choices=UserProfile.GRADE_LEVEL_CHOICES,
-        widget=forms.Select(attrs={
-            'class': 'form-control',
-            'style': 'width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; background-color: #333; color: #f1f1f1;'
-        }),
-        required=True
-    )
-    concentration = forms.ChoiceField(
-        choices=UserProfile.CONCENTRATION_CHOICES,
-        widget=forms.Select(attrs={
-            'class': 'form-control',
-            'style': 'width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; background-color: #333; color: #f1f1f1;'
-        }),
-        required=True
-    )
-    linkedin = forms.CharField(
+    grade_level = forms.CharField(
         widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Grade Level',
+            'style': 'width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; background-color: #333; color: #f1f1f1;'
+        }),
+        max_length=50,
+        required=True
+    )
+    concentration = forms.CharField(
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Concentration',
+            'style': 'width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; background-color: #333; color: #f1f1f1;'
+        }),
+        max_length=100,
+        required=True
+    )
+    linkedin = forms.URLField(
+        widget=forms.URLInput(attrs={
             'class': 'form-control',
             'placeholder': 'LinkedIn URL (Optional)',
+            'style': 'width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; background-color: #333; color: #f1f1f1;'
         }),
         required=False
     )
-    github = forms.CharField(
-        widget=forms.TextInput(attrs={
+    github = forms.URLField(
+        widget=forms.URLInput(attrs={
             'class': 'form-control',
             'placeholder': 'GitHub URL (Optional)',
+            'style': 'width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; background-color: #333; color: #f1f1f1;'
         }),
         required=False
     )
-
     bio = forms.CharField(
         widget=forms.Textarea(attrs={
             'class': 'form-control',
@@ -78,21 +81,9 @@ class CustomUserCreationForm(UserCreationForm):
         }),
         required=False
     )
+    profile_picture = forms.ImageField(required=False)
+    #Make profile_picture a required field to fix profile picture bugs
     profile_picture = forms.ImageField(required=True)
-
-    def clean_github(self):
-        github = self.cleaned_data.get('github')
-        if github and not github.startswith(('http://', 'https://')):
-            github = 'https://' + github
-        return github
-
-    def clean_linkedin(self):
-        linkedin = self.cleaned_data.get('linkedin')
-        if linkedin and not linkedin.startswith(('http://', 'https://')):
-            linkedin = 'https://' + linkedin
-        return linkedin
-
-
 
 
     class Meta:
@@ -101,12 +92,11 @@ class CustomUserCreationForm(UserCreationForm):
             'username', 'first_name', 'last_name', 'email', 'grade_level', 'concentration', 'linkedin', 'github', 'bio', 'password1', 'password2', 'profile_picture'
         )
 
-    #validation that user uploaded required profile picture
-    #def clean_profile_picture(self):
-        #profile_picture = self.cleaned_data.get('profile_picture')
-        #if not profile_picture:
-            #raise forms.ValidationError("Please upload a profile picture.")
-        #return profile_picture
+    def clean_profile_picture(self):
+        profile_picture = self.cleaned_data.get('profile_picture')
+        if not profile_picture:
+            raise forms.ValidationError("Please upload a profile picture.")
+        return profile_picture
 
 
 class RatingForm(forms.Form):

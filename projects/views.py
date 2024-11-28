@@ -24,33 +24,59 @@ def profile(request, username):
     return render(request, 'projects/profile.html', {'profile_user': user})  # Render the profile template
 
 def register(request):
-    current_step = request.POST.get('current_step', '1')
-    current_step = int(current_step)
-
     if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST, request.FILES)
+        form = CustomUserCreationForm(request.POST, request.FILES)  # Include file uploads
         if form.is_valid():
-            user = form.save(commit=False)
-            # Add any additional user setup here
-            user.save()
-            login(request, user)
-            return redirect('home')  # or wherever you want to redirect after successful registration
+            print("Form is valid")  # Debugging statement
+            user = form.save()  # Save the new user
+
+            # Configure Cloudinary for image uploads
+            cloudinary.config(
+                cloud_name='dvah1m8du',
+                api_key='547583998667598',
+                api_secret='-hOXeuzVlg2LrLjnML7Bzm7SnHw'
+            )
+
+            # Check if a profile picture is uploaded
+            if 'profile_picture' in request.FILES:
+                try:
+                    # Upload the profile picture to Cloudinary
+                    result = upload(request.FILES['profile_picture'], upload_preset='ml_default')
+                    print("Cloudinary upload result:", result)
+
+                    # Save the Cloudinary URL to the user's profile
+                    user.userprofile.profile_picture = result['url']
+                    user.userprofile.save()
+                except Exception as e:
+                    print(f"Error uploading to Cloudinary: {e}")
+
+            # Update other UserProfile fields
+            user.userprofile.grade_level = form.cleaned_data.get('grade_level')
+            user.userprofile.concentration = form.cleaned_data.get('concentration')
+            user.userprofile.linkedin = form.cleaned_data.get('linkedin')
+            user.userprofile.github = form.cleaned_data.get('github')
+            user.userprofile.bio = form.cleaned_data.get('bio')
+            user.userprofile.save()  # Save the updated profile
+
+            # Authenticate and log in the user
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=password)
+
+            if user is not None:
+                print("User authenticated successfully")  # Debugging statement
+                login(request, user)
+                messages.success(request, f'Account created for {username}! You are now logged in.')
+                return redirect(reverse('profile', kwargs={'username': user.username}))  # Redirect to profile
+            else:
+                print("User authentication failed")  # Debugging statement
         else:
-            # Handle form errors
-            if any(field in form.errors for field in ['first_name', 'last_name', 'username', 'email']):
-                current_step = 1
-            elif any(field in form.errors for field in ['grade_level', 'concentration']):
-                current_step = 2
-            elif any(field in form.errors for field in ['linkedin', 'github', 'bio', 'profile_picture', 'password1', 'password2']):
-                current_step = 3
+            print(form.errors)  # Print errors for debugging
+
     else:
         form = CustomUserCreationForm()
-        current_step = 1
 
-    return render(request, 'projects/register.html', {
-        'form': form,
-        'current_step': current_step
-    })
+    return render(request, 'projects/register.html', {'form': form})
 
 # View for a single project and handling actions like rating, commenting, and joining
 @login_required

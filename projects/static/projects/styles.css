@@ -2681,6 +2681,53 @@ footer p {
     /* Behind everything */
 }
 
+.hero-buttons {
+    display: flex;
+    justify-content: center; /* Center the buttons horizontally */
+    gap: 15px; /* Space between the buttons */
+    margin-top: 20px; /* Add some spacing above the buttons */
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background-color: #007BFF; /* Primary blue color */
+    border: none;
+    border-radius: 6px;
+    text-decoration: none; /* Remove underline */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.cta-button:hover {
+    background-color: #0056b3; /* Darker blue for hover effect */
+    transform: scale(1.05); /* Slight zoom-in effect */
+}
+
+.secondary-button {
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #007BFF; /* Primary blue color for text */
+    background-color: white;
+    border: 2px solid #007BFF; /* Border matches the text color */
+    border-radius: 6px;
+    text-decoration: none; /* Remove underline */
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+}
+
+.secondary-button:hover {
+    background-color: #007BFF; /* Fill the button with blue */
+    color: white; /* Change text color to white */
+    transform: scale(1.05); /* Slight zoom-in effect */
+}
+
+
 .hero::after {
     content: "";
     position: absolute;

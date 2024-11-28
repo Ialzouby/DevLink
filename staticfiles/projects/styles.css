@@ -218,17 +218,13 @@ Line numbers are not accurate; to navigate use CMD/CTRL F and lookup the value a
 🎨 COLOR PALETTE
 ──────────────
 Brand Colors:
-  UNCC GOLD:    #a49665 │████│ Buttons, badges, primary actions
-  UNCC GREEN:   #005035 │████│ Tags, accent elements
-  DARK BG:      #343434 │████│ Main background color
-  CYAN:         #2daba6 │████│ Navigation bar
-  PURPLE:       #6571ff │████│ Secondary elements
-
   $marian-blue:         #004196ff   Navigation bar
   $caribbean-current:   #007373ff;  Tags, accent elements
   $honolulu-blue:       #0079B2ff   Secondary elements
   $bone:                #D4D6C7ff   
+  if nto white, this bk: #d4d4d4
   buttons,etc hover:    #rgb(20, 161, 161)
+  buttons hovering for green: rgb(4, 92, 92)
   $caribbean-current-2: #007677ff   Buttons, badges, primary actions 
 
 UI Colors:
@@ -270,6 +266,7 @@ Status Colors:
    1 Base Styles & Reset
    ========================================================================== */
 html,
+
 body {
     height: 100%;
     margin: 0;
@@ -300,23 +297,27 @@ h5,
 h6,
 p,
 a {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    font-family: -apple-system, "Merriweather", BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
 }
 
 h1,
 h2,
-h3 {
+h3,
+h4,
+h5 {
     font-weight: 600;
+    color:rgb(0, 0, 0)
 }
 
 p,
 a {
     font-weight: 400;
+    color:rgb(39, 19, 219)
 }
 
-.logo h1 {
+.logo h1, h2 {
     margin: 0;
-    font-size: 24px;
+    font-size: 30px;
 }
 
 /* ==========================================================================
@@ -333,7 +334,7 @@ a {
 }
 
 .nav-links a {
-    color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
     text-decoration: none;
     font-weight: bold;
     padding: 2px 2px;
@@ -362,6 +363,7 @@ a {
     font-weight: bold;
     display: inline-block;
     margin-left: 10px;
+    margin-right: 10px; 
 }
 
 .nav-buttons button:hover {
@@ -564,7 +566,7 @@ textarea::placeholder {
     margin-top: 0;
     margin-bottom: 20px;
     text-align: center;
-    color: #ffffff;
+    color: #000000;
     /* Ensures visibility on dark background */
     font-size: 1.8rem;
 }
@@ -608,7 +610,7 @@ textarea::placeholder {
     position: absolute;
     top: 90px;
     right: 0;
-    background-color: #636363;
+    background-color: #ffffff;
     min-width: 160px;
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.144);
     z-index: 1;
@@ -621,7 +623,7 @@ textarea::placeholder {
 
 .dropdown-content a:hover,
 .dropdown-content form:hover {
-    background-color: #8a7a56;
+    background-color: rgb(4, 92, 92);
 }
 
 
@@ -634,7 +636,7 @@ textarea::placeholder {
 .profile-dropdown .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #222;
+    background-color: #ffffff;
     min-width: 100px;
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
     z-index: 1;
@@ -687,7 +689,7 @@ textarea::placeholder {
 }
 
 .dropdown-button {
-    background-color: #a49665;
+    background-color: #007373ff;
     border: none;
     width: 100px;
     color: white;
@@ -699,9 +701,13 @@ textarea::placeholder {
     font-weight: bold;
     margin-top: 20px;
 }
-
+/* rgb(4, 92, 92) */
 .dropdown-button:hover {
-    background-color: #8a7a56;
+    background-color: rgb(4, 92, 92);
+    text-decoration: none;
+    transform: none;
+    color: #fff;
+    cursor: pointer;
 }
 
 /* ==========================================================================
@@ -763,7 +769,7 @@ textarea::placeholder {
     height: 100px;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid #b08d57;
+    border: 2px solid #256c81;
 }
 
 .profile-img {
@@ -788,35 +794,37 @@ textarea::placeholder {
 }
 
 .tags .tag {
-    background-color: #037304;
+    background-color: #007373ff;
     padding: 5px 10px;
     border-radius: 5px;
     margin-right: 10px;
+    font-size: small;
 }
 
 .comment-box {
-    background-color: #1b1a1a;
+    background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
     margin-bottom: 20px;
 }
 
 .comments .comment {
-    background-color: #242424;
+    background-color: #d4d4d4;
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 10px;
 }
 
 .comment p {
-    color: #929292;
+    color: #000000;
 }
 
 .comment-input {
-    background-color: #333;
+    background-color: #d4d4d4;
     padding: 20px;
     border-radius: 10px;
     margin-bottom: 20px;
+
 }
 
 .comment-input textarea {
@@ -824,8 +832,8 @@ textarea::placeholder {
     padding: 10px;
     border: none;
     border-radius: 5px;
-    background-color: #444;
-    color: white;
+    background-color: #eeeeee;
+    color: rgb(0, 0, 0);
     resize: none;
     margin-bottom: 10px;
 }
@@ -984,54 +992,6 @@ textarea::placeholder {
 }
 
 
-
-.dropdown-button {
-    background-color: #a49665;
-    /* Gold background */
-    border: none;
-    color: white;
-    width: 80%;
-    /* Set a consistent width for the buttons */
-    text-align: center;
-    /* Center-align the text */
-    padding: 10px 0;
-    /* Padding to make it look like a button */
-    border-radius: 5px;
-    /* Rounded corners */
-    text-decoration: none;
-    display: inline-block;
-    /* Ensure buttons stay inline */
-    cursor: pointer;
-    font-weight: bold;
-    /* Bold text */
-    margin: 5px 0;
-    /* Add some margin between the buttons */
-}
-
-.dropdown-button:hover {
-    background-color: #8a7a56;
-    /* Darker gold on hover */
-}
-
-/* General Dropdown Button Styling */
-.dropdown-button {
-    background-color: #a49665;
-    border: none;
-    width: 100px;
-    color: white;
-    padding: 10px 5px;
-    border-radius: 5px;
-    text-align: center;
-    display: block;
-    text-decoration: none;
-    font-weight: bold;
-    margin-top: 20px;
-}
-
-.dropdown-button:hover {
-    background-color: #8a7a56;
-}
-
 /* Ensure the navbar is responsive */
 .navbar-toggler {
     display: none;
@@ -1123,36 +1083,22 @@ textarea::placeholder {
 
 }
 
-/* Dropdown Content (Initially Hidden) */
-.notification-dropdown .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #222;
-    min-width: 500px;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
-    z-index: 1000;
-    border-radius: 8px;
-    padding: 10px;
-    top: 40px;
-    /* Adjusts space below the icon */
-    right: 0;
-    color: white;
-    transition: all 0.3s ease;
-    /* Adds smooth transition */
-    margin-right: -20px;
-}
+
 
 .notification-dropdown .dropdown-content {
     position: absolute;
-    background-color: #222;
+    background-color: #ffffff;
     min-width: 160px;
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
     z-index: 1;
-    border-radius: 5px;
-    padding: 10px;
+    border-radius: 2px;
+    padding: 6px;
     top: 30px;
     /* Ensure dropdown is below the profile image */
     right: 0;
+    transition: all 0.3s ease;
+    /* Adds smooth transition */
+    margin-right: -20px;
 }
 
 /* Show dropdown on hover */
@@ -1260,19 +1206,19 @@ textarea::placeholder {
    17 Project Components
    ========================================================================== */
 .project-description {
-    background-color: #222;
+    background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
     margin-bottom: 20px;
 }
 
 .project-description h3 {
-    color: #fff;
+    color: #000000;
     font-size: 20px;
 }
 
 .project-description p {
-    color: #ccc;
+    color: #000000;
     margin-top: 10px;
 }
 
@@ -1389,8 +1335,8 @@ textarea::placeholder {
 
 .skills-learn,
 .skills-required {
-    background-color: #212020;
-    color: #f1f1f1;
+    background-color: #ffffff;
+    color: #000000;
     padding: 20px;
     border-radius: 10px;
     width: 48%;
@@ -1406,7 +1352,6 @@ textarea::placeholder {
 .skills-learn p,
 .skills-required p {
     font-size: 1rem;
-    color: #ccc;
 }
 
 
@@ -1475,6 +1420,7 @@ textarea::placeholder {
     margin: 0;
     justify-content: flex-end;
 }
+
 
 .navbar h1 {
     font-size: 40px;
@@ -1580,7 +1526,7 @@ textarea::placeholder {
     width: 400px;
     margin: 50px auto;
     padding: 20px 30px;
-    background-color: #961e1e;
+    background-color: #ffffff;
     border-radius: 10px;
     color: #f1f1f1;
 }
@@ -1595,6 +1541,7 @@ textarea::placeholder {
 
 .form-group label {
     font-size: 16px;
+    color: #000;
 }
 
 .form-group input,
@@ -1618,11 +1565,11 @@ textarea {
     border: none;
     padding: 10px 20px;
     border-radius: 5px;
-    font-weight: bold;
+    font-weight: bold;   
 }
 
 .btn-primary:hover {
-    background-color: rgba(141, 227, 227, 0.292);
+    background-color: rgb(4, 92, 92);
 }
 
 .unique-view-btn {
@@ -1771,8 +1718,13 @@ textarea {
     /* Soften border radius */
 }
 
+.message-search {
+    background-color: #ffffff !important; /* White background */
+    color: #000000 !important; /* Black text */
+}
+
 .login-page {
-    color: white !important;
+    color: rgb(0, 0, 0) !important;
 }
 
 /* Right: Chat Container */
@@ -1868,7 +1820,7 @@ textarea {
 }
 
 .sent-message {
-    background-color: #0084ff;
+    background-color: rgb(20, 161, 161);
     color: #ffffff;
     align-self: flex-end;
     border-radius: 16px 16px 0 16px;
@@ -1884,7 +1836,7 @@ textarea {
 .message-info {
     font-size: 11px;
     /* Reduce font size */
-    color: #777;
+    color: #000;
     margin-bottom: 3px;
     /* Reduce margin */
 }
@@ -1911,7 +1863,7 @@ textarea {
 
 .message-form textarea {
     width: 100%;
-    height: 30px;
+    height: 46px;
     /* Reduce height */
     border: none;
     border-radius: 12px;
@@ -1928,14 +1880,14 @@ textarea {
 }
 
 .send-message-btn {
-    background-color: #007bff;
+    background-color: #007373ff;
     color: #ffffff;
     border: none;
-    border-radius: 16px;
+    border-radius: 5px;
     /* Soften border radius */
-    width: 36px;
+    width: 44px;
     /* Reduce size */
-    height: 36px;
+    height: 34px;
     /* Reduce size */
     margin-left: 8px;
     /* Reduce space between input and button */
@@ -1947,7 +1899,7 @@ textarea {
 }
 
 .send-message-btn:hover {
-    background-color: #0056b3;
+    background-color: rgb(20, 161, 161);
 }
 
 
@@ -1988,6 +1940,7 @@ textarea {
 /* Project Grid */
 .custom-portfolio-heading {
     color: black;
+    margin-bottom: 14px;
 }
 
 .custom-project-section {
@@ -2006,11 +1959,10 @@ textarea {
 
 /* Project Cards */
 .custom-project-card {
-    background-color: #b5b5b5;
+    background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
     text-align: center;
-    color: #fff;
     transition: transform 0.3s ease;
 }
 
@@ -2019,28 +1971,19 @@ textarea {
 }
 
 .custom-project-card h3 {
-    font-size: 1.5rem;
+    font-size: 21px;
     margin-bottom: 10px;
     color: #000;
 }
 
 .custom-project-card p {
     font-size: 1rem;
+    margin-top: 30px;
     color: #aaa;
 }
 
-.custom-project-card a {
-    display: inline-block;
-    background-color: #a49665;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
-    text-decoration: none;
-    margin-top: 10px;
-}
-
 .custom-project-card a:hover {
-    background-color: #8a7a56;
+    background-color: rgb(4, 92, 92);
 }
 
 
@@ -2189,13 +2132,14 @@ p {
    34 Buttons & Interactive Elements
    ========================================================================== */
 .join-btn {
-    background-color: #6571ff;
+    background-color: #007373ff;
     color: #fff;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-left: 20px;
+    position: relative;
+    right: 0;
 }
 
 .join-btn:hover {
@@ -2237,9 +2181,9 @@ p {
 }
 
 .custom-title {
-    font-size: 2.5rem;
+    font-size: 30px;
     font-weight: bold;
-    color: #fff;
+    color: #000000;
     margin-bottom: 20px;
     text-align: left;
 }
@@ -2290,6 +2234,7 @@ footer p {
 
 .form-group {
     margin-bottom: 15px;
+    color: #000;
 }
 
 .form-group input,
@@ -2298,8 +2243,8 @@ footer p {
     padding: 10px;
     margin-bottom: 10px;
     width: 100%;
-    background-color: #444;
-    color: white;
+    background-color: #d4d4d4;
+    color: rgb(0, 0, 0);
     border: none;
     border-radius: 5px;
 }
@@ -2307,17 +2252,6 @@ footer p {
 /* ==========================================================================
    38 BUTTONS AND INTERACTIVE ELEMENTS
    ========================================================================== */
-.btn-primary {
-    padding: 10px 30px;
-    color: white;
-    border-radius: 5px;
-    background-color: #007373ff;
-    margin-top: 20px;
-}
-
-.btn-primary:hover {
-    background-color: rgba(0, 115, 115, 0.116);
-}
 
 .github-btn {
     display: inline-block;
@@ -2370,8 +2304,6 @@ footer p {
    ========================================================================== */
 .network-page-container {
     padding: 20px;
-    background-color: #ffffff;
-    color: #ffffff;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
     min-height: 100vh;
     width: 100vw;
@@ -2383,6 +2315,7 @@ footer p {
 .network-search-bar {
     display: flex;
     justify-content: center;
+    align-items: center;
     margin-bottom: 30px;
 }
 
@@ -2390,18 +2323,16 @@ footer p {
     display: flex;
     gap: 15px;
     max-width: 80%;
-    width: 100%;
+    width: 50%;
 }
 
 .network-search-input {
-    padding: 15px;
     border-radius: 8px;
-    border: 1px solid #666666;
-    background-color: #b5b5b5 !important;
-    color: #ffffff;
+    border: none;
+    background-color: #ffffff !important;
+    color: #000 !important;
     font-size: 18px;
     width: 100%;
-    flex-grow: 1;
 }
 
 .network-search-input::placeholder {
@@ -2412,28 +2343,37 @@ footer p {
 
 .network-search-btn,
 .network-clear-btn {
-    padding: 15px 25px;
+    padding: 8px 16px;
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
     border-radius: 8px;
     background-color: #007373ff;
     color: #ffffff;
-    border: none;
-    font-size: 18px;
+    font-size: 16px;
+    font-family: "Merriweather";
+    height: 40px;
+    width: auto;
     cursor: pointer;
+    border: none;
     transition: background-color 0.3s ease;
     text-decoration: none;
 }
 
-.network-search-btn:hover,
-.network-clear-btn:hover {
-    background-color: #007373ff;
+.network-search-btn:hover {
+    background-color: rgb(4, 92, 92);
 }
 
 .network-clear-btn {
     background-color: #444;
+    align-items: center;
+    display: flex;
+    
 }
 
 .network-clear-btn:hover {
-    background-color: #666;
+    background-color: #000000;
+    text-decoration: none;
+    color: #ffffff;
 }
 
 /* ==========================================================================
@@ -2450,7 +2390,7 @@ footer p {
 }
 
 .network-user-card {
-    background-color: #b5b5b5;
+    background-color: #ffffff;
     padding: 20px;
     border-radius: 15px;
     width: 400px;
@@ -2476,7 +2416,7 @@ footer p {
 .network-username {
     font-size: 20px;
     font-weight: bold;
-    color: #ffffff;
+    color: #000000;
     margin-bottom: 5px;
 }
 
@@ -2484,7 +2424,7 @@ footer p {
 .network-user-concentration {
     font-size: 14px;
     margin: 3px 0;
-    color: #cccccc;
+    color: #000000;
 }
 
 .network-badge-section {
@@ -2559,6 +2499,7 @@ footer p {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     padding: 5px;
     border-radius: 10px;
+    font-size: 14px;
 }
 
 .network-badge.silver {
@@ -2566,13 +2507,15 @@ footer p {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     padding: 5px;
     border-radius: 10px;
+    font-size: 14px;
 }
 
 .network-badge.bronze {
-    background-color: #CD7F32;
+    background-color: #995a1b;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     padding: 5px;
     border-radius: 10px;
+    font-size: 14px;
 }
 
 /* ==========================================================================
@@ -2738,6 +2681,53 @@ footer p {
     /* Behind everything */
 }
 
+.hero-buttons {
+    display: flex;
+    justify-content: center; /* Center the buttons horizontally */
+    gap: 15px; /* Space between the buttons */
+    margin-top: 20px; /* Add some spacing above the buttons */
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background-color: #007BFF; /* Primary blue color */
+    border: none;
+    border-radius: 6px;
+    text-decoration: none; /* Remove underline */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.cta-button:hover {
+    background-color: #0056b3; /* Darker blue for hover effect */
+    transform: scale(1.05); /* Slight zoom-in effect */
+}
+
+.secondary-button {
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #007BFF; /* Primary blue color for text */
+    background-color: white;
+    border: 2px solid #007BFF; /* Border matches the text color */
+    border-radius: 6px;
+    text-decoration: none; /* Remove underline */
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+}
+
+.secondary-button:hover {
+    background-color: #007BFF; /* Fill the button with blue */
+    color: white; /* Change text color to white */
+    transform: scale(1.05); /* Slight zoom-in effect */
+}
+
+
 .hero::after {
     content: "";
     position: absolute;
@@ -2774,42 +2764,7 @@ footer p {
     line-height: 1.6;
 }
 
-.hero-buttons {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-}
 
-.cta-button {
-    background-color: #28a745;
-    color: white;
-    padding: 10px 20px;
-    font-size: 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    border: none;
-}
-
-.cta-button:hover {
-    background-color: #218838;
-}
-
-.secondary-button {
-    background: transparent;
-    color: #28a745;
-    padding: 10px 20px;
-    font-size: 1rem;
-    border: 2px solid #28a745;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.secondary-button:hover {
-    background-color: #28a745;
-    color: white;
-}
 
 /* Floating Animation */
 @keyframes float {
@@ -3011,6 +2966,24 @@ footer p {
     bottom: -100px;
     left: 20px;
     animation-delay: 3s;
+}
+
+.form-group select,
+.form-group input {
+    height: auto;
+    min-height: 38px;  /* Standard height for form controls */
+    padding: 6px 12px;
+    width: 100%;
+    line-height: 1.5;
+}
+
+/* Specifically for select elements */
+select.form-control,
+.form-group select {
+    padding: 6px 12px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 /* Animation for subtle floating effect */
@@ -3405,3 +3378,4 @@ footer p {
         /* Align it with the DevLink text */
     }
 }
+

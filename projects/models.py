@@ -78,7 +78,7 @@ class Project(models.Model):
     topic = models.CharField(max_length=100, choices=TOPIC_CHOICES) 
     birthdate = models.DateField(null=True, blank=True)
     completed = models.BooleanField(default=False)  # New field to track project completion
-
+    views = models.IntegerField(default=0)
 
 
 

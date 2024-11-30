@@ -7,9 +7,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.http import HttpResponseForbidden, JsonResponse
 from django.views.decorators.http import require_POST, require_http_methods
+from django.utils.timesince import timesince
 
 from .forms import RatingForm, CustomUserCreationForm, MessageForm, ProjectForm, UserProfileForm
-from .models import Project, Comment, UserProfile, JoinRequest, Message, User, Notification
+from .models import Project, Comment, UserProfile, JoinRequest, Message, User, Notification, Update
 
 from cloudinary.uploader import upload
 import cloudinary
@@ -80,40 +81,71 @@ def register(request):
 # View for a single project and handling actions like rating, commenting, and joining
 @login_required
 def project(request, project_id):
-    project = get_object_or_404(Project, pk=project_id)  # Fetch project or return 404
-    comments = project.comments.all().order_by('-created_at')  # Get all comments, newest first
-    join_requests = project.join_requests.filter(status='pending')  # Get pending join requests
+    project = get_object_or_404(Project, pk=project_id)
+
+    # Increment the view count
+    project.views += 1
+    project.save()
+
+    comments = project.comments.all().order_by('-created_at')
+    join_requests = project.join_requests.filter(status='pending')
+
+    # Collect updates
+    updates = list(Update.objects.filter(project=project).values('content', 'created_at'))
+
+    # Add project creation date
+    updates.append({
+        'content': "Project created",
+        'created_at': project.created_at
+    })
+
+    # Add user join events
+    for member in project.members.all():
+        updates.append({
+            'content': f"{member.username} joined the project",
+            'created_at': member.date_joined  # Assuming you have a date_joined field
+        })
+
+    # Sort updates by date
+    updates.sort(key=lambda x: x['created_at'], reverse=True)
 
     if request.method == "POST":
-        if "rating" in request.POST:  # Handle rating submission
+        if "rating" in request.POST:
             form = RatingForm(request.POST)
             if form.is_valid():
                 rating = int(form.cleaned_data['rating'])
-                project.rating = (project.rating + rating) / 2  # Update project rating
+                project.rating = (project.rating + rating) / 2
                 project.save()
                 return redirect('project', project_id=project_id)
-        elif "comment" in request.POST:  # Handle comment submission
+        elif "comment" in request.POST:
             content = request.POST.get('comment')
             if content:
-                Comment.objects.create(project=project, user=request.user, content=content)  # Create comment
+                Comment.objects.create(project=project, user=request.user, content=content)
                 return redirect('project', project_id=project_id)
-        elif "join_project" in request.POST:  # Handle join request
+        elif "join_project" in request.POST:
             if project.completed:
                 messages.error(request, "This project is completed and no longer accepting join requests.")
                 return redirect('project', project_id=project_id)
             if request.user not in project.members.all():
-                JoinRequest.objects.create(user=request.user, project=project)  # Create join request
+                JoinRequest.objects.create(user=request.user, project=project)
                 messages.success(request, "Join request sent. Awaiting approval.")
                 return redirect('project', project_id=project_id)
-        elif "approve_request" in request.POST:  # Approve a join request
+        elif "approve_request" in request.POST:
             join_request_id = request.POST.get('approve_request')
             join_request = get_object_or_404(JoinRequest, pk=join_request_id, project=project)
             join_request.status = 'approved'
             join_request.save()
-            project.members.add(join_request.user)  # Add user to project members
+            project.members.add(join_request.user)
+            
+            # Add update for user joining
+            Update.objects.create(
+                project=project,
+                content=f"{join_request.user.username} joined the project"
+            )
+            
             messages.success(request, f"{join_request.user.username} has been added to the project.")
             return redirect('project', project_id=project_id)
-        elif "reject_request" in request.POST:  # Reject a join request
+        elif "reject_request" in request.POST:
             join_request_id = request.POST.get('reject_request')
             join_request = get_object_or_404(JoinRequest, pk=join_request_id, project=project)
             join_request.status = 'rejected'
@@ -129,7 +161,8 @@ def project(request, project_id):
         'form': form,
         'is_owner': project.members.filter(pk=request.user.pk).exists(),
         'is_pending_request': is_pending_request,
-        'join_requests': join_requests if request.user == project.owner else None,  # Only for project owner
+        'join_requests': join_requests if request.user == project.owner else None,
+        'updates': updates,  # Add updates to context
     }
     return render(request, 'projects/project.html', context)
 

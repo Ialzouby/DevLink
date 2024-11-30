@@ -75,7 +75,10 @@
                     {% for comment in comments %}
                         <div class="comment">
                             <div class="comment-header">
-                                <p><strong>{{ comment.user.username }}</strong> ({{ comment.created_at|timesince }} ago)</p>
+                                <a href="{% url 'profile' comment.user.username %}">
+                                    <img src="{{ comment.user.userprofile.profile_picture|safe }}" alt="{{ comment.user.username }}" class="contributor-pic">
+                                </a>
+                                <p class="comment-username"><strong>{{ comment.user.username }}</strong> ({{ comment.created_at|timesince }} ago)</p>
                                 {% if comment.user == request.user %}
                                     <!-- Delete button for user's own comment -->
                                     <form action="{% url 'comment-delete' comment.id %}" method="post" style="display:inline;">
@@ -149,15 +152,15 @@
             {% endif %}
 
             <h4>Live Updates</h4>
-
-            <ul>
+            <ul class="live-updates-list">
                 {% for update in updates %}
-                    <li>{{ update.content }} <span>{{ update.created_at|timesince }} ago</span></li>
+                    <li class="live-update-item">
+                        {{ update.content }} <span class="update-time">{{ update.created_at|timesince }} ago</span>
+                    </li>
                 {% empty %}
-                    <li>No updates yet.</li>
+                    <li class="live-update-item">No updates yet.</li>
                 {% endfor %}
             </ul>
-
             <!-- Pending Join Requests (Visible to Project Owner) -->
             {% if join_requests %}
                 <h4>Pending Join Requests</h4>

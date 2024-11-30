@@ -820,11 +820,16 @@ textarea::placeholder {
 }
 
 .comment-input {
-    background-color: #d4d4d4;
+    background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
     margin-bottom: 20px;
 
+}
+
+.comment-header {
+    display: flex;
+    align-items: center; /* Vertically center the items */
 }
 
 .comment-input textarea {
@@ -1155,7 +1160,7 @@ textarea::placeholder {
    ========================================================================== */
 .container {
     flex: 1;
-    padding: 40px 20px;
+    padding: 20px 20px;
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
@@ -1331,6 +1336,10 @@ textarea::placeholder {
     border-radius: 10px;
     width: 48%;
     margin-bottom: 22px;
+}
+.skills-section ul {
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .skills-learn h4,
@@ -3447,5 +3456,27 @@ select.form-control,
 
 .project-delete-btn {
     background-color: #dc3545; /* Red for delete */
+}
+
+.live-updates-list {
+    list-style-type: none; /* Remove default list styling */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+}
+
+.live-update-item {
+    background-color: #f9f9f9; /* Light background for each update */
+    border: 1px solid #ddd; /* Light border */
+    border-radius: 4px; /* Rounded corners */
+    padding: 10px; /* Padding inside each item */
+    margin-bottom: 10px; /* Space between items */
+    font-size: 14px; /* Font size */
+    color: #333; /* Text color */
+}
+
+.update-time {
+    font-size: 12px; /* Smaller font for time */
+    color: #888; /* Lighter color for time */
+    float: right; /* Align time to the right */
 }
 

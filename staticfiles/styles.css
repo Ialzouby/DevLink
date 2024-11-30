@@ -2239,19 +2239,20 @@ p {
    ========================================================================== */
 footer {
     width: 100%;
-    padding: 8px;
+    padding: 10px;
     background: #004196ff !important;
-    color: #f1f1f1;
+    color: #f1f1f1!important;
     text-align: center;
-    margin-top: 15px;
+    margin-top: 10px;
     flex-shrink: 0;
     position: relative;
-    bottom: 0;
 }
 
 footer p {
-    color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255)!important;
 }
+
+
 
 /* ==========================================================================
    37 FORM COMPONENTS

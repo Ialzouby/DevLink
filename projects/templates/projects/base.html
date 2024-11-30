@@ -73,7 +73,7 @@
                                         <li id="notification-{{ notification.id }}">
                                             <div class="notification-text">
                                                 {% if notification.related_message %}
-                                                    <a href="{{ notification.get_message_thread_url }}">
+                                                    <a href="{% url 'active_conversations' %}?recipient={{ notification.related_message.sender.username }}">
                                                         {{ notification.related_message.content }}
                                                     </a>
                                                 {% endif %}

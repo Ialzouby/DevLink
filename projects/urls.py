@@ -27,6 +27,11 @@ urlpatterns = [
     path('check-username-email/', views.check_username_email, name='check_username_email'),
     path('landing/', landing_page, name='landing'),
     path('home/', views.home, name='home'),
+    path('project/<int:project_id>/toggle-status/', views.toggle_project_status, name='toggle_project_status'),
+    path('project/<int:project_id>/edit/', views.edit_project, name='edit_project'),
+
+    path('project/<int:project_id>/delete/', views.delete_project, name='delete_project'),
+
 
 ]
 

@@ -23,7 +23,7 @@
                       `"""----"""`  
 
 
-    █▀▄ █▀▀ █░█ █░░ █ █▄░█ █▄▀   █▀▀ █▀ █▀
+    █▀▄ █▀▀ █░█ █░░ █ █▄░█ █▄▀   █��▀ █▀ █▀
     █▄▀ ██▄ ▀▄▀ █▄▄ █ █░▀█ █░█   █▄▄ ▄█ ▄█
 
         ┌───────────────────────┐
@@ -175,7 +175,7 @@ Line numbers are not accurate; to navigate use CMD/CTRL F and lookup the value a
 ├─📊 PROJECT MANAGEMENT
 │  ├── 17. Project Components.....................Line 1023
 │  ├── 18. Project Search and Container...........Line 1068
-│  └── 19. Project List...........................Line 1090
+���  └── 19. Project List...........................Line 1090
 │
 ├─🎯 FEATURES & FUNCTIONALITY
 │  ├── 20. Skills Section.........................Line 1108
@@ -935,14 +935,16 @@ textarea::placeholder {
 .notification-count {
     position: absolute;
     top: -5px;
-    right: -5px;
+    right: -15px;
     background-color: red;
     color: white;
     border-radius: 50%;
     padding: 4px 4px;
     font-size: 12px;
-    margin-right: 70px;
+    margin-right: 60px;
 }
+
+
 
 .notification-list {
     list-style: none;
@@ -1070,18 +1072,6 @@ textarea::placeholder {
     vertical-align: center;
 }
 
-.notification-count {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background-color: red;
-    color: white;
-    border-radius: 50%;
-    padding: 4px 4px;
-    font-size: 12px;
-    margin-right: 70px;
-
-}
 
 
 
@@ -1439,7 +1429,7 @@ textarea::placeholder {
 .navbar-title {
     font-size: 35px;
     font-weight: normal;
-    color: #040404;
+    color: #ffffff;
     display: flex;
     font-family: "Helvetica Neue";
     align-items: center;
@@ -2038,6 +2028,8 @@ p {
     font-weight: bold;
 }
 
+
+
 /* ==========================================================================
    33 Sidebar & User Cards
    ========================================================================== */
@@ -2276,17 +2268,30 @@ footer p {
 }
 
 .github-preview {
-    width: 100%;
-    height: auto;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 1000% !important; /* Reduce width */
+    max-width: 300px !important; /* Set a smaller maximum width */
+    height: auto !important; /* Maintain aspect ratio */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    margin-bottom: 10px;
 }
-
 /* ==========================================================================
    40 TEXT STYLES AND LINKS
    ========================================================================== */
 .live-updates h4 {
     margin-top: 15px;
+}
+
+
+
+.live-updates {
+    max-width: 320px;
+    width: 100%; 
+    padding: 10px;
+    box-sizing: border-box; 
+    background-color: #ffffff !important;
+    border-radius: 10px;
+
 }
 
 .clickable-text {
@@ -3377,5 +3382,70 @@ select.form-control,
         vertical-align: middle;
         /* Align it with the DevLink text */
     }
+}
+
+.request-card {
+    border: 1px solid #ddd; /* Light border for the card */
+    border-radius: 8px; /* Rounded corners */
+    padding: 10px; /* Padding inside the card */
+    margin-bottom: 10px; /* Space between cards */
+    display: flex; /* Flexbox for alignment */
+    align-items: center; /* Center items vertically */
+    background-color: #bbb8b8; /* Light background color */
+}
+
+.contributor-pic {
+    width: 40px; /* Adjust size as needed */
+    height: 40px; /* Adjust size as needed */
+    border-radius: 50%; /* Make the image circular */
+    margin-right: 10px; /* Space between image and text */
+}
+
+.join-text {
+    color: #007bff; /* Change text color */
+    font-weight: bold; /* Make text bold */
+    margin-right: 10px; /* Space between text and buttons */
+}
+
+.approve-btn, .reject-btn {
+    background: none; /* Remove default button styling */
+    border: none; /* Remove border */
+    cursor: pointer; /* Pointer cursor on hover */
+    margin-left: 5px; /* Space between buttons */
+}
+
+.approve-btn i {
+    color: #28a745; /* Green color for approve */
+}
+
+.reject-btn i {
+    color: #dc3545; /* Red color for reject */
+}
+
+.project-button-container {
+    display: flex;
+    gap: 10px; /* Space between buttons */
+    align-items: center; /* Align items vertically */
+    margin-top: 10px;
+}
+
+.project-edit-btn,
+.project-delete-btn {
+    margin-top: 10px;
+    padding: 8px 16px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    color: white;
+}
+
+.project-edit-btn {
+    background-color: #007bff; /* Blue for edit */
+}
+
+.project-delete-btn {
+    background-color: #dc3545; /* Red for delete */
 }
 

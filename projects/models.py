@@ -26,6 +26,8 @@ class UserProfile(models.Model):
         ('Data Science', 'Data Science'),
         ('Cybersecurity', 'Cybersecurity'),
         ('Software Engineering', 'Software Engineering'),
+        ('Robotics', 'Robotics'),
+        ('Artificial Intelligence', 'Artificial Intelligence'),
     ]
 
     first_name = models.CharField(max_length=30, blank=False)
@@ -54,10 +56,13 @@ class Project(models.Model):
 
     TOPIC_CHOICES = [
         ('Web Development', 'Web Development'),
-        ('AI', 'AI'),
+        ('Software Engineering', 'Software Engineering'),
+        ('Artificial Intelligence', 'Artificial Intelligence'),
         ('Data Science', 'Data Science'),
         ('Cybersecurity', 'Cybersecurity'),
-        # Add more topics as needed
+        ('Robotics', 'Robotics'),
+        ('Game Development', 'Game Development'),
+        # Add more topics as need
     ]
         
     title = models.CharField(max_length=200)
@@ -72,6 +77,7 @@ class Project(models.Model):
     github_link = models.URLField(max_length=200)
     topic = models.CharField(max_length=100, choices=TOPIC_CHOICES) 
     birthdate = models.DateField(null=True, blank=True)
+    completed = models.BooleanField(default=False)  # New field to track project completion
 
 
 

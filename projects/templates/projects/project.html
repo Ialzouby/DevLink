@@ -1,5 +1,6 @@
 {% extends "projects/base.html" %}
 {% load custom_filters %}
+{% load static %}
 {% block title %}Forum Thread{% endblock %}
 
 {% block content %}
@@ -15,7 +16,6 @@
                 <span class="tag">Discussion</span>
             </div>
 
-            
             <div class="contributors-section">
                 <p>Contributors:</p>
                 <div class="contributors-list">
@@ -29,20 +29,9 @@
                         </a>
                     {% endfor %}
                 </div>
-                <!-- Join Project Button or Request Pending Status -->
-                {% if request.user != project.owner %}
-                    {% if not is_pending_request and request.user not in project.members.all %}
-                        <form action="" method="post">
-                            {% csrf_token %}
-                            <button type="submit" name="join_project" class="join-btn">Join Project +</button>
-                        </form>
-                    {% elif is_pending_request %}
-                        <p class="pending-message">Request Pending Approval</p>
-                    {% endif %}
-                {% endif %}
             </div>
-            
 
+            <!-- Example template snippet -->
             <p class="details">Comments: {{ comments.count }} · Views: {{ project.views }}</p>
 
             <!-- Project Description Section -->
@@ -51,59 +40,56 @@
                 <p>{{ project.description }}</p>
             </div>
 
-           <!-- Skills Section -->
-           <div class="skills-section">
-            <!-- Skills You Can Learn Block -->
-            <div class="skills-learn">
-                <h4>Skills You Can Learn:</h4>
-                <ul>
-                    {% for skill in project.skills_gained|split:"," %}
-                        <li>{{ skill }}</li>
-                    {% empty %}
-                        <li>No skills listed.</li>
-                    {% endfor %}
-                </ul>
-            </div>
+            <!-- Skills Section -->
+            <div class="skills-section">
+                <!-- Skills You Can Learn Block -->
+                <div class="skills-learn">
+                    <h4>Skills You Can Learn:</h4>
+                    <ul>
+                        {% for skill in project.skills_gained|split:"," %}
+                            <li>{{ skill }}</li>
+                        {% empty %}
+                            <li>No skills listed.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
 
-            <!-- Required Skills Block -->
-            <div class="skills-required">
-                <h4>Required Skills:</h4>
-                <ul>
-                    {% for skill in project.skill_requirements|split:"," %}
-                        <li>{{ skill }}</li>
-                    {% empty %}
-                        <li>No requirements listed.</li>
-                    {% endfor %}
-                </ul>
+                <!-- Required Skills Block -->
+                <div class="skills-required">
+                    <h4>Required Skills:</h4>
+                    <ul>
+                        {% for skill in project.skill_requirements|split:"," %}
+                            <li>{{ skill }}</li>
+                        {% empty %}
+                            <li>No requirements listed.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
             </div>
-        </div>
-
 
             <!-- Comment Box -->
             <div class="comment-box">
-                
-<!-- Display Comments -->
-<h4>Comments</h4>
-<div class="comments">
-    {% for comment in comments %}
-        <div class="comment">
-            <div class="comment-header">
-                <p><strong>{{ comment.user.username }}</strong> ({{ comment.created_at|timesince }} ago)</p>
-                {% if comment.user == request.user %}
-                    <!-- Delete button for user's own comment -->
-                    <form action="{% url 'comment-delete' comment.id %}" method="post" style="display:inline;">
-                        {% csrf_token %}
-                        <button type="submit" class="delete-btn">Delete</button>
-                    </form>
-                {% endif %}
-            </div>
-            <p>{{ comment.content }}</p>
-        </div>
-    {% empty %}
-        <p>No comments yet.</p>
-    {% endfor %}
-</div>
-
+                <!-- Display Comments -->
+                <h4>Comments</h4>
+                <div class="comments">
+                    {% for comment in comments %}
+                        <div class="comment">
+                            <div class="comment-header">
+                                <p><strong>{{ comment.user.username }}</strong> ({{ comment.created_at|timesince }} ago)</p>
+                                {% if comment.user == request.user %}
+                                    <!-- Delete button for user's own comment -->
+                                    <form action="{% url 'comment-delete' comment.id %}" method="post" style="display:inline;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="delete-btn">Delete</button>
+                                    </form>
+                                {% endif %}
+                            </div>
+                            <p>{{ comment.content }}</p>
+                        </div>
+                    {% empty %}
+                        <p>No comments yet.</p>
+                    {% endfor %}
+                </div>
 
                 <!-- Comment Input Section -->
                 <div class="comment-input">
@@ -117,48 +103,86 @@
             </div>
         </div>
 
-<!-- Right Section (Live Updates) -->
-<div class="live-updates">
-    <h4>Live Updates</h4>
-    <p>GitHub Repo Name ★★★★★</p>
+        <!-- Right Section (Live Updates) -->
+        <div class="live-updates">
 
-    <h5>GitHub Preview</h5>
-    <a href="{{ project.github_link }}" target="_blank">
-        <img src="https://api.urlbox.io/v1/hXXufaUIypyZYtri/png?url={{ project.github_link }}&thumb_width=800&quality=80">
+            <h5>GitHub Preview</h5>
+            <a href="{{ project.github_link }}" target="_blank">
+                <img src="/static/projects/images/github_view.png" alt="GitHub Preview" class="github-preview">
+            </a>
 
-    </a>
+            <!-- Move the buttons here -->
+            {% if request.user != project.owner %}
+                {% if project.completed %}
+                    <button type="button" class="join-btn" disabled>Project Closed</button>
+                {% else %}
+                    {% if not is_pending_request and request.user not in project.members.all %}
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <button type="submit" name="join_project" class="join-btn">Join Project +</button>
+                        </form>
+                    {% elif is_pending_request %}
+                    <button type="button" class="join-btn" disabled>Pending Approval </button>
+                    {% endif %}
+                {% endif %}
+            {% endif %}
 
-    <ul>
-        {% for update in updates %}
-            <li>{{ update.content }} <span>{{ update.created_at|timesince }} ago</span></li>
-        {% empty %}
-            <li>No updates yet.</li>
-        {% endfor %}
-    </ul>
+            {% if project.owner == request.user %}
+                <form method="post" action="{% url 'toggle_project_status' project.id %}">
+                    {% csrf_token %}
+                    {% if project.completed %}
+                        <button type="submit" class="join-btn">Reopen Project</button>
+                    {% else %}
+                        <button type="submit" class="join-btn">Mark as Completed</button>
+                    {% endif %}
+                </form>
+            {% endif %}
 
-    <!-- Pending Join Requests (Visible to Project Owner) -->
-    {% if join_requests %}
-        <h4>Pending Join Requests</h4>
-        <ul>
-            {% for request in join_requests %}
-                <li>
-                    {{ request.user.username }} wants to join.
-                    <form action="" method="post" style="display: inline;">
+            {% if project.owner == request.user %}
+                <div class="project-button-container">
+                    <a href="{% url 'edit_project' project.id %}" class="project-edit-btn">Edit Project</a>
+                    <form method="post" action="{% url 'delete_project' project.id %}" style="display: inline;">
                         {% csrf_token %}
-                        <button type="submit" name="approve_request" value="{{ request.id }}" class="approve-btn">
-                            <i class="fas fa-check"></i> <!-- Green Checkmark -->
-                        </button>
-                        <button type="submit" name="reject_request" value="{{ request.id }}" class="reject-btn">
-                            <i class="fas fa-times"></i> <!-- Red X -->
-                        </button>
+                        <button type="submit" class="project-delete-btn">Delete Project</button>
                     </form>
-                    
-                </li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-</div>
+                </div>
+            {% endif %}
 
+            <h4>Live Updates</h4>
 
+            <ul>
+                {% for update in updates %}
+                    <li>{{ update.content }} <span>{{ update.created_at|timesince }} ago</span></li>
+                {% empty %}
+                    <li>No updates yet.</li>
+                {% endfor %}
+            </ul>
+
+            <!-- Pending Join Requests (Visible to Project Owner) -->
+            {% if join_requests %}
+                <h4>Pending Join Requests</h4>
+                <ul>
+                    {% for request in join_requests %}
+                        <li>
+                            <div class="request-card">
+                                <a href="{% url 'profile' request.user.username %}">
+                                    <img src="{{ request.user.userprofile.profile_picture|safe }}" alt="{{ request.user.username }}" class="contributor-pic">
+                                </a>
+                                <span class="join-text">{{ request.user.username }} wants to join.</span>
+                                <form action="" method="post" style="display: inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" name="approve_request" value="{{ request.id }}" class="approve-btn">
+                                        <i class="fas fa-check"></i> <!-- Green Checkmark -->
+                                    </button>
+                                    <button type="submit" name="reject_request" value="{{ request.id }}" class="reject-btn">
+                                        <i class="fas fa-times"></i> <!-- Red X -->
+                                    </button>
+                                </form>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
     </div>
-    {% endblock %}
+{% endblock %}

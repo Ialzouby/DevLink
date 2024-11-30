@@ -98,6 +98,9 @@ def project(request, project_id):
                 Comment.objects.create(project=project, user=request.user, content=content)  # Create comment
                 return redirect('project', project_id=project_id)
         elif "join_project" in request.POST:  # Handle join request
+            if project.completed:
+                messages.error(request, "This project is completed and no longer accepting join requests.")
+                return redirect('project', project_id=project_id)
             if request.user not in project.members.all():
                 JoinRequest.objects.create(user=request.user, project=project)  # Create join request
                 messages.success(request, "Join request sent. Awaiting approval.")
@@ -133,7 +136,7 @@ def project(request, project_id):
 # Home view to display projects and topics
 def home(request, topic=None):
     # Define topics for the sidebar
-    topics = ["Web Development", "AI", "Data Science", "Cybersecurity"]  # Example topics
+    topics = [choice[0] for choice in Project.TOPIC_CHOICES]  
     # Get the search query from the URL if it exists
     q = request.GET.get('q', '')
     # If a topic is passed through the URL, filter projects based on it and the search query if present
@@ -162,6 +165,17 @@ def home(request, topic=None):
 def network(request):
     users = User.objects.all()  # Fetch all users
     return render(request, 'projects/network.html', {'users': users})
+
+
+@login_required
+def toggle_project_status(request, project_id):
+    project = get_object_or_404(Project, id=project_id, owner=request.user)
+    
+    if request.method == 'POST':
+        project.completed = not project.completed  # Toggle the completed status
+        project.save()
+        return redirect('project', project_id=project.id)
+    
 
 # Delete comment view
 @login_required
@@ -363,3 +377,29 @@ def landing_page(request):
         ]
     }
     return render(request, 'projects/landing.html', context)
+
+@login_required
+def delete_project(request, project_id):
+    project = get_object_or_404(Project, id=project_id, owner=request.user)
+    
+    if request.method == 'POST':
+        project.delete()
+        messages.success(request, 'Project deleted successfully.')
+        return redirect('home')  # Ensure 'home' is the correct name for your home page URL pattern
+
+    return render(request, 'projects/confirm_delete.html', {'project': project})
+
+@login_required
+def edit_project(request, project_id):
+    project = get_object_or_404(Project, id=project_id, owner=request.user)
+    
+    if request.method == 'POST':
+        form = ProjectForm(request.POST, instance=project)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Project updated successfully.')
+            return redirect('project', project_id=project.id)
+    else:
+        form = ProjectForm(instance=project)
+    
+    return render(request, 'projects/edit_project.html', {'form': form, 'project': project})

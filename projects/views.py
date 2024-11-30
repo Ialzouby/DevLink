@@ -436,3 +436,34 @@ def edit_project(request, project_id):
         form = ProjectForm(instance=project)
     
     return render(request, 'projects/edit_project.html', {'form': form, 'project': project})
+
+def search_users(request):
+    query = request.GET.get('q', '').strip()
+    if query:
+        users = User.objects.filter(
+            Q(username__icontains=query) | 
+            Q(first_name__icontains=query) | 
+            Q(last_name__icontains=query)
+        ).distinct()
+
+        results = [
+            {
+                'username': user.username,
+                'full_name': f"{user.first_name} {user.last_name}".strip(),
+            }
+            for user in users
+        ]
+        return JsonResponse(results, safe=False)
+
+    return JsonResponse([], safe=False)
+def message_thread_partial(request, recipient_username):
+    recipient = get_object_or_404(User, username=recipient_username)
+    messages = Message.objects.filter(
+        Q(sender=request.user, recipient=recipient) |
+        Q(sender=recipient, recipient=request.user)
+    ).order_by('timestamp')
+
+    return render(request, 'projects/message_thread_partial.html', {
+        'messages': messages,
+        'recipient': recipient,
+    })

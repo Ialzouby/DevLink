@@ -31,7 +31,8 @@ urlpatterns = [
     path('project/<int:project_id>/edit/', views.edit_project, name='edit_project'),
 
     path('project/<int:project_id>/delete/', views.delete_project, name='delete_project'),
-
+    path('search_users/', views.search_users, name='search_users'),
+    path('message-thread-partial/<str:recipient_username>/', views.message_thread_partial, name='message_thread_partial'),
 
 ]
 

@@ -23,7 +23,7 @@
                       `"""----"""`  
 
 
-    █▀▄ █▀▀ █░█ █░░ █ █▄░█ █▄▀   █��▀ █▀ █▀
+    █▀▄ █▀▀ █░█ █░░ █ █▄░█ █▄▀   █����▀ █▀ █▀
     █▄▀ ██▄ ▀▄▀ █▄▄ █ █░▀█ █░█   █▄▄ ▄█ ▄█
 
         ┌───────────────────────┐
@@ -69,7 +69,7 @@ Line numbers are not accurate; to navigate use CMD/CTRL F and lookup the value a
 │
 ├─📂 EDIT PROFILE PAGE (edit_profile.html)
 │  ├── User Interface
-│      ├── 7. Profile & User Components................Line 331
+���      ├── 7. Profile & User Components................Line 331
 │      ├── 9. Profile & User Related Styles...........Line 466
 │
 ├─📂 LOGIN PAGE (login.html)
@@ -199,7 +199,7 @@ Line numbers are not accurate; to navigate use CMD/CTRL F and lookup the value a
 │  ├── 34. Buttons & Interactive Elements.........Line 1555
 │  ├── 35. Utility Classes & Miscellaneous........Line 1580
 │  ├── 36. Footer.................................Line 1600
-│  ├── 37. Form Components........................Line 1620
+��  ├── 37. Form Components........................Line 1620
 │  ├── 38. Buttons and Interactive Elements.......Line 1645
 │  ├── 39. GitHub Preview Components..............Line 1675
 │  ├── 40. Text Styles and Links..................Line 1700
@@ -1197,6 +1197,10 @@ textarea::placeholder {
     padding: 0;
 }
 
+#search-results {
+    display: none; /* Hide the search results initially */
+}
+
 /* ==========================================================================
    17 Project Components
    ========================================================================== */
@@ -1684,38 +1688,6 @@ textarea {
     width: 100vw;
 }
 
-/* Left: Conversation List */
-.conversation-list-container {
-    flex: 1;
-    background-color: #ffffff;
-    border-radius: 6px;
-    /* Reduce the border radius */
-    padding: 15px;
-    /* Reduce the padding inside */
-    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
-    /* Soften the shadow */
-    overflow-y: auto;
-    height: 100%;
-    min-width: 0;
-}
-
-.conversation-list-container h2 {
-    font-size: 16px;
-    /* Reduce the font size */
-    color: #333;
-    margin-bottom: 10px;
-    /* Reduce the margin */
-    text-align: center;
-}
-
-.list-group-item {
-    padding: 8px;
-    /* Reduce padding for list items */
-    margin-bottom: 5px;
-    /* Reduce margin between items */
-    border-radius: 4px;
-    /* Soften border radius */
-}
 
 .message-search {
     background-color: #ffffff !important; /* White background */
@@ -1740,6 +1712,17 @@ textarea {
     overflow: hidden;
     height: 100%;
     min-width: 0;
+}
+
+
+
+@keyframes genieOpen {
+    0% {
+        transform: scale(0); /* Start from a scale of 0 (invisible) */
+    }
+    100% {
+        transform: scale(1); /* End at a scale of 1 (full size) */
+    }
 }
 
 .chat-header {
@@ -1996,6 +1979,62 @@ textarea {
     color: #fff;
     transition: transform 0.3s ease;
 }
+
+#message-thread {
+    transform-origin: bottom left; /* Set the origin for the transformation */
+    display: none; /* Initially hide the message thread */
+}
+#message-thread.animate {
+    animation: genieOpen 0.5s ease-out forwards; /* Apply the animation */
+    display: block; /* Ensure it's displayed */
+}
+
+#blank-chat-container {
+    display: block; /* Initially visible */
+}
+
+@keyframes genieOpen {
+    0% {
+        transform: scale(0); /* Start from invisible */
+        opacity: 0; /* Fully transparent */
+    }
+    100% {
+        transform: scale(1); /* Full size */
+        opacity: 1; /* Fully visible */
+    }
+}
+
+.chat-container {
+    animation: genieOpen 0.5s ease-in-out; /* Apply the animation */
+    transform-origin: top center; /* Define the origin */
+}
+
+.blank-chat-view {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    background-color: #282c34; /* Dark background for a terminal-like feel */
+    color: #61dafb; /* Light blue text color */
+    font-family: 'Courier New', Courier, monospace; /* Monospace font for a coding look */
+}
+
+.typing-effect {
+    white-space: pre; /* Preserve spaces */
+}
+
+.cursor {
+    display: inline-block;
+    width: 10px;
+    background-color: #61dafb;
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+    from, to { background-color: transparent; }
+    50% { background-color: #61dafb; }
+}
+
 
 .unique-project-item h3,
 p {
@@ -3480,3 +3519,98 @@ select.form-control,
     float: right; /* Align time to the right */
 }
 
+
+
+
+.conversation-link {
+    text-decoration: none; /* Remove underline from links */
+    color: #343a40; /* Dark text color */
+    font-weight: bold; /* Bold text for emphasis */
+    display: block; /* Make the link fill the entire list item */
+}
+
+
+/* Left: Conversation List */
+.conversation-list-container {
+    flex: 1;
+    background-color: #ffffff;
+    border-radius: 6px;
+    /* Reduce the border radius */
+    padding: 15px;
+    /* Reduce the padding inside */
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+    /* Soften the shadow */
+    overflow-y: auto;
+    height: 100%;
+    min-width: 0;
+}
+
+.list-group-item:hover {
+    background-color: #e9ecef; /* Slightly darker background on hover */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add subtle shadow on hover */
+}
+
+.conversation-list-container h2 {
+    font-size: 16px;
+    /* Reduce the font size */
+    color: #333;
+    margin-bottom: 10px;
+    /* Reduce the margin */
+    text-align: center;
+}
+
+.list-group-item {
+    padding: 8px;
+    /* Reduce padding for list items */
+    margin-bottom: 5px;
+    /* Reduce margin between items */
+    border-radius: 4px;
+    /* Soften border radius */
+}
+
+.blank-chat-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%; /* Ensure it takes the full container height only when visible */
+    color: #888;
+    font-size: 1.2rem;
+    background-color: #f9f9f9;
+    border: 1px dashed #ccc;
+    z-index: 1; /* Adjust z-index to ensure it doesn't overlap other elements */
+}
+
+.message-thread {
+    position: relative; /* Ensure the message thread has proper positioning */
+    z-index: 2; /* Keep the thread above the blank container */
+}
+
+
+.typing-animation {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5em;
+    color: #888;
+    text-align: center;
+    display: none; /* Initially hidden */
+}
+
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+#typing-text {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 3px solid;
+    animation: typing 4s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: black; }
+}

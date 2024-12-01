@@ -7,9 +7,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.http import HttpResponseForbidden, JsonResponse
 from django.views.decorators.http import require_POST, require_http_methods
+from django.utils.timesince import timesince
 
 from .forms import RatingForm, CustomUserCreationForm, MessageForm, ProjectForm, UserProfileForm
-from .models import Project, Comment, UserProfile, JoinRequest, Message, User, Notification
+from .models import Project, Comment, UserProfile, JoinRequest, Message, User, Notification, Update
 
 from cloudinary.uploader import upload
 import cloudinary
@@ -24,105 +25,127 @@ def profile(request, username):
     return render(request, 'projects/profile.html', {'profile_user': user})  # Render the profile template
 
 def register(request):
-    current_step = 1  # Start at step 1 by default
+    current_step = request.POST.get('current_step', '1')
+    current_step = int(current_step)
 
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST, request.FILES)
         if form.is_valid():
-            print("Form is valid")  # Debugging statement
-            user = form.save()
-
-            cloudinary.config(
-                cloud_name='dvah1m8du',
-                api_key='547583998667598',
-                api_secret='-hOXeuzVlg2LrLjnML7Bzm7SnHw'
-            )
-
+            # Save the User model
+            user = form.save(commit=False)
+            user.save()
+            
+            # Create and save the UserProfile
+            user_profile = UserProfile(user=user)
+            
+            # Handle additional fields
+            user_profile.grade_level = form.cleaned_data.get('grade_level')
+            user_profile.concentration = form.cleaned_data.get('concentration')
+            user_profile.linkedin = form.cleaned_data.get('linkedin')
+            user_profile.github = form.cleaned_data.get('github')
+            user_profile.bio = form.cleaned_data.get('bio')
+            
+            # Handle profile picture upload
             if 'profile_picture' in request.FILES:
                 try:
                     result = upload(request.FILES['profile_picture'], upload_preset='ml_default')
-                    print("Cloudinary upload result:", result)
-                    user.userprofile.profile_picture = result['url']
-                    user.userprofile.save()
+                    user_profile.profile_picture = result['url']
                 except Exception as e:
                     print(f"Error uploading to Cloudinary: {e}")
-
-            user.userprofile.grade_level = form.cleaned_data.get('grade_level')
-            user.userprofile.concentration = form.cleaned_data.get('concentration')
-            user.userprofile.linkedin = form.cleaned_data.get('linkedin')
-            user.userprofile.github = form.cleaned_data.get('github')
-            user.userprofile.bio = form.cleaned_data.get('bio')
-            user.userprofile.save()
-
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=password)
-
-            if user is not None:
-                print("User authenticated successfully")  # Debugging statement
-                login(request, user)
-                messages.success(request, f'Account created for {username}! You are now logged in.')
-                return redirect(reverse('profile', kwargs={'username': user.username}))
-            else:
-                print("User authentication failed")  # Debugging statement
-        else:
-            print(form.errors)  # Print errors for debugging
+                    messages.error(request, "Issue uploading the profile picture.")
             
-            # Preserve form data and set the current step for error display
+            # Save the UserProfile instance
+            user_profile.save()
+            
+            # Log the user in
+            login(request, user)
+            return redirect('home')  # Redirect to the home page or any other page
+        else:
+            # Handle form errors and set the step accordingly
             if any(field in form.errors for field in ['first_name', 'last_name', 'username', 'email']):
                 current_step = 1
             elif any(field in form.errors for field in ['grade_level', 'concentration']):
                 current_step = 2
             elif any(field in form.errors for field in ['linkedin', 'github', 'bio', 'profile_picture', 'password1', 'password2']):
                 current_step = 3
-            else:
-                current_step = 1  # Ensure it stays on the first step if no specific error is found
     else:
         form = CustomUserCreationForm()
+        current_step = 1
 
-    # Don't access form.cleaned_data in GET requests or when the form is not valid
     return render(request, 'projects/register.html', {
         'form': form,
-        'current_step': current_step,
-        'submitted_data': {} if request.method == 'GET' else request.POST
+        'current_step': current_step
     })
-
 
 
 # View for a single project and handling actions like rating, commenting, and joining
 @login_required
 def project(request, project_id):
-    project = get_object_or_404(Project, pk=project_id)  # Fetch project or return 404
-    comments = project.comments.all().order_by('-created_at')  # Get all comments, newest first
-    join_requests = project.join_requests.filter(status='pending')  # Get pending join requests
+    project = get_object_or_404(Project, pk=project_id)
+
+    # Increment the view count
+    project.views += 1
+    project.save()
+
+    comments = project.comments.all().order_by('-created_at')
+    join_requests = project.join_requests.filter(status='pending')
+
+    # Collect updates
+    updates = list(Update.objects.filter(project=project).values('content', 'created_at'))
+
+    # Add project creation date
+    updates.append({
+        'content': "Project created",
+        'created_at': project.created_at
+    })
+
+    # Add user join events
+    for member in project.members.all():
+        updates.append({
+            'content': f"{member.username} joined the project",
+            'created_at': member.date_joined  # Assuming you have a date_joined field
+        })
+
+    # Sort updates by date
+    updates.sort(key=lambda x: x['created_at'], reverse=True)
 
     if request.method == "POST":
-        if "rating" in request.POST:  # Handle rating submission
+        if "rating" in request.POST:
             form = RatingForm(request.POST)
             if form.is_valid():
                 rating = int(form.cleaned_data['rating'])
-                project.rating = (project.rating + rating) / 2  # Update project rating
+                project.rating = (project.rating + rating) / 2
                 project.save()
                 return redirect('project', project_id=project_id)
-        elif "comment" in request.POST:  # Handle comment submission
+        elif "comment" in request.POST:
             content = request.POST.get('comment')
             if content:
-                Comment.objects.create(project=project, user=request.user, content=content)  # Create comment
+                Comment.objects.create(project=project, user=request.user, content=content)
                 return redirect('project', project_id=project_id)
-        elif "join_project" in request.POST:  # Handle join request
+        elif "join_project" in request.POST:
+            if project.completed:
+                messages.error(request, "This project is completed and no longer accepting join requests.")
+                return redirect('project', project_id=project_id)
             if request.user not in project.members.all():
-                JoinRequest.objects.create(user=request.user, project=project)  # Create join request
+                JoinRequest.objects.create(user=request.user, project=project)
                 messages.success(request, "Join request sent. Awaiting approval.")
                 return redirect('project', project_id=project_id)
-        elif "approve_request" in request.POST:  # Approve a join request
+        elif "approve_request" in request.POST:
             join_request_id = request.POST.get('approve_request')
             join_request = get_object_or_404(JoinRequest, pk=join_request_id, project=project)
             join_request.status = 'approved'
             join_request.save()
-            project.members.add(join_request.user)  # Add user to project members
+            project.members.add(join_request.user)
+            
+            # Add update for user joining
+            Update.objects.create(
+                project=project,
+                content=f"{join_request.user.username} joined the project"
+            )
+            
             messages.success(request, f"{join_request.user.username} has been added to the project.")
             return redirect('project', project_id=project_id)
-        elif "reject_request" in request.POST:  # Reject a join request
+        elif "reject_request" in request.POST:
             join_request_id = request.POST.get('reject_request')
             join_request = get_object_or_404(JoinRequest, pk=join_request_id, project=project)
             join_request.status = 'rejected'
@@ -138,14 +161,15 @@ def project(request, project_id):
         'form': form,
         'is_owner': project.members.filter(pk=request.user.pk).exists(),
         'is_pending_request': is_pending_request,
-        'join_requests': join_requests if request.user == project.owner else None,  # Only for project owner
+        'join_requests': join_requests if request.user == project.owner else None,
+        'updates': updates,  # Add updates to context
     }
     return render(request, 'projects/project.html', context)
 
 # Home view to display projects and topics
 def home(request, topic=None):
     # Define topics for the sidebar
-    topics = ["Web Development", "AI", "Data Science", "Cybersecurity"]  # Example topics
+    topics = [choice[0] for choice in Project.TOPIC_CHOICES]  
     # Get the search query from the URL if it exists
     q = request.GET.get('q', '')
     # If a topic is passed through the URL, filter projects based on it and the search query if present
@@ -174,6 +198,17 @@ def home(request, topic=None):
 def network(request):
     users = User.objects.all()  # Fetch all users
     return render(request, 'projects/network.html', {'users': users})
+
+
+@login_required
+def toggle_project_status(request, project_id):
+    project = get_object_or_404(Project, id=project_id, owner=request.user)
+    
+    if request.method == 'POST':
+        project.completed = not project.completed  # Toggle the completed status
+        project.save()
+        return redirect('project', project_id=project.id)
+    
 
 # Delete comment view
 @login_required
@@ -285,6 +320,17 @@ def active_conversations(request):
 
     conversation_users = User.objects.filter(id__in=conversation_user_ids)
 
+    # Handle search functionality
+    search_query = request.GET.get('q', '').strip()
+    search_results = []
+    if search_query:
+        search_results = User.objects.filter(
+        Q(username__icontains=search_query) |
+        Q(first_name__icontains=search_query) |
+        Q(last_name__icontains=search_query)
+    ).exclude(id=request.user.id)
+
+
     recipient_username = request.GET.get('recipient')
     recipient = None
     messages = []
@@ -310,8 +356,10 @@ def active_conversations(request):
         'conversation_users': conversation_users,
         'recipient': recipient,
         'messages': messages,
-        'form': form
+        'form': form,
+        'search_results': search_results,  # Pass search results to template
     })
+
 
 # View to render notifications
 @login_required
@@ -362,3 +410,60 @@ def landing_page(request):
         ]
     }
     return render(request, 'projects/landing.html', context)
+
+@login_required
+def delete_project(request, project_id):
+    project = get_object_or_404(Project, id=project_id, owner=request.user)
+    
+    if request.method == 'POST':
+        project.delete()
+        messages.success(request, 'Project deleted successfully.')
+        return redirect('home')  # Ensure 'home' is the correct name for your home page URL pattern
+
+    return render(request, 'projects/confirm_delete.html', {'project': project})
+
+@login_required
+def edit_project(request, project_id):
+    project = get_object_or_404(Project, id=project_id, owner=request.user)
+    
+    if request.method == 'POST':
+        form = ProjectForm(request.POST, instance=project)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Project updated successfully.')
+            return redirect('project', project_id=project.id)
+    else:
+        form = ProjectForm(instance=project)
+    
+    return render(request, 'projects/edit_project.html', {'form': form, 'project': project})
+
+def search_users(request):
+    query = request.GET.get('q', '').strip()
+    if query:
+        users = User.objects.filter(
+            Q(username__icontains=query) | 
+            Q(first_name__icontains=query) | 
+            Q(last_name__icontains=query)
+        ).distinct()
+
+        results = [
+            {
+                'username': user.username,
+                'full_name': f"{user.first_name} {user.last_name}".strip(),
+            }
+            for user in users
+        ]
+        return JsonResponse(results, safe=False)
+
+    return JsonResponse([], safe=False)
+def message_thread_partial(request, recipient_username):
+    recipient = get_object_or_404(User, username=recipient_username)
+    messages = Message.objects.filter(
+        Q(sender=request.user, recipient=recipient) |
+        Q(sender=recipient, recipient=request.user)
+    ).order_by('timestamp')
+
+    return render(request, 'projects/message_thread_partial.html', {
+        'messages': messages,
+        'recipient': recipient,
+    })

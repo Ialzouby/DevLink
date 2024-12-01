@@ -78,7 +78,28 @@ class CustomUserCreationForm(UserCreationForm):
         }),
         required=False
     )
+
     profile_picture = forms.ImageField(required=True)
+
+    password1 = forms.CharField(
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Password',
+            'style': 'width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; ',
+            'id': 'password1' 
+        }),
+        required=True
+    )
+
+    password2 = forms.CharField(
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Confirm Password',
+            'style': 'width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;',
+            'id': 'password2'
+        }),
+        required=True
+    )
 
     def clean_github(self):
         github = self.cleaned_data.get('github')
@@ -91,9 +112,6 @@ class CustomUserCreationForm(UserCreationForm):
         if linkedin and not linkedin.startswith(('http://', 'https://')):
             linkedin = 'https://' + linkedin
         return linkedin
-
-
-
 
     class Meta:
         model = User

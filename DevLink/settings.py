@@ -74,7 +74,7 @@ SOCIALACCOUNT_PROVIDERS = {
 SITE_ID = 2
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',  # Default authentication
-    'allauth.account.auth_backends.AuthenticationBackend',  # allauth backend
+   # 'allauth.account.auth_backends.AuthenticationBackend',  # allauth backend
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

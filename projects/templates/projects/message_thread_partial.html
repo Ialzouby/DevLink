@@ -1,0 +1,21 @@
+<div class="message-thread">
+    {% if messages %}
+        {% for message in messages %}
+        <div class="message {% if message.sender == request.user %}sent-message{% else %}received-message{% endif %}">
+            <div class="message-info">
+                <strong>{{ message.sender.username }}</strong>
+                <small>{{ message.timestamp|date:"M d, Y H:i" }}</small>
+            </div>
+            <p>{{ message.content }}</p>
+        </div>
+        {% endfor %}
+    {% else %}
+        {% if recipient %}
+        <p>No messages yet. Start a conversation with {{ recipient.username }}!</p>
+        {% else %}
+        <div class="blank-message-thread">
+            <p>Select a conversation to start chatting!</p>
+        </div>
+        {% endif %}
+    {% endif %}
+</div>

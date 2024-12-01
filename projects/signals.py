@@ -6,13 +6,7 @@ from allauth.socialaccount.models import SocialAccount
 from django.dispatch import receiver
 from django.utils import timezone
 
-@receiver(post_save, sender=User)
-def create_or_update_user_profile(sender, instance, created, **kwargs):
-    if created:
-        UserProfile.objects.create(user=instance)
-    else:
-        UserProfile.objects.get_or_create(user=instance)  # Ensure UserProfile always exists
-        instance.userprofile.save()
+
 
 # Signal to add points when a user joins a project
 @receiver(m2m_changed, sender=Project.members.through)

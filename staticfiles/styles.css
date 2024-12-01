@@ -23,7 +23,7 @@
                       `"""----"""`  
 
 
-    █▀▄ █▀▀ █░█ █░░ █ █▄░█ █▄▀   █▀▀ █▀ █▀
+    █▀▄ █▀▀ █░█ █░░ █ █▄░█ █▄▀   █����▀ █▀ █▀
     █▄▀ ██▄ ▀▄▀ █▄▄ █ █░▀█ █░█   █▄▄ ▄█ ▄█
 
         ┌───────────────────────┐
@@ -69,7 +69,7 @@ Line numbers are not accurate; to navigate use CMD/CTRL F and lookup the value a
 │
 ├─📂 EDIT PROFILE PAGE (edit_profile.html)
 │  ├── User Interface
-│      ├── 7. Profile & User Components................Line 331
+���      ├── 7. Profile & User Components................Line 331
 │      ├── 9. Profile & User Related Styles...........Line 466
 │
 ├─📂 LOGIN PAGE (login.html)
@@ -175,7 +175,7 @@ Line numbers are not accurate; to navigate use CMD/CTRL F and lookup the value a
 ├─📊 PROJECT MANAGEMENT
 │  ├── 17. Project Components.....................Line 1023
 │  ├── 18. Project Search and Container...........Line 1068
-│  └── 19. Project List...........................Line 1090
+���  └── 19. Project List...........................Line 1090
 │
 ├─🎯 FEATURES & FUNCTIONALITY
 │  ├── 20. Skills Section.........................Line 1108
@@ -199,7 +199,7 @@ Line numbers are not accurate; to navigate use CMD/CTRL F and lookup the value a
 │  ├── 34. Buttons & Interactive Elements.........Line 1555
 │  ├── 35. Utility Classes & Miscellaneous........Line 1580
 │  ├── 36. Footer.................................Line 1600
-│  ├── 37. Form Components........................Line 1620
+��  ├── 37. Form Components........................Line 1620
 │  ├── 38. Buttons and Interactive Elements.......Line 1645
 │  ├── 39. GitHub Preview Components..............Line 1675
 │  ├── 40. Text Styles and Links..................Line 1700
@@ -820,11 +820,16 @@ textarea::placeholder {
 }
 
 .comment-input {
-    background-color: #d4d4d4;
+    background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
     margin-bottom: 20px;
 
+}
+
+.comment-header {
+    display: flex;
+    align-items: center; /* Vertically center the items */
 }
 
 .comment-input textarea {
@@ -935,14 +940,16 @@ textarea::placeholder {
 .notification-count {
     position: absolute;
     top: -5px;
-    right: -5px;
+    right: -15px;
     background-color: red;
     color: white;
     border-radius: 50%;
     padding: 4px 4px;
     font-size: 12px;
-    margin-right: 70px;
+    margin-right: 60px;
 }
+
+
 
 .notification-list {
     list-style: none;
@@ -1070,18 +1077,6 @@ textarea::placeholder {
     vertical-align: center;
 }
 
-.notification-count {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background-color: red;
-    color: white;
-    border-radius: 50%;
-    padding: 4px 4px;
-    font-size: 12px;
-    margin-right: 70px;
-
-}
 
 
 
@@ -1165,7 +1160,7 @@ textarea::placeholder {
    ========================================================================== */
 .container {
     flex: 1;
-    padding: 40px 20px;
+    padding: 20px 20px;
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
@@ -1200,6 +1195,10 @@ textarea::placeholder {
     align-items: center;
     background-color: #1a1a1a;
     padding: 0;
+}
+
+#search-results {
+    display: none; /* Hide the search results initially */
 }
 
 /* ==========================================================================
@@ -1342,6 +1341,10 @@ textarea::placeholder {
     width: 48%;
     margin-bottom: 22px;
 }
+.skills-section ul {
+    padding-left: 20px;
+    padding-right: 20px;
+}
 
 .skills-learn h4,
 .skills-required h4 {
@@ -1439,7 +1442,7 @@ textarea::placeholder {
 .navbar-title {
     font-size: 35px;
     font-weight: normal;
-    color: #040404;
+    color: #ffffff;
     display: flex;
     font-family: "Helvetica Neue";
     align-items: center;
@@ -1685,37 +1688,10 @@ textarea {
     width: 100vw;
 }
 
-/* Left: Conversation List */
-.conversation-list-container {
-    flex: 1;
-    background-color: #ffffff;
-    border-radius: 6px;
-    /* Reduce the border radius */
-    padding: 15px;
-    /* Reduce the padding inside */
-    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
-    /* Soften the shadow */
-    overflow-y: auto;
-    height: 100%;
-    min-width: 0;
-}
 
-.conversation-list-container h2 {
-    font-size: 16px;
-    /* Reduce the font size */
-    color: #333;
-    margin-bottom: 10px;
-    /* Reduce the margin */
-    text-align: center;
-}
-
-.list-group-item {
-    padding: 8px;
-    /* Reduce padding for list items */
-    margin-bottom: 5px;
-    /* Reduce margin between items */
-    border-radius: 4px;
-    /* Soften border radius */
+.message-search {
+    background-color: #ffffff !important; /* White background */
+    color: #000000 !important; /* Black text */
 }
 
 .login-page {
@@ -1736,6 +1712,17 @@ textarea {
     overflow: hidden;
     height: 100%;
     min-width: 0;
+}
+
+
+
+@keyframes genieOpen {
+    0% {
+        transform: scale(0); /* Start from a scale of 0 (invisible) */
+    }
+    100% {
+        transform: scale(1); /* End at a scale of 1 (full size) */
+    }
 }
 
 .chat-header {
@@ -1815,7 +1802,7 @@ textarea {
 }
 
 .sent-message {
-    background-color: #0084ff;
+    background-color: rgb(20, 161, 161);
     color: #ffffff;
     align-self: flex-end;
     border-radius: 16px 16px 0 16px;
@@ -1831,7 +1818,7 @@ textarea {
 .message-info {
     font-size: 11px;
     /* Reduce font size */
-    color: #777;
+    color: #000;
     margin-bottom: 3px;
     /* Reduce margin */
 }
@@ -1858,7 +1845,7 @@ textarea {
 
 .message-form textarea {
     width: 100%;
-    height: 30px;
+    height: 46px;
     /* Reduce height */
     border: none;
     border-radius: 12px;
@@ -1875,14 +1862,14 @@ textarea {
 }
 
 .send-message-btn {
-    background-color: #007bff;
+    background-color: #007373ff;
     color: #ffffff;
     border: none;
-    border-radius: 16px;
+    border-radius: 5px;
     /* Soften border radius */
-    width: 36px;
+    width: 44px;
     /* Reduce size */
-    height: 36px;
+    height: 34px;
     /* Reduce size */
     margin-left: 8px;
     /* Reduce space between input and button */
@@ -1894,7 +1881,7 @@ textarea {
 }
 
 .send-message-btn:hover {
-    background-color: #0056b3;
+    background-color: rgb(20, 161, 161);
 }
 
 
@@ -1993,6 +1980,62 @@ textarea {
     transition: transform 0.3s ease;
 }
 
+#message-thread {
+    transform-origin: bottom left; /* Set the origin for the transformation */
+    display: none; /* Initially hide the message thread */
+}
+#message-thread.animate {
+    animation: genieOpen 0.5s ease-out forwards; /* Apply the animation */
+    display: block; /* Ensure it's displayed */
+}
+
+#blank-chat-container {
+    display: block; /* Initially visible */
+}
+
+@keyframes genieOpen {
+    0% {
+        transform: scale(0); /* Start from invisible */
+        opacity: 0; /* Fully transparent */
+    }
+    100% {
+        transform: scale(1); /* Full size */
+        opacity: 1; /* Fully visible */
+    }
+}
+
+.chat-container {
+    animation: genieOpen 0.5s ease-in-out; /* Apply the animation */
+    transform-origin: top center; /* Define the origin */
+}
+
+.blank-chat-view {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    background-color: #282c34; /* Dark background for a terminal-like feel */
+    color: #61dafb; /* Light blue text color */
+    font-family: 'Courier New', Courier, monospace; /* Monospace font for a coding look */
+}
+
+.typing-effect {
+    white-space: pre; /* Preserve spaces */
+}
+
+.cursor {
+    display: inline-block;
+    width: 10px;
+    background-color: #61dafb;
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+    from, to { background-color: transparent; }
+    50% { background-color: #61dafb; }
+}
+
+
 .unique-project-item h3,
 p {
     color: black !important;
@@ -2032,6 +2075,8 @@ p {
     /* Font size for the topic text */
     font-weight: bold;
 }
+
+
 
 /* ==========================================================================
    33 Sidebar & User Cards
@@ -2194,19 +2239,20 @@ p {
    ========================================================================== */
 footer {
     width: 100%;
-    padding: 8px;
+    padding: 10px;
     background: #004196ff !important;
-    color: #f1f1f1;
+    color: #f1f1f1!important;
     text-align: center;
-    margin-top: 15px;
+    margin-top: 10px;
     flex-shrink: 0;
     position: relative;
-    bottom: 0;
 }
 
 footer p {
-    color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255)!important;
 }
+
+
 
 /* ==========================================================================
    37 FORM COMPONENTS
@@ -2271,17 +2317,30 @@ footer p {
 }
 
 .github-preview {
-    width: 100%;
-    height: auto;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 1000% !important; /* Reduce width */
+    max-width: 300px !important; /* Set a smaller maximum width */
+    height: auto !important; /* Maintain aspect ratio */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    margin-bottom: 10px;
 }
-
 /* ==========================================================================
    40 TEXT STYLES AND LINKS
    ========================================================================== */
 .live-updates h4 {
     margin-top: 15px;
+}
+
+
+
+.live-updates {
+    max-width: 320px;
+    width: 100%; 
+    padding: 10px;
+    box-sizing: border-box; 
+    background-color: #ffffff !important;
+    border-radius: 10px;
+
 }
 
 .clickable-text {
@@ -2676,6 +2735,53 @@ footer p {
     /* Behind everything */
 }
 
+.hero-buttons {
+    display: flex;
+    justify-content: center; /* Center the buttons horizontally */
+    gap: 15px; /* Space between the buttons */
+    margin-top: 20px; /* Add some spacing above the buttons */
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background-color: #007BFF; /* Primary blue color */
+    border: none;
+    border-radius: 6px;
+    text-decoration: none; /* Remove underline */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.cta-button:hover {
+    background-color: #0056b3; /* Darker blue for hover effect */
+    transform: scale(1.05); /* Slight zoom-in effect */
+}
+
+.secondary-button {
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #007BFF; /* Primary blue color for text */
+    background-color: white;
+    border: 2px solid #007BFF; /* Border matches the text color */
+    border-radius: 6px;
+    text-decoration: none; /* Remove underline */
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+}
+
+.secondary-button:hover {
+    background-color: #007BFF; /* Fill the button with blue */
+    color: white; /* Change text color to white */
+    transform: scale(1.05); /* Slight zoom-in effect */
+}
+
+
 .hero::after {
     content: "";
     position: absolute;
@@ -2914,6 +3020,24 @@ footer p {
     bottom: -100px;
     left: 20px;
     animation-delay: 3s;
+}
+
+.form-group select,
+.form-group input {
+    height: auto;
+    min-height: 38px;  /* Standard height for form controls */
+    padding: 6px 12px;
+    width: 100%;
+    line-height: 1.5;
+}
+
+/* Specifically for select elements */
+select.form-control,
+.form-group select {
+    padding: 6px 12px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 /* Animation for subtle floating effect */
@@ -3307,4 +3431,187 @@ footer p {
         vertical-align: middle;
         /* Align it with the DevLink text */
     }
+}
+
+.request-card {
+    border: 1px solid #ddd; /* Light border for the card */
+    border-radius: 8px; /* Rounded corners */
+    padding: 10px; /* Padding inside the card */
+    margin-bottom: 10px; /* Space between cards */
+    display: flex; /* Flexbox for alignment */
+    align-items: center; /* Center items vertically */
+    background-color: #bbb8b8; /* Light background color */
+}
+
+.contributor-pic {
+    width: 40px; /* Adjust size as needed */
+    height: 40px; /* Adjust size as needed */
+    border-radius: 50%; /* Make the image circular */
+    margin-right: 10px; /* Space between image and text */
+}
+
+.join-text {
+    color: #007bff; /* Change text color */
+    font-weight: bold; /* Make text bold */
+    margin-right: 10px; /* Space between text and buttons */
+}
+
+.approve-btn, .reject-btn {
+    background: none; /* Remove default button styling */
+    border: none; /* Remove border */
+    cursor: pointer; /* Pointer cursor on hover */
+    margin-left: 5px; /* Space between buttons */
+}
+
+.approve-btn i {
+    color: #28a745; /* Green color for approve */
+}
+
+.reject-btn i {
+    color: #dc3545; /* Red color for reject */
+}
+
+.project-button-container {
+    display: flex;
+    gap: 10px; /* Space between buttons */
+    align-items: center; /* Align items vertically */
+    margin-top: 10px;
+}
+
+.project-edit-btn,
+.project-delete-btn {
+    margin-top: 10px;
+    padding: 8px 16px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    color: white;
+}
+
+.project-edit-btn {
+    background-color: #007bff; /* Blue for edit */
+}
+
+.project-delete-btn {
+    background-color: #dc3545; /* Red for delete */
+}
+
+.live-updates-list {
+    list-style-type: none; /* Remove default list styling */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+}
+
+.live-update-item {
+    background-color: #f9f9f9; /* Light background for each update */
+    border: 1px solid #ddd; /* Light border */
+    border-radius: 4px; /* Rounded corners */
+    padding: 10px; /* Padding inside each item */
+    margin-bottom: 10px; /* Space between items */
+    font-size: 14px; /* Font size */
+    color: #333; /* Text color */
+}
+
+.update-time {
+    font-size: 12px; /* Smaller font for time */
+    color: #888; /* Lighter color for time */
+    float: right; /* Align time to the right */
+}
+
+
+
+
+.conversation-link {
+    text-decoration: none; /* Remove underline from links */
+    color: #343a40; /* Dark text color */
+    font-weight: bold; /* Bold text for emphasis */
+    display: block; /* Make the link fill the entire list item */
+}
+
+
+/* Left: Conversation List */
+.conversation-list-container {
+    flex: 1;
+    background-color: #ffffff;
+    border-radius: 6px;
+    /* Reduce the border radius */
+    padding: 15px;
+    /* Reduce the padding inside */
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+    /* Soften the shadow */
+    overflow-y: auto;
+    height: 100%;
+    min-width: 0;
+}
+
+.list-group-item:hover {
+    background-color: #e9ecef; /* Slightly darker background on hover */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add subtle shadow on hover */
+}
+
+.conversation-list-container h2 {
+    font-size: 16px;
+    /* Reduce the font size */
+    color: #333;
+    margin-bottom: 10px;
+    /* Reduce the margin */
+    text-align: center;
+}
+
+.list-group-item {
+    padding: 8px;
+    /* Reduce padding for list items */
+    margin-bottom: 5px;
+    /* Reduce margin between items */
+    border-radius: 4px;
+    /* Soften border radius */
+}
+
+.blank-chat-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%; /* Ensure it takes the full container height only when visible */
+    color: #888;
+    font-size: 1.2rem;
+    background-color: #f9f9f9;
+    border: 1px dashed #ccc;
+    z-index: 1; /* Adjust z-index to ensure it doesn't overlap other elements */
+}
+
+.message-thread {
+    position: relative; /* Ensure the message thread has proper positioning */
+    z-index: 2; /* Keep the thread above the blank container */
+}
+
+
+.typing-animation {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5em;
+    color: #888;
+    text-align: center;
+    display: none; /* Initially hidden */
+}
+
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+#typing-text {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 3px solid;
+    animation: typing 4s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: black; }
 }

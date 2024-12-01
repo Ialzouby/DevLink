@@ -27,7 +27,7 @@
                 </div>
                 <!-- User Info -->
                 <div class="network-user-info">
-                    <h5 class="network-username">{{ user.username }}</h5>
+                    <h5 class="network-username">{{ user.first_name }} {{ user.last_name }}</h5>
                     <p class="network-user-grade">Grade Level: {{ user.userprofile.grade_level|default_if_none:"Not available" }}</p>
                     <p class="network-user-concentration">Concentration: {{ user.userprofile.concentration|default_if_none:"Not available" }}</p>
                     <!-- Badge Section -->

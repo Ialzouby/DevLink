@@ -1,0 +1,11 @@
+{% extends "projects/base.html" %}
+
+{% block content %}
+    <h2>Edit Project: {{ project.title }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save Changes</button>
+    </form>
+    <a href="{% url 'project' project.id %}">Cancel</a>
+{% endblock %}

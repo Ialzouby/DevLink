@@ -1,15 +1,18 @@
 {% extends "projects/base.html" %}
+{% load static %}
 {% block title %}Sign Up{% endblock %}
 
 {% block content %}
-<div class="container custom-form-container mx-auto">
+<div class="container custom-form-container mx-auto" data-current-step="{{ current_step|default:1 }}">
     
     <div class="custom-form-wrapper">
         <div>
             <h2>Sign Up</h2>
         </div>
         <form class="custom-form" method="POST" action="{% url 'register' %}" enctype="multipart/form-data">
+            
             {% csrf_token %}
+            <input type="hidden" name="current_step" id="current_step" value="{{ current_step }}">
 
             {% if form.errors %}
                 <div class="alert alert-danger">
@@ -75,14 +78,28 @@
                         <label for="profile_picture">Profile Picture: <span class="astrix-required">*</span></label>
                         {{ form.profile_picture }}
                     </div>
+
+                    <!-- Implementing the visible password viewer -->
+
                     <div class="form-group">
                         <label for="password1">Password: <span class="astrix-required">*</span></label>
-                        {{ form.password1 }}
+                        <div style="display: flex; align-items: center; width: 100%;">
+                            {{ form.password1 }}
+                            <button type="button" class="toggle-password" onclick="togglePassword_a()">
+                                <i id="eye-icon1" class="fas fa-eye"></i>
+                            </button>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="password2">Confirm Password: <span class="astrix-required">*</span></label>
-                        {{ form.password2 }}
+                        <div style="display: flex; align-items: center; width: 100%;">
+                            {{ form.password2 }}
+                            <button type="button" class="toggle-password" onclick="togglePassword_b()">
+                                <i id="eye-icon2" class="fas fa-eye"></i>
+                            </button>
+                        </div>
                     </div>
+
                 </div>
             </div>
             
@@ -95,4 +112,36 @@
         </form>
     </div>
 </div>
+
+
+<script>
+    function togglePassword_a() {
+        const passwordField = document.getElementById("password1");
+        const eyeIcon = document.getElementById("eye-icon1");
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            eyeIcon.classList.remove("fa-eye");
+            eyeIcon.classList.add("fa-eye-slash");
+        } else {
+            passwordField.type = "password";
+            eyeIcon.classList.remove("fa-eye-slash");
+            eyeIcon.classList.add("fa-eye");
+        }
+    }
+
+    function togglePassword_b() {
+        const passwordField = document.getElementById("password2");
+        const eyeIcon = document.getElementById("eye-icon2");
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            eyeIcon.classList.remove("fa-eye");
+            eyeIcon.classList.add("fa-eye-slash");
+        } else {
+            passwordField.type = "password";
+            eyeIcon.classList.remove("fa-eye-slash");
+            eyeIcon.classList.add("fa-eye");
+        }
+    }
+</script>
+
 {% endblock %}

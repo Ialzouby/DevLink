@@ -27,7 +27,7 @@
             <!-- Logo and Title -->
             <a class="navbar-brand navbar-title" href="{% url 'home' %}">
                 <img src="/static/projects/images/logo.png" alt="DevLink Logo" class="navbar-logo" color="#ffff">
-                DevLink
+                DevLink |
             </a>
     
             <!-- Navbar Toggler Button (for mobile)
@@ -40,6 +40,9 @@
         <div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
             <ul class="navbar-nav nav-links align-items-">
                 {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Projects</a>
+                </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'network' %}">Network</a>
                     </li>
@@ -70,7 +73,7 @@
                                         <li id="notification-{{ notification.id }}">
                                             <div class="notification-text">
                                                 {% if notification.related_message %}
-                                                    <a href="{{ notification.get_message_thread_url }}">
+                                                    <a href="{% url 'active_conversations' %}?recipient={{ notification.related_message.sender.username }}">
                                                         {{ notification.related_message.content }}
                                                     </a>
                                                 {% endif %}

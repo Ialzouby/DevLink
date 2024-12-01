@@ -1,0 +1,2 @@
+class InvalidHeaderSignatureError(Exception):
+    pass

@@ -1,4 +1,3 @@
-// Add this function at the top of your JavaScript file
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -42,7 +41,7 @@ function prevStep() {
 
 function showStep(step) {
     console.log('Showing step:', step);
-    
+
     // Hide all steps
     const steps = document.querySelectorAll('.step');
     steps.forEach(stepElement => {
@@ -70,7 +69,7 @@ function showStep(step) {
     console.log('Button visibility updated');
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
 
 
     currentStep = parseInt(document.querySelector('.custom-form-container').dataset.currentStep) || 1;
@@ -84,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Attach delete function to notification buttons
     document.querySelectorAll(".delete-notification-btn").forEach(button => {
-        button.addEventListener("click", function() {
+        button.addEventListener("click", function () {
             const notificationId = button.getAttribute("data-id");
             deleteNotification(notificationId);
         });
@@ -99,22 +98,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 "Content-Type": "application/json"
             }
         })
-        .then(response => {
-            if (response.ok) {
-                const notificationElement = document.getElementById(`notification-${notificationId}`);
-                if (notificationElement) {
-                    notificationElement.remove();
+            .then(response => {
+                if (response.ok) {
+                    const notificationElement = document.getElementById(`notification-${notificationId}`);
+                    if (notificationElement) {
+                        notificationElement.remove();
+                    }
+                    const notificationCount = document.querySelector(".notification-count");
+                    if (notificationCount) {
+                        const currentCount = parseInt(notificationCount.textContent, 10);
+                        notificationCount.textContent = Math.max(0, currentCount - 1);
+                    }
+                } else {
+                    console.error("Failed to delete notification");
                 }
-                const notificationCount = document.querySelector(".notification-count");
-                if (notificationCount) {
-                    const currentCount = parseInt(notificationCount.textContent, 10);
-                    notificationCount.textContent = Math.max(0, currentCount - 1);
-                }
-            } else {
-                console.error("Failed to delete notification");
-            }
-        })
-        .catch(error => console.error("Error:", error));
+            })
+            .catch(error => console.error("Error:", error));
     }
 
     // Call showStep for the initial step
@@ -127,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const hiddenField = document.getElementById(hiddenFieldId);
 
         if (inputField && skillList && hiddenField) {
-            inputField.addEventListener('keypress', function(event) {
+            inputField.addEventListener('keypress', function (event) {
                 if (event.key === 'Enter') {
                     event.preventDefault();
 
@@ -155,7 +154,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Logout functionality
     const logoutButton = document.querySelector('#logout-button');
     if (logoutButton) {
-        logoutButton.addEventListener('click', function() {
+        logoutButton.addEventListener('click', function () {
             fetch('/logout/', {
                 method: 'POST',
                 headers: {
@@ -163,15 +162,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     'Content-Type': 'application/json'
                 }
             })
-            .then(response => {
-                if (response.ok) {
-                    console.log("Logged out successfully");
-                    // Redirect or update the UI as needed
-                } else {
-                    console.error("Logout failed");
-                }
-            })
-            .catch(error => console.error("Error:", error));
+                .then(response => {
+                    if (response.ok) {
+                        console.log("Logged out successfully");
+                        // Redirect or update the UI as needed
+                    } else {
+                        console.error("Logout failed");
+                    }
+                })
+                .catch(error => console.error("Error:", error));
         });
     }
 });

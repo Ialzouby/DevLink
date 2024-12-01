@@ -49,7 +49,7 @@
         <a href="{% url 'project' project.id %}" class="unique-project-item-link">
             <div class="unique-project-item">
                 <div class="project-topic">{{ project.topic }}</div> <!-- New Topic Element -->
-                <h3>{{ project.title }}</h3>
+                <h5>{{ project.title }}</h5>
                 <p>{{ project.description|truncatewords:20 }}</p>
             </div>
         </a>

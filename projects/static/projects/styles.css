@@ -479,7 +479,7 @@ textarea::placeholder {
 }
 
 .badge {
-    background-color: #a49665;
+    background-color: #007677ff;
     color: white;
     padding: 5px 10px;
     border-radius: 5px;
@@ -1264,7 +1264,7 @@ textarea::placeholder {
 }
 
 .search-btn {
-    background-color: #36454F;
+    background-color: #007373ff;
     color: white;
     padding: 10px 15px;
     border-radius: 5px;
@@ -1284,7 +1284,7 @@ textarea::placeholder {
 }
 
 .search-btn:hover {
-    background-color: #007373ff;
+    background-color: rgb(4, 92, 92);
 }
 
 .search-btn i {
@@ -2029,7 +2029,7 @@ textarea {
 }
 
 
-.unique-project-item h3,
+.unique-project-item h5,
 p {
     color: black !important;
 }
@@ -2209,13 +2209,6 @@ p {
 /* ==========================================================================
    35 Utility Classes & Miscellaneous
    ========================================================================== */
-.badge {
-    background-color: #a49665;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-weight: bold;
-}
 
 .custom-title {
     font-size: 30px;
@@ -3038,6 +3031,14 @@ select.form-control,
     overflow: hidden;
 }
 
+.form-control {
+    background-color: #d4d4d4 !important;
+    color: #333 !important; 
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+
+}
 /* Animation for subtle floating effect */
 @keyframes float {
 

@@ -76,7 +76,12 @@
                 <li>Updated profile picture</li>
                 <li>Completed a course</li>
             </ul>
+            {% if request.user != profile_user %}
+            <a href="{% url 'active_conversations' %}?recipient={{ profile_user.username }}" class="btn btn-secondary">Message {{ profile_user.username }}</a>
+            {% endif %}
         </div>
+
+
     </div>
 
     <!-- Project Grid Section -->

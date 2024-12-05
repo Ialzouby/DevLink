@@ -479,7 +479,7 @@ textarea::placeholder {
 }
 
 .badge {
-    background-color: #a49665;
+    background-color: #007677ff;
     color: white;
     padding: 5px 10px;
     border-radius: 5px;
@@ -1264,7 +1264,7 @@ textarea::placeholder {
 }
 
 .search-btn {
-    background-color: #36454F;
+    background-color: #007373ff;
     color: white;
     padding: 10px 15px;
     border-radius: 5px;
@@ -1284,7 +1284,7 @@ textarea::placeholder {
 }
 
 .search-btn:hover {
-    background-color: #007373ff;
+    background-color: rgb(4, 92, 92);
 }
 
 .search-btn i {
@@ -1466,14 +1466,11 @@ textarea::placeholder {
 /* Updated Left Sidebar */
 .unique-left-sidebar {
     background-color: #ffffff;
-    color: #d4d4d4;
+    color: #333;
     padding: 10px;
-    flex-wrap: wrap;
     border-radius: 6px;
     width: 220px;
-    /* min-height: 10px; */
-    display: flex;
-    flex-direction: column;
+    height: 65%;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.05);
 }
 
@@ -1490,7 +1487,6 @@ textarea::placeholder {
     list-style-type: none;
     padding: 0;
     margin: 0;
-    flex-grow: 1; 
 }
 
 .unique-left-sidebar li {
@@ -2213,13 +2209,6 @@ p {
 /* ==========================================================================
    35 Utility Classes & Miscellaneous
    ========================================================================== */
-.badge {
-    background-color: #a49665;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-weight: bold;
-}
 
 .custom-title {
     font-size: 30px;
@@ -2259,7 +2248,7 @@ footer p {
    37 FORM COMPONENTS
    ========================================================================== */
 .form-box {
-    background-color: #3c3c3c;
+    background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
     width: 100%;
@@ -3042,6 +3031,14 @@ select.form-control,
     overflow: hidden;
 }
 
+.form-control {
+    background-color: #d4d4d4 !important;
+    color: #333 !important; 
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+
+}
 /* Animation for subtle floating effect */
 @keyframes float {
 

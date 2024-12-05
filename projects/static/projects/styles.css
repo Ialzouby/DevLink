@@ -1187,7 +1187,6 @@ textarea::placeholder {
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    background-color: #1a1a1a;
     padding: 0;
 }
 
@@ -2248,7 +2247,7 @@ footer p {
    37 FORM COMPONENTS
    ========================================================================== */
 .form-box {
-    background-color: #3c3c3c;
+    background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
     width: 100%;
@@ -2258,7 +2257,7 @@ footer p {
 }
 
 .form-box h2 {
-    color: #fff;
+    color: #000000;
     margin-bottom: 20px;
     text-align: center;
 }

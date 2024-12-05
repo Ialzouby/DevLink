@@ -598,6 +598,16 @@ textarea::placeholder {
     object-fit: cover;
 }
 
+.custom-profile-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    width: 100%;
+}
+
+
 .dropdown-content {
     visibility: hidden;
     opacity: 0;
@@ -656,6 +666,7 @@ textarea::placeholder {
 }
 
 
+
 .profile-img {
     width: 60px;
     height: 60px;
@@ -709,14 +720,6 @@ textarea::placeholder {
    ========================================================================== */
 /* Profile Container */
 /* Profile Container */
-.custom-profile-page-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 30px;
-    width: 100%;
-}
 
 /* Styling for the Skills Section Header */
 .profile-middle-column h3 {
@@ -766,7 +769,7 @@ textarea::placeholder {
     display: flex;
     justify-content: space-between; /* Align columns horizontally */
     margin-bottom: 30px;
-    width: 100%; /* Ensure it takes full width */
+    width: 90%; /* Ensure it takes full width */
     text-align: left; /* Align text to the left for better readability */
 }
 
@@ -807,7 +810,7 @@ textarea::placeholder {
     display: flex;
     justify-content: space-between;
     margin-bottom: 30px;
-    width: 100%;
+    width: 90%;
     padding: 20px;
     background-color: #f0f0f5; /* Light background color */
     border-radius: 8px;
@@ -856,6 +859,23 @@ textarea::placeholder {
 .profile-right-column li {
     margin-bottom: 5px;
     color: #555;
+}
+
+.custom-profile-page-container *,
+.custom-profile-page-container *::before,
+.custom-profile-page-container *::after {
+    box-sizing: border-box!important;
+}
+
+.custom-profile-page-container {
+    overflow-x: hidden; /* Prevent any overflow */
+    width: 100vw; /* Ensure no element exceeds the viewport width */
+}
+
+
+/* Prevent horizontal scrolling for this specific page */
+.custom-profile-page-container {
+    overflow-x: hidden!important;
 }
 /* ==========================================================================
    10 PROFILE PICTURES AND IMAGES
@@ -1294,7 +1314,6 @@ textarea::placeholder {
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    background-color: #1a1a1a;
     padding: 0;
 }
 
@@ -2365,7 +2384,7 @@ footer p {
 }
 
 .form-box h2 {
-    color: #fff;
+    color: #000000;
     margin-bottom: 20px;
     text-align: center;
 }

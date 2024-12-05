@@ -54,6 +54,15 @@ class CustomUserCreationForm(UserCreationForm):
         }),
         required=True
     )
+    skills = forms.CharField(
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Skills (comma-separated)',
+            'style': 'width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; background-color: #333; color: #f1f1f1;'
+        }),
+        max_length=255,
+        required=False
+    )
     linkedin = forms.CharField(
         widget=forms.TextInput(attrs={
             'class': 'form-control',
@@ -116,7 +125,7 @@ class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = User
         fields = (
-            'username', 'first_name', 'last_name', 'email', 'grade_level', 'concentration', 'linkedin', 'github', 'bio', 'password1', 'password2', 'profile_picture'
+            'username', 'first_name', 'last_name', 'email', 'grade_level', 'concentration', 'skills', 'linkedin', 'github', 'bio', 'password1', 'password2', 'profile_picture'
         )
 
     #validation that user uploaded required profile picture
@@ -165,7 +174,7 @@ class ProjectForm(forms.ModelForm):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ['grade_level', 'concentration', 'linkedin', 'github', 'bio', 'profile_picture']
+        fields = ['grade_level', 'concentration', 'linkedin', 'github', 'bio', 'profile_picture', 'skills']
 
 
 class MessageForm(forms.ModelForm):

@@ -1,201 +1,78 @@
-{% extends "projects/base.html" %}
+<div class="custom-profile-page-container">
+    <!-- Profile Information Section (Three Columns) -->
+    <div class="profile-info-section">
+        
+        <!-- Left Column -->
+        <div class="profile-left-column">
+            <div class="profile-pic">
+                {% if profile_user.userprofile.profile_picture %}
+                <img src="{{ profile_user.userprofile.profile_picture|safe }}" alt="Profile Picture">
+                {% else %}
+                    <img src="https://via.placeholder.com/150" alt="Default Profile Picture">
+                {% endif %}
+            </div>
+            <p><strong>Email:</strong> {{ profile_user.email }}</p>
+            <p><strong>Grade Level:</strong> {{ profile_user.userprofile.grade_level }}</p>
+            <p><strong>Concentration:</strong> {{ profile_user.userprofile.concentration }}</p>
+        </div>
 
-{% block content %}
-<div class="chat-page-container">
-    <!-- Left: Conversation List -->
-    <div class="conversation-list-container">
-
-        <!-- Search Form -->
-        <form method="get" action="{% url 'active_conversations' %}" class="custom-search-form">
-            <input
-                type="text"
-                name="q"
-                placeholder="Search for users..."
-                class="message-search"
-                autocomplete="off"
-                value="{{ request.GET.q|default:'' }}"
-            />
-        </form>
-
-        <!-- Search Results -->
-        {% if search_results %}
-        <div class="search-results mt-3" style="display: none;">
-            <h2>Search Results</h2>
-            <ul class="list-group">
-                {% for user in search_results %}
-                <li class="list-group-item">
-                    <a href="?recipient={{ user.username }}" class="search-result-link">
-                        {{ user.get_full_name|default:user.username }}
+        <!-- Middle Column -->
+        <div class="profile-middle-column">
+            {% if profile_user.userprofile.linkedin %}
+                <p>
+                    <strong>LinkedIn:</strong>
+                    <a href="{{ profile_user.userprofile.linkedin }}" target="_blank">
+                        <i class="fab fa-linkedin"></i>
                     </a>
-                </li>
-                {% endfor %}
+                </p>
+            {% endif %}
+            
+            {% if profile_user.userprofile.github %}
+                <p>
+                    <strong>GitHub:</strong>
+                    <a href="{{ profile_user.userprofile.github }}" target="_blank">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </p>
+            {% endif %}
+            
+            {% if profile_user.userprofile.bio %}
+                <p><strong>Bio:</strong> {{ profile_user.userprofile.bio }}</p>
+            {% endif %}
+            
+            {% if skills_list %}
+                <p><strong>Skills:</strong></p>
+                <ul>
+                    {% for skill in skills_list %}
+                        <li>{{ skill }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <!-- Right Column -->
+        <div class="profile-right-column">
+            <p><strong>Points:</strong> {{ profile_user.userprofile.points }}</p>
+            <p><strong>Latest Activity:</strong></p>
+            <ul>
+                <li>Joined a new project</li>
+                <li>Updated profile picture</li>
+                <li>Completed a course</li>
             </ul>
         </div>
-        {% endif %}
-
-        <!-- Active Conversations -->
-        <h2>Your Active Conversations</h2>
-        <ul class="list-group">
-            {% for user in conversation_users %}
-            <li class="list-group-item">
-                <a href="?recipient={{ user.username }}" class="conversation-link">
-                    {{ user.first_name }} {{ user.last_name }}
-                </a>
-            </li>
-            {% endfor %}
-        </ul>
     </div>
 
-    <!-- Right: Chat Container -->
-    <div class="chat-container">
-        {% if recipient %}
-            <div class="chat-header">
-                <h2>Chat with {{ recipient.username }}</h2>
-                <button onclick="window.history.back()" class="btn btn-secondary back-to-profile-btn">Go Back</button>
-            </div>
-
-            <div class="message-thread">
-                {% for message in messages %}
-                <div class="message {% if message.sender == request.user %}sent-message{% else %}received-message{% endif %}">
-                    <div class="message-info">
-                        <strong>{{ message.sender.username }}</strong>
-                        <small>{{ message.timestamp|date:"M d, Y H:i" }}</small>
-                    </div>
-                    <p>{{ message.content }}</p>
+    <!-- Project Grid Section -->
+    <div class="custom-project-section">
+        <h3 class="custom-portfolio-heading">Portfolio</h3>
+        <div class="custom-project-grid">
+            {% for project in profile_user.owned_projects.all %}
+                <div class="custom-project-card">
+                    <h3>{{ project.title }}</h3>
+                    <p>{{ project.description|truncatewords:10 }}</p>
+                    <a href="{% url 'project' project.id %}" class="btn btn-primary">View Project</a>
                 </div>
-                {% empty %}
-                <p>No messages yet. Start a conversation with {{ recipient.username }}!</p>
-                {% endfor %}
-            </div>
-
-            <div class="message-input-container">
-                <form method="post" class="message-form">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        {{ form.content }}
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary send-message-btn">Send</button>
-                    </div>
-                </form>
-            </div>
-        {% else %}
-            <div class="unique-blank-chat-view">
-                <p><span id="unique-typing-text" class="unique-typing-effect"></span><span class="unique-cursor">.</span></p>
-            </div>
-        {% endif %}
+            {% endfor %}
+        </div>
     </div>
 </div>
-
-<style>
-    .unique-blank-chat-view {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh; /* Full viewport height */
-        background-color: #707175; /* Dark background for a terminal-like feel */
-        color: #61dafb; /* Light blue text color */
-        font-family: 'Courier New', Courier, monospace; /* Monospace font for a coding look */
-        text-align: center; /* Center text horizontally */
-    }
-
-    .unique-typing-effect {
-        white-space: pre; /* Preserve spaces */
-        font-size: 2em; /* Larger font size for better visibility */
-        font-weight: bold; /* Bold text for a more terminal-like appearance */
-    }
-
-    .unique-cursor {
-        display: inline-block;
-        width: 10px;
-        margin-left: 5px;
-        height: 20px;
-        background-color: #05f621;
-        animation: unique-blink 1s step-end infinite;
-    }
-
-    @keyframes unique-blink {
-        from, to { background-color: transparent; }
-        50% { background-color: #05f621; }
-    }
-</style>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const searchInput = document.querySelector('.message-search');
-        const searchResultsContainer = document.querySelector('.search-results');
-        const searchResultsList = searchResultsContainer?.querySelector('.list-group');
-    
-        if (searchInput) {
-            searchInput.addEventListener('input', function () {
-                const query = this.value.trim();
-    
-                if (query.length > 0) {
-                    // Show loading or clear old results
-                    if (searchResultsList) {
-                        searchResultsList.innerHTML = '<li class="list-group-item">Searching...</li>';
-                    }
-                    searchResultsContainer.style.display = 'block'; // Show the search results container
-    
-                    // Fetch search results
-                    fetch(`/search_users/?q=${encodeURIComponent(query)}`, {
-                        headers: { 'X-Requested-With': 'XMLHttpRequest' },
-                    })
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error(`HTTP error! Status: ${response.status}`);
-                            }
-                            return response.json();
-                        })
-                        .then(data => {
-                            if (searchResultsList) {
-                                searchResultsList.innerHTML = ''; // Clear current results
-    
-                                if (data.length > 0) {
-                                    // Populate the list with search results
-                                    data.forEach(user => {
-                                        const listItem = document.createElement('li');
-                                        listItem.classList.add('list-group-item');
-                                        listItem.innerHTML = `
-                                            <a href="?recipient=${user.username}" class="search-result-link">
-                                                ${user.full_name || user.username}
-                                            </a>`;
-                                        searchResultsList.appendChild(listItem);
-                                    });
-                                } else {
-                                    searchResultsList.innerHTML = '<li class="list-group-item">No users found.</li>';
-                                }
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error fetching search results:', error);
-                            if (searchResultsList) {
-                                searchResultsList.innerHTML = '<li class="list-group-item text-danger">An error occurred. Try again later.</li>';
-                            }
-                        });
-                } else {
-                    if (searchResultsList) {
-                        searchResultsList.innerHTML = ''; // Clear results if input is empty
-                    }
-                    searchResultsContainer.style.display = 'none'; // Hide the search results container
-                }
-            });
-        }
-
-        const text = "Select a conversation to start chatting!";
-        const typingTextElement = document.getElementById('unique-typing-text');
-        let index = 0;
-
-        function typeWriter() {
-            if (index < text.length) {
-                typingTextElement.innerHTML += text.charAt(index);
-                index++;
-                setTimeout(typeWriter, 100); // Adjust typing speed here
-            }
-        }
-
-        typeWriter();
-    });
-</script>
-    
-{% endblock %}

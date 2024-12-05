@@ -479,7 +479,7 @@ textarea::placeholder {
 }
 
 .badge {
-    background-color: #a49665;
+    background-color: #007677ff;
     color: white;
     padding: 5px 10px;
     border-radius: 5px;
@@ -708,6 +708,7 @@ textarea::placeholder {
    9 Profile & User Related Styles
    ========================================================================== */
 /* Profile Container */
+/* Profile Container */
 .custom-profile-page-container {
     display: flex;
     flex-direction: column;
@@ -717,14 +718,64 @@ textarea::placeholder {
     width: 100%;
 }
 
+/* Styling for the Skills Section Header */
+.profile-middle-column h3 {
+    font-size: 1.5rem;
+    color: #000; /* Black header text */
+    border-bottom: 2px solid #ccc;
+    margin-bottom: 10px;
+}
+
+/* Skills container */
+#skills-container {
+    display: flex; /* Use flexbox layout */
+    flex-wrap: wrap; /* Allow items to wrap to the next row */
+    gap: 10px; /* Add space between items */
+    justify-content: flex-start; /* Align items to the left */
+    padding: 10px 0;
+}
+
+/* Individual skill box */
+.skill-box {
+    background-color: #f1f1f1; /* Light background for rectangle */
+    color: #000; /* Black text */
+    border: 1px solid #ccc; /* Optional: Add a border */
+    border-radius: 10px; /* Rounded edges */
+    padding: 5px 10px; /* Space inside the rectangle */
+    font-size: 0.9rem; /* Adjust font size */
+    display: inline-block; /* Ensure items respect their own size */
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1); /* Optional shadow */
+}
+
+/* Responsive Layout */
+@media (max-width: 768px) {
+    #skills-container {
+        justify-content: center; /* Center items on smaller screens */
+    }
+
+    .skill-box {
+        font-size: 0.8rem; /* Slightly smaller text for smaller screens */
+    }
+}
+
+
+
+
 /* Profile Section */
 .custom-profile-section {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    justify-content: space-between; /* Align columns horizontally */
     margin-bottom: 30px;
-    text-align: center;
-    flex-direction: column;
+    width: 100%; /* Ensure it takes full width */
+    text-align: left; /* Align text to the left for better readability */
+}
+
+/* Profile Column */
+.custom-profile-column {
+    flex: 1; /* Each column takes equal space */
+    padding: 10px;
+    box-sizing: border-box;
+    text-align: center; /* Center text within each column */
 }
 
 /* Profile Picture */
@@ -750,6 +801,62 @@ textarea::placeholder {
     color: #2b2b2b;
 }
 
+
+/* Profile Information Section */
+.profile-info-section {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    width: 100%;
+    padding: 20px;
+    background-color: #f0f0f5; /* Light background color */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Left Column */
+.profile-left-column {
+    flex: 1;
+    padding: 20px;
+    text-align: center;
+}
+
+.profile-pic img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 3px solid #007bff;
+    margin-bottom: 15px;
+}
+
+/* Middle Column */
+.profile-middle-column {
+    flex: 1;
+    padding: 20px;
+    text-align: center;
+}
+
+.profile-middle-column p {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* Right Column */
+.profile-right-column {
+    flex: 1;
+    padding: 20px;
+    text-align: center;
+}
+
+.profile-right-column ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.profile-right-column li {
+    margin-bottom: 5px;
+    color: #555;
+}
 /* ==========================================================================
    10 PROFILE PICTURES AND IMAGES
    ========================================================================== */
@@ -1264,7 +1371,7 @@ textarea::placeholder {
 }
 
 .search-btn {
-    background-color: #36454F;
+    background-color: #007373ff;
     color: white;
     padding: 10px 15px;
     border-radius: 5px;
@@ -1284,7 +1391,7 @@ textarea::placeholder {
 }
 
 .search-btn:hover {
-    background-color: #007373ff;
+    background-color: rgb(4, 92, 92);
 }
 
 .search-btn i {
@@ -1466,14 +1573,11 @@ textarea::placeholder {
 /* Updated Left Sidebar */
 .unique-left-sidebar {
     background-color: #ffffff;
-    color: #d4d4d4;
+    color: #333;
     padding: 10px;
-    flex-wrap: wrap;
     border-radius: 6px;
     width: 220px;
-    /* min-height: 10px; */
-    display: flex;
-    flex-direction: column;
+    height: 65%;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.05);
 }
 
@@ -1490,7 +1594,6 @@ textarea::placeholder {
     list-style-type: none;
     padding: 0;
     margin: 0;
-    flex-grow: 1; 
 }
 
 .unique-left-sidebar li {
@@ -2213,13 +2316,6 @@ p {
 /* ==========================================================================
    35 Utility Classes & Miscellaneous
    ========================================================================== */
-.badge {
-    background-color: #a49665;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-weight: bold;
-}
 
 .custom-title {
     font-size: 30px;
@@ -2803,6 +2899,7 @@ footer p {
 
 /* Content Styling */
 .hero-content {
+    margin-top: 70px;
     z-index: 2;
     /* Ensure it's above graphics and lighting */
     max-width: 800px;
@@ -2812,12 +2909,18 @@ footer p {
 .hero h1 {
     font-size: 2.8rem;
     margin-bottom: 20px;
+    color: #fff;
+}
+
+.hero-content p{
+    color: #0ddbff!important;
 }
 
 .hero p {
     font-size: 1.5rem;
     margin-bottom: 30px;
     line-height: 1.6;
+    color: #fff;
 }
 
 
@@ -3042,6 +3145,14 @@ select.form-control,
     overflow: hidden;
 }
 
+.form-control {
+    background-color: #d4d4d4 !important;
+    color: #333 !important; 
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+
+}
 /* Animation for subtle floating effect */
 @keyframes float {
 

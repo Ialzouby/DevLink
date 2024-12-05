@@ -22,7 +22,12 @@ from .forms import CustomUserCreationForm
 # Profile view to display a user's profile
 def profile(request, username):
     user = get_object_or_404(User, username=username)  # Fetch the user by username or return 404
-    return render(request, 'projects/profile.html', {'profile_user': user})  # Render the profile template
+    user_profile = get_object_or_404(UserProfile, user=user)  # Fetch the UserProfile object
+    skills_list = user_profile.skills.split(",") if user_profile.skills else []
+    
+    return render(request, 'projects/profile.html', {'profile_user': user, 'skills_list': skills_list})  # Render the profile template
+
+
 
 def register(request):
     current_step = request.POST.get('current_step', '1')
@@ -266,6 +271,11 @@ def edit_profile(request):
                 except Exception as e:
                     print(f"Error uploading to Cloudinary: {e}")
                     messages.error(request, "Issue uploading the profile picture.")
+
+                                # Clean and format skills
+            skills = form.cleaned_data.get('skills', '')
+            user_profile.skills = ",".join(skill.strip() for skill in skills.split(",") if skill.strip())
+
             user_profile.save()  # Save profile updates
             messages.success(request, 'Your profile has been updated!')
             return redirect('profile', username=request.user.username)

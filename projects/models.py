@@ -34,14 +34,15 @@ class UserProfile(models.Model):
     last_name = models.CharField(max_length=30, blank=False)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     grade_level = models.CharField(max_length=50, choices=GRADE_LEVEL_CHOICES)
-    concentration = models.CharField(max_length=100, choices=CONCENTRATION_CHOICES)
-    linkedin = models.CharField(max_length=200, blank=True, null=True)
-    github = models.CharField(max_length=200, blank=True, null=True)
+    concentration = models.CharField(max_length=200, choices=CONCENTRATION_CHOICES)
+    linkedin = models.CharField(max_length=500, blank=True, null=True)
+    github = models.CharField(max_length=500, blank=True, null=True)
     bio = models.TextField(blank=True, null=True)
     profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True)
     profile_picture_url = models.URLField(blank=True, null=True)
     points = models.IntegerField(default=0)
     birthdate = models.DateField(null=True, blank=True)
+    skills = models.CharField(max_length=255, blank=True, null=True) 
 
     
 
@@ -68,7 +69,7 @@ class Project(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
     views = models.IntegerField(default=0)
-    rating = models.FloatField(default=0.0)  # Add a rating field (can store decimal values)
+    rating = models.FloatField(default=0.0)  
     created_at = models.DateTimeField(auto_now_add=True)
     members = models.ManyToManyField(User, related_name='joined_projects', blank=True)
     owner = models.ForeignKey(User, related_name='owned_projects', on_delete=models.CASCADE)  # New field for project owner
@@ -79,6 +80,7 @@ class Project(models.Model):
     birthdate = models.DateField(null=True, blank=True)
     completed = models.BooleanField(default=False)  # New field to track project completion
     views = models.IntegerField(default=0)
+
 
 
 

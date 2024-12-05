@@ -2,51 +2,80 @@
 
 {% block content %}
 <div class="custom-profile-page-container">
-    <!-- Profile Information Section (Outside the gray card) -->
-    <div class="custom-profile-section">
-        <!-- Profile Picture -->
-        <div class="custom-profile-pic">
-            {% if profile_user.userprofile.profile_picture %}
-            <img src="{{ profile_user.userprofile.profile_picture|safe }}" alt="Profile Picture">
-            {% else %}
-                <img src="https://via.placeholder.com/150" alt="Default Profile Picture">
-            {% endif %}
-        </div>
+    <!-- Profile Information Section (Three Columns) -->
+    <div class="profile-info-section">
+        
+        <!-- Left Column -->
+        <div class="profile-left-column">
+            <div class="profile-pic">
+                {% if profile_user.userprofile.profile_picture %}
+                <img src="{{ profile_user.userprofile.profile_picture|safe }}" alt="Profile Picture">
+                {% else %}
+                    <img src="https://via.placeholder.com/150" alt="Default Profile Picture">
+                {% endif %}
+            </div>
 
-        <!-- Profile Info -->
-        <div class="custom-profile-info">
-            <h1>{{ profile_user.first_name }} {{ profile_user.last_name }}</h1>
-            <p><strong>Email:</strong> {{ profile_user.email }}</p>
-            <p><strong>Grade Level:</strong> {{ profile_user.userprofile.grade_level }}</p>
-            <p><strong>Concentration:</strong> {{ profile_user.userprofile.concentration }}</p>
-            
-            {% if profile_user.userprofile.linkedin %}
-                <p>
-                    <strong>LinkedIn:</strong>
-                    <a href="{{ profile_user.userprofile.linkedin }}" target="_blank">
-                        <i class="fab fa-linkedin"></i> <!-- FontAwesome LinkedIn Icon -->
-                    </a>
-                </p>
-            {% endif %}
-            
-            {% if profile_user.userprofile.github %}
-                <p>
-                    <strong>GitHub:</strong>
-                    <a href="{{ profile_user.userprofile.github }}" target="_blank">
-                        <i class="fab fa-github"></i> <!-- FontAwesome GitHub Icon -->
-                    </a>
-                </p>
-            {% endif %}
+
+                        <h3>About Me</h3>
+
             
             {% if profile_user.userprofile.bio %}
                 <p><strong>Bio:</strong> {{ profile_user.userprofile.bio }}</p>
             {% endif %}
 
-            <p><strong>Points:</strong> {{ profile_user.userprofile.points }}</p>
+            <h3>Links</h3>
 
-            {% if request.user != profile_user %}
-            <a href="{% url 'active_conversations' %}?recipient={{ profile_user.username }}" class="btn btn-secondary">Message {{ profile_user.username }}</a>
-            {% endif %}
+            <div class="social-links">
+                {% if profile_user.userprofile.linkedin %}
+                    <a href="{{ profile_user.userprofile.linkedin }}" target="_blank" class="social-link">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                {% endif %}
+                
+                {% if profile_user.userprofile.github %}
+                    <a href="{{ profile_user.userprofile.github }}" target="_blank" class="social-link">
+                        <i class="fab fa-github"></i>
+                    </a>
+                {% endif %}
+            </div>
+            
+        </div>
+
+        <!-- Middle Column -->
+        <div class="profile-middle-column">
+
+
+            <p><strong>Email:</strong> {{ profile_user.email }}</p>
+            <p><strong>Grade Level:</strong> {{ profile_user.userprofile.grade_level }}</p>
+            <p><strong>Concentration:</strong> {{ profile_user.userprofile.concentration }}</p>
+
+            
+    <!-- Display skills -->
+    <h3>Skills</h3>
+
+    <div id="skills-container">
+        {% if skills_list %}
+            {% for skill in skills_list %}
+                <div class="skill-box">{{ skill }}</div>
+            {% endfor %}
+        {% else %}
+            <div class="no-skills">No skills provided.</div>
+        {% endif %}
+    </div>
+    
+    
+    
+        </div>
+
+        <!-- Right Column -->
+        <div class="profile-right-column">
+            <p><strong>Points:</strong> {{ profile_user.userprofile.points }}</p>
+            <p><strong>Latest Activity:</strong></p>
+            <ul>
+                <li>Joined a new project</li>
+                <li>Updated profile picture</li>
+                <li>Completed a course</li>
+            </ul>
         </div>
     </div>
 

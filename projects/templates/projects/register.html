@@ -57,6 +57,12 @@
                     <label for="concentration">Concentration: <span class="astrix-required">*</span></label>
                     {{ form.concentration }}
                 </div>
+
+                <div class="form-group">
+                    <label for="skills">Skills (comma-separated):</label>
+                    {{ form.skills }}
+                </div>
+                <ul id="skills-list"></ul>
             </div>
 
             <!-- Step 3 -->
@@ -142,6 +148,21 @@
             eyeIcon.classList.add("fa-eye");
         }
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const skillsInput = document.querySelector('input[name="skills"]');
+        const skillsList = document.getElementById('skills-list');
+
+        skillsInput.addEventListener('input', function() {
+            const skills = skillsInput.value.split(',').map(skill => skill.trim()).filter(skill => skill);
+            skillsList.innerHTML = '';
+            skills.forEach(skill => {
+                const li = document.createElement('li');
+                li.textContent = skill;
+                skillsList.appendChild(li);
+            });
+        });
+    });
 </script>
 
 {% endblock %}

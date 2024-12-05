@@ -15,15 +15,15 @@
                 {% endif %}
             </div>
 
-
-                        <h3>About Me</h3>
+<h1>{{ profile_user.first_name }} {{ profile_user.last_name }}</h1> 
+                        <h5>About Me</h5>
 
             
             {% if profile_user.userprofile.bio %}
                 <p><strong>Bio:</strong> {{ profile_user.userprofile.bio }}</p>
             {% endif %}
 
-            <h3>Links</h3>
+            <h5>Links</h5>
 
             <div class="social-links">
                 {% if profile_user.userprofile.linkedin %}

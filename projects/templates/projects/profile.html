@@ -19,12 +19,25 @@
             <p><strong>Email:</strong> {{ profile_user.email }}</p>
             <p><strong>Grade Level:</strong> {{ profile_user.userprofile.grade_level }}</p>
             <p><strong>Concentration:</strong> {{ profile_user.userprofile.concentration }}</p>
+            
             {% if profile_user.userprofile.linkedin %}
-                <p><strong>LinkedIn:</strong> <a href="{{ profile_user.userprofile.linkedin }}" target="_blank">{{ profile_user.userprofile.linkedin }}</a></p>
+                <p>
+                    <strong>LinkedIn:</strong>
+                    <a href="{{ profile_user.userprofile.linkedin }}" target="_blank">
+                        <i class="fab fa-linkedin"></i> <!-- FontAwesome LinkedIn Icon -->
+                    </a>
+                </p>
             {% endif %}
+            
             {% if profile_user.userprofile.github %}
-                <p><strong>GitHub:</strong> <a href="{{ profile_user.userprofile.github }}" target="_blank">{{ profile_user.userprofile.github }}</a></p>
+                <p>
+                    <strong>GitHub:</strong>
+                    <a href="{{ profile_user.userprofile.github }}" target="_blank">
+                        <i class="fab fa-github"></i> <!-- FontAwesome GitHub Icon -->
+                    </a>
+                </p>
             {% endif %}
+            
             {% if profile_user.userprofile.bio %}
                 <p><strong>Bio:</strong> {{ profile_user.userprofile.bio }}</p>
             {% endif %}
@@ -34,7 +47,6 @@
             {% if request.user != profile_user %}
             <a href="{% url 'active_conversations' %}?recipient={{ profile_user.username }}" class="btn btn-secondary">Message {{ profile_user.username }}</a>
             {% endif %}
-
         </div>
     </div>
 

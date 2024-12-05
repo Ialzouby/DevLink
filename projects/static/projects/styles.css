@@ -810,7 +810,7 @@ textarea::placeholder {
     display: flex;
     justify-content: space-between;
     margin-bottom: 30px;
-    width: 90%;
+    width: 100%;
     padding: 20px;
     background-color: #f0f0f5; /* Light background color */
     border-radius: 8px;

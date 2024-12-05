@@ -8,6 +8,8 @@ from django import forms
 from .models import Project
 import re
 from django import forms
+import os
+
 from urllib.parse import urlparse
 
 class CustomUserCreationForm(UserCreationForm):
@@ -88,7 +90,8 @@ class CustomUserCreationForm(UserCreationForm):
         required=False
     )
 
-    profile_picture = forms.ImageField(required=True)
+    profile_picture = forms.ImageField(required=True, max_length=255)
+
 
     password1 = forms.CharField(
         widget=forms.PasswordInput(attrs={
@@ -121,6 +124,7 @@ class CustomUserCreationForm(UserCreationForm):
         if linkedin and not linkedin.startswith(('http://', 'https://')):
             linkedin = 'https://' + linkedin
         return linkedin
+    
 
     class Meta:
         model = User

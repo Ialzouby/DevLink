@@ -268,22 +268,18 @@ Status Colors:
 html,
 
 body {
-    height: 100%;
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-direction: column;
     box-sizing: border-box;
-    width: 100vw;
-}
-
-body {
     background-color: #f3f2f2;
     color: #f1f1f1;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh; /* Ensure the body takes at least the full viewport height */
+    display: flex;
+    flex-direction: column;
 }
+
+
 
 /* ==========================================================================
    2 Typography
@@ -297,7 +293,8 @@ h5,
 h6,
 p,
 a {
-    font-family: -apple-system, "Merriweather", BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    font-family: "Archivo", "Helvetica Neue", Arial, sans-serif;
+ 
 }
 
 h1,
@@ -312,6 +309,7 @@ h5 {
 p,
 a {
     font-weight: 400;
+    font-size: 15.5px;
 }
 
 .logo h1, h2 {
@@ -1302,10 +1300,17 @@ textarea::placeholder {
 .page-container {
     flex: 1;
     display: flex;
-    justify-content: space-between;
+    justify-content: column;
     padding: 40px 20px;
     margin: 0 auto;
     width: 100%;
+}
+
+.page-container {
+    flex: 1; /* Allow the page container to grow and push the footer down */
+    padding: 40px 20px;
+    width: 100%;
+    margin: 0 auto;
 }
 
 .create-project-container {
@@ -1316,6 +1321,14 @@ textarea::placeholder {
     align-items: center;
     padding: 0;
 }
+
+.project-container {
+    width: 100%;
+    max-width: 850px;
+    margin: 0 auto;
+    height: 100%;
+}
+
 
 #search-results {
     display: none; /* Hide the search results initially */
@@ -1366,11 +1379,39 @@ textarea::placeholder {
 /* ==========================================================================
    18 PROJECT SEARCH AND CONTAINER
    ========================================================================== */
-.project-container {
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
+
+   .unique-project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
 }
+
+.search-and-add-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between the search form and the add-project button */
+}
+
+
+
+.add-project-btn {
+    padding: 5px;
+    background: #28a745;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 18px;
+    transition: background 0.3s ease;
+}
+
+.add-project-btn:hover {
+    background: #218838;
+}
+
 
 .project-search-bar {
     width: calc(100% - 100px);
@@ -1431,7 +1472,6 @@ textarea::placeholder {
 .unique-project-list {
     width: 60vw;
     padding: 20px;
-    height: calc(100vh - 220px);
     overflow-y: auto;
 }
 
@@ -1538,7 +1578,7 @@ textarea::placeholder {
 .navbar {
     width: 100vw;
     padding: 0px;
-    background: #004196ff !important;
+    background: rgb(65, 141, 241) !important;
     display: flex;
     margin: 0;
     justify-content: flex-end;
@@ -1596,8 +1636,8 @@ textarea::placeholder {
     padding: 10px;
     border-radius: 6px;
     width: 220px;
-    height: 65%;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.05);
+    height: 20%;
 }
 
 .unique-left-sidebar h3 {
@@ -2208,8 +2248,7 @@ p {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    min-height: 65%;
-    height: 65%;
+    height: 20%;
 }
 
 .unique-right-sidebar h3 {
@@ -2353,14 +2392,13 @@ p {
 /* ==========================================================================
    36 Footer
    ========================================================================== */
-footer {
+   footer {
     width: 100%;
     padding: 10px;
-    background: #004196ff !important;
-    color: #f1f1f1!important;
+    background: rgb(65, 141, 241);
+    color: #f1f1f1;
     text-align: center;
     margin-top: 10px;
-    flex-shrink: 0;
     position: relative;
 }
 
@@ -2488,6 +2526,12 @@ footer p {
     justify-content: center;
     align-items: center;
     margin-bottom: 30px;
+}
+
+.search-form {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
 }
 
 .network-search-form {

@@ -25,25 +25,25 @@
     
 
 <!-- Center Content for Projects -->
-<div class="unique-project-list">
 
     <!-- Wrapping container for consistent width -->
     <div class="project-container">
         <!-- Search Bar Above Header -->
-        <form method="GET" action="{% url 'home' %}" style="margin-bottom: 10px; display: flex; align-items: center;">
-            <input type="text" name="q" placeholder="Search projects..." class="project-search-bar" value="{{ request.GET.q }}">
-            <button type="submit" class="search-btn">
-                <i class="fa fa-search"></i>
-            </button>
-        </form>
-
-        <!-- Project Header with Title and Plus Button -->
         <div class="unique-project-header">
             <h2>Projects</h2>
-            <a href="{% url 'create_project' %}" class="add-project-btn">
-                <i class="fa fa-plus"></i>
-            </a>
+            <div class="search-and-add-container">
+                <form method="GET" action="{% url 'home' %}" class="search-form" style="display: flex; align-items: center;">
+                    <input type="text" name="q" placeholder="Search projects..." class="project-search-bar" value="{{ request.GET.q }}">
+                    <button type="submit" class="search-btn">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </form>
+                <a href="{% url 'create_project' %}" class="add-project-btn">
+                    <i class="fa fa-plus"></i>
+                </a>
+            </div>
         </div>
+        
 
         {% for project in projects %}
         <a href="{% url 'project' project.id %}" class="unique-project-item-link">

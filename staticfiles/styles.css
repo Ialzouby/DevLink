@@ -268,21 +268,22 @@ Status Colors:
 html,
 
 body {
-    height: 100%;
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-direction: column;
     box-sizing: border-box;
-    width: 100vw;
-}
-
-body {
     background-color: #f3f2f2;
     color: #f1f1f1;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh; /* Ensure the body takes at least the full viewport height */
+    display: flex;
+    flex-direction: column;
+}
+
+.page-container {
+    flex: 1; /* Allow the page container to grow and push the footer down */
+    padding: 40px 20px;
+    width: 100%;
+    margin: 0 auto;
 }
 
 /* ==========================================================================
@@ -297,7 +298,8 @@ h5,
 h6,
 p,
 a {
-    font-family: -apple-system, "Merriweather", BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    font-family: "Archivo", "Helvetica Neue", Arial, sans-serif;
+ 
 }
 
 h1,
@@ -312,6 +314,7 @@ h5 {
 p,
 a {
     font-weight: 400;
+    font-size: 15.5px;
 }
 
 .logo h1, h2 {
@@ -810,7 +813,7 @@ textarea::placeholder {
     display: flex;
     justify-content: space-between;
     margin-bottom: 30px;
-    width: 90%;
+    width: 100%;
     padding: 20px;
     background-color: #f0f0f5; /* Light background color */
     border-radius: 8px;
@@ -1080,7 +1083,7 @@ textarea::placeholder {
 
 .notification-list li {
     padding: 10px;
-    background-color: #444;
+    background-color: #fafafa;
     border-radius: 5px;
     display: flex;
     align-items: center;
@@ -1302,7 +1305,7 @@ textarea::placeholder {
 .page-container {
     flex: 1;
     display: flex;
-    justify-content: space-between;
+    justify-content: column;
     padding: 40px 20px;
     margin: 0 auto;
     width: 100%;
@@ -1538,7 +1541,7 @@ textarea::placeholder {
 .navbar {
     width: 100vw;
     padding: 0px;
-    background: #004196ff !important;
+    background: rgb(65, 141, 241) !important;
     display: flex;
     margin: 0;
     justify-content: flex-end;
@@ -2356,7 +2359,7 @@ p {
 footer {
     width: 100%;
     padding: 10px;
-    background: #004196ff !important;
+    background: rgb(65, 141, 241) !important;
     color: #f1f1f1!important;
     text-align: center;
     margin-top: 10px;

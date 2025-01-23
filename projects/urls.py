@@ -8,9 +8,9 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('', landing_page, name='landing'),
-    path('register/', views.register, name='register'),
+    #path('register/', views.register, name='register'),
     path('profile/<str:username>/', profile, name='profile'),
-    path('logout/', auth_views.LogoutView.as_view(template_name='projects/logout.html'), name='logout'), 
+    #path('logout/', auth_views.LogoutView.as_view(template_name='projects/logout.html'), name='logout'), 
     path('project/', views.project, name='project-list'),  # URL for listing projects (adjust if needed)
     path('project/<int:project_id>/', views.project, name='project'),  # URL for viewing a specific project
     path('comment/delete/<int:pk>/', views.delete_comment, name='comment-delete'),  # URL for deleting a comment

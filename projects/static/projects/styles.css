@@ -1414,7 +1414,6 @@ textarea::placeholder {
 
 
 .project-search-bar {
-    width: calc(100% - 100px);
     /* Adjust to make space for the button */
     padding: 8px;
     border: 1px solid #ccc;

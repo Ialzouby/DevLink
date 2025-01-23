@@ -1,5 +1,6 @@
 from pathlib import Path
 import os
+from dotenv import load_dotenv
 import dj_database_url
 import cloudinary
 import cloudinary.uploader
@@ -9,7 +10,20 @@ import cloudinary.api
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent 
 
-DATABASE_URL = "postgresql://postgres:qsaYzAIPQNssheBNrDfoJIqbGxQQWoTR@junction.proxy.rlwy.net:32147/railway"
+load_dotenv(os.path.join(BASE_DIR, '.env'))
+
+# Now retrieve secrets strictly from environment (no fallback).
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')        # If missing, this will be None and likely break your app
+GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')
+GOOGLE_CLIENT_SECRET = os.getenv('GOOGLE_CLIENT_SECRET')
+CLOUDINARY_CLOUD_NAME = os.getenv('CLOUDINARY_CLOUD_NAME')
+CLOUDINARY_API_KEY = os.getenv('CLOUDINARY_API_KEY')
+CLOUDINARY_API_SECRET = os.getenv('CLOUDINARY_API_SECRET')
+DATABASE_URL = os.getenv('DATABASE_URL')
+SITE_ID = int(os.getenv('SITE_ID'))   
+
+
+#DATABASE_URL = "postgresql://postgres:qsaYzAIPQNssheBNrDfoJIqbGxQQWoTR@junction.proxy.rlwy.net:32147/railway"
 
 LOGOUT_REDIRECT_URL = '/'
 # Redirect to the homepage after login
@@ -23,7 +37,7 @@ LOGIN_URL = '/accounts/login/'
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'b)2(07%(p#u+0w)xzg2obwkc3%cmbn&7zc--xk@*8&@boms&lf')
+# SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'b)2(07%(p#u+0w)xzg2obwkc3%cmbn&7zc--xk@*8&@boms&lf')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -39,8 +53,10 @@ ALLOWED_HOSTS = [
 
 #SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-CSRF_TRUSTED_ORIGINS = [ 'https://devlink.up.railway.app']
-
+CSRF_TRUSTED_ORIGINS = [
+    'https://devlink.up.railway.app',
+    'http://127.0.0.1:8000',
+]
 # Application definition
 
 INSTALLED_APPS = [
@@ -60,6 +76,14 @@ INSTALLED_APPS = [
     'cloudinary_storage', #important
 ]
 
+
+
+#SITE_ID = 4
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',  # Default authentication
+    'allauth.account.auth_backends.AuthenticationBackend',  # allauth backend
+]
+
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'APP': {
@@ -70,14 +94,14 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
+DATABASES = {
+    'default': dj_database_url.config(default=DATABASE_URL, conn_max_age=1800),
+}
 
-SITE_ID = 2
-AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',  # Default authentication
-   # 'allauth.account.auth_backends.AuthenticationBackend',  # allauth backend
-]
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -85,7 +109,6 @@ MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'DevLink.urls'
@@ -114,9 +137,6 @@ WSGI_APPLICATION = 'DevLink.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': dj_database_url.config(default=DATABASE_URL, conn_max_age=1800),
-}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -166,16 +186,17 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dvah1m8du',
-    'API_KEY': '547583998667598',
-    'API_SECRET': '-hOXeuzVlg2LrLjnML7Bzm7SnHw',
+    'CLOUD_NAME': CLOUDINARY_CLOUD_NAME,
+    'API_KEY': CLOUDINARY_API_KEY,
+    'API_SECRET': CLOUDINARY_API_SECRET,
 }
 
 cloudinary.config(
-    cloud_name='dvah1m8du',
-    api_key='547583998667598',
-    api_secret='-hOXeuzVlg2LrLjnML7Bzm7SnHw'
+    cloud_name=CLOUDINARY_CLOUD_NAME,
+    api_key=CLOUDINARY_API_KEY,
+    api_secret=CLOUDINARY_API_SECRET
 )
+
 
 # Media files
 MEDIA_URL = '/media/'

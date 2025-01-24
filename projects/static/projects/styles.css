@@ -1880,7 +1880,7 @@ textarea::placeholder {
     background-color: #ffffff;
     color: #333;
     padding: 10px;
-    border-radius: 6px;
+    border-radius: 5px;
     width: 220px;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.05);
     height: 20%;
@@ -2490,7 +2490,7 @@ p {
     width: 20vw;
     background-color: #ffffff;
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 5px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

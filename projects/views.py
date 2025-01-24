@@ -21,12 +21,17 @@ from .forms import CustomUserCreationForm
 
 # Profile view to display a user's profile
 def profile(request, username):
-    user = get_object_or_404(User, username=username)  # Fetch the user by username or return 404
-    user_profile = get_object_or_404(UserProfile, user=user)  # Fetch the UserProfile object
+    user = get_object_or_404(User, username=username)
+    # Ensure UserProfile exists
+    user_profile, created = UserProfile.objects.get_or_create(user=user)
     skills_list = user_profile.skills.split(",") if user_profile.skills else []
-    
-    return render(request, 'projects/profile.html', {'profile_user': user, 'skills_list': skills_list})  # Render the profile template
-
+    # Debugging: Print profile fields
+    print(f"Profile Picture: {user_profile.profile_picture}")
+    print(f"Google Picture URL: {user_profile.profile_picture_url}")
+    return render(request, 'projects/profile.html', {
+        'profile_user': user,
+        'skills_list': skills_list,
+    })
 
 
 def register(request):
@@ -61,6 +66,9 @@ def register(request):
             
             # Save the UserProfile instance
             user_profile.save()
+
+            user.backend = 'django.contrib.auth.backends.ModelBackend'
+
             
             # Log the user in
             login(request, user)
@@ -256,32 +264,49 @@ def network(request):
         users = User.objects.all().order_by('-userprofile__points')  # Order users by points
     return render(request, 'projects/network.html', {'users': users})
 
-# View to edit a user's profile
 @login_required
 def edit_profile(request):
+    # Fetch the user's profile
+    user_profile = request.user.userprofile
+
     if request.method == 'POST':
-        form = UserProfileForm(request.POST, request.FILES, instance=request.user.userprofile)
+        # Pass the user's profile instance to the form
+        form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
+
         if form.is_valid():
+            # Save the profile instance without committing to allow modifications
             user_profile = form.save(commit=False)
-            if 'profile_picture' in request.FILES:  # Check for new profile picture
+
+            # Handle profile picture upload
+            if 'profile_picture' in request.FILES:
                 try:
+                    # Upload the file to Cloudinary
                     result = upload(request.FILES['profile_picture'], upload_preset='ml_default')
                     print("Cloudinary upload result:", result)
                     user_profile.profile_picture = result['url']
                 except Exception as e:
                     print(f"Error uploading to Cloudinary: {e}")
-                    messages.error(request, "Issue uploading the profile picture.")
+                    messages.error(request, "There was an issue uploading your profile picture. Please try again.")
 
-                                # Clean and format skills
+            # Clean and save the skills field
             skills = form.cleaned_data.get('skills', '')
             user_profile.skills = ",".join(skill.strip() for skill in skills.split(",") if skill.strip())
 
-            user_profile.save()  # Save profile updates
-            messages.success(request, 'Your profile has been updated!')
+            # Save the updated profile
+            user_profile.save()
+
+            # Display a success message and redirect the user
+            messages.success(request, 'Your profile has been updated successfully.')
             return redirect('profile', username=request.user.username)
+        else:
+            messages.error(request, "Please correct the errors below.")
     else:
-        form = UserProfileForm(instance=request.user.userprofile)
+        # Prepopulate the form with the user's existing profile data
+        form = UserProfileForm(instance=user_profile)
+
+    # Render the edit profile template
     return render(request, 'projects/edit_profile.html', {'form': form})
+
 
 # Message thread view for private messaging
 from django.shortcuts import get_object_or_404

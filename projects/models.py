@@ -44,7 +44,18 @@ class UserProfile(models.Model):
     birthdate = models.DateField(null=True, blank=True)
     skills = models.CharField(max_length=255, blank=True, null=True) 
 
-    
+    def is_complete(self):
+        required_fields = [
+
+            self.grade_level,
+            self.concentration,
+            self.bio,
+        ]
+        profile_picture_exists = self.profile_picture or self.profile_picture_url
+
+    # Return True only if all required fields are filled and a profile picture exists
+        return all(required_fields) and profile_picture_exists
+
 
 
     def __str__(self):

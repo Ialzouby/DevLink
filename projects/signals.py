@@ -5,9 +5,34 @@ from allauth.socialaccount.signals import social_account_added
 from allauth.socialaccount.models import SocialAccount
 from django.dispatch import receiver
 from django.utils import timezone
+from allauth.socialaccount.signals import social_account_added, social_account_updated
+from django.dispatch import receiver
+from django.core.files.base import ContentFile
+from .models import UserProfile
+from cloudinary.uploader import upload
+from django.dispatch import receiver
+from django.shortcuts import redirect
+from allauth.socialaccount.signals import social_account_added
+import requests
 
 
+from django.dispatch import receiver
+from django.shortcuts import redirect
+from allauth.socialaccount.signals import social_account_added, social_account_updated
 
+@receiver(social_account_added)
+@receiver(social_account_updated)
+def handle_social_account(sender, request, sociallogin, **kwargs):
+    if sociallogin.account.provider == 'google':
+        user = sociallogin.user
+        
+        # Check if the profile is incomplete
+        if not hasattr(user, 'userprofile') or not user.userprofile.first_name or not user.userprofile.last_name:
+            # Ensure a UserProfile exists
+            profile, created = UserProfile.objects.get_or_create(user=user)
+            if not profile.first_name or not profile.last_name:
+                # Redirect to the edit profile page for completion
+                return redirect('edit_profile')  # Replace with your edit profile URL name
 # Signal to add points when a user joins a project
 @receiver(m2m_changed, sender=Project.members.through)
 def update_points_on_project_joining(sender, instance, action, pk_set, **kwargs):
@@ -65,5 +90,4 @@ def notify_project_owner_on_join_request(sender, instance, created, **kwargs):
             timestamp=timezone.now(),
             content=f"{user_requesting.username} has requested to join your project '{instance.project.title}'"
         )
-
 

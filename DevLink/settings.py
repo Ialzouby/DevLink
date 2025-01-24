@@ -5,6 +5,8 @@ import dj_database_url
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+import logging
+logging.basicConfig(level=logging.DEBUG)
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -101,6 +103,9 @@ MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'projects.middleware.ProfileCompletionMiddleware',
+
 ]
 
 ROOT_URLCONF = 'DevLink.urls'

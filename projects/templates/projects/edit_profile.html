@@ -15,25 +15,25 @@
                 <div class="form-column">
                     <!-- Grade Level Field -->
                     <div class="form-group mb-3">
-                        <label for="id_grade_level">Grade Level:</label>
+                        <label for="id_grade_level">*Grade Level:</label>
                         {{ form.grade_level }}
                     </div>
 
                     <!-- Concentration Field -->
                     <div class="form-group mb-3">
-                        <label for="id_concentration">Concentration:</label>
+                        <label for="id_concentration">*Concentration:</label>
                         {{ form.concentration }}
                     </div>
 
                     <!-- LinkedIn Field -->
                     <div class="form-group mb-3">
-                        <label for="id_linkedin">LinkedIn:</label>
+                        <label for="id_linkedin">*LinkedIn:</label>
                         <input type="url" name="linkedin" id="id_linkedin" class="form-control" value="{{ form.linkedin.value }}">
                     </div>
 
                     <!-- GitHub Field -->
                     <div class="form-group mb-3">
-                        <label for="id_github">GitHub:</label>
+                        <label for="id_github">*GitHub:</label>
                         <input type="url" name="github" id="id_github" class="form-control" value="{{ form.github.value }}">
                     </div>
                 </div>
@@ -43,7 +43,7 @@
                 <div class="form-column">
                     <!-- Bio Field -->
                     <div class="form-group mb-3">
-                        <label for="id_bio">Bio:</label>
+                        <label for="id_bio">*Bio:</label>
                         <textarea name="bio" id="id_bio" class="form-control" rows="5">{{ form.bio.value }}</textarea>
                     </div>
 
@@ -55,7 +55,7 @@
                 
                     <!-- Profile Picture Field -->
                     <div class="form-group mb-3">
-                        <label for="id_profile_picture">Profile Picture:</label>
+                        <label for="id_profile_picture">*Profile Picture:</label>
                         <input type="file" name="profile_picture" id="id_profile_picture" class="form-control">
                     </div>
                 

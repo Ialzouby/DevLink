@@ -19,20 +19,16 @@ import requests
 from django.dispatch import receiver
 from django.shortcuts import redirect
 from allauth.socialaccount.signals import social_account_added, social_account_updated
+from django.contrib.auth import get_user_model
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from .models import UserProfile
 
-@receiver(social_account_added)
-@receiver(social_account_updated)
-def handle_social_account(sender, request, sociallogin, **kwargs):
-    if sociallogin.account.provider == 'google':
-        user = sociallogin.user
-        
-        # Check if the profile is incomplete
-        if not hasattr(user, 'userprofile') or not user.userprofile.first_name or not user.userprofile.last_name:
-            # Ensure a UserProfile exists
-            profile, created = UserProfile.objects.get_or_create(user=user)
-            if not profile.first_name or not profile.last_name:
-                # Redirect to the edit profile page for completion
-                return redirect('edit_profile')  # Replace with your edit profile URL name
+User = get_user_model()
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        UserProfile.objects.get_or_create(user=instance)
 # Signal to add points when a user joins a project
 @receiver(m2m_changed, sender=Project.members.through)
 def update_points_on_project_joining(sender, instance, action, pk_set, **kwargs):

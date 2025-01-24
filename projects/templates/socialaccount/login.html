@@ -5,6 +5,7 @@
 {% block title %}Sign In with Google{% endblock %}
 
 {% block content %}
+
 <div class="google-signin-container">
     <div class="google-signin-card">
         <h1 class="google-signin-heading">Sign In with Google</h1>
@@ -13,10 +14,16 @@
 
         <form method="post">
             {% csrf_token %}
-            <button type="submit" class="btn btn-primary google-signin-button">
-                <span class="google-icon"></span> Continue with Google
+            <button type="submit" 
+                    style="border: none; background: none; padding: 0; cursor: pointer;">
+                <img src="{% static 'google_signin/web_dark_rd_SI.svg' %}"
+                     alt="Sign in with Google"
+                     style="max-width: 200px;" />
             </button>
         </form>
+        
+        
     </div>
 </div>
 {% endblock %}
+{% load static %}

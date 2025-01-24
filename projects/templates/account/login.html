@@ -34,12 +34,13 @@
     <p class="login-page">Don't have an account? <a href="{% url 'register' %}">Sign up here</a><br><a href="#">Forgot
             your password?</a></p>
 
-            <div style="margin-top: 20px; text-align: center;">
-                <a href="{% provider_login_url 'google' %}" class="google-signin-btn btn">
-                    <img src="{% static 'projects/images/google-icon.svg' %}" alt="Google Logo" style="height: 16px; margin-right: 8px;">
-                    Sign in with Google
-                </a>
-            </div>
+            {% load static %}
+            <a href="{% provider_login_url 'google' %}">
+              <img src="{% static 'google_signin/web_dark_rd_SI.svg' %}"
+                   alt="Sign in with Google"
+                   style="max-width: 200px;">
+            </a>
+            
 </div>
 
 

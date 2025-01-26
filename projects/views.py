@@ -66,17 +66,17 @@ def register(request):
             # Save the User model
             user = form.save(commit=False)
             user.save()
-            
-            # Create and save the UserProfile
-            user_profile = UserProfile(user=user)
-            
+
+            # Check if a UserProfile already exists
+            user_profile, created = UserProfile.objects.get_or_create(user=user)
+
             # Handle additional fields
             user_profile.grade_level = form.cleaned_data.get('grade_level')
             user_profile.concentration = form.cleaned_data.get('concentration')
             user_profile.linkedin = form.cleaned_data.get('linkedin')
             user_profile.github = form.cleaned_data.get('github')
             user_profile.bio = form.cleaned_data.get('bio')
-            
+
             # Handle profile picture upload
             if 'profile_picture' in request.FILES:
                 try:
@@ -85,13 +85,12 @@ def register(request):
                 except Exception as e:
                     print(f"Error uploading to Cloudinary: {e}")
                     messages.error(request, "Issue uploading the profile picture.")
-            
+
             # Save the UserProfile instance
             user_profile.save()
 
             user.backend = 'django.contrib.auth.backends.ModelBackend'
 
-            
             # Log the user in
             login(request, user)
             return redirect('home')  # Redirect to the home page or any other page
@@ -111,7 +110,6 @@ def register(request):
         'form': form,
         'current_step': current_step
     })
-
 
 # View for a single project and handling actions like rating, commenting, and joining
 @login_required

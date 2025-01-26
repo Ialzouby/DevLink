@@ -17,6 +17,9 @@ import cloudinary
 from django.http import JsonResponse
 from django.contrib.auth.models import User
 from .forms import CustomUserCreationForm 
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect, get_object_or_404
+from .models import Follow
 
 
 # Profile view to display a user's profile
@@ -33,7 +36,26 @@ def profile(request, username):
         'skills_list': skills_list,
     })
 
+from django.contrib import messages
 
+@login_required
+def upload_banner(request, username):
+    profile_user = get_object_or_404(UserProfile, user__username=username)
+    if request.method == "POST":
+        banner_picture = request.FILES.get('banner_picture')
+        if banner_picture:
+            try:
+                # Upload the image to Cloudinary
+                result = upload(banner_picture, folder="banner_pics/", overwrite=True)
+                # Save the Cloudinary URL to the `banner_picture_url` field
+                profile_user.banner_picture_url = result['secure_url']
+                profile_user.save()
+                messages.success(request, "Banner updated successfully!")
+            except Exception as e:
+                print(f"Error uploading to Cloudinary: {e}")
+                messages.error(request, "There was an issue uploading your banner.")
+        return redirect('profile', username=username)
+    
 def register(request):
     current_step = request.POST.get('current_step', '1')
     current_step = int(current_step)
@@ -181,30 +203,46 @@ def project(request, project_id):
 
 # Home view to display projects and topics
 def home(request, topic=None):
-    # Define topics for the sidebar
-    topics = [choice[0] for choice in Project.TOPIC_CHOICES]  
-    # Get the search query from the URL if it exists
+    topics = [choice[0] for choice in Project.TOPIC_CHOICES]
     q = request.GET.get('q', '')
-    # If a topic is passed through the URL, filter projects based on it and the search query if present
+    date_posted = request.GET.get('date_posted')
+    status = request.GET.get('status')
+    concentration = request.GET.get('concentration')
+
+    projects = Project.objects.all()
+
     if topic:
-        projects = Project.objects.filter(topic__icontains=topic)
-    else:
-        projects = Project.objects.all().order_by('-created_at')
-    # Apply search filtering if there is a search query
+        projects = projects.filter(topic__icontains=topic)
+
     if q:
-        projects = projects.filter(
-            Q(title__icontains=q) |
-            Q(description__icontains=q)
-        )
-    # Get the top 3 users based on their points
+        projects = projects.filter(Q(title__icontains=q) | Q(description__icontains=q))
+
+    # Filter by date posted
+    if date_posted:
+        from datetime import timedelta
+        from django.utils.timezone import now
+        days = int(date_posted)
+        projects = projects.filter(created_at__gte=now() - timedelta(days=days))
+
+    # Filter by status
+    if status:
+        if status == 'active':
+            projects = projects.filter(completed=False)
+        elif status == 'closed':
+            projects = projects.filter(completed=True)
+
+    # Filter by concentration
+    if concentration:
+        projects = projects.filter(topic=concentration)
+
     top_users = UserProfile.objects.order_by('-points')[:3]
-    # Pass the topics, filtered projects, and search query to the template
+
     return render(request, 'projects/home.html', {
         'projects': projects,
         'topics': topics,
         'top_users': top_users,
-        'selected_topic': topic,  # Optional for highlighting the selected topic
-        'search_query': q,        # To retain the search query in the template
+        'selected_topic': topic,
+        'search_query': q,
     })
 
 # Network view to list all users
@@ -265,46 +303,50 @@ def network(request):
     return render(request, 'projects/network.html', {'users': users})
 
 @login_required
+# views.py
+
+@login_required
 def edit_profile(request):
-    # Fetch the user's profile
     user_profile = request.user.userprofile
 
     if request.method == 'POST':
-        # Pass the user's profile instance to the form
         form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
-
         if form.is_valid():
-            # Save the profile instance without committing to allow modifications
             user_profile = form.save(commit=False)
 
             # Handle profile picture upload
             if 'profile_picture' in request.FILES:
                 try:
-                    # Upload the file to Cloudinary
                     result = upload(request.FILES['profile_picture'], upload_preset='ml_default')
-                    print("Cloudinary upload result:", result)
                     user_profile.profile_picture = result['url']
                 except Exception as e:
                     print(f"Error uploading to Cloudinary: {e}")
-                    messages.error(request, "There was an issue uploading your profile picture. Please try again.")
+                    messages.error(request, "There was an issue uploading your profile picture.")
 
-            # Clean and save the skills field
+            # Handle banner picture upload
+            if 'banner_picture' in request.FILES:
+                try:
+                    result = upload(request.FILES['banner_picture'], upload_preset='ml_default')
+                    user_profile.banner_picture = result['url']
+                except Exception as e:
+                    print(f"Error uploading banner to Cloudinary: {e}")
+                    messages.error(request, "There was an issue uploading your banner picture.")
+
+            # Save skills in comma‐separated format
             skills = form.cleaned_data.get('skills', '')
-            user_profile.skills = ",".join(skill.strip() for skill in skills.split(",") if skill.strip())
+            user_profile.skills = ",".join(
+                skill.strip() for skill in skills.split(",") if skill.strip()
+            )
 
-            # Save the updated profile
             user_profile.save()
 
-            # Display a success message and redirect the user
             messages.success(request, 'Your profile has been updated successfully.')
             return redirect('profile', username=request.user.username)
         else:
             messages.error(request, "Please correct the errors below.")
     else:
-        # Prepopulate the form with the user's existing profile data
         form = UserProfileForm(instance=user_profile)
 
-    # Render the edit profile template
     return render(request, 'projects/edit_profile.html', {'form': form})
 
 
@@ -502,3 +544,29 @@ def message_thread_partial(request, recipient_username):
         'messages': messages,
         'recipient': recipient,
     })
+
+# views.py
+
+
+@login_required
+def follow_user(request, username):
+    user_to_follow = get_object_or_404(User, username=username)
+    if user_to_follow != request.user:
+        # Create follow relationship if not existing
+        Follow.objects.get_or_create(
+            follower=request.user, 
+            following=user_to_follow
+        )
+    return redirect('profile', username=username)
+
+
+@login_required
+def unfollow_user(request, username):
+    user_to_unfollow = get_object_or_404(User, username=username)
+    if user_to_unfollow != request.user:
+        # Delete the relationship if exists
+        Follow.objects.filter(
+            follower=request.user, 
+            following=user_to_unfollow
+        ).delete()
+    return redirect('profile', username=username)

@@ -34,16 +34,37 @@
         {% endif %}
 
         <!-- Active Conversations -->
-        <h2>Your Active Conversations</h2>
-        <ul class="list-group">
-            {% for user in conversation_users %}
-            <li class="list-group-item">
-                <a href="?recipient={{ user.username }}" class="conversation-link">
-                    {{ user.first_name }} {{ user.last_name }}
-                </a>
-            </li>
-            {% endfor %}
-        </ul>
+ <!-- Active Conversations -->
+<h2>Your Active Conversations</h2>
+<ul class="list-group conversation-list">
+    {% for user in conversation_users %}
+    <li class="list-group-item conversation-item d-flex align-items-center">
+        <!-- Profile Picture -->
+        {% if user.userprofile.profile_picture %}
+        <img 
+            src="{{ user.userprofile.profile_picture|safe }}" 
+            alt="{{ user.username }}" 
+            class="conversation-profile-picture"
+        >
+        {% else %}
+        <img 
+            src="https://via.placeholder.com/100" 
+            alt="{{ user.username }}" 
+            class="conversation-profile-picture"
+        >
+        {% endif %}
+        <!-- User Name -->
+        <a href="?recipient={{ user.username }}" class="conversation-link">
+            {{ user.first_name }} {{ user.last_name }}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+
+
+
+
+
     </div>
 
     <!-- Right: Chat Container -->

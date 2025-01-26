@@ -281,6 +281,453 @@ body {
 
 /* Custom Navbar Styling */
 
+/* Reset and base styles */
+html, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f3f2f2;
+    color: #f1f1f1;
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh; /* Ensure the body takes at least the full viewport height */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Custom Navbar Styling */
+span.devlink-logo {
+    font-size: 32px;
+    font-weight: bold;
+    color: #000000;
+}
+/* The outer wrapper for banner + content */
+.qz9-profile-wrapper {
+    max-width: 1100px;
+    margin: 60px auto;
+    background-color: #f9f9f9;
+    border-radius: 16px; /* Ensures the wrapper matches banner corners */
+    overflow: hidden; /* Prevent anything from spilling outside */
+    position: relative;
+}
+
+.qz9-profile-banner {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    background-color: #333;
+    overflow: visible; /* Ensure profile picture can overlap */
+    border-top-left-radius: 16px; /* Top-left corner rounding */
+    border-top-right-radius: 16px; /* Top-right corner rounding */
+}
+
+.qz9-banner-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.qz9-banner-placeholder {
+    width: 100%;
+    height: 100%;
+    background-color: #555;
+}
+/* Pencil icon top-right */
+.qz9-banner-edit-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    padding: 8px;
+    cursor: pointer;
+}
+.qz9-banner-edit-btn:hover {
+    background: rgba(0,0,0,0.7);
+}
+
+/* Overlapping Profile Pic bridging banner & next section */
+.qz9-banner-profile-pic {
+    position: absolute;
+    left: 30px;
+    bottom: 0;               /* anchor to bottom of banner */
+    transform: translateY(50%); 
+    /* moves the pic down so half is on banner, half on next card */
+    width: 120px;            /* Increased size for better visibility */
+    height: 120px;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    overflow: hidden;
+    z-index: 999; /* Ensure it sits above other sections */
+}
+.qz9-banner-profile-pic img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+
+/* Headline info */
+.qz9-user-name {
+    font-size: 24px;
+    margin-bottom: 5px;
+    color: #333;
+}
+.qz9-user-headline {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 10px;
+}
+.qz9-user-location {
+    color: #777;
+    margin-bottom: 10px;
+}
+.qz9-contact-link {
+    color: #0077b5;
+    text-decoration: none;
+}
+.qz9-contact-link:hover {
+    text-decoration: underline;
+}
+
+/* Actions row */
+.qz9-action-buttons {
+    display: flex;
+    gap: 10px;
+    background: #fff;
+    border-radius: 8px;
+    padding: 10px 20px;
+    margin: 20px 0;
+}
+.qz9-action-btn {
+    border: 1px solid #ccc;
+    background: #fff;
+    color: #333;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+}
+.qz9-action-btn i {
+    margin-right: 6px;
+}
+.qz9-action-btn:hover {
+    background: #f0f0f0;
+}
+
+/* "Open to work" card */
+.qz9-open-to-work-card {
+    background: #e6f7ff;
+    border-left: 4px solid #0077b5;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+}
+
+/* About Section (with spacing) */
+.qz9-about-section {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+    margin-bottom: 30px; /* separate from next section */
+}
+.qz9-about-section h2 {
+    margin-bottom: 10px;
+}
+.qz9-about-section h3 {
+    margin: 15px 0 5px;
+}
+.qz9-skills-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+.qz9-skill-badge {
+    background: #eee;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+.qz9-skill-none {
+    color: #999;
+}
+.qz9-top-card {
+    background: #fff;
+    padding: 20px;
+    display: flex; /* Use flexbox for alignment */
+    justify-content: space-between; /* Push left and right sections apart */
+    align-items: center; /* Vertically align content */
+    position: relative;
+    z-index: 1;
+    min-width: 800px; /* Set a minimum width */
+    max-width: 100%; /* Ensure it doesn't exceed the container width */
+}
+
+
+.qz9-user-follow-info {
+    font-size: 16px;
+    color: #555; /* Light gray for the text labels */
+    margin-bottom: 10px;
+    display: flex;
+    gap: 10px; /* Space between followers and following */
+}
+
+.qz9-user-follow-info span {
+    font-weight: bold;
+    color: #000; /* Make numbers black */
+}
+
+
+/* Left side of the top card */
+.qz9-top-left {
+    flex: 1; /* Take up remaining space on the left */
+    margin-top: 45px;
+}
+
+/* Right side for buttons */
+.qz9-top-right {
+    display: flex;
+    gap: 10px; /* Add spacing between buttons */
+    align-items: center;
+}
+
+/* Follow and Message Buttons */
+.qz9-follow-btn,
+.qz9-message-btn {
+    border: none;
+    border-radius: 4px;
+    padding: 6px 12px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.9rem;
+    text-decoration: none;
+}
+
+/* Follow Button */
+.qz9-follow-btn {
+    background: #0077b5; /* LinkedIn-like blue */
+}
+.qz9-follow-btn:hover {
+    background: #005582;
+}
+
+/* Message Button */
+.qz9-message-btn {
+    background: #6c757d; /* Neutral gray */
+}
+.qz9-message-btn:hover {
+    background: #495057;
+}
+
+
+/* Portfolio Section */
+.qz9-portfolio-section {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+.qz9-portfolio-grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+.qz9-portfolio-card {
+    background: #f9f9f9;
+    border-radius: 6px;
+    padding: 15px;
+}
+.qz9-portfolio-card h4 {
+    margin-bottom: 8px;
+}
+.qz9-portfolio-link {
+    display: inline-block;
+    background: #0a66c2;
+    color: #fff;
+    border-radius: 4px;
+    padding: 6px 12px;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+.qz9-portfolio-link:hover {
+    background: #004182;
+}
+
+  /* Modal overlay - dims the background */
+  .qz9-modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent dark background */
+    display: flex; /* Flexbox for centering */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+  }
+  
+
+  /* Modal content box */
+  .qz9-modal-content {
+    background-color: #f3f3f3; /* Light gray background */
+    padding: 30px;
+    border-radius: 12px; /* Rounded corners */
+    width: 90%;
+    max-width: 500px; /* Limit the width */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    animation: fadeIn 0.3s ease-in-out; /* Smooth fade-in effect */
+    position: relative; /* Relative positioning for close button */
+  }
+
+  /* Close button */
+  .qz9-modal-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 1.5rem;
+    color: #333;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  /* Drop area */
+  #drop-area {
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #e6e6e6; /* Light gray for the drop area */
+    color: #666;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  /* Highlight drop area on drag */
+  #drop-area.dragover {
+    background-color: #d3d3d3;
+  }
+
+  /* File input (hidden) */
+  .file-input {
+    display: none; /* Hidden by default */
+  }
+
+  /* Custom upload button */
+  .upload-label {
+    display: inline-block;
+    background-color: #007bff; /* Bootstrap primary color */
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+  }
+
+  /* Hover effect for upload button */
+  .upload-label:hover {
+    background-color: #0056b3;
+  }
+
+  /* Preview image */
+  img.preview {
+    max-width: 100%;
+    height: auto;
+    margin-top: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Submit button */
+  .qz9-modal-submit-btn {
+    background-color: #007bff; /* Bootstrap primary color */
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+  }
+
+  /* Hover effect for submit button */
+  .qz9-modal-submit-btn:hover {
+    background-color: #0056b3;
+  }
+
+  /* Fade-in animation */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+
+/* Additional Fixes for Flex Layout */
+.profile-page .qz9-profile-wrapper {
+    flex: 1; /* Allow the profile wrapper to grow and take available space */
+}
+
+/* Ensure the profile-wrapper doesn't shrink */
+.profile-page .qz9-profile-wrapper {
+    flex-shrink: 0;
+}
+
+.conversation-list {
+    list-style-type: none; /* Remove bullet points */
+    padding: 0; /* Remove default padding */
+    margin: 0; /* Remove default margin */
+}
+
+.conversation-item {
+    border: 1px solid #e0e0e0; /* Add a border for each item */
+    border-radius: 10px; /* Rounded corners */
+    padding: 10px 15px; /* Padding around content */
+    margin-bottom: 10px; /* Space between items */
+    background-color: #f9f9f9; /* Light background color */
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    display: flex;
+    align-items: center; /* Center content vertically */
+    gap: 15px; /* Space between the profile picture and text */
+}
+
+.conversation-item:hover {
+    background-color: #e0f7fa; /* Light teal hover background */
+}
+
+.conversation-profile-picture {
+    width: 50px; /* Set profile picture width */
+    height: 50px; /* Set profile picture height */
+    border-radius: 50%; /* Make profile picture circular */
+    object-fit: cover; /* Crop image if it doesn’t fit */
+    border: 2px solid #009688; /* Add a border */
+}
+
+.conversation-link {
+    font-size: 1rem; /* Slightly larger text */
+    font-weight: 500; /* Medium font weight */
+    color: #333; /* Dark text color */
+    text-decoration: none; /* Remove underline */
+}
+
+.conversation-link:hover {
+    text-decoration: underline; /* Add underline on hover */
+    color: #00796b; /* Change text color on hover */
+}
 
 
 .custom-navbar-container {
@@ -297,6 +744,7 @@ body {
 .custom-navbar-links {
     display: flex;
     gap: 30px; /* Space between links */
+    margin-left: -70px;
 }
 
 .custom-navbar-links a {
@@ -316,6 +764,99 @@ body {
 .custom-navbar-links i {
     font-size: 20px; /* Icon size */
 }
+
+/* Filter Button */
+.filter-btn {
+    background-color: #28a745; /* Green */
+    color: white;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border: none;
+    margin-left: 10px;
+}
+
+.filter-btn:hover {
+    background-color: #1e7e34;
+}
+
+/* Filter Modal */
+.filter-modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Dimmed background */
+    justify-content: center;
+    align-items: center;
+}
+
+.filter-modal-content {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: left;
+    position: relative;
+}
+
+/* Close Button */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    color: #555;
+    cursor: pointer;
+}
+
+/* Filter Groups */
+.filter-group {
+    margin-bottom: 15px;
+}
+
+.filter-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.filter-group select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Filter Submit Button */
+.filter-submit-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.filter-submit-btn:hover {
+    background-color: #0056b3;
+}
+
+
 
 /* Dropdown Styling */
 .unique-profile-dropdown {
@@ -538,7 +1079,25 @@ body {
     text-decoration: none;
     width: 80%;
 }
-
+.profile-banner-container {
+    width: 100%;
+    height: 200px; /* or whatever height you prefer */
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .profile-banner-img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  
+  .profile-banner-placeholder {
+    width: 100%;
+    height: 200px;
+    background-color: #333; /* or some fallback color */
+  }
+  
 .custom-profile-view-button:hover {
     background: #0073b1;
     color: #fff;
@@ -591,6 +1150,65 @@ body {
     background: #0073b1;
     color: #fff;
 }
+
+.custom-profile-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.custom-banner-section {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.custom-banner-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.custom-profile-picture {
+    position: absolute;
+    top: 220px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 4px solid #fff;
+    overflow: hidden;
+    background-color: #f1f1f1;
+}
+
+.custom-profile-pic {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.custom-skills-section {
+    margin-top: 20px;
+}
+
+.custom-skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.custom-skill {
+    background-color: #f0f0f5;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 
 
 /* ==========================================================================

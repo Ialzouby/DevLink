@@ -8,7 +8,9 @@
 
 
 
-    
+    <!-- Concentrations -->
+
+    <!--
     <div class="unique-left-sidebar">
         <h3>Concentrations</h3>
         <ul>
@@ -20,7 +22,7 @@
             {% endfor %}
         </ul>
     </div>
-    
+-->
     
     
 
@@ -38,10 +40,60 @@
                         <i class="fa fa-search"></i>
                     </button>
                 </form>
+                <!-- Filter Button -->
+                <button class="add-project-btn" onclick="openFilterModal()">
+                    <i class="fa fa-filter"></i>
+                </button>
+                <!-- Add Project Button -->
                 <a href="{% url 'create_project' %}" class="add-project-btn">
                     <i class="fa fa-plus"></i>
                 </a>
             </div>
+            
+            <!-- Filter Modal -->
+            <div id="filterModal" class="filter-modal">
+                <div class="filter-modal-content">
+                    <span class="close-btn" onclick="closeFilterModal()">&times;</span>
+                    <h3>Filter Projects</h3>
+                    <form method="GET" action="{% url 'home' %}">
+                        <!-- Filter by Date Posted -->
+                        <div class="filter-group">
+                            <label for="date_posted">Posted Within:</label>
+                            <select name="date_posted" id="date_posted">
+                                <option value="">Anytime</option>
+                                <option value="1">Last 24 hours</option>
+                                <option value="7">Last 7 days</option>
+                                <option value="30">Last 30 days</option>
+                            </select>
+                        </div>
+            
+                        <!-- Filter by Status -->
+                        <div class="filter-group">
+                            <label for="status">Project Status:</label>
+                            <select name="status" id="status">
+                                <option value="">All</option>
+                                <option value="active">Active</option>
+                                <option value="closed">Closed</option>
+                            </select>
+                        </div>
+            
+                        <!-- Filter by Concentration -->
+                        <div class="filter-group">
+                            <label for="concentration">Concentration:</label>
+                            <select name="concentration" id="concentration">
+                                <option value="">All Concentrations</option>
+                                {% for topic in topics %}
+                                    <option value="{{ topic }}">{{ topic }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+            
+                        <button type="submit" class="filter-submit-btn">See Results</button>
+                    </form>
+                </div>
+            </div>
+            
+            
         </div>
         
 

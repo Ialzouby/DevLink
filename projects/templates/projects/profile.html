@@ -1,101 +1,325 @@
-{% extends "projects/base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    {% load is_followed_by %}
 
-{% block content %}
-<div class="custom-profile-page-container">
-    <!-- Profile Information Section (Three Columns) -->
-    <div class="profile-info-section">
-        
-        <!-- Left Column -->
-        <div class="profile-left-column">
-            <div class="profile-pic">
-                {% if profile_user.userprofile.profile_picture %}
-                <img src="{{ profile_user.userprofile.profile_picture|safe }}" alt="Profile Picture">
-                {% else %}
-                    <img src="https://via.placeholder.com/150" alt="Default Profile Picture">
-                {% endif %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevLink Profile</title>
+
+    <!-- Fonts / FontAwesome / Bootstrap -->
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- Your main styles -->
+    <link rel="stylesheet" href="{% static 'projects/styles.css' %}">
+    <link rel="icon" href="/static/projects/images/logo.png" type="image/x-icon">
+</head>
+
+
+<body class="profile-page">
+
+    <!-- ========== HEADER / NAVBAR ========== -->
+    {% if user.is_authenticated %}
+    <nav class="custom-navbar">
+        <div class="custom-navbar-container">
+            <div class="custom-navbar-logo">
+                <a href="{% url 'home' %}">
+            <!--        <img src="/static/projects/images/logo.png" alt="DevLink Logo"> -->
+            <span class="devlink-logo">DevLink</span>
+                </a>
             </div>
-
-<h1>{{ profile_user.first_name }} {{ profile_user.last_name }}</h1> 
-                        <h5>About Me</h5>
-
-            
-            {% if profile_user.userprofile.bio %}
-                <p><strong>Bio:</strong> {{ profile_user.userprofile.bio }}</p>
-            {% endif %}
-
-            <h5>Links</h5>
-
-            <div class="social-links">
-                {% if profile_user.userprofile.linkedin %}
-                    <a href="{{ profile_user.userprofile.linkedin }}" target="_blank" class="social-link">
-                        <i class="fab fa-linkedin"></i>
-                    </a>
-                {% endif %}
-                
-                {% if profile_user.userprofile.github %}
-                    <a href="{{ profile_user.userprofile.github }}" target="_blank" class="social-link">
-                        <i class="fab fa-github"></i>
-                    </a>
-                {% endif %}
+            <div class="custom-navbar-links">
+                <a href="{% url 'home' %}"><i class="fa fa-home"></i><span>Home</span></a>
+                <a href="{% url 'network' %}"><i class="fa fa-users"></i><span>My Network</span></a>
+                <a href="{% url 'active_conversations' %}"><i class="fa fa-comments"></i><span>Messaging</span></a>
+                <a href="#"><i class="fa fa-bell"></i><span>Notifications</span></a>
             </div>
-            
-        </div>
-
-        <!-- Middle Column -->
-        <div class="profile-middle-column">
-
-
-            <p><strong>Email:</strong> {{ profile_user.email }}</p>
-            <p><strong>Grade Level:</strong> {{ profile_user.userprofile.grade_level }}</p>
-            <p><strong>Concentration:</strong> {{ profile_user.userprofile.concentration }}</p>
-
-            
-    <!-- Display skills -->
-    <h3>Skills</h3>
-
-    <div id="skills-container">
-        {% if skills_list %}
-            {% for skill in skills_list %}
-                <div class="skill-box">{{ skill }}</div>
-            {% endfor %}
-        {% else %}
-            <div class="no-skills">No skills provided.</div>
-        {% endif %}
-    </div>
-    
-    
-    
-        </div>
-
-        <!-- Right Column -->
-        <div class="profile-right-column">
-            <p><strong>Points:</strong> {{ profile_user.userprofile.points }}</p>
-            <p><strong>Latest Activity:</strong></p>
-            <ul>
-                <li>Joined a new project</li>
-                <li>Updated profile picture</li>
-                <li>Completed a course</li>
-            </ul>
-            {% if request.user != profile_user %}
-            <a href="{% url 'active_conversations' %}?recipient={{ profile_user.username }}" class="btn btn-secondary">Message {{ profile_user.username }}</a>
-            {% endif %}
-        </div>
-
-
-    </div>
-
-    <!-- Project Grid Section -->
-    <div class="custom-project-section">
-        <h3 class="custom-portfolio-heading">Portfolio</h3>
-        <div class="custom-project-grid">
-            {% for project in profile_user.owned_projects.all %}
-                <div class="custom-project-card">
-                    <h3>{{ project.title }}</h3>
-                    <p>{{ project.description|truncatewords:10 }}</p>
-                    <a href="{% url 'project' project.id %}" class="btn btn-primary">View Project</a>
+            <div class="unique-profile-dropdown">
+                <div class="unique-profile-trigger" id="uniqueProfileTrigger">
+                    <img src="{% if user.userprofile.profile_picture %}{{ user.userprofile.profile_picture|safe }}{% else %}https://via.placeholder.com/150{% endif %}" alt="{{ user.username }}" class="unique-profile-image">
                 </div>
-            {% endfor %}
+                <div class="unique-profile-menu" id="uniqueProfileMenu">
+                    <div class="unique-profile-header">
+                        <img src="{% if user.userprofile.profile_picture %}{{ user.userprofile.profile_picture|safe }}{% else %}https://via.placeholder.com/150{% endif %}" alt="{{ user.username }}" class="unique-profile-thumbnail">
+                        <div class="unique-profile-info">
+                            <h4>{{ user.first_name }} {{ user.last_name }}</h4> 
+                            <p>{{ profile_user.userprofile.grade_level }} studying {{ profile_user.userprofile.concentration }} | Skills: {{ skills_list|join:", " }}</p>
+                        </div>
+                        <a href="{% url 'profile' user.username %}" class="unique-profile-view-button">View Profile</a>
+                    </div>
+                    <hr>
+                    <div class="unique-profile-section">
+                        <p>Account</p>
+                        <ul>
+                          <li><a href="{% url 'edit_profile' %}">Edit Profile</a></li>
+                          <li><a href="#">Settings & Privacy</a></li>
+                          <li><a href="#">Help</a></li>
+                          <li><a href="#">Language</a></li>
+                        </ul>
+                    </div>
+                    <hr>
+                    <div class="unique-profile-footer">
+                        <form method="POST" action="{% url 'account_logout' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="unique-profile-signout-button">Sign Out</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
+    </nav>
+    {% else %}
+    <nav class="custom-navbar">
+        <div class="custom-navbar-container">
+            <div class="custom-navbar-logo">
+                <a href="{% url 'home' %}">
+                    <img src="/static/projects/images/logo.png" alt="DevLink Logo">
+                </a>
+            </div>
+            <div class="custom-navbar-links">
+                <a href="{% url 'account_login' %}">Login</a>
+                <a href="{% url 'account_signup' %}">Sign Up</a>
+            </div>
+        </div>
+    </nav>
+    {% endif %}
+
+    <!-- ========== PROFILE WRAPPER ========== -->
+    <div class="qz9-profile-wrapper">
+      <div class="qz9-profile-banner">
+        {% if profile_user.userprofile.banner_picture_url %}
+          <img class="qz9-banner-img" src="{{ profile_user.userprofile.banner_picture_url }}" alt="Profile Banner"/>
+        {% else %}
+          <div class="qz9-banner-placeholder"></div>
+        {% endif %}
+
+        {% if request.user == profile_user %}
+          <button class="qz9-banner-edit-btn" title="Edit banner" onclick="document.getElementById('qz9-banner-modal').style.display='block'"><i class="fa fa-pencil-alt"></i></button>
+        {% endif %}
+
+        <div class="qz9-banner-profile-pic">
+            {% if profile_user.userprofile.profile_picture %}
+            <img src="{{ profile_user.userprofile.profile_picture|safe }}" alt="Profile Picture">
+            {% else %}
+                <img src="https://via.placeholder.com/150" alt="Default Profile Picture">
+            {% endif %}
+
+          </div>
+      </div>
+
+      {% if request.user == profile_user %}
+      <div id="qz9-banner-modal" class="qz9-modal" style="display: none;">
+        <div class="qz9-modal-content">
+          <span class="qz9-modal-close" onclick="document.getElementById('qz9-banner-modal').style.display='none'">&times;</span>
+          <h2>Upload New Banner</h2>
+          <form method="POST" enctype="multipart/form-data" action="{% url 'upload_banner' request.user.username %}" id="banner-upload-form">
+            {% csrf_token %}
+            <div id="drop-area">
+              <p>Drag & Drop your image here</p>
+              <p>or</p>
+              <label for="id_banner_picture" class="upload-label">Choose a file</label>
+              <input type="file" name="banner_picture" id="id_banner_picture" class="file-input">
+            </div>
+            <button type="submit" class="qz9-modal-submit-btn">Save</button>
+          </form>
+        </div>
+      </div>
+      
+      {% endif %}
+      
+
+      <div class="qz9-top-card">
+        <div class="qz9-top-left">
+          <h1 class="qz9-user-name">{{ profile_user.first_name }} {{ profile_user.last_name }}</h1>
+          <h3 class="qz9-user-headline">{{ profile_user.userprofile.grade_level }} studying {{ profile_user.userprofile.concentration }} | Skills: {{ skills_list|join:", " }}</h3>
+          <p class="qz9-user-follow-info">
+            <span>{{ profile_user.followers.count }} Followers</span> |
+            <span>{{ profile_user.following.count }} Following</span>
+          </p>
+        </div>
+
+        <div class="qz9-top-right">
+          {% if request.user != profile_user %}
+            {% if profile_user|is_followed_by:request.user %}
+              <form action="{% url 'unfollow_user' profile_user.username %}" method="POST">
+                {% csrf_token %}
+                <button class="qz9-follow-btn" type="submit">Unfollow</button>
+              </form>
+            {% else %}
+              <form action="{% url 'follow_user' profile_user.username %}" method="POST">
+                {% csrf_token %}
+                <button class="qz9-follow-btn" type="submit">Follow</button>
+              </form>
+            {% endif %}
+            <a href="{% url 'active_conversations' %}?recipient={{ profile_user.username }}" class="qz9-message-btn">Message</a>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="qz9-about-section">
+        <h2>About</h2>
+        <p>{{ profile_user.userprofile.bio|default:"<em>No bio provided.</em>"|safe }}</p>
+      </div>
+
+      <div class="qz9-portfolio-section">
+        <h2>Portfolio</h2>
+        <div class="qz9-portfolio-grid">
+          {% for project in profile_user.owned_projects.all %}
+            <div class="qz9-portfolio-card">
+              <h4>{{ project.title }}</h4>
+              <p>{{ project.description|truncatewords:10 }}</p>
+              <a href="{% url 'project' project.id %}" class="qz9-portfolio-link">View Project</a>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
     </div>
-</div>
-{% endblock %}
+
+    <footer>
+      <p>&copy; 2024 DevLink. All rights reserved.</p>
+  </footer>
+
+  <script>
+
+document.addEventListener('DOMContentLoaded', function () {
+    const profileTrigger = document.getElementById('uniqueProfileTrigger');
+    const profileMenu = document.getElementById('uniqueProfileMenu');
+    const pencilButton = document.querySelector('.qz9-banner-edit-btn');
+    const modal = document.getElementById('qz9-banner-modal');
+    const closeModalButton = document.querySelector('.qz9-modal-close');
+    const dropArea = document.getElementById('drop-area');
+    const fileInput = document.getElementById('id_banner_picture');
+
+    // Toggle profile dropdown
+    profileTrigger.addEventListener('click', function () {
+        profileMenu.classList.toggle('show');
+    });
+
+    // Close the dropdown when clicking outside of it
+    window.addEventListener('click', function (e) {
+        if (!profileTrigger.contains(e.target) && !profileMenu.contains(e.target)) {
+            profileMenu.classList.remove('show');
+        }
+    });
+
+    // Show the modal when the pencil button is clicked
+    pencilButton.addEventListener('click', function () {
+        modal.style.display = 'flex';
+    });
+
+    // Hide the modal when the close button is clicked
+    closeModalButton.addEventListener('click', function () {
+        modal.style.display = 'none';
+    });
+
+    // Hide the modal when clicking outside the modal content
+    window.addEventListener('click', function (event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+
+    // Prevent default behavior for drag-and-drop events
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        dropArea.addEventListener(eventName, preventDefaults, false);
+    });
+
+    function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
+    // Highlight the drop area when a file is dragged over
+    ['dragenter', 'dragover'].forEach(eventName => {
+        dropArea.addEventListener(eventName, () => dropArea.classList.add('dragover'), false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+        dropArea.addEventListener(eventName, () => dropArea.classList.remove('dragover'), false);
+    });
+
+    // Handle dropped files
+    dropArea.addEventListener('drop', (e) => {
+        const files = e.dataTransfer.files;
+        handleFiles(files);
+    });
+
+    // Open file dialog when the drop area is clicked
+    dropArea.addEventListener('click', () => {
+        fileInput.click();
+    });
+
+    // Handle file selection via the input
+    fileInput.addEventListener('change', (e) => {
+        const files = e.target.files;
+        handleFiles(files);
+    });
+
+    function handleFiles(files) {
+        if (files.length > 0) {
+            const file = files[0];
+            const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+            const maxFileSize = 5 * 1024 * 1024; // 5MB
+
+            // Validate file type
+            if (!allowedTypes.includes(file.type)) {
+                alert('Please upload an image file (JPEG, PNG, or GIF).');
+                return;
+            }
+
+            // Validate file size
+            if (file.size > maxFileSize) {
+                alert('The file size exceeds the 5MB limit.');
+                return;
+            }
+
+            // Update the file input
+            fileInput.files = files;
+
+            // Optionally preview the uploaded image
+            previewImage(file);
+        }
+    }
+
+    // Preview the uploaded image
+    function previewImage(file) {
+        const existingPreview = dropArea.querySelector('img.preview');
+        if (existingPreview) existingPreview.remove(); // Remove old preview if present
+
+        const preview = document.createElement('img');
+        preview.src = URL.createObjectURL(file);
+        preview.alt = 'Image Preview';
+        preview.classList.add('preview');
+        preview.style.maxWidth = '100%';
+        preview.style.marginTop = '10px';
+        dropArea.appendChild(preview);
+    }
+});
+
+
+
+  </script>
+
+  <style>
+      .unique-profile-menu {
+          display: none;
+          position: absolute;
+          top: 60px;
+          right: 10px;
+          background: #fff;
+          border: 1px solid #ccc;
+          border-radius: 8px;
+          width: 250px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .unique-profile-menu.show {
+          display: block;
+      }
+  </style>
+</body>
+</html>

@@ -29,7 +29,9 @@
             <!-- Logo -->
             <div class="custom-navbar-logo">
                 <a href="{% url 'home' %}">
-                    <img src="/static/projects/images/logo.png" alt="DevLink Logo">
+            <!--        <img src="/static/projects/images/logo.png" alt="DevLink Logo"> -->
+                    <span class="devlink-logo">DevLink</span>
+
                 </a>
             </div>
 
@@ -66,7 +68,7 @@
                              alt="{{ user.username }}" class="unique-profile-thumbnail">
                         <div class="unique-profile-info">
                             <h4>{{ user.first_name }} {{ user.last_name }}</h4>
-                            <p>AI Research @UNCC | 5X Hackathon Winner | Tech Enthusiast</p>
+                            <p>{{ user.userprofile.grade_level }} studying {{ user.userprofile.concentration }} | Skills: {{ skills_list|join:", " }}</p>
                         </div>
                         <a href="{% url 'profile' user.username %}" class="unique-profile-view-button">View Profile</a>
                     </div>
@@ -74,7 +76,7 @@
                     <div class="unique-profile-section">
                         <p>Account</p>
                         <ul>
-                            <li><a href="#">Premium Features</a></li>
+                            <li><a href="{% url 'edit_profile' %}">Edit Profile</a></li>
                             <li><a href="#">Settings & Privacy</a></li>
                             <li><a href="#">Help</a></li>
                             <li><a href="#">Language</a></li>

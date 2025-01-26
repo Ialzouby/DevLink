@@ -43,7 +43,13 @@ class UserProfile(models.Model):
     points = models.IntegerField(default=0)
     birthdate = models.DateField(null=True, blank=True)
     skills = models.CharField(max_length=255, blank=True, null=True) 
-
+    banner_picture = models.ImageField(
+        upload_to='banner_pics/', 
+        max_length=255, 
+        blank=True, 
+        null=True
+    )
+    banner_picture_url = models.URLField(blank=True, null=True)
     def is_complete(self):
         required_fields = [
 
@@ -162,3 +168,16 @@ class Notification(models.Model):
             return reverse('message_thread', kwargs={'username': self.related_message.sender.username})
         return reverse('active_conversations')  # Redirect to conversations page if no message is associated
 
+
+# models.py
+
+class Follow(models.Model):
+    follower = models.ForeignKey(User, related_name='following', on_delete=models.CASCADE)
+    following = models.ForeignKey(User, related_name='followers', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('follower', 'following')  # Prevent duplicates
+
+    def __str__(self):
+        return f"{self.follower.username} -> {self.following.username}"

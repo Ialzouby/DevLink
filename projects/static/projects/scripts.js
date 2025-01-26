@@ -136,3 +136,22 @@ document.addEventListener('DOMContentLoaded', function () {
     handleSkillInput('skills-gained-input', 'skills-gained-list', 'skills_gained');
     handleSkillInput('skills-requirements-input', 'skills-requirements-list', 'requirements');
 });
+    // Open the filter modal
+    function openFilterModal() {
+        const modal = document.getElementById('filterModal');
+        modal.style.display = 'flex';
+    }
+
+    // Close the filter modal
+    function closeFilterModal() {
+        const modal = document.getElementById('filterModal');
+        modal.style.display = 'none';
+    }
+
+    // Close the modal when clicking outside of it
+    window.onclick = function (event) {
+        const modal = document.getElementById('filterModal');
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    };

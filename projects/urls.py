@@ -33,6 +33,9 @@ urlpatterns = [
     path('project/<int:project_id>/delete/', views.delete_project, name='delete_project'),
     path('search_users/', views.search_users, name='search_users'),
     path('message-thread-partial/<str:recipient_username>/', views.message_thread_partial, name='message_thread_partial'),
+    path('follow/<str:username>/', views.follow_user, name='follow_user'),
+    path('unfollow/<str:username>/', views.unfollow_user, name='unfollow_user'),
+    path('profile/<str:username>/upload-banner/', views.upload_banner, name='upload_banner'),
 
 ]
 

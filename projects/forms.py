@@ -178,7 +178,7 @@ class ProjectForm(forms.ModelForm):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ['grade_level', 'concentration', 'linkedin', 'github', 'bio', 'profile_picture', 'skills']
+        fields = ['grade_level', 'concentration', 'linkedin', 'github', 'bio', 'profile_picture','banner_picture', 'skills']
 
 
 class MessageForm(forms.ModelForm):

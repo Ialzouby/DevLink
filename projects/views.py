@@ -441,7 +441,9 @@ def active_conversations(request):
 # View to render notifications
 @login_required
 def notifications_view(request):
-    return render(request, 'projects/notifications.html')
+    notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
+    return render(request, 'projects/notifications.html', {'notifications': notifications})
+
 
 # Mark a notification as read
 @login_required

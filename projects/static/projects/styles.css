@@ -856,6 +856,120 @@ span.devlink-logo {
     background-color: #0056b3;
 }
 
+.notifications-container {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+}
+
+.notifications-sidebar,
+.notifications-main,
+.notifications-right-sidebar {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.notifications-sidebar {
+    width: 25%;
+}
+
+.notifications-main {
+    width: 50%;
+}
+
+.notifications-right-sidebar {
+    width: 25%;
+}
+
+.profile-summary {
+    text-align: center;
+}
+
+.profile-picture {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.settings-link {
+    display: block;
+    margin-top: 10px;
+    color: #0073b1;
+    text-decoration: none;
+}
+
+.settings-link:hover {
+    text-decoration: underline;
+}
+
+.notifications-filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.filter-btn {
+    padding: 10px 20px;
+    border: 1px solid #ddd;
+    background: #f9f9f9;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.filter-btn.active {
+    background: #0073b1;
+    color: #fff;
+}
+
+.notifications-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.notification-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f9f9f9;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.notification-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.notification-timestamp {
+    color: #666;
+    font-size: 0.8rem;
+}
+
+.more-options-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #666;
+}
+
+.ad-section {
+    text-align: center;
+}
+
+.boost-btn {
+    background: #0073b1;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
 
 
 /* Dropdown Styling */

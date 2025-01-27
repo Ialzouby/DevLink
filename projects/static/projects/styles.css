@@ -765,212 +765,6 @@ span.devlink-logo {
     font-size: 20px; /* Icon size */
 }
 
-/* Filter Button */
-.filter-btn {
-    background-color: #28a745; /* Green */
-    color: white;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    border: none;
-    margin-left: 10px;
-}
-
-.filter-btn:hover {
-    background-color: #1e7e34;
-}
-
-/* Filter Modal */
-.filter-modal {
-    display: none; /* Hidden by default */
-    position: fixed;
-    z-index: 1000;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Dimmed background */
-    justify-content: center;
-    align-items: center;
-}
-
-.filter-modal-content {
-    background-color: white;
-    border-radius: 10px;
-    padding: 20px;
-    width: 90%;
-    max-width: 400px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    text-align: left;
-    position: relative;
-}
-
-/* Close Button */
-.close-btn {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 20px;
-    color: #555;
-    cursor: pointer;
-}
-
-/* Filter Groups */
-.filter-group {
-    margin-bottom: 15px;
-}
-
-.filter-group label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.filter-group select {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-/* Filter Submit Button */
-.filter-submit-btn {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 100%;
-    font-size: 16px;
-    margin-top: 10px;
-}
-
-.filter-submit-btn:hover {
-    background-color: #0056b3;
-}
-
-.notifications-container {
-    display: flex;
-    gap: 20px;
-    padding: 20px;
-}
-
-.notifications-sidebar,
-.notifications-main,
-.notifications-right-sidebar {
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 20px;
-}
-
-.notifications-sidebar {
-    width: 25%;
-}
-
-.notifications-main {
-    width: 50%;
-}
-
-.notifications-right-sidebar {
-    width: 25%;
-}
-
-.profile-summary {
-    text-align: center;
-}
-
-.profile-picture {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    margin-bottom: 10px;
-}
-
-.settings-link {
-    display: block;
-    margin-top: 10px;
-    color: #0073b1;
-    text-decoration: none;
-}
-
-.settings-link:hover {
-    text-decoration: underline;
-}
-
-.notifications-filters {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-.filter-btn {
-    padding: 10px 20px;
-    border: 1px solid #ddd;
-    background: #f9f9f9;
-    border-radius: 20px;
-    cursor: pointer;
-}
-
-.filter-btn.active {
-    background: #0073b1;
-    color: #fff;
-}
-
-.notifications-list {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.notification-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #f9f9f9;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-}
-
-.notification-content {
-    display: flex;
-    flex-direction: column;
-}
-
-.notification-timestamp {
-    color: #666;
-    font-size: 0.8rem;
-}
-
-.more-options-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 1.2rem;
-    color: #666;
-}
-
-.ad-section {
-    text-align: center;
-}
-
-.boost-btn {
-    background: #0073b1;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-}
-
 
 /* Dropdown Styling */
 .unique-profile-dropdown {
@@ -1495,6 +1289,211 @@ textarea::placeholder {
     background-color: #d32f2f;
 }
 
+/* Filter Button */
+.filter-btn {
+    background-color: #28a745; /* Green */
+    color: white;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border: none;
+    margin-left: 10px;
+}
+
+.filter-btn:hover {
+    background-color: #1e7e34;
+}
+
+/* Filter Modal */
+.filter-modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Dimmed background */
+    justify-content: center;
+    align-items: center;
+}
+
+.filter-modal-content {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: left;
+    position: relative;
+}
+
+/* Close Button */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    color: #555;
+    cursor: pointer;
+}
+
+/* Filter Groups */
+.filter-group {
+    margin-bottom: 15px;
+}
+
+.filter-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.filter-group select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Filter Submit Button */
+.filter-submit-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.filter-submit-btn:hover {
+    background-color: #0056b3;
+}
+
+.notifications-container {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+}
+
+.notifications-sidebar,
+.notifications-main,
+.notifications-right-sidebar {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.notifications-sidebar {
+    width: 25%;
+}
+
+.notifications-main {
+    width: 50%;
+}
+
+.notifications-right-sidebar {
+    width: 25%;
+}
+
+.profile-summary {
+    text-align: center;
+}
+
+.profile-picture {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.settings-link {
+    display: block;
+    margin-top: 10px;
+    color: #0073b1;
+    text-decoration: none;
+}
+
+.settings-link:hover {
+    text-decoration: underline;
+}
+
+.notifications-filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.filter-btn {
+    padding: 10px 20px;
+    border: 1px solid #ddd;
+    background: #f9f9f9;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.filter-btn.active {
+    background: #0073b1;
+    color: #fff;
+}
+
+.notifications-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.notification-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f9f9f9;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.notification-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.notification-timestamp {
+    color: #666;
+    font-size: 0.8rem;
+}
+
+.more-options-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #666;
+}
+
+.ad-section {
+    text-align: center;
+}
+
+.boost-btn {
+    background: #0073b1;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
 
 /* ==========================================================================
    6 Cards & Components
@@ -3586,7 +3585,7 @@ footer p {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 15px;
-    width: 400px;
+    width: 410px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -4289,11 +4288,16 @@ select.form-control,
     }
 }
 
+
 /* Responsive Styling for Smaller Screens */
 @media (max-width: 768px) {
+    .network-user-list {
+        grid-template-columns: 1fr; /* Switch to 1 card per row */
+        gap: 20px;
+    }
+
     .network-user-card {
-        width: 100%;
-        /* Full width for user cards on mobile */
+        width: 100%; /* Full width for user cards on mobile */
     }
 
     .network-search-input {
@@ -4307,16 +4311,11 @@ select.form-control,
         font-size: 16px;
     }
 
-    .network-user-list {
-        gap: 20px;
-    }
-
     .network-profile-img {
         width: 100px;
         height: 100px;
     }
 }
-
 /* Mobile view */
 @media (max-width: 768px) {
 

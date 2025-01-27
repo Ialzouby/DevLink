@@ -69,15 +69,15 @@
             <div class="step" id="step-3" {% if current_step != 3 %}style="display:none;"{% endif %}>
                 <div class="form-grid">
                     <div class="form-group">
-                        <label for="linkedin">LinkedIn (Optional):</label>
+                        <label for="linkedin">LinkedIn (Optional): <span class="astrix-required">*</span></label>
                         {{ form.linkedin }}
                     </div>
                     <div class="form-group">
-                        <label for="github">GitHub (Optional):</label>
+                        <label for="github">GitHub (Optional): <span class="astrix-required">*</span></label>
                         {{ form.github }}
                     </div>
                     <div class="form-group">
-                        <label for="bio">Bio (Optional):</label>
+                        <label for="bio">Bio : <span class="astrix-required">*</span></label>
                         {{ form.bio }}
                     </div>
                     <div class="form-group">

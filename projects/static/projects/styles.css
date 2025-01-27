@@ -1519,16 +1519,91 @@ textarea::placeholder {
     transform: translateY(-50%);
 }
 
+
+
+/* Badge Styling */
 .badge {
-    background-color: #007677ff;
-    color: white;
+    display: inline-block;
     padding: 5px 10px;
-    border-radius: 5px;
+    border-radius: 15px;
+    font-size: 12px;
     font-weight: bold;
-    text-transform: uppercase;
-    font-size: 0.9rem;
+    background-color: #007677ff;
+    color: #ffffff;
+    margin-right: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
+
+
+
+.unique-project-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Project Title */
+.project-title {
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #2e2e2e;
+}
+
+/* Row Layout for Tags */
+.project-details-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: -10px; /* Space between tags and description */
+    margin-top: 20px;
+}
+
+/* Description Styling */
+.project-description {
+    font-size: 14px;
+    color: #555555;
+    line-height: 1.5;
+    margin-top: 10px;
+    overflow: hidden;
+    margin-bottom: -10px;
+}
+
+/* Badge Styling */
+.badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #ffffff;
+    margin-right: 5px;
+}
+
+.badge-topic {
+    background-color: #2e2e2e;
+}
+
+.badge-open {
+    background-color: #35b951;
+}
+
+.badge-closed {
+    background-color: #d32f2f;
+}
+
+.badge-skills {
+    background-color: #2d9feb;
+    color: #ffffff;
+}
+
+.posted-date {
+    font-size: 14px;
+    color: #6c757d;
+    margin-left: auto;
+}
+
 
 /* ==========================================================================
    7 Profile & User Components
@@ -2244,12 +2319,14 @@ textarea::placeholder {
 /* ==========================================================================
    15 LAYOUT CONTAINERS
    ========================================================================== */
+/* Center the main content container */
 .unique-layout-container {
     display: flex;
-    justify-content: space-between;
-    width: 100%;
-    padding: 0;
+    justify-content: center; /* Center all content horizontally */
+    gap: 20px; /* Optional: Space between sections (e.g., right sidebar) */
+    padding: 20px;
 }
+
 
 
 /* ==========================================================================
@@ -3107,13 +3184,16 @@ textarea {
 
 /* Project Items */
 .unique-project-item {
-    position: relative;
     background-color: #ffffff;
     padding: 20px;
+    border-radius: 15px;
+
     margin-bottom: 20px;
-    border-radius: 10px;
-    color: #fff;
-    transition: transform 0.3s ease;
+
+    align-items: flex-start;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    min-height: 160px; /* Adjusted height */
 }
 
 #message-thread {

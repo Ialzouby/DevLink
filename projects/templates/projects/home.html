@@ -24,7 +24,29 @@
     </div>
 -->
     
-    
+    <div class="unique-right-sidebar">
+
+        <h3>Recommended Users</h3>
+        {% for user in top_users %}
+            <!-- Wrap the user-card div with an anchor tag -->
+            <a href="{% url 'profile' user.user.username %}" class="user-card-link">
+                <div class="user-card">
+                    <div class="user-avatar-container">
+                        {% if user.profile_picture %}
+                            <img src="{{ user.profile_picture|safe }}" alt="{{ user.user.username }}" class="user-avatar">
+                        {% else %}
+                            <img src="https://via.placeholder.com/50" alt="{{ user.user.username }}" class="user-avatar">
+                        {% endif %}
+                    </div>
+                    <div class="user-info">
+                        <h4>{{ user.user.first_name }} {{ user.user.last_name }}</h4>
+                        <p>Grade Level: {{ user.grade_level }}</p>
+                        <p>{{ user.concentration }}</p>
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
 
 <!-- Center Content for Projects -->
 
@@ -100,20 +122,30 @@
         {% for project in projects %}
         <a href="{% url 'project' project.id %}" class="unique-project-item-link">
             <div class="unique-project-item">
-                <div class="project-topic">
-                    {{ project.topic }}
-                    <!-- Badge for Project Status -->
+                <!-- Title -->
+                <h5 class="project-title">{{ project.title }}</h5>
+                <!-- Details Row -->
+                <div class="project-details-row">
+                    <!-- Concentration Badge -->
+                    <span class="badge badge-topic">{{ project.topic }}</span>
+                    <!-- Active/Closed Badge -->
                     {% if project.completed %}
-                        <span class="badge badge-closed">Closed</span>
+                        <span class="badge badge-closed">CLOSED</span>
                     {% else %}
-                        <span class="badge badge-open">Open</span>
+                        <span class="badge badge-open">OPEN</span>
                     {% endif %}
+                    <!-- Skills Required -->
+                    <span class="badge badge-skills">Skills: {{ project.skill_requirements|truncatewords:3 }}</span>
+                    <!-- Posted Date -->
+                    <span class="posted-date">Posted: {{ project.created_at|date:"M j, Y" }}</span>
                 </div>
-                <h5>{{ project.title }}</h5>
-                <p>{{ project.description|truncatewords:20 }}</p>
+                <!-- Description -->
+                <p class="project-description">{{ project.description|truncatewords:40 }}</p>
             </div>
         </a>
-    {% endfor %}
+        {% endfor %}
+        
+
     
     </div>
 </div>

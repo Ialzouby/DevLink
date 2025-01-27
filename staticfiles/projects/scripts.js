@@ -136,3 +136,115 @@ document.addEventListener('DOMContentLoaded', function () {
     handleSkillInput('skills-gained-input', 'skills-gained-list', 'skills_gained');
     handleSkillInput('skills-requirements-input', 'skills-requirements-list', 'requirements');
 });
+    // Open the filter modal
+    function openFilterModal() {
+        const modal = document.getElementById('filterModal');
+        modal.style.display = 'flex';
+    }
+
+    // Close the filter modal
+    function closeFilterModal() {
+        const modal = document.getElementById('filterModal');
+        modal.style.display = 'none';
+    }
+
+    // Close the modal when clicking outside of it
+    window.onclick = function (event) {
+        const modal = document.getElementById('filterModal');
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    };
+
+    document.addEventListener("DOMContentLoaded", function () {
+        console.log("Registration page JavaScript loaded");
+    
+        // Initialize current step
+        let currentStep = parseInt(document.querySelector('.custom-form-container')?.dataset?.currentStep || 1);
+        showStep(currentStep);
+    
+        // Navigate to the next step
+        document.getElementById("nextBtn")?.addEventListener("click", nextStep);
+    
+        // Navigate to the previous step
+        document.getElementById("prevBtn")?.addEventListener("click", prevStep);
+    
+        // Show the current step based on `currentStep`
+        function showStep(step) {
+            console.log("Showing step:", step);
+    
+            // Hide all steps
+            document.querySelectorAll(".step").forEach(stepElement => {
+                stepElement.style.display = "none";
+            });
+    
+            // Show the active step
+            document.getElementById(`step-${step}`)?.style.setProperty("display", "block");
+    
+            // Show/hide navigation buttons
+            document.getElementById("prevBtn").style.display = step > 1 ? "inline-block" : "none";
+            document.getElementById("nextBtn").style.display = step < 3 ? "inline-block" : "none";
+            document.getElementById("submitBtn").style.display = step === 3 ? "inline-block" : "none";
+        }
+    
+        function nextStep() {
+            if (currentStep < 3) {
+                currentStep++;
+                document.getElementById("current_step").value = currentStep;
+                showStep(currentStep);
+            }
+        }
+    
+        function prevStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                document.getElementById("current_step").value = currentStep;
+                showStep(currentStep);
+            }
+        }
+    
+        // Toggle password visibility for password fields
+        function togglePassword(fieldId, iconId) {
+            const passwordField = document.getElementById(fieldId);
+            const eyeIcon = document.getElementById(iconId);
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                eyeIcon.classList.remove("fa-eye");
+                eyeIcon.classList.add("fa-eye-slash");
+            } else {
+                passwordField.type = "password";
+                eyeIcon.classList.remove("fa-eye-slash");
+                eyeIcon.classList.add("fa-eye");
+            }
+        }
+    
+        // Attach password toggle handlers
+        document.querySelectorAll(".toggle-password").forEach(button => {
+            button.addEventListener("click", function () {
+                const fieldId = this.getAttribute("data-field");
+                const iconId = this.getAttribute("data-icon");
+                togglePassword(fieldId, iconId);
+            });
+        });
+    
+        // Handle skill input and dynamic list rendering
+        const skillsInput = document.querySelector('input[name="skills"]');
+        const skillsList = document.getElementById("skills-list");
+    
+        if (skillsInput && skillsList) {
+            skillsInput.addEventListener("input", function () {
+                const skills = skillsInput.value
+                    .split(",")
+                    .map(skill => skill.trim())
+                    .filter(skill => skill);
+    
+                skillsList.innerHTML = ""; // Clear previous list
+                skills.forEach(skill => {
+                    const li = document.createElement("li");
+                    li.textContent = skill;
+                    skillsList.appendChild(li);
+                });
+            });
+        }
+    });
+    

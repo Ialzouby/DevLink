@@ -5,14 +5,7 @@
 {% block content %}
 <div class="notifications-container">
     <!-- Left Sidebar for User Info -->
-    <div class="notifications-sidebar">
-        <div class="profile-summary">
-            <img src="{% if user.userprofile.profile_picture %}{{ user.userprofile.profile_picture|safe }}{% else %}https://via.placeholder.com/150{% endif %}" alt="{{ user.username }}" class="profile-picture">
-            <h4>{{ user.first_name }} {{ user.last_name }}</h4>
-            <p>{{ user.userprofile.bio|default:"No bio available." }}</p>
-            <a href="{% url 'edit_profile' %}" class="settings-link">Manage your Notifications</a>
-        </div>
-    </div>
+
 
     <!-- Main Notifications Section -->
     <div class="notifications-main">

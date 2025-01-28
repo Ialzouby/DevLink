@@ -772,6 +772,8 @@ span.devlink-logo {
     display: inline-block;
 }
 
+
+
 .unique-profile-trigger {
     cursor: pointer;
 }
@@ -1382,25 +1384,27 @@ textarea::placeholder {
 
 .notifications-container {
     display: flex;
-    gap: 20px;
+    justify-content: space-between; /* Align sidebars and main content */
     padding: 20px;
+    gap: 20px; /* Space between sections */
+    max-width: 1400px; /* Limit the container width for large screens */
+    margin: 0 auto; /* Center the container */
 }
 
 .notifications-sidebar,
-.notifications-main,
 .notifications-right-sidebar {
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 20px;
-}
-
-.notifications-sidebar {
-    width: 25%;
+    width: 20%; /* Adjust sidebar width */
+    max-width: 240px;
+    min-width: 200px;
 }
 
 .notifications-main {
-    width: 50%;
+    flex: 1; /* Main content takes up the remaining space */
+    max-width: 800px; /* Optional: Adjust maximum width */
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .notifications-right-sidebar {
@@ -1433,14 +1437,16 @@ textarea::placeholder {
     display: flex;
     gap: 10px;
     margin-bottom: 20px;
+    justify-content: center; /* Center filters */
 }
-
 .filter-btn {
     padding: 10px 20px;
-    border: 1px solid #ddd;
+    border: 1px solid #ffffff;
     background: #f9f9f9;
     border-radius: 20px;
     cursor: pointer;
+    flex: 1;
+    text-align: center;
 }
 
 .filter-btn.active {
@@ -1451,19 +1457,18 @@ textarea::placeholder {
 .notifications-list {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
 }
 
 .notification-item {
+    background: #ffffff;
+    padding: 15px;
+    border-radius: 4px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #f9f9f9;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
-
 .notification-content {
     display: flex;
     flex-direction: column;
@@ -2683,56 +2688,6 @@ textarea::placeholder {
    24 SIDEBAR COMPONENTS
    ========================================================================== */
 
-/* Updated Left Sidebar */
-.unique-left-sidebar {
-    background-color: #ffffff;
-    color: #333;
-    padding: 10px;
-    border-radius: 5px;
-    width: 220px;
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.05);
-    height: 20%;
-}
-
-.unique-left-sidebar h3 {
-    text-align: center;
-    font-size: 18px;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 5px;
-    color: #444;
-}
-
-.unique-left-sidebar ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-
-.unique-left-sidebar li {
-    margin-bottom: 8px;
-    font-style: normal;
-    color: #d4d4d4;
-}
-
-.unique-left-sidebar a {
-    color: #333;
-    background-color: #d4d4d4;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 500;
-    display: block;
-    padding: 8px;
-    border-radius: 4px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.unique-left-sidebar a:hover {
-    background-color: #d5d5d5;
-    transform: translateY(-2px);
-    cursor: pointer;
-}
-
 
 /* ==========================================================================
    25 FORM COMPONENTS
@@ -3317,6 +3272,25 @@ p {
     color: #444;
 }
 
+.unique-left-sidebar {
+    width: 20vw;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 10%;
+}
+
+.unique-left-sidebar h3 {
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+    color: #444;
+}
 
 
 /* User Cards */
@@ -3452,15 +3426,15 @@ p {
    footer {
     width: 100%;
     padding: 10px;
-    background: rgb(65, 141, 241);
-    color: #f1f1f1;
+    background: rgb(247, 247, 247);
+    color: #2e2e2e;
     text-align: center;
     margin-top: 10px;
     position: relative;
 }
 
 footer p {
-    color: rgb(255, 255, 255)!important;
+    color: rgb(0, 0, 0)!important;
 }
 
 

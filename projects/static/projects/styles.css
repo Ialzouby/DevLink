@@ -1500,6 +1500,17 @@ textarea::placeholder {
     cursor: pointer;
 }
 
+.username-link {
+    color: blue;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.username-link:hover {
+    text-decoration: underline;
+}
+
+
 /* ==========================================================================
    6 Cards & Components
    ========================================================================== */

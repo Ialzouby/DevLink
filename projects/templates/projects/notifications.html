@@ -4,9 +4,6 @@
 
 {% block content %}
 <div class="notifications-container">
-    <!-- Left Sidebar for User Info -->
-
-
     <!-- Main Notifications Section -->
     <div class="notifications-main">
         <!-- Filters Section -->
@@ -22,18 +19,36 @@
             {% for notification in notifications %}
                 <div class="notification-item">
                     <div class="notification-content">
-                        <p>{{ notification.content }}</p>
+                        <p>{{ notification.content|safe }}</p>
                         <span class="notification-timestamp">{{ notification.timestamp|timesince }} ago</span>
                     </div>
-                    <button class="more-options-btn">
+                    <button class="more-options-btn" onclick="toggleOptions('{{ notification.id }}')">
                         <i class="fa fa-ellipsis-h"></i>
                     </button>
+                    <!-- Dropdown for more options -->
+                    <div class="more-options" id="options-{{ notification.id }}" style="display: none;">
+                        <form action="{% url 'delete_notification' notification.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="delete-btn">Delete</button>
+                        </form>
+                    </div>
                 </div>
             {% empty %}
                 <p>No notifications available.</p>
             {% endfor %}
         </div>
     </div>
-
 </div>
+
+<script>
+    function toggleOptions(notificationId) {
+        const optionsMenu = document.getElementById(`options-${notificationId}`);
+        if (optionsMenu.style.display === "none" || !optionsMenu.style.display) {
+            optionsMenu.style.display = "block";
+        } else {
+            optionsMenu.style.display = "none";
+        }
+    }
+</script>
 {% endblock %}
+

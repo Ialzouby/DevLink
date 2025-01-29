@@ -14,7 +14,7 @@ from django.dispatch import receiver
 from django.shortcuts import redirect
 from allauth.socialaccount.signals import social_account_added
 import requests
-
+from django.urls import reverse 
 
 from django.dispatch import receiver
 from django.shortcuts import redirect
@@ -81,9 +81,13 @@ def notify_project_owner_on_join_request(sender, instance, created, **kwargs):
         project_owner = instance.project.owner
         user_requesting = instance.user
         Notification.objects.create(
-            user=project_owner,
-            is_read=False,
-            timestamp=timezone.now(),
-            content=f"{user_requesting.username} has requested to join your project '{instance.project.title}'"
+        user=project_owner,
+        is_read=False,
+        timestamp=timezone.now(),
+        content=(
+            f"<a href='{reverse('profile', kwargs={'username': user_requesting.username})}' "
+            f"class='username-link'>{user_requesting.username}</a> has requested to join your project "
+            f"'<strong>{instance.project.title}</strong>'"
         )
+    )
 

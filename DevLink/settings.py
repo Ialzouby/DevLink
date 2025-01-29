@@ -103,6 +103,7 @@ MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'projects.middleware.RedirectAuthenticatedMiddleware',
 
     'projects.middleware.ProfileCompletionMiddleware',
 

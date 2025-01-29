@@ -8,7 +8,7 @@ from django.contrib import messages
 from django.http import HttpResponseForbidden, JsonResponse
 from django.views.decorators.http import require_POST, require_http_methods
 from django.utils.timesince import timesince
-
+from django.contrib.auth import views as auth_views
 from .forms import RatingForm, CustomUserCreationForm, MessageForm, ProjectForm, UserProfileForm
 from .models import Project, Comment, UserProfile, JoinRequest, Message, User, Notification, Update
 
@@ -56,7 +56,16 @@ def upload_banner(request, username):
                 messages.error(request, "There was an issue uploading your banner.")
         return redirect('profile', username=username)
     
+# Prevent logged-in users from accessing login and register pages
+def custom_login(request):
+    if request.user.is_authenticated:
+        return redirect('home')
+    return auth_views.LoginView.as_view(template_name='projects/login.html')(request)
+
 def register(request):
+    if request.user.is_authenticated:
+        return redirect('home')
+
     current_step = request.POST.get('current_step', '1')
     current_step = int(current_step)
 
@@ -110,6 +119,7 @@ def register(request):
         'form': form,
         'current_step': current_step
     })
+
 
 # View for a single project and handling actions like rating, commenting, and joining
 @login_required
@@ -453,15 +463,12 @@ def mark_as_read(request, notification_id):
 
 # Delete a notification
 @login_required
-@require_http_methods(["DELETE"])
+@require_http_methods(["POST"])
 def delete_notification(request, notification_id):
     notification = get_object_or_404(Notification, id=notification_id, user=request.user)
-    if notification.user == request.user:
-        notification.delete()
-        return JsonResponse({'success': True})  # Return success response
-    return JsonResponse({'error': 'Unauthorized'}, status=403)  # Return error if unauthorized
-
-
+    notification.delete()
+    messages.success(request, "Notification deleted successfully.")
+    return redirect('notifications_view')  # Redirect to notifications page
 
 def check_username_email(request):
     username = request.GET.get('username')

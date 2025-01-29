@@ -1,6 +1,28 @@
 # middlewares.py (or wherever you store middleware)
 from django.shortcuts import redirect
 from django.urls import reverse
+from django.shortcuts import redirect
+from django.urls import reverse
+
+from django.shortcuts import redirect
+from django.urls import reverse
+
+class RedirectAuthenticatedMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        # Generate restricted paths inside the request context
+        restricted_paths = [
+            reverse('login'),  # Ensure this matches your URL name in urls.py
+            reverse('register'),
+        ]
+
+        if request.user.is_authenticated and request.path in restricted_paths:
+            return redirect('home')  # Redirect authenticated users to home
+
+        return self.get_response(request)
+
 
 class ProfileCompletionMiddleware:
     def __init__(self, get_response):

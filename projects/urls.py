@@ -29,6 +29,7 @@ urlpatterns = [
     path('home/', views.home, name='home'),
     path('project/<int:project_id>/toggle-status/', views.toggle_project_status, name='toggle_project_status'),
     path('project/<int:project_id>/edit/', views.edit_project, name='edit_project'),
+    path('profile/<str:username>/', views.profile, name='profile'),
 
     path('project/<int:project_id>/delete/', views.delete_project, name='delete_project'),
     path('search_users/', views.search_users, name='search_users'),

@@ -1,0 +1,115 @@
+{% extends 'projects/base.html' %}
+{% load static %}
+
+{% block title %}Help & Support{% endblock %}
+
+{% block content %}
+<div class="help-container">
+    <h1 class="help-title">Help & Support</h1>
+    <p class="help-intro">Find answers to common questions about using DevLink.</p>
+
+    <div class="accordion" id="helpAccordion">
+        <!-- How to Edit Your Profile -->
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-toggle="collapse" data-target="#profileHelp">
+                    How do I edit my profile?
+                </button>
+            </h2>
+            <div id="profileHelp" class="collapse" data-parent="#helpAccordion">
+                <div class="accordion-body">
+                    <p>To edit your profile, follow these steps:</p>
+                    <ol>
+                        <li>Click on your profile picture at the top-right corner.</li>
+                        <li>Select "Edit Profile" from the dropdown menu.</li>
+                        <li>Update your information and save changes.</li>
+                    </ol>
+           
+                </div>
+            </div>
+        </div>
+
+        <!-- How to Create a Project -->
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-toggle="collapse" data-target="#createProjectHelp">
+                    How do I create a new project?
+                </button>
+            </h2>
+            <div id="createProjectHelp" class="collapse" data-parent="#helpAccordion">
+                <div class="accordion-body">
+                    <p>To create a project:</p>
+                    <ol>
+                        <li>Go to the homepage and click "Create Project".</li>
+                        <li>Fill in project details such as title, description, and skills required.</li>
+                        <li>Click "Submit" to create your project.</li>
+                    </ol>
+   
+                </div>
+            </div>
+        </div>
+
+        <!-- How to Send Messages -->
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-toggle="collapse" data-target="#messagingHelp">
+                    How do I send messages?
+                </button>
+            </h2>
+            <div id="messagingHelp" class="collapse" data-parent="#helpAccordion">
+                <div class="accordion-body">
+                    <p>You can send messages by:</p>
+                    <ol>
+                        <li>Going to "Messaging" from the navbar.</li>
+                        <li>Selecting a user or starting a new conversation.</li>
+                        <li>Typing your message and clicking "Send".</li>
+                    </ol>
+        
+                </div>
+            </div>
+        </div>
+
+        <!-- How to Manage Notifications -->
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-toggle="collapse" data-target="#notificationsHelp">
+                    How do I manage notifications?
+                </button>
+            </h2>
+            <div id="notificationsHelp" class="collapse" data-parent="#helpAccordion">
+                <div class="accordion-body">
+                    <p>To manage notifications:</p>
+                    <ol>
+                        <li>Click the bell icon on the navbar.</li>
+                        <li>View unread notifications.</li>
+                        <li>Click on a notification to mark it as read.</li>
+                    </ol>
+           
+                </div>
+            </div>
+        </div>
+
+        <!-- How to Delete a Project -->
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-toggle="collapse" data-target="#deleteProjectHelp">
+                    How do I delete a project?
+                </button>
+            </h2>
+            <div id="deleteProjectHelp" class="collapse" data-parent="#helpAccordion">
+                <div class="accordion-body">
+                    <p>To delete a project:</p>
+                    <ol>
+                        <li>Go to the project page.</li>
+                        <li>Click the "Delete" button.</li>
+                        <li>Confirm your choice to remove the project permanently.</li>
+                    </ol>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

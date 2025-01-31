@@ -62,6 +62,10 @@ def custom_login(request):
         return redirect('home')
     return auth_views.LoginView.as_view(template_name='projects/login.html')(request)
 
+@login_required
+def help_page(request):
+    return render(request, 'projects/help.html')
+
 def register(request):
     if request.user.is_authenticated:
         return redirect('home')

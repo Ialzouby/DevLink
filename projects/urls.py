@@ -4,7 +4,8 @@ from .views import register, profile, network, landing_page
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
-
+from django.urls import path
+from .views import help_page
 
 urlpatterns = [
     path('', landing_page, name='landing'),
@@ -30,6 +31,7 @@ urlpatterns = [
     path('project/<int:project_id>/toggle-status/', views.toggle_project_status, name='toggle_project_status'),
     path('project/<int:project_id>/edit/', views.edit_project, name='edit_project'),
     path('profile/<str:username>/', views.profile, name='profile'),
+    path('help/', help_page, name='help'),
 
     path('project/<int:project_id>/delete/', views.delete_project, name='delete_project'),
     path('search_users/', views.search_users, name='search_users'),

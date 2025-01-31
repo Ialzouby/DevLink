@@ -11,6 +11,7 @@ from django.utils.timesince import timesince
 from django.contrib.auth import views as auth_views
 from .forms import RatingForm, CustomUserCreationForm, MessageForm, ProjectForm, UserProfileForm
 from .models import Project, Comment, UserProfile, JoinRequest, Message, User, Notification, Update
+from django.contrib.auth import logout
 
 from cloudinary.uploader import upload
 import cloudinary
@@ -20,6 +21,71 @@ from .forms import CustomUserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, get_object_or_404
 from .models import Follow
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
+from django.http import JsonResponse
+from django.contrib.auth.models import User
+from .forms import UserSettingsForm
+from .models import UserProfile
+
+@login_required
+def settings_page(request):
+    user_profile = request.user.userprofile
+
+    if request.method == 'POST':
+        form = UserSettingsForm(request.POST, instance=user_profile)
+        password_form = PasswordChangeForm(request.user, request.POST)
+
+        if "update_settings" in request.POST:
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Your settings have been updated.")
+                return redirect('settings')
+
+        elif "change_password" in request.POST:
+            if password_form.is_valid():
+                user = password_form.save()
+                update_session_auth_hash(request, user)  # Keep user logged in after password change
+                messages.success(request, "Your password has been changed successfully.")
+                return redirect('settings')
+            else:
+                messages.error(request, "Please correct the errors below.")
+
+    else:
+        form = UserSettingsForm(instance=user_profile)
+        password_form = PasswordChangeForm(request.user)
+
+    return render(request, 'projects/settings.html', {
+        'form': form,
+        'password_form': password_form
+    })
+
+
+from django.contrib.auth import logout
+
+@login_required
+def delete_account(request):
+    if request.method == 'POST':
+        confirm_username = request.POST.get('confirm_username', '').strip().lower()  # Normalize input
+        actual_username = request.user.username.strip().lower()  # Normalize stored username
+        
+        print(f"Entered Username: {confirm_username}")  # Debugging
+        print(f"Actual Username: {actual_username}")  # Debugging
+
+        if confirm_username == actual_username:
+            user = request.user
+            logout(request)  # Log the user out before deletion
+            user.delete()
+            messages.success(request, "Your account has been deleted successfully.")
+            return redirect('home')
+        else:
+            messages.error(request, "Username does not match. Account deletion failed.")
+            return redirect('settings')
+
+    return render(request, 'projects/settings.html')
 
 
 # Profile view to display a user's profile

@@ -6,6 +6,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
 from .views import help_page
+from .views import settings_page, delete_account
+
 
 urlpatterns = [
     path('', landing_page, name='landing'),
@@ -32,7 +34,8 @@ urlpatterns = [
     path('project/<int:project_id>/edit/', views.edit_project, name='edit_project'),
     path('profile/<str:username>/', views.profile, name='profile'),
     path('help/', help_page, name='help'),
-
+    path('settings/', settings_page, name='settings'),
+    path('delete-account/', delete_account, name='delete_account'),
     path('project/<int:project_id>/delete/', views.delete_project, name='delete_project'),
     path('search_users/', views.search_users, name='search_users'),
     path('message-thread-partial/<str:recipient_username>/', views.message_thread_partial, name='message_thread_partial'),

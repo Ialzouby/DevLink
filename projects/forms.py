@@ -11,7 +11,15 @@ from django import forms
 import os
 
 from urllib.parse import urlparse
+from django import forms
+from .models import UserProfile
 
+class UserSettingsForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['bio', 'linkedin', 'github', 'profile_picture']
+
+        
 class CustomUserCreationForm(UserCreationForm):
     first_name = forms.CharField(
         widget=forms.TextInput(attrs={

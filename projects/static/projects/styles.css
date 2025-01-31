@@ -1570,6 +1570,95 @@ textarea::placeholder {
     color: #000;
 }
 
+.settings-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.settings-title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.delete-warning {
+    color: red;
+    font-weight: bold;
+}
+
+.btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.settings-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.btn {
+    margin: 10px;
+}
+
+.modal-header {
+    background-color: #007bff;
+    color: white;
+}
+
+.modal-header .close {
+    color: white;
+}
+
+.modal-body {
+    padding: 20px;
+}
+.settings-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.btn {
+    margin: 10px;
+}
+
+.delete-warning {
+    color: red;
+    font-weight: bold;
+}
+
+.modal-header.bg-danger {
+    background-color: #dc3545 !important;
+    color: white !important;
+}
+
+.modal-footer {
+    justify-content: space-between;
+}
+
+#confirmDeleteButton {
+    opacity: 0.5;
+    transition: opacity 0.3s ease-in-out;
+}
+
+#confirmDeleteButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
 
 /* ==========================================================================
    6 Cards & Components

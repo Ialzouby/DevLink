@@ -1356,6 +1356,7 @@ textarea::placeholder {
     display: block;
     font-weight: bold;
     margin-bottom: 5px;
+    color: black;
 }
 
 .filter-group select {
@@ -2626,6 +2627,7 @@ textarea::placeholder {
     text-decoration: none;
     font-size: 18px;
     transition: background 0.3s ease;
+    border: none;
 }
 
 .add-project-btn:hover {

@@ -2172,6 +2172,10 @@ textarea::placeholder {
     align-items: center; /* Vertically center the items */
 }
 
+.comment-username {
+    margin-top: 10px;
+}
+
 .comment-input textarea {
     width: 100%;
     padding: 10px;

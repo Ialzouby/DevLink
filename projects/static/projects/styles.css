@@ -2641,6 +2641,7 @@ textarea::placeholder {
     /* Rounded corners, only on left side */
     box-sizing: border-box;
     background-color: #b5b5b5 !important;
+    width: 300px !important;
 }
 
 .project-search-bar::placeholder {

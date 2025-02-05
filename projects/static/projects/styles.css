@@ -4573,6 +4573,11 @@ select.form-control,
         font-size: 20px;
         padding: 5px 10px;
     }
+
+    .search-btn {
+        font-size: 20px;
+        padding: 5px 10px;
+    }
 }
 
 @media (max-width: 768px) {

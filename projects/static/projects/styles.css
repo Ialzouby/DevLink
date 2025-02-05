@@ -1285,6 +1285,8 @@ textarea::placeholder {
     border: none;
     padding: 5px 10px;
     cursor: pointer;
+    border-radius: 5px;
+    margin-left: 20px;
 }
 
 .delete-btn:hover {

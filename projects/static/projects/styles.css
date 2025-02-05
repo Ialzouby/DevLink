@@ -1285,6 +1285,8 @@ textarea::placeholder {
     border: none;
     padding: 5px 10px;
     cursor: pointer;
+    border-radius: 5px;
+    margin-left: 20px;
 }
 
 .delete-btn:hover {
@@ -1356,6 +1358,7 @@ textarea::placeholder {
     display: block;
     font-weight: bold;
     margin-bottom: 5px;
+    color: black;
 }
 
 .filter-group select {
@@ -2239,6 +2242,10 @@ textarea::placeholder {
     align-items: center; /* Vertically center the items */
 }
 
+.comment-username {
+    margin-top: 10px;
+}
+
 .comment-input textarea {
     width: 100%;
     padding: 10px;
@@ -2696,6 +2703,7 @@ textarea::placeholder {
     text-decoration: none;
     font-size: 18px;
     transition: background 0.3s ease;
+    border: none;
 }
 
 .add-project-btn:hover {
@@ -2711,6 +2719,7 @@ textarea::placeholder {
     /* Rounded corners, only on left side */
     box-sizing: border-box;
     background-color: #b5b5b5 !important;
+    width: 300px !important;
 }
 
 .project-search-bar::placeholder {
@@ -3510,7 +3519,9 @@ p {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    height: 10%;
+
+    height: auto;  /* Adjusts height to fit content */
+    align-self: flex-start; /* Matches height of the right sidebar */
 }
 
 .unique-left-sidebar h3 {
@@ -4629,6 +4640,11 @@ select.form-control,
     }
 
     .add-project-btn {
+        font-size: 20px;
+        padding: 5px 10px;
+    }
+
+    .search-btn {
         font-size: 20px;
         padding: 5px 10px;
     }

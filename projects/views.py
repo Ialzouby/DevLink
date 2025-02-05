@@ -368,6 +368,13 @@ def project_detail(request, pk):
     return render(request, 'projects/project_detail.html', {'project': project})
 
 # Network view with search functionality
+
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.db.models import Q
+from django.contrib.auth.models import User
+
+@login_required
 def network(request):
     query = request.GET.get('q', '')  # Get search query
     if query:
@@ -378,10 +385,13 @@ def network(request):
         ).order_by('-userprofile__points')  # Filter and order users
     else:
         users = User.objects.all().order_by('-userprofile__points')  # Order users by points
-    return render(request, 'projects/network.html', {'users': users})
 
-@login_required
-# views.py
+    # Split users into groups of 9
+    group_size = 9
+    groups = [users[i:i + group_size] for i in range(0, len(users), group_size)]
+
+    return render(request, 'projects/network.html', {'groups': groups})
+
 
 @login_required
 def edit_profile(request):

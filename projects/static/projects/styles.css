@@ -3449,7 +3449,9 @@ p {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    height: 10%;
+
+    height: auto;  /* Adjusts height to fit content */
+    align-self: flex-start; /* Matches height of the right sidebar */
 }
 
 .unique-left-sidebar h3 {

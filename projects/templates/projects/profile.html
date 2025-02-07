@@ -165,6 +165,90 @@
         <p>{{ profile_user.userprofile.bio|default:"<em>No bio provided.</em>"|safe }}</p>
       </div>
 
+      <!-- ========== SKILLS SECTION (LinkedIn-Style) ========== -->
+<div class="skills-card-container">
+  <!-- Header Row -->
+  <div class="skills-card-header">
+    <h2>Skills</h2>
+
+    <!-- If it's *my* profile, show the + and pencil icons -->
+    {% if request.user == profile_user %}
+    <div class="skills-header-actions">
+      <!-- Add Skill (+) -->
+      <button class="skills-add-btn" title="Add Skill">
+        <i class="fas fa-plus"></i>
+      </button>
+      <!-- Edit Skills (pencil) -->
+      <button class="skills-edit-btn" title="Edit Skills">
+        <i class="fas fa-pencil-alt"></i>
+      </button>
+    </div>
+    {% endif %}
+  </div>
+
+  <!-- First Skill Category (example: Software Development) -->
+  <div class="skill-category-block">
+    <h3 class="skill-category-title">Software Development</h3>
+    <div class="skill-detail-line">
+      <img 
+        src="https://via.placeholder.com/24" 
+        alt="UNC Charlotte Logo" 
+        class="skill-logo"
+      />
+      University of North Carolina at Charlotte
+    </div>
+    <div class="skill-detail-line">
+      <img 
+        src="https://via.placeholder.com/32" 
+        alt="Marlon Mejias" 
+        class="endorser-pic"
+      />
+      Endorsed by Marlon Mejias (mutual connection)
+    </div>
+    <p class="skill-detail-subtext">
+      Endorsed by 1 person in the last 6 months
+    </p>
+    <a href="#" class="show-details-link">Show all 4 details →</a>
+
+    <!-- If it's another user's profile, show an Endorse button -->
+    {% if request.user != profile_user %}
+    <button class="endorse-btn">Endorse</button>
+    {% endif %}
+  </div>
+
+  <!-- Second Skill Category (example: Interpersonal Skills) -->
+  <div class="skill-category-block">
+    <h3 class="skill-category-title">Interpersonal Skills</h3>
+    <div class="skill-detail-line">
+      <img 
+        src="https://via.placeholder.com/24" 
+        alt="Company Logo" 
+        class="skill-logo"
+      />
+      4 experiences across Southeast Contracting and Restoration and 3 other companies
+    </div>
+    <div class="skill-detail-line">
+      <img 
+        src="https://via.placeholder.com/24" 
+        alt="School Logo" 
+        class="skill-logo"
+      />
+      3 educational experiences at University of North Carolina at Charlotte and 2 other schools
+    </div>
+    <a href="#" class="show-details-link">Show all 4 details →</a>
+
+    {% if request.user != profile_user %}
+    <button class="endorse-btn">Endorse</button>
+    {% endif %}
+  </div>
+
+  <!-- Footer: "Show all X skills →" link -->
+  <div class="skills-footer-link">
+    <a href="#" class="show-all-skills-link">Show all 22 skills →</a>
+  </div>
+</div>
+
+
       <div class="qz9-portfolio-section">
         <h2>Portfolio</h2>
         <div class="qz9-portfolio-grid">

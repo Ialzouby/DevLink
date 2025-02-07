@@ -1,0 +1,29 @@
+{% extends "projects/base.html" %}
+{% load static %}
+
+{% block title %}Competitions{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/competitions.css' %}">
+
+<div class="competitions-container">
+    <h2 class="page-title">Upcoming & Past Competitions</h2>
+    
+    <div class="competitions-list">
+        {% for competition in competitions %}
+        <div class="competition-card">
+            <h3 class="competition-title">{{ competition.title }}</h3>
+            <p class="competition-date">
+                <strong>Date:</strong> {{ competition.date|date:"M j, Y" }}
+            </p>
+            <p class="competition-description">
+                {{ competition.description|truncatewords:20 }}
+            </p>
+            <a href="{% url 'competition_detail' competition.id %}" class="btn-view-details">View Details</a>
+        </div>
+        {% empty %}
+        <p>No competitions available.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

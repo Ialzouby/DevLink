@@ -713,7 +713,7 @@ span.devlink-logo {
     width: 50px; /* Set profile picture width */
     height: 50px; /* Set profile picture height */
     border-radius: 50%; /* Make profile picture circular */
-    object-fit: cover; /* Crop image if it doesn’t fit */
+    object-fit: cover; /* Crop image if it doesn't fit */
     border: 2px solid #009688; /* Add a border */
 }
 
@@ -1732,120 +1732,6 @@ textarea::placeholder {
     }
 }
 
-
-/* Page Container */
-.dlk-feed-page-container {
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-    background-color: #f0f2f5; /* Light gray background like LinkedIn */
-    min-height: 80vh;
-  }
-  
-
-  
-  /* ========== Feed Header ========== */
-  .dlk-feed-header-section {
-    background-color: #ffffff;
-    border-radius: 5px;
-    border-bottom: 1px solid #eaeaea;
-  }
-  .dlk-feed-title {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin: 0;
-    color: #000000;
-  }
-  
-  /* ========== Individual Feed Item ========== */
-  .dlk-feed-item {
-    background-color: #ffffff;
-    border-radius: 8px;
-    padding: 1rem 1.5rem; /* Because we're not using .card-body now */
-    border: 1px solid #ddd;
-  }
-
-  .dlk-feed-avatar-img {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    border: 2px solid #fff;
-  }
-  .dlk-feed-project-title mb-1{
-    color: #000000;
-  }
-
-  .dlk-feed-header {
-    margin-bottom: 0.5rem;
-  }
-  .dlk-feed-username-block {
-    display: inline-block;
-  }
-  .dlk-feed-username {
-    font-weight: 600;
-    color: #333;
-    text-decoration: none;
-    margin-right: 5px;
-  }
-  .dlk-feed-username:hover {
-    text-decoration: underline;
-  }
-  
-  .dlk-feed-user-subtitle {
-    font-size: 0.85rem;
-    margin-left: 5px;
-    color: #000000;
-  }
-  .dlk-feed-timestamp {
-    font-size: 0.8rem;
-  }
-  
-  /* Activity Description */
-  .dlk-feed-activity-description p {
-    margin: 0;
-    font-size: 0.95rem;
-  }
-  
-  /* Project Preview in Feed */
-  .dlk-feed-project-preview {
-    background-color: #ffffff;
-    border: 1px solid #e6e6e6;
-    border-radius: 6px;
-    padding: 0.75rem;
-  }
-  .dlk-feed-project-title {
-    font-weight: 600;
-    margin-bottom: 0.4rem;
-  }
-  .dlk-feed-project-description {
-    font-size: 0.9rem;
-    color: #666;
-  }
-  
-  /* ========== Sidebar Column ========== */
-  .dlk-feed-sidebar-column {
-    margin-top: 2rem;
-  }
-  .dlk-feed-sidebar-box {
-    background-color: #ffffff;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    padding: 1rem;
-  }
-  .dlk-feed-sidebar-title {
-    font-size: 1.2rem;
-    font-weight: 600;
-  }
-
-  .dlk-feed-sidebar-project-title {
-    font-size: 1rem;
-    font-weight: 600;
-  }
-  .dlk-feed-sidebar-project-desc {
-    font-size: 0.9rem;
-    color: #000000;
-    margin-bottom: 0.5rem;
-  }
-  
 /* ==========================================================================
    6 Cards & Components
    ========================================================================== */
@@ -1955,7 +1841,604 @@ textarea::placeholder {
     margin-left: auto;
 }
 
+/* ------------------------------------
+   Global Feed Page Styles
+--------------------------------------- */
 
+.feed-page-container {
+    display: grid;
+    grid-template-columns: 240px 1fr 260px; /* Left sidebar, main, right sidebar */
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: "Open Sans", sans-serif;
+  }
+  
+  /* Adjust for smaller screens */
+  @media (max-width: 992px) {
+    .feed-page-container {
+      grid-template-columns: 1fr;
+    }
+    .feed-sidebar-left, .feed-sidebar-right {
+      display: none;
+    }
+  }
+  
+  /* ----- SIDEBARS ----- */
+  .feed-sidebar-left,
+  .feed-sidebar-right {
+    background-color: #fff;
+    border: 1px solid #e4e4e4;
+    border-radius: 8px;
+    padding: 20px;
+    height: fit-content;
+  }
+  
+  .sidebar-block {
+    margin-bottom: 20px;
+  }
+  
+  .sidebar-block h3 {
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+    color: #333;
+  }
+  
+  .sidebar-block ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .sidebar-block li {
+    margin: 10px 0;
+  }
+  
+  .sidebar-block a {
+    text-decoration: none;
+    color: #0073b1; /* LinkedIn-ish blue */
+  }
+  
+  .sidebar-block a:hover {
+    text-decoration: underline;
+  }
+  
+  .recommended-project {
+    margin-bottom: 15px;
+  }
+  
+  .project-title {
+    font-size: 0.95rem;
+    margin-bottom: 5px;
+  }
+  
+  .project-snippet {
+    font-size: 0.85rem;
+    color: #555;
+    margin-bottom: 5px;
+  }
+  
+  .btn-view {
+    font-size: 0.85rem;
+    background: #0073b1;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 4px;
+    text-decoration: none;
+  }
+  
+  .btn-view:hover {
+    background: #005A87;
+  }
+  
+  /* ----- MAIN SECTION ----- */
+  .feed-main-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .feed-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+  }
+  
+  .feed-title {
+    font-size: 1.5rem;
+    margin: 0;
+  }
+  
+  .btn-filter {
+    background-color: #fff;
+    color: #0073b1;
+    border: 1px solid #0073b1;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-filter:hover {
+    background-color: #0073b1;
+    color: #fff;
+  }
+
+
+  .add-project-btn {
+    background-color: #fff;
+    color: #0073b1;
+    border: 1px solid #0073b1;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.add-project-btn:hover {
+    background-color: rgb(4, 92, 92);
+    text-decoration: none;
+    color:#ffffff
+}
+
+.add-project-btn i {
+    font-size: 1.5rem;
+}
+
+.search-btn {
+    background-color: #fff;
+    color: #0073b1;
+    border: 1px solid #0073b1;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 15px;
+    margin-left: 10px;
+
+}
+
+.search-btn:hover {
+    background-color: rgb(4, 92, 92);
+}
+
+.search-btn i {
+    font-size: 1.5rem;
+}
+
+  
+  /* ----- FEED CARD ----- */
+  .feed-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    transition: box-shadow 0.2s ease;
+  }
+  
+  .feed-card:not(:last-child) {
+    margin-bottom: 10px;
+  }
+  
+  .feed-card:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  
+  .feed-card-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .avatar-img {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+  }
+  
+  .feed-card-userinfo {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .feed-card-username {
+    font-weight: 600;
+    color: #333;
+    text-decoration: none;
+  }
+  .feed-card-username:hover {
+    text-decoration: underline;
+  }
+  
+  .feed-card-time {
+    font-size: 0.85rem;
+    color: #888;
+  }
+  
+  .feed-card-body {
+    margin-bottom: 10px;
+  }
+  
+  .feed-card-text {
+    margin: 0 0 10px 0;
+    line-height: 1.5;
+  }
+  
+  .feed-project-snippet {
+    background: #f8f8f8;
+    border: 1px solid #eee;
+    padding: 10px;
+    border-radius: 6px;
+  }
+  
+  .feed-project-title {
+    margin-bottom: 5px;
+    color: #0073b1;
+  }
+  
+  .feed-project-desc {
+    font-size: 0.85rem;
+    color: #444;
+  }
+  
+  /* ----- FEED CARD FOOTER (LIKE & COMMENT) ----- */
+  .feed-card-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 15px;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+  }
+  
+  .like-form,
+  .comment-form {
+    display: inline-flex;
+    align-items: center;
+  }
+  
+  .btn-like {
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .btn-like:hover {
+    color: #0073b1;
+  }
+  
+  .liked-icon {
+    color: #0073b1;
+  }
+  
+  /* Comments info */
+  .feed-comments-info {
+    font-size: 0.9rem;
+    color: #666;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  /* Comment input */
+  .comment-form {
+    margin-left: auto; /* push to the right */
+    gap: 5px;
+  }
+  
+  .comment-input {
+    border: 1px solid #ccc;
+    padding: 5px 8px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    outline: none;
+  }
+  
+  .btn-comment {
+    background: #0073b1;
+    color: #fff;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+  }
+  
+  .btn-comment:hover {
+    background: #005A87;
+  }
+  
+  /* ----- PAGINATION ----- */
+  .feed-pagination {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    justify-content: center;
+  }
+  
+  .btn-page {
+    background: #fff;
+    color: #0073b1;
+    border: 1px solid #0073b1;
+    padding: 6px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.85rem;
+  }
+  
+  .btn-page:hover {
+    background: #0073b1;
+    color: #fff;
+  }
+  
+  .page-info {
+    font-size: 0.85rem;
+    color: #666;
+  }
+  
+  /* ------------------------------------
+     MODAL OVERLAY 
+  --------------------------------------- */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+    display: none; /* hidden by default */
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+  
+  .modal-content {
+    background: #fff;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 8px;
+    padding: 20px;
+    position: relative;
+  }
+  
+  .modal-content h3 {
+    margin-top: 0;
+  }
+  
+  .modal-content label {
+    display: block;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #444;
+  }
+  
+  .modal-content select {
+    width: 100%;
+    padding: 6px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin-top: 5px;
+  }
+  
+  .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+    gap: 10px;
+  }
+  
+  .btn-apply {
+    background: #0073b1;
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    cursor: pointer;
+  }
+  
+  .btn-apply:hover {
+    background: #005A87;
+  }
+  
+  .modal-close-btn {
+    background: #999;
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    cursor: pointer;
+  }
+  
+  .modal-close-btn:hover {
+    background: #777;
+  }
+  
+  /* Additional CSS for comment dropdown */
+
+.comments-dropdown {
+    display: none; /* hidden by default; toggled via JS */
+    margin: 10px 0 0 0;
+    padding: 10px;
+    background-color: #fafafa;
+    border: 1px solid #eee;
+    border-radius: 6px;
+  }
+  
+  .single-comment {
+    padding: 6px 0;
+    border-bottom: 1px solid #ddd;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    color: #000000;
+  }
+  
+  .single-comment:last-child {
+    border-bottom: none;
+  }
+  
+  .single-comment strong {
+    margin-right: 6px;
+    color: #333;
+  }
+  /* Make the comment icon + text appear clickable */
+.feed-comments-info {
+    color: #000000;       /* Default color (optional) */
+    cursor: pointer;   /* Show a pointer cursor on hover */
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  /* Turn it blue on hover */
+  .feed-comments-info:hover {
+    color: #0073b1; /* Or your preferred shade of blue */
+  }
+
+
+
+  /* === SKILLS CARD WRAPPER === */
+.skills-card-container {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-top: 20px;  /* space below your About section */
+    position: relative;
+    /* box-shadow: 0 1px 3px rgba(0,0,0,0.15);  (optional) */
+  }
+  
+  /* HEADER: SKILLS + (Icons) */
+  .skills-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .skills-card-header h2 {
+    font-size: 1.25rem;
+    margin: 0;
+  }
+  
+  .skills-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .skills-header-actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    color: #666;
+  }
+  
+  /* SKILL CATEGORY BLOCKS */
+  .skill-category-block {
+    padding: 12px 0;
+    border-bottom: 1px solid #f3f2ef;
+  }
+  
+  .skill-category-block:last-child {
+    border-bottom: none;  /* no line after last block */
+  }
+  
+  .skill-category-title {
+    margin: 0 0 8px 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+  
+  /* Single lines describing endorsement or institution */
+  .skill-detail-line {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 4px 0;
+    font-size: 0.95rem;
+  }
+  
+  .skill-detail-subtext {
+    color: #555;
+    font-size: 0.85rem;
+    margin: 4px 0 8px 0;
+  }
+  
+  /* The small "Show all X details →" link */
+  .show-details-link {
+    display: inline-block;
+    font-size: 0.9rem;
+    color: #0073b1;
+    text-decoration: none;
+    margin-top: 4px;
+    margin-bottom: 8px;
+  }
+  .show-details-link:hover {
+    text-decoration: underline;
+  }
+  
+  /* Footer link: "Show all X skills →" */
+  .skills-footer-link {
+    margin-top: 10px;
+    text-align: left;
+  }
+  .show-all-skills-link {
+    font-size: 0.9rem;
+    color: #0073b1;
+    text-decoration: none;
+  }
+  .show-all-skills-link:hover {
+    text-decoration: underline;
+  }
+  
+  /* Logos and endorser images */
+  .skill-logo, .endorser-pic {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px; /* or 50% for circles */
+    object-fit: cover;
+  }
+  
+  /* The "Endorse" button for visitors */
+  .endorse-btn {
+    background: #fff;
+    border: 1px solid #666;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    color: #666;
+    cursor: pointer;
+    margin-top: 6px;
+  }
+  .endorse-btn:hover {
+    background: #0073b1;
+    color: #fff;
+    border-color: #0073b1;
+  }
+  
+  
 /* ==========================================================================
    7 Profile & User Components
    ========================================================================== */
@@ -2805,23 +3288,7 @@ textarea::placeholder {
 
 
 
-.add-project-btn {
-    padding: 5px;
-    background: #28a745;
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    font-size: 18px;
-    transition: background 0.3s ease;
-    border: none;
-}
 
-.add-project-btn:hover {
-    background: #218838;
-}
 
 
 .project-search-bar {
@@ -2841,33 +3308,6 @@ textarea::placeholder {
     /* Ensure the placeholder text is fully opaque */
 }
 
-.search-btn {
-    background-color: #007373ff;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 5px;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    cursor: pointer;
-    border: none;
-    /* Remove default button border */
-    height: 100%;
-    /* Ensure it aligns with the search bar height */
-    margin-top: -15px;
-    /* Move up by 5px */
-    /* margin-left: -20px;  Move left by 10px */
-}
-
-.search-btn:hover {
-    background-color: rgb(4, 92, 92);
-}
-
-.search-btn i {
-    font-size: 1.5rem;
-}
 
 .unique-project-header {
     display: flex;
@@ -3731,30 +4171,7 @@ p {
     background-color: #003822;
 }
 
-.add-project-btn {
-    background-color: #007677ff;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 5px;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    cursor: pointer;
-    /* margin-right: 35px; */
-    /* Move left by 10px */
-}
 
-.add-project-btn:hover {
-    background-color: rgb(4, 92, 92);
-    text-decoration: none;
-    color:#ffffff
-}
-
-.add-project-btn i {
-    font-size: 1.5rem;
-}
 
 /* ==========================================================================
    35 Utility Classes & Miscellaneous
@@ -3906,12 +4323,7 @@ footer p {
 /* ==========================================================================
    42 SEARCH BAR COMPONENTS
    ========================================================================== */
-.network-search-bar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 30px;
-}
+
 
 .search-form {
     display: flex;
@@ -3922,8 +4334,8 @@ footer p {
 .network-search-form {
     display: flex;
     gap: 15px;
-    max-width: 80%;
-    width: 50%;
+    max-width: 200%;
+    width: 200%;
 }
 
 .network-search-input {
@@ -3932,7 +4344,8 @@ footer p {
     background-color: #ffffff !important;
     color: #000 !important;
     font-size: 18px;
-    width: 100%;
+    width: 200%;
+    margin-top: 13px;
 }
 
 .network-search-input::placeholder {
@@ -3963,6 +4376,7 @@ footer p {
     background-color: rgb(4, 92, 92);
 }
 
+
 .network-clear-btn {
     background-color: #444;
     align-items: center;
@@ -3975,6 +4389,201 @@ footer p {
     text-decoration: none;
     color: #ffffff;
 }
+
+
+
+
+  /* Center row with the input + three icon buttons */
+  .network-search-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; /* space between form and filter button */
+    margin-bottom: 20px;
+    margin-top: -15px;
+  }
+  
+  /* The form containing input + search + clear */
+  .network-search-form {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0; /* remove default spacing */
+  }
+  
+  /* Search Input styling */
+  .network-search-input {
+    width: 220px; /* adjust as needed */
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    outline: none;
+  }
+  
+  /* "Search" button styling */
+  .btn-search {
+    background-color: #0B5F5D; /* modern teal-ish */
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .btn-search:hover {
+    background-color: #084f4d;
+  }
+  
+  /* "Clear" button styling */
+  .btn-clear {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none; /* so it looks like a button, not a link */
+    background-color: #555; 
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .btn-clear:hover {
+    background-color: #333;
+  }
+  
+  /* Existing filter button. Just keep what you had, or style similarly. */
+  .btn-filter {
+    border: 1px solid #0073b1;
+    background: #fff;
+    color: #0073b1;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+  }
+  
+  .btn-filter:hover {
+    background-color: #f0f0f0;
+  }
+
+
+  
+  /* The form for input + search + clear */
+  .network-search-form {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+  }
+  
+  /* Search text input styling */
+  .network-search-input {
+    width: 240px;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    outline: none;
+  }
+  
+  /* Make all three buttons look alike (round, blue border) */
+  .btn-search, .btn-clear, .btn-filter {
+    border: 1px solid #0073b1;   /* same color as your filter outline */
+    background: #fff;
+    color: #0073b1;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+    text-decoration: none; /* so <a> appears as button */
+  }
+  
+  /* Hover effect for all round buttons */
+  .btn-search:hover,
+  .btn-clear:hover,
+  .btn-filter:hover {
+    background-color: #f0f0f0;
+  }
+  
+
+  /* Recommended Users Section */
+.recommended-users {
+    background: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+  }
+  
+  .recommended-users h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
+  /* User Card */
+  .recommended-user-card {
+    display: flex;
+    align-items: center;
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .recommended-user-card:hover {
+    background: #e2e6ea;
+    transform: scale(1.02);
+  }
+  
+  /* Avatar Styling */
+  .recommended-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 12px;
+  }
+  
+  .recommended-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  /* User Info */
+  .recommended-info h4 {
+    font-size: 16px;
+    margin: 0;
+    font-weight: bold;
+  }
+  
+  .recommended-info p {
+    font-size: 14px;
+    margin: 2px 0 0;
+    color: #6c757d;
+  }
+  
 
 /* ==========================================================================
    43 USER CARDS AND LIST
@@ -4258,7 +4867,7 @@ footer p {
     color: white;
     text-align: center;
     padding-top: 100px;
-    padding-bottom: 400px;
+    padding-bottom: 200px;
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -4558,20 +5167,20 @@ footer p {
 }
 
 .graphic1 {
-    top: -140px;
-    left: -50px;
+    top: -60px;
+    left: -320px;
     animation-delay: 0s;
 }
 
 .graphic2 {
-    top: 0px;
-    right: 40px;
+    top:-400px;
+    right: -440px;
     animation-delay: 1.5s;
 }
 
 .graphic3 {
     bottom: -100px;
-    left: 20px;
+    left: -50px;
     animation-delay: 3s;
 }
 
@@ -4601,6 +5210,9 @@ select.form-control,
     border-radius: 5px;
 
 }
+
+
+
 /* Animation for subtle floating effect */
 @keyframes float {
 

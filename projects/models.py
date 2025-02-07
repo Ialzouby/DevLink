@@ -69,6 +69,25 @@ class UserProfile(models.Model):
         return f'{self.user.username} Profile'
 
 
+from django.db import models
+from django.contrib.auth.models import User
+
+class Competition(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    date = models.DateField()
+
+    def __str__(self):
+        return self.title
+
+class TrainingRegistration(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    full_name = models.CharField(max_length=100)
+    email = models.EmailField()
+    training_type = models.CharField(max_length=50)
+
+    def __str__(self):
+        return f"{self.full_name} - {self.training_type}"
 
 
 # Project model
@@ -238,7 +257,7 @@ class FeedItemLike(models.Model):
     def __str__(self):
         return f"{self.user.username} liked feed item #{self.feed_item.id}"
     
-    
+
 
 
 class FeedItemComment(models.Model):

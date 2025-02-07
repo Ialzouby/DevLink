@@ -6,14 +6,12 @@
 
 <!-- Use your existing feed.css -->
 <link rel="stylesheet" href="{% static 'css/feed.css' %}">
-<link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-/>
+<link rel="stylesheet" href="{% static 'css/recommended_users.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
 
 <div class="feed-page-container">
 
-  <!-- Left Sidebar (Optional) -->
+  <!-- Left Sidebar -->
   <aside class="feed-sidebar-left">
     <div class="sidebar-block">
       <h3>Menu</h3>
@@ -30,228 +28,146 @@
     <div class="feed-header-row">
       <h2 class="feed-title">Your Feed</h2>
       <button id="openFilterModal" class="btn-filter">
-        Filter <i class="fas fa-filter"></i>
+        <i class="fas fa-filter"></i>
       </button>
     </div>
 
     <!-- Loop Through Feed Items -->
     {% for item in page_obj %}
     <div class="feed-card">
-
-      <!-- Card Header -->
       <div class="feed-card-header">
         {% if item.user and item.user.username %}
-          <!-- If user is valid and has a username -->
           <a href="{% url 'profile' item.user.username %}">
             {% if item.user.userprofile and item.user.userprofile.profile_picture %}
-              <img
-                class="avatar-img"
-                src="{{ item.user.userprofile.profile_picture|safe }}"
-                alt="{{ item.user.username }}"
-              >
+              <img class="avatar-img" src="{{ item.user.userprofile.profile_picture|safe }}" alt="{{ item.user.username }}">
             {% else %}
-              <img
-                class="avatar-img"
-                src="https://via.placeholder.com/55"
-                alt="Unknown User"
-              >
+              <img class="avatar-img" src="https://via.placeholder.com/55" alt="Unknown User">
             {% endif %}
           </a>
           <div class="feed-card-userinfo">
-            <a class="feed-card-username" href="{% url 'profile' item.user.username %}">
-              {{ item.user.username }}
-            </a>
-            <span class="feed-card-time">
-              {{ item.created_at|timesince }} ago
-            </span>
-          </div>
-        {% else %}
-          <!-- Fallback if item.user is missing or username is empty -->
-          <div class="feed-card-userinfo">
-            <img
-              class="avatar-img"
-              src="https://via.placeholder.com/55"
-              alt="Unknown User"
-            >
-            <span class="feed-card-username">Unknown User</span>
-            <span class="feed-card-time">
-              {{ item.created_at|timesince }} ago
-            </span>
+            <a class="feed-card-username" href="{% url 'profile' item.user.username %}">{{ item.user.username }}</a>
+            <span class="feed-card-time">{{ item.created_at|timesince }} ago</span>
           </div>
         {% endif %}
       </div>
 
-      <!-- Card Body -->
       <div class="feed-card-body">
         <p class="feed-card-text">{{ item.content }}</p>
         {% if item.project %}
-        <div class="feed-project-snippet">
-          <p class="feed-project-title"><strong>{{ item.project.title }}</strong></p>
-          <p class="feed-project-desc">{{ item.project.description|truncatechars:100 }}</p>
-        </div>
+          <div class="feed-project-snippet">
+            <p class="feed-project-title"><strong>{{ item.project.title }}</strong></p>
+            <p class="feed-project-desc">{{ item.project.description|truncatechars:100 }}</p>
+          </div>
         {% endif %}
       </div>
 
-      <!-- Card Footer -->
       <div class="feed-card-footer">
-        <!-- Like Form -->
         <form method="POST" action="{% url 'like_feed_item' item.id %}" class="like-form">
           {% csrf_token %}
           <button type="submit" class="btn-like">
             {% if item.user_liked %}
-              <i class="fas fa-thumbs-up liked-icon"></i>
-              <span>Unlike ({{ item.likes.count }})</span>
+              <i class="fas fa-thumbs-up liked-icon"></i> <span>Unlike ({{ item.likes.count }})</span>
             {% else %}
-              <i class="far fa-thumbs-up"></i>
-              <span>Like ({{ item.likes.count }})</span>
+              <i class="far fa-thumbs-up"></i> <span>Like ({{ item.likes.count }})</span>
             {% endif %}
           </button>
         </form>
-
-        <!-- Comment Count: Toggles the hidden comments section -->
         <div class="feed-comments-info" onclick="toggleComments('comments-section-{{ item.id }}')">
-          <i class="far fa-comment"></i>
-          <span>{{ item.feed_comments.count }} comments</span>
+          <i class="far fa-comment"></i> <span>{{ item.feed_comments.count }} comments</span>
         </div>
-
-        <!-- Comment Form -->
         <form method="POST" action="{% url 'comment_on_feed_item' item.id %}" class="comment-form">
           {% csrf_token %}
-          <input
-            class="comment-input"
-            type="text"
-            name="content"
-            placeholder="Add a comment..."
-            required
-          >
+          <input class="comment-input" type="text" name="content" placeholder="Add a comment..." required>
           <button class="btn-comment">Comment</button>
         </form>
       </div>
 
-      <!-- Comments Dropdown (hidden by default) -->
-      <div
-        id="comments-section-{{ item.id }}"
-        class="comments-dropdown"
-      >
+      <div id="comments-section-{{ item.id }}" class="comments-dropdown">
         {% for comment in item.feed_comments.all %}
         <div class="single-comment">
-          <strong>
-            {% if comment.user and comment.user.username %}
-              {{ comment.user.username }}
-            {% else %}
-              Unknown User
-            {% endif %}
-          </strong>: 
-          <span>{{ comment.content }}</span>
+          <strong>{{ comment.user.username }}</strong>: <span>{{ comment.content }}</span>
         </div>
         {% empty %}
         <div class="single-comment">No comments yet.</div>
         {% endfor %}
       </div>
-
     </div>
     {% endfor %}
-    <!-- End for loop -->
 
     <!-- Pagination -->
     <div class="feed-pagination">
       {% if page_obj.has_previous %}
         <a href="?page={{ page_obj.previous_page_number }}" class="btn-page">« Previous</a>
       {% endif %}
-      <span class="page-info">
-        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
-      </span>
+      <span class="page-info">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
       {% if page_obj.has_next %}
         <a href="?page={{ page_obj.next_page_number }}" class="btn-page">Next »</a>
       {% endif %}
     </div>
   </main>
 
-  <!-- Right Sidebar (Recommended) -->
-  <aside class="feed-sidebar-right">
-    <div class="sidebar-block">
-      <h3>Recommended Projects</h3>
-      {% if recommended_projects %}
-        {% for project in recommended_projects %}
-          <div class="recommended-project">
-            <p class="project-title"><strong>{{ project.title }}</strong></p>
-            <p class="project-snippet">{{ project.description|truncatechars:80 }}</p>
-            <a href="{% url 'project' project.id %}" class="btn-view">View</a>
-          </div>
-        {% endfor %}
-      {% else %}
-        <p>No recommendations yet.</p>
-      {% endif %}
+<!-- Right Sidebar (Recommended) -->
+<!-- Right Sidebar (Recommended) -->
+<!-- Right Sidebar (Recommended) -->
+<aside class="feed-sidebar-right">
+
+    <!-- 🔹 Recommended Projects (Fully Separate Block) -->
+    <div class="recommended-projects-block">
+        <h3>Recommended Projects</h3>
+        {% if recommended_projects %}
+            {% for project in recommended_projects %}
+                <div class="recommended-project">
+                    <p class="project-title"><strong>{{ project.title }}</strong></p>
+                    <a href="{% url 'project' project.id %}" class="btn-view">View</a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No recommended projects yet.</p>
+        {% endif %}
     </div>
-  </aside>
+
+    <!-- 🔹 Recommended Users (Now a Fully Separate Block) -->
+    <div class="recommended-users-block">
+        <h3>Recommended Users</h3>
+        {% if top_users %}
+            <div class="recommended-users-list">
+                {% for user in top_users|slice:":3" %}  <!-- Only Top 3 Users -->
+                    <a href="{% url 'profile' user.user.username %}" class="recommended-user-card">
+                        <div class="recommended-user-content">
+                            <div class="recommended-avatar">
+                                {% if user.profile_picture %}
+                                    <img src="{{ user.profile_picture|safe }}" alt="{{ user.user.username }}">
+                                {% else %}
+                                    <img src="https://via.placeholder.com/50" alt="{{ user.user.username }}">
+                                {% endif %}
+                            </div>
+                            <div class="recommended-info">
+                                <h4>{{ user.user.first_name }} {{ user.user.last_name }}</h4>
+                                <p>{{ user.grade_level }} | {{ user.concentration }}</p>
+                            </div>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No recommended users available.</p>
+        {% endif %}
+    </div>
+
+</aside>
+
+
+
+
 </div>
 
-<!-- Filter Modal -->
-<div id="feedFilterModal" class="modal-overlay">
-  <div class="modal-content">
-    <h3>Filter Feed</h3>
-    <form method="GET" action="">
-      <label for="filter_mode">Feed Mode:</label>
-      <select name="filter_mode" id="filter_mode">
-        <option value="global" {% if filter_mode == 'global' %}selected{% endif %}>
-          Global Feed
-        </option>
-        <option value="following" {% if filter_mode == 'following' %}selected{% endif %}>
-          Following Feed
-        </option>
-      </select>
-
-      <label for="event_type">Event Type:</label>
-      <select name="event_type" id="event_type">
-        <option value="">All Types</option>
-        <option value="project_created" {% if event_type_filter == 'project_created' %}selected{% endif %}>
-          Project Created
-        </option>
-        <option value="project_joined" {% if event_type_filter == 'project_joined' %}selected{% endif %}>
-          Project Joined
-        </option>
-        <option value="comment_added" {% if event_type_filter == 'comment_added' %}selected{% endif %}>
-          Comment Added
-        </option>
-      </select>
-
-      <div class="modal-actions">
-        <button type="submit" class="btn-apply">Apply</button>
-        <button type="button" class="modal-close-btn" id="closeFilterModal">Close</button>
-      </div>
-    </form>
-  </div>
-</div>
-
-<!-- JS for toggling comments + filter modal -->
+<!-- JavaScript -->
 <script>
   function toggleComments(sectionId) {
     const section = document.getElementById(sectionId);
     if (!section) return;
-    if (section.style.display === 'none' || section.style.display === '') {
-      section.style.display = 'block';
-    } else {
-      section.style.display = 'none';
-    }
+    section.style.display = (section.style.display === 'none' || section.style.display === '') ? 'block' : 'none';
   }
-
-  const openFilterModalBtn = document.getElementById('openFilterModal');
-  const closeFilterModalBtn = document.getElementById('closeFilterModal');
-  const filterModal = document.getElementById('feedFilterModal');
-
-  openFilterModalBtn.addEventListener('click', () => {
-    filterModal.style.display = 'flex';
-  });
-
-  closeFilterModalBtn.addEventListener('click', () => {
-    filterModal.style.display = 'none';
-  });
-
-  window.onclick = function(event) {
-    if (event.target === filterModal) {
-      filterModal.style.display = 'none';
-    }
-  };
 </script>
 
 {% endblock %}

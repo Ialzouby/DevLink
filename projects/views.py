@@ -728,6 +728,16 @@ def feed_view(request):
     paginator = Paginator(feed_queryset, 10)  # Show 10 feed items per page
     page_obj = paginator.get_page(page_number)
 
+        # ✅ Fetch Recommended Users (Top 3 by points)
+    top_users = (
+        UserProfile.objects.all()
+        .order_by("-points")[:3]  # Ensure we get only top 3 users
+    )
+
+    # ✅ Fetch Recommended Projects (if applicable)
+    recommended_projects = Project.objects.filter(completed=False)[:3]
+
+
     # 4) **Precompute user-like status to fix template issue**
     for item in page_obj:
         item.user_liked = item.likes.filter(user=request.user).exists()
@@ -753,12 +763,17 @@ def feed_view(request):
         })
 
     # 6) **Render the full template for normal page load**
+    # 6) **Render the full template for normal page load**
     context = {
         'page_obj': page_obj,
         'filter_mode': filter_mode,
         'event_type_filter': event_type_filter,
+        'top_users': top_users,  # ✅ Pass recommended users to the template
+        'recommended_projects': recommended_projects,  # ✅ Pass recommended projects to the template
     }
+
     return render(request, 'projects/feeds.html', context)
+
 
 
 # ----------------------------------------
@@ -794,3 +809,32 @@ def comment_on_feed_item(request, feed_item_id):
         return redirect('feed')  # or wherever you want to go after
     return HttpResponseForbidden("Invalid request")
 
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
+from .models import Competition, TrainingRegistration
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def competitions(request):
+    competitions = Competition.objects.all().order_by("-date")
+    return render(request, "projects/competitions.html", {"competitions": competitions})
+
+@login_required
+def training(request):
+    if request.method == "POST":
+        full_name = request.POST.get("full_name")
+        email = request.POST.get("email")
+        training_type = request.POST.get("training_type")
+
+        # Save training registration
+        TrainingRegistration.objects.create(
+            user=request.user,
+            full_name=full_name,
+            email=email,
+            training_type=training_type,
+        )
+
+        messages.success(request, "You have successfully registered for the training.")
+        return redirect("training")
+
+    return render(request, "projects/training.html")

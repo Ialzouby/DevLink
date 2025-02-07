@@ -1,6 +1,6 @@
 from django.urls import path, include
 from . import views
-from .views import register, profile, network, landing_page
+from .views import register, profile, network, landing_page, feed_view, like_feed_item, comment_on_feed_item
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
@@ -42,7 +42,10 @@ urlpatterns = [
     path('follow/<str:username>/', views.follow_user, name='follow_user'),
     path('unfollow/<str:username>/', views.unfollow_user, name='unfollow_user'),
     path('profile/<str:username>/upload-banner/', views.upload_banner, name='upload_banner'),
-
+    path('feed/', feed_view, name='feed'),
+    path('feed/<int:feed_item_id>/like/', like_feed_item, name='like_feed_item'),
+    path('feed/<int:feed_item_id>/comment/', comment_on_feed_item, name='comment_on_feed_item'),
+ 
 ]
 
 

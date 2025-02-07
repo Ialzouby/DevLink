@@ -635,13 +635,36 @@ def message_thread_partial(request, recipient_username):
 # views.py
 
 
+# --- IMPORTS --- #
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponseForbidden, JsonResponse
+from django.core.paginator import Paginator
+from django.db.models import Q
+from django.contrib.auth.decorators import login_required
+from django.utils import timezone
+from django.contrib.auth import get_user_model
+
+from .models import (
+    Project,
+    UserProfile,
+    Follow,
+    FeedItem,
+    FeedItemLike,
+    FeedItemComment,
+)
+
+User = get_user_model()
+
+# ----------------------------------------
+# FOLLOW / UNFOLLOW VIEWS
+# ----------------------------------------
 @login_required
 def follow_user(request, username):
     user_to_follow = get_object_or_404(User, username=username)
     if user_to_follow != request.user:
         # Create follow relationship if not existing
         Follow.objects.get_or_create(
-            follower=request.user, 
+            follower=request.user,
             following=user_to_follow
         )
     return redirect('profile', username=username)
@@ -653,7 +676,121 @@ def unfollow_user(request, username):
     if user_to_unfollow != request.user:
         # Delete the relationship if exists
         Follow.objects.filter(
-            follower=request.user, 
+            follower=request.user,
             following=user_to_unfollow
         ).delete()
     return redirect('profile', username=username)
+
+
+# ----------------------------------------
+# FEED VIEW
+# ----------------------------------------
+from django.core.paginator import Paginator
+from django.db.models import Q
+from django.http import JsonResponse
+from django.shortcuts import render, get_object_or_404
+from django.utils import timezone
+from django.contrib.auth.decorators import login_required
+from .models import FeedItem, Follow, FeedItemLike
+
+@login_required
+def feed_view(request):
+    """
+    Display a feed of events based on either:
+      - 'global': all feed items
+      - 'following': feed items from the user itself + the users they follow
+      - filters by event_type if specified
+    Supports infinite scrolling with AJAX pagination.
+    """
+    filter_mode = request.GET.get('filter_mode', 'global')  # Default to 'global'
+    event_type_filter = request.GET.get('event_type', '')  # e.g. 'project_joined', 'comment_added'
+
+    # Base QuerySet (all feed items)
+    feed_queryset = FeedItem.objects.all().order_by('-created_at')
+
+    # 1) **Filter by 'global' or 'following' mode**
+    if filter_mode == 'following':
+        # Get users the current user follows
+        following_user_ids = Follow.objects.filter(
+            follower=request.user
+        ).values_list('following_id', flat=True)
+
+        # Include the logged-in user's own posts
+        user_ids = list(following_user_ids) + [request.user.id]
+        feed_queryset = feed_queryset.filter(user__id__in=user_ids)
+
+    # 2) **Filter by event type if specified**
+    if event_type_filter:
+        feed_queryset = feed_queryset.filter(event_type=event_type_filter)
+
+    # 3) **Pagination for infinite scrolling**
+    page_number = request.GET.get('page', 1)
+    paginator = Paginator(feed_queryset, 10)  # Show 10 feed items per page
+    page_obj = paginator.get_page(page_number)
+
+    # 4) **Precompute user-like status to fix template issue**
+    for item in page_obj:
+        item.user_liked = item.likes.filter(user=request.user).exists()
+
+    # 5) **Handle AJAX requests for infinite scroll**
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        feed_data = []
+        for item in page_obj:
+            feed_data.append({
+                'id': item.id,
+                'user': item.user.username,
+                'event_type': item.event_type,
+                'content': item.content,
+                'created_at': item.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+                'project_title': item.project.title if item.project else None,
+                'likes_count': item.likes.count(),
+                'comments_count': item.feed_comments.count(),
+                'user_liked': item.user_liked,  # Send user-like status to frontend
+            })
+        return JsonResponse({
+            'feed_items': feed_data,
+            'has_next': page_obj.has_next(),
+        })
+
+    # 6) **Render the full template for normal page load**
+    context = {
+        'page_obj': page_obj,
+        'filter_mode': filter_mode,
+        'event_type_filter': event_type_filter,
+    }
+    return render(request, 'projects/feeds.html', context)
+
+
+# ----------------------------------------
+# FEED-ITEM LIKES & COMMENTS
+# ----------------------------------------
+@login_required
+def like_feed_item(request, feed_item_id):
+    """
+    Toggle like on a feed item for the logged-in user.
+    If already liked, unlike it; else like it.
+    """
+    if request.method == 'POST':
+        feed_item = get_object_or_404(FeedItem, id=feed_item_id)
+        existing_like = feed_item.likes.filter(user=request.user).first()
+        if existing_like:
+            existing_like.delete()  # user unlikes
+        else:
+            feed_item.likes.create(user=request.user)
+        return redirect('feed')  # or redirect back to next URL
+    return HttpResponseForbidden("Invalid request")
+
+
+@login_required
+def comment_on_feed_item(request, feed_item_id):
+    """
+    Post a comment on a feed item.
+    """
+    if request.method == 'POST':
+        feed_item = get_object_or_404(FeedItem, id=feed_item_id)
+        content = request.POST.get('content', '').strip()
+        if content:
+            feed_item.feed_comments.create(user=request.user, content=content)
+        return redirect('feed')  # or wherever you want to go after
+    return HttpResponseForbidden("Invalid request")
+

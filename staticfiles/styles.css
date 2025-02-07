@@ -1285,6 +1285,8 @@ textarea::placeholder {
     border: none;
     padding: 5px 10px;
     cursor: pointer;
+    border-radius: 5px;
+    margin-left: 20px;
 }
 
 .delete-btn:hover {
@@ -1356,6 +1358,7 @@ textarea::placeholder {
     display: block;
     font-weight: bold;
     margin-bottom: 5px;
+    color: black;
 }
 
 .filter-group select {
@@ -1660,6 +1663,189 @@ textarea::placeholder {
     cursor: not-allowed;
 }
 
+
+/* Ensure full page width is used */
+.network-page-container {
+    width: 100%;
+    max-width: 1200px;  /* Adjust as needed */
+    margin: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Large Card Containers */
+.network-groups-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+}
+
+/* Each Large Card */
+.network-group {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    width: 100%;
+    min-height: 250px; /* Ensures height stability */
+}
+
+/* Individual User Cards */
+.network-user-card {
+    display: flex;
+    align-items: center;
+    background: #f9f9f9;
+    border-radius: 8px;
+    padding: 12px;
+    transition: transform 0.2s ease-in-out;
+    min-width: 220px;
+    max-width: 350px;
+}
+
+.network-user-card:hover {
+    transform: scale(1.02);
+}
+
+/* User Info */
+.network-user-info {
+    margin-left: 15px;
+    flex-grow: 1;
+}
+
+/* Ensure the grid is responsive */
+@media (max-width: 1100px) {
+    .network-group {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns on medium screens */
+    }
+}
+
+@media (max-width: 750px) {
+    .network-group {
+        grid-template-columns: repeat(1, 1fr); /* 1 column on small screens */
+    }
+}
+
+
+/* Page Container */
+.dlk-feed-page-container {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    background-color: #f0f2f5; /* Light gray background like LinkedIn */
+    min-height: 80vh;
+  }
+  
+
+  
+  /* ========== Feed Header ========== */
+  .dlk-feed-header-section {
+    background-color: #ffffff;
+    border-radius: 5px;
+    border-bottom: 1px solid #eaeaea;
+  }
+  .dlk-feed-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0;
+    color: #000000;
+  }
+  
+  /* ========== Individual Feed Item ========== */
+  .dlk-feed-item {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1rem 1.5rem; /* Because we're not using .card-body now */
+    border: 1px solid #ddd;
+  }
+
+  .dlk-feed-avatar-img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border: 2px solid #fff;
+  }
+  .dlk-feed-project-title mb-1{
+    color: #000000;
+  }
+
+  .dlk-feed-header {
+    margin-bottom: 0.5rem;
+  }
+  .dlk-feed-username-block {
+    display: inline-block;
+  }
+  .dlk-feed-username {
+    font-weight: 600;
+    color: #333;
+    text-decoration: none;
+    margin-right: 5px;
+  }
+  .dlk-feed-username:hover {
+    text-decoration: underline;
+  }
+  
+  .dlk-feed-user-subtitle {
+    font-size: 0.85rem;
+    margin-left: 5px;
+    color: #000000;
+  }
+  .dlk-feed-timestamp {
+    font-size: 0.8rem;
+  }
+  
+  /* Activity Description */
+  .dlk-feed-activity-description p {
+    margin: 0;
+    font-size: 0.95rem;
+  }
+  
+  /* Project Preview in Feed */
+  .dlk-feed-project-preview {
+    background-color: #ffffff;
+    border: 1px solid #e6e6e6;
+    border-radius: 6px;
+    padding: 0.75rem;
+  }
+  .dlk-feed-project-title {
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+  }
+  .dlk-feed-project-description {
+    font-size: 0.9rem;
+    color: #666;
+  }
+  
+  /* ========== Sidebar Column ========== */
+  .dlk-feed-sidebar-column {
+    margin-top: 2rem;
+  }
+  .dlk-feed-sidebar-box {
+    background-color: #ffffff;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    padding: 1rem;
+  }
+  .dlk-feed-sidebar-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+
+  .dlk-feed-sidebar-project-title {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  .dlk-feed-sidebar-project-desc {
+    font-size: 0.9rem;
+    color: #000000;
+    margin-bottom: 0.5rem;
+  }
+  
 /* ==========================================================================
    6 Cards & Components
    ========================================================================== */
@@ -2169,6 +2355,10 @@ textarea::placeholder {
     align-items: center; /* Vertically center the items */
 }
 
+.comment-username {
+    margin-top: 10px;
+}
+
 .comment-input textarea {
     width: 100%;
     padding: 10px;
@@ -2626,6 +2816,7 @@ textarea::placeholder {
     text-decoration: none;
     font-size: 18px;
     transition: background 0.3s ease;
+    border: none;
 }
 
 .add-project-btn:hover {
@@ -2641,6 +2832,7 @@ textarea::placeholder {
     /* Rounded corners, only on left side */
     box-sizing: border-box;
     background-color: #b5b5b5 !important;
+    width: 300px !important;
 }
 
 .project-search-bar::placeholder {
@@ -3440,7 +3632,9 @@ p {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    height: 10%;
+
+    height: auto;  /* Adjusts height to fit content */
+    align-self: flex-start; /* Matches height of the right sidebar */
 }
 
 .unique-left-sidebar h3 {
@@ -4559,6 +4753,11 @@ select.form-control,
     }
 
     .add-project-btn {
+        font-size: 20px;
+        padding: 5px 10px;
+    }
+
+    .search-btn {
         font-size: 20px;
         padding: 5px 10px;
     }

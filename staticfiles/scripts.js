@@ -248,3 +248,44 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
     
+    document.addEventListener("DOMContentLoaded", function () {
+        // Ensure this script only runs on the settings page
+        if (!document.getElementById("deleteAccountModal")) {
+            console.log("⚠️ Not on the settings page. Skipping delete account script.");
+            return;
+        }
+    
+        const confirmUsernameInput = document.getElementById("confirmUsernameInput");
+        const confirmDeleteButton = document.getElementById("confirmDeleteButton");
+        const confirmUsernameHidden = document.getElementById("confirmUsernameHidden");
+    
+        // 🛑 FIX: Prevent JavaScript errors if elements are missing
+        if (!confirmUsernameInput || !confirmDeleteButton || !confirmUsernameHidden) {
+            console.error("⚠️ One or more required elements not found in DOM. Exiting script.");
+            return;  // Stop execution if elements are missing
+        }
+    
+        const expectedUsername = confirmDeleteButton.dataset.username.trim(); // Get username from dataset
+    
+        console.log("✅ Expected Username:", expectedUsername);
+    
+        confirmUsernameInput.addEventListener("input", function () {
+            const typedUsername = confirmUsernameInput.value.trim();
+            confirmUsernameHidden.value = typedUsername;
+    
+            console.log("Typed Username:", typedUsername);
+    
+            if (typedUsername === expectedUsername) {
+                console.log("✅ Username matches! Enabling button...");
+                confirmDeleteButton.disabled = false;
+                confirmDeleteButton.style.opacity = "1";
+                confirmDeleteButton.style.cursor = "pointer";
+            } else {
+                console.log("❌ Username does not match. Button remains disabled.");
+                confirmDeleteButton.disabled = true;
+                confirmDeleteButton.style.opacity = "0.5";
+                confirmDeleteButton.style.cursor = "not-allowed";
+            }
+        });
+    });
+    

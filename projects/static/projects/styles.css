@@ -713,7 +713,7 @@ span.devlink-logo {
     width: 50px; /* Set profile picture width */
     height: 50px; /* Set profile picture height */
     border-radius: 50%; /* Make profile picture circular */
-    object-fit: cover; /* Crop image if it doesn’t fit */
+    object-fit: cover; /* Crop image if it doesn't fit */
     border: 2px solid #009688; /* Add a border */
 }
 
@@ -1732,7 +1732,6 @@ textarea::placeholder {
     }
 }
 
-
 /* ==========================================================================
    6 Cards & Components
    ========================================================================== */
@@ -1842,7 +1841,431 @@ textarea::placeholder {
     margin-left: auto;
 }
 
+/* ------------------------------------
+   Global Feed Page Styles
+--------------------------------------- */
 
+.feed-page-container {
+    display: grid;
+    grid-template-columns: 240px 1fr 260px; /* Left sidebar, main, right sidebar */
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: "Open Sans", sans-serif;
+  }
+  
+  /* Adjust for smaller screens */
+  @media (max-width: 992px) {
+    .feed-page-container {
+      grid-template-columns: 1fr;
+    }
+    .feed-sidebar-left, .feed-sidebar-right {
+      display: none;
+    }
+  }
+  
+  /* ----- SIDEBARS ----- */
+  .feed-sidebar-left,
+  .feed-sidebar-right {
+    background-color: #fff;
+    border: 1px solid #e4e4e4;
+    border-radius: 8px;
+    padding: 20px;
+    height: fit-content;
+  }
+  
+  .sidebar-block {
+    margin-bottom: 20px;
+  }
+  
+  .sidebar-block h3 {
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+    color: #333;
+  }
+  
+  .sidebar-block ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .sidebar-block li {
+    margin: 10px 0;
+  }
+  
+  .sidebar-block a {
+    text-decoration: none;
+    color: #0073b1; /* LinkedIn-ish blue */
+  }
+  
+  .sidebar-block a:hover {
+    text-decoration: underline;
+  }
+  
+  .recommended-project {
+    margin-bottom: 15px;
+  }
+  
+  .project-title {
+    font-size: 0.95rem;
+    margin-bottom: 5px;
+  }
+  
+  .project-snippet {
+    font-size: 0.85rem;
+    color: #555;
+    margin-bottom: 5px;
+  }
+  
+  .btn-view {
+    font-size: 0.85rem;
+    background: #0073b1;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 4px;
+    text-decoration: none;
+  }
+  
+  .btn-view:hover {
+    background: #005A87;
+  }
+  
+  /* ----- MAIN SECTION ----- */
+  .feed-main-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .feed-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+  }
+  
+  .feed-title {
+    font-size: 1.5rem;
+    margin: 0;
+  }
+  
+  .btn-filter {
+    background-color: #fff;
+    color: #0073b1;
+    border: 1px solid #0073b1;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-filter:hover {
+    background-color: #0073b1;
+    color: #fff;
+  }
+  
+  /* ----- FEED CARD ----- */
+  .feed-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    transition: box-shadow 0.2s ease;
+  }
+  
+  .feed-card:not(:last-child) {
+    margin-bottom: 10px;
+  }
+  
+  .feed-card:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  
+  .feed-card-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .avatar-img {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+  }
+  
+  .feed-card-userinfo {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .feed-card-username {
+    font-weight: 600;
+    color: #333;
+    text-decoration: none;
+  }
+  .feed-card-username:hover {
+    text-decoration: underline;
+  }
+  
+  .feed-card-time {
+    font-size: 0.85rem;
+    color: #888;
+  }
+  
+  .feed-card-body {
+    margin-bottom: 10px;
+  }
+  
+  .feed-card-text {
+    margin: 0 0 10px 0;
+    line-height: 1.5;
+  }
+  
+  .feed-project-snippet {
+    background: #f8f8f8;
+    border: 1px solid #eee;
+    padding: 10px;
+    border-radius: 6px;
+  }
+  
+  .feed-project-title {
+    margin-bottom: 5px;
+    color: #0073b1;
+  }
+  
+  .feed-project-desc {
+    font-size: 0.85rem;
+    color: #444;
+  }
+  
+  /* ----- FEED CARD FOOTER (LIKE & COMMENT) ----- */
+  .feed-card-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 15px;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+  }
+  
+  .like-form,
+  .comment-form {
+    display: inline-flex;
+    align-items: center;
+  }
+  
+  .btn-like {
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .btn-like:hover {
+    color: #0073b1;
+  }
+  
+  .liked-icon {
+    color: #0073b1;
+  }
+  
+  /* Comments info */
+  .feed-comments-info {
+    font-size: 0.9rem;
+    color: #666;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  /* Comment input */
+  .comment-form {
+    margin-left: auto; /* push to the right */
+    gap: 5px;
+  }
+  
+  .comment-input {
+    border: 1px solid #ccc;
+    padding: 5px 8px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    outline: none;
+  }
+  
+  .btn-comment {
+    background: #0073b1;
+    color: #fff;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+  }
+  
+  .btn-comment:hover {
+    background: #005A87;
+  }
+  
+  /* ----- PAGINATION ----- */
+  .feed-pagination {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    justify-content: center;
+  }
+  
+  .btn-page {
+    background: #fff;
+    color: #0073b1;
+    border: 1px solid #0073b1;
+    padding: 6px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.85rem;
+  }
+  
+  .btn-page:hover {
+    background: #0073b1;
+    color: #fff;
+  }
+  
+  .page-info {
+    font-size: 0.85rem;
+    color: #666;
+  }
+  
+  /* ------------------------------------
+     MODAL OVERLAY 
+  --------------------------------------- */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+    display: none; /* hidden by default */
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+  
+  .modal-content {
+    background: #fff;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 8px;
+    padding: 20px;
+    position: relative;
+  }
+  
+  .modal-content h3 {
+    margin-top: 0;
+  }
+  
+  .modal-content label {
+    display: block;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #444;
+  }
+  
+  .modal-content select {
+    width: 100%;
+    padding: 6px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin-top: 5px;
+  }
+  
+  .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+    gap: 10px;
+  }
+  
+  .btn-apply {
+    background: #0073b1;
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    cursor: pointer;
+  }
+  
+  .btn-apply:hover {
+    background: #005A87;
+  }
+  
+  .modal-close-btn {
+    background: #999;
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    cursor: pointer;
+  }
+  
+  .modal-close-btn:hover {
+    background: #777;
+  }
+  
+  /* Additional CSS for comment dropdown */
+
+.comments-dropdown {
+    display: none; /* hidden by default; toggled via JS */
+    margin: 10px 0 0 0;
+    padding: 10px;
+    background-color: #fafafa;
+    border: 1px solid #eee;
+    border-radius: 6px;
+  }
+  
+  .single-comment {
+    padding: 6px 0;
+    border-bottom: 1px solid #ddd;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    color: #000000;
+  }
+  
+  .single-comment:last-child {
+    border-bottom: none;
+  }
+  
+  .single-comment strong {
+    margin-right: 6px;
+    color: #333;
+  }
+  /* Make the comment icon + text appear clickable */
+.feed-comments-info {
+    color: #000000;       /* Default color (optional) */
+    cursor: pointer;   /* Show a pointer cursor on hover */
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  /* Turn it blue on hover */
+  .feed-comments-info:hover {
+    color: #0073b1; /* Or your preferred shade of blue */
+  }
+  
 /* ==========================================================================
    7 Profile & User Components
    ========================================================================== */

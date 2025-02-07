@@ -91,3 +91,105 @@ def notify_project_owner_on_join_request(sender, instance, created, **kwargs):
         )
     )
 
+from django.db.models.signals import post_save, m2m_changed
+from django.dispatch import receiver
+from django.urls import reverse
+from django.utils import timezone
+from django.contrib.auth import get_user_model
+
+from .models import (
+    UserProfile, 
+    Project, 
+    Comment, 
+    Message, 
+    JoinRequest, 
+    Notification, 
+    FeedItem
+)
+from .models import Follow  # if you have a Follow model for user follow events
+
+User = get_user_model()
+
+
+@receiver(post_save, sender=Project)
+def create_feeditem_for_project_creation(sender, instance, created, **kwargs):
+    """
+    When a Project is created, create a feed item
+    for the owner's 'project_created' event.
+    """
+    if created:
+        FeedItem.objects.create(
+            user=instance.owner,
+            event_type='project_created',
+            project=instance,
+            content=f"{instance.owner.username} created a new project: {instance.title}",
+        )
+
+
+@receiver(m2m_changed, sender=Project.members.through)
+def create_feeditem_for_project_join(sender, instance, action, pk_set, **kwargs):
+    """
+    When a user joins a project (via M2M 'post_add'),
+    create a feed item for each user who joined.
+    """
+    if action == 'post_add':
+        for user_id in pk_set:
+            user_obj = User.objects.get(id=user_id)
+            # Create feed item for user joining project
+            FeedItem.objects.create(
+                user=user_obj,
+                event_type='project_joined',
+                project=instance,
+                content=f"{user_obj.username} joined project: {instance.title}",
+            )
+
+
+@receiver(post_save, sender=Project)
+def create_feeditem_for_project_completion(sender, instance, created, **kwargs):
+    """
+    If the project is newly marked completed (not on creation)
+    we create a feed item. We'll detect it by checking
+    if the 'completed' field changed from False to True.
+    """
+    if not created:  # This is an update
+        # 'completed' might have changed. In practice, you'd 
+        # track old vs new value, or define a separate signal/logic for toggling.
+        # For simplicity, assume the user toggles completed from the view:
+        if instance.completed:
+            # It's newly completed
+            FeedItem.objects.get_or_create(
+                user=instance.owner,
+                event_type='project_completed',
+                project=instance,
+                content=f"{instance.owner.username} marked project '{instance.title}' as completed.",
+            )
+
+
+@receiver(post_save, sender=Comment)
+def create_feeditem_for_comment(sender, instance, created, **kwargs):
+    """
+    When a user comments on a project, create a feed item
+    for that user with 'comment_added' event.
+    """
+    if created:
+        FeedItem.objects.create(
+            user=instance.user,
+            event_type='comment_added',
+            project=instance.project,
+            content=f"{instance.user.username} commented on '{instance.project.title}': {instance.content}",
+        )
+
+
+@receiver(post_save, sender=Follow)
+def create_feeditem_for_follow(sender, instance, created, **kwargs):
+    """
+    When a user follows another user, create feed item.
+    """
+    if created:
+        follower = instance.follower
+        following = instance.following
+        FeedItem.objects.create(
+            user=follower,
+            event_type='followed_user',
+            content=f"{follower.username} started following {following.username}",
+        )

@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from cloudinary.models import CloudinaryField
 from django.utils import timezone
 
+
 # UserProfile model
 class UserProfile(models.Model):
     GRADE_LEVEL_CHOICES = [
@@ -66,6 +67,7 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return f'{self.user.username} Profile'
+
 
 
 
@@ -181,3 +183,73 @@ class Follow(models.Model):
 
     def __str__(self):
         return f"{self.follower.username} -> {self.following.username}"
+
+
+EVENT_TYPE_CHOICES = (
+    ('project_created', 'Project Created'),
+    ('project_joined', 'Project Joined'),
+    ('project_completed', 'Project Completed'),
+    ('comment_added', 'Comment Added'),
+    ('followed_user', 'Followed a User'),
+    # Add more event types if needed
+)
+
+class FeedItem(models.Model):
+    """
+    Represents one activity in the feed. 
+    For example:
+     - A user created a project
+     - A user joined a project
+     - A user completed a project
+     - A user commented on a project
+     - A user followed another user
+    """
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='feed_items'
+    )
+    event_type = models.CharField(
+        max_length=50, choices=EVENT_TYPE_CHOICES
+    )
+    # Link to a project if the event is project-related
+    project = models.ForeignKey(
+        Project, null=True, blank=True, on_delete=models.SET_NULL
+    )
+    # Optionally store additional text describing the feed event
+    content = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f"FeedItem: {self.event_type} by {self.user.username} at {self.created_at}"
+    
+
+
+class FeedItemLike(models.Model):
+    feed_item = models.ForeignKey(
+        FeedItem, on_delete=models.CASCADE, related_name='likes'
+    )
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='feed_likes'
+    )
+    created_at = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        unique_together = ('feed_item', 'user')  # Prevent double-liking
+
+    def __str__(self):
+        return f"{self.user.username} liked feed item #{self.feed_item.id}"
+    
+    
+
+
+class FeedItemComment(models.Model):
+    feed_item = models.ForeignKey(
+        FeedItem, on_delete=models.CASCADE, related_name='feed_comments'
+    )
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='feed_item_comments'
+    )
+    content = models.TextField()
+    created_at = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f"Comment by {self.user.username} on feed item #{self.feed_item.id}"

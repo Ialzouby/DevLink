@@ -7,7 +7,7 @@ from django.conf.urls.static import static
 from django.urls import path
 from .views import help_page
 from .views import settings_page, delete_account
-from .views import competitions, training
+from .views import training, add_post, add_comment, like_post
 
 urlpatterns = [
     path('', landing_page, name='landing'),
@@ -45,9 +45,11 @@ urlpatterns = [
     path('feed/', feed_view, name='feed'),
     path('feed/<int:feed_item_id>/like/', like_feed_item, name='like_feed_item'),
     path('feed/<int:feed_item_id>/comment/', comment_on_feed_item, name='comment_on_feed_item'),
-    path("competitions/", competitions, name="competitions"),
     path("training/", training, name="training"),
- 
+    path("training/add_post/", add_post, name="add_post"),
+    path("training/comment/<int:post_id>/", add_comment, name="add_comment"),
+    path("training/like/<int:post_id>/", like_post, name="like_post"),
+
 ]
 
 

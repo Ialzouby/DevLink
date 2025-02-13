@@ -1,36 +1,192 @@
 {% extends "projects/base.html" %}
-{% load static %}
-
-{% block title %}Training Registration{% endblock %}
-
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/training.css' %}">
 
 <div class="training-container">
-    <h2 class="page-title">Training Registration</h2>
+    <!-- Sidebar (Fixed on Left) -->
+    <aside class="training-sidebar">
+        <h2 class="training-sidebar-title">Topics</h2>
+        <ul class="training-topic-list">
+            <li class="training-topic-item">
+                <a href="{% url 'training' %}">📌 Show All</a>
+            </li>
+            {% for topic in topics %}
+                <li class="training-topic-item">
+                    <a href="?topic={{ topic.id }}">{{ topic.name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </aside>
 
-    <form method="POST" action="{% url 'training' %}" class="training-form">
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="full_name">Full Name</label>
-            <input type="text" name="full_name" id="full_name" required>
+    <!-- Main Content (Centered Feed) -->
+    <main class="training-main-feed">
+        <div class="training-header">
+            <h2 class="training-topic-title">{{ selected_topic.name }}</h2>
+            <button class="training-new-post-btn" onclick="openTrainingPostForm()">+ Add Post</button>
         </div>
 
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" name="email" id="email" required>
-        </div>
+        {% if posts %}
+            {% for post in posts %}
+            <div class="training-post-card">
+                <!-- Post Header (User Info + Actions) -->
+                <div class="training-post-header">
+                    <img src="{{ post.user.userprofile.profile_picture|default:'https://via.placeholder.com/50' }}" 
+                         class="training-user-avatar" 
+                         alt="User">
+                    <div class="training-user-info">
+                        <strong>{{ post.user.username }}</strong>
+                        <span class="training-post-date">{{ post.created_at|date:"M d, Y" }}</span>
+                    </div>
+                    
+                    <!-- Three-dot Menu (Dropdown) -->
+                    <div class="training-post-actions-menu">
+                        <button class="training-menu-btn" onclick="togglePostMenu('{{ post.id }}')">⋮</button>
+                        <ul class="training-menu-dropdown" id="post-menu-{{ post.id }}">
+                            {% if post.user == request.user %}
+                                <li onclick="editPost('{{ post.id }}')">✏ Edit</li>
+                                <li onclick="deletePost('{{ post.id }}')">🗑 Delete</li>
+                            {% else %}
+                                <li onclick="reportPost('{{ post.id }}')">⚠ Report</li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
 
-        <div class="form-group">
-            <label for="training_type">Training Type</label>
-            <select name="training_type" id="training_type" required>
-                <option value="beginner">Beginner</option>
-                <option value="advanced">Advanced</option>
-                <option value="specialized">Specialized</option>
-            </select>
-        </div>
+                <!-- Post Content -->
+                <h3 class="training-post-title">{{ post.title }}</h3>
+                <p class="training-post-content">{{ post.content }}</p>
+                {% if post.link %}
+                    <a class="training-post-link" href="{{ post.link }}" target="_blank">🔗 Tutorial Link</a>
+                {% endif %}
 
-        <button type="submit" class="btn-submit">Register</button>
-    </form>
+                <!-- Post Actions -->
+                <div class="training-post-actions">
+                    <button class="training-like-btn" data-post-id="{{ post.id }}" onclick="likeTrainingPost('{{ post.id }}')">👍 {{ post.likes.count }}</button>
+                    <button class="training-comment-toggle" onclick="toggleTrainingComments('{{ post.id }}')">💬 {{ post.comments.count }}</button>
+                </div>
+
+                <!-- Comments (Hidden Initially) -->
+                <div class="training-comments-section" id="training-comments-{{ post.id }}" style="display: none;">
+                    {% for comment in post.comments.all %}
+                        <div class="training-comment">
+                            <strong>{{ comment.user.username }}</strong>: {{ comment.content }}
+                        </div>
+                    {% endfor %}
+                    <form class="training-comment-form" action="{% url 'add_comment' post.id %}" method="POST">
+                        {% csrf_token %}
+                        <input type="text" name="content" placeholder="Write a comment..." required class="training-comment-input">
+                        <button type="submit" class="training-comment-submit-btn">Comment</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="training-no-posts">
+                <p>No posts yet. Be the first to share something!</p>
+            </div>
+        {% endif %}
+    </main>
 </div>
+
+<!-- New Post Popup -->
+<div id="training-post-popup" class="training-popup">
+    <div class="training-popup-content">
+        <span class="training-close-btn" onclick="closeTrainingPostForm()">&times;</span>
+        <h2 class="training-popup-title">New Post</h2>
+        <form action="{% url 'add_post' %}" method="POST">
+            {% csrf_token %}
+            
+            <!-- Topic Selection Dropdown -->
+            <label for="topic-select">Select Topic:</label>
+            <select name="topic_id" id="topic-select" required class="training-popup-dropdown">
+                {% for topic in topics %}
+                    <option value="{{ topic.id }}" {% if topic.id == selected_topic.id %}selected{% endif %}>{{ topic.name }}</option>
+                {% endfor %}
+            </select>
+
+            <input type="text" name="title" placeholder="Post title" required class="training-popup-input">
+            <textarea name="content" placeholder="Write something..." required class="training-popup-textarea"></textarea>
+            <input type="url" name="link" placeholder="Optional tutorial link" class="training-popup-link-input">
+            <button type="submit" class="training-popup-submit-btn">Post</button>
+        </form>
+    </div>
+</div>
+
+<!-- ✅ JavaScript -->
+<script>
+    function openTrainingPostForm() {
+        document.getElementById("training-post-popup").style.display = "block";
+    }
+
+    function closeTrainingPostForm() {
+        document.getElementById("training-post-popup").style.display = "none";
+    }
+
+    function toggleTrainingComments(postId) {
+        let commentsSection = document.getElementById("training-comments-" + postId);
+        commentsSection.style.display = (commentsSection.style.display === "none") ? "block" : "none";
+    }
+
+    function likeTrainingPost(postId) {
+        fetch(`/training/like/${postId}/`, {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": "{{ csrf_token }}",
+                "Content-Type": "application/json",
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            let button = document.querySelector(`button[data-post-id='${postId}']`);
+            button.innerHTML = `👍 ${data.likes_count}`;
+        })
+        .catch(error => console.error("Error liking post:", error));
+    }
+
+    function togglePostMenu(postId) {
+        let menu = document.getElementById("post-menu-" + postId);
+        menu.style.display = (menu.style.display === "none" || menu.style.display === "") ? "block" : "none";
+    }
+
+    function reportPost(postId) {
+        alert(`Reported post #${postId}.`);
+    }
+
+    function editPost(postId) {
+        alert(`Editing post #${postId}. Open edit UI.`);
+    }
+
+    function deletePost(postId) {
+        if (confirm("Are you sure you want to delete this post?")) {
+            fetch(`/training/delete/${postId}/`, {
+                method: "POST",
+                headers: { "X-CSRFToken": "{{ csrf_token }}", "Content-Type": "application/json" }
+            }).then(() => location.reload());
+        }
+    }
+    function togglePostMenu(postId) {
+    let menu = document.getElementById("post-menu-" + postId);
+
+    // Close all other open menus
+    document.querySelectorAll(".training-menu-dropdown").forEach(m => {
+        if (m !== menu) {
+            m.style.display = "none";
+        }
+    });
+
+    // Toggle the clicked menu
+    menu.style.display = (menu.style.display === "none" || menu.style.display === "") ? "block" : "none";
+}
+
+// Close menu if clicked outside
+document.addEventListener("click", function (event) {
+    if (!event.target.closest(".training-post-actions-menu")) {
+        document.querySelectorAll(".training-menu-dropdown").forEach(menu => {
+            menu.style.display = "none";
+        });
+    }
+});
+
+    
+</script>
+
 {% endblock %}

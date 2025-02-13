@@ -193,3 +193,19 @@ def create_feeditem_for_follow(sender, instance, created, **kwargs):
             event_type='followed_user',
             content=f"{follower.username} started following {following.username}",
         )
+
+
+from .models import TrainingPost, FeedItem
+
+@receiver(post_save, sender=TrainingPost)
+def create_feeditem_for_training_post(sender, instance, created, **kwargs):
+    """
+    When a user posts in training, create a feed item
+    so it appears in the main feed.
+    """
+    if created:
+        FeedItem.objects.create(
+            user=instance.user,
+            event_type='training_posted',
+            content=f"{instance.user.username} posted a new resource in training: '{instance.title}'",
+        )

@@ -809,32 +809,66 @@ def comment_on_feed_item(request, feed_item_id):
         return redirect('feed')  # or wherever you want to go after
     return HttpResponseForbidden("Invalid request")
 
+
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib import messages
-from .models import Competition, TrainingRegistration
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from .models import TrainingTopic, TrainingPost, TrainingComment, TrainingLike
 
-@login_required
-def competitions(request):
-    competitions = Competition.objects.all().order_by("-date")
-    return render(request, "projects/competitions.html", {"competitions": competitions})
-
-@login_required
 def training(request):
+    """Renders the training forum with topics and posts."""
+    topics = TrainingTopic.objects.all()
+    topic_id = request.GET.get("topic")
+    selected_topic = None
+    posts = []
+
+    if topic_id:
+        selected_topic = get_object_or_404(TrainingTopic, id=topic_id)
+        posts = selected_topic.posts.all().order_by("-created_at")
+    else:
+        selected_topic = None  # No single topic selected
+        posts = TrainingPost.objects.all().order_by("-created_at") 
+
+    return render(request, "projects/training.html", {
+        "topics": topics,
+        "selected_topic": selected_topic,
+        "posts": posts,
+    })
+
+@login_required
+def add_post(request):
+    """Handles creating a new training post."""
     if request.method == "POST":
-        full_name = request.POST.get("full_name")
-        email = request.POST.get("email")
-        training_type = request.POST.get("training_type")
+        topic_id = request.POST.get("topic_id")
+        topic = get_object_or_404(TrainingTopic, id=topic_id)
+        title = request.POST.get("title")
+        content = request.POST.get("content")
+        link = request.POST.get("link", "").strip()
 
-        # Save training registration
-        TrainingRegistration.objects.create(
-            user=request.user,
-            full_name=full_name,
-            email=email,
-            training_type=training_type,
-        )
+        TrainingPost.objects.create(topic=topic, user=request.user, title=title, content=content, link=link)
+        return redirect(f"/training/?topic={topic_id}")
 
-        messages.success(request, "You have successfully registered for the training.")
-        return redirect("training")
+@login_required
+def add_comment(request, post_id):
+    """Handles adding a comment to a training post."""
+    post = get_object_or_404(TrainingPost, id=post_id)
+    content = request.POST.get("content")
 
-    return render(request, "projects/training.html")
+    if content.strip():
+        TrainingComment.objects.create(post=post, user=request.user, content=content)
+
+    return redirect(f"/training/?topic={post.topic.id}")
+
+@login_required
+def like_post(request, post_id):
+    """Handles liking/unliking a training post."""
+    post = get_object_or_404(TrainingPost, id=post_id)
+    like, created = TrainingLike.objects.get_or_create(post=post, user=request.user)
+
+    if not created:
+        like.delete()
+        liked = False
+    else:
+        liked = True
+
+    return JsonResponse({"liked": liked, "likes_count": post.likes.count()})

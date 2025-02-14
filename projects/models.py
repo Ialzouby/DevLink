@@ -80,14 +80,6 @@ class Competition(models.Model):
     def __str__(self):
         return self.title
 
-class TrainingRegistration(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    full_name = models.CharField(max_length=100)
-    email = models.EmailField()
-    training_type = models.CharField(max_length=50)
-
-    def __str__(self):
-        return f"{self.full_name} - {self.training_type}"
 
 
 # Project model
@@ -210,6 +202,7 @@ EVENT_TYPE_CHOICES = (
     ('project_completed', 'Project Completed'),
     ('comment_added', 'Comment Added'),
     ('followed_user', 'Followed a User'),
+    ('training_posted', 'Training Posted'),
     # Add more event types if needed
 )
 
@@ -272,3 +265,42 @@ class FeedItemComment(models.Model):
 
     def __str__(self):
         return f"Comment by {self.user.username} on feed item #{self.feed_item.id}"
+from django.db import models
+from django.contrib.auth.models import User
+
+from django.db import models
+from django.contrib.auth.models import User
+
+class TrainingTopic(models.Model):
+    """Categories like 'Game Dev', 'Web Dev', etc."""
+    name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name
+
+class TrainingPost(models.Model):
+    """Forum posts under a specific topic."""
+    topic = models.ForeignKey(TrainingTopic, on_delete=models.CASCADE, related_name="posts")
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=255)
+    content = models.TextField()
+    link = models.URLField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
+class TrainingComment(models.Model):  # ⬅ Renamed to TrainingComment
+    """Comments for training posts."""
+    post = models.ForeignKey(TrainingPost, on_delete=models.CASCADE, related_name="comments")
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+class TrainingLike(models.Model):  # ⬅ Renamed to TrainingLike
+    """Likes for training posts."""
+    post = models.ForeignKey(TrainingPost, on_delete=models.CASCADE, related_name="likes")
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('post', 'user')  # Prevent duplicate likes

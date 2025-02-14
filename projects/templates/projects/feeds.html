@@ -53,12 +53,17 @@
 
       <div class="feed-card-body">
         <p class="feed-card-text">{{ item.content }}</p>
-        {% if item.project %}
-          <div class="feed-project-snippet">
-            <p class="feed-project-title"><strong>{{ item.project.title }}</strong></p>
-            <p class="feed-project-desc">{{ item.project.description|truncatechars:100 }}</p>
-          </div>
-        {% endif %}
+        {% if item.event_type == "training_posted" %}
+        <div class="feed-training-snippet">
+          <p class="feed-training-title"><strong>{{ item.content }}</strong></p>
+        </div>
+      {% elif item.project %}
+        <div class="feed-project-snippet">
+          <p class="feed-project-title"><strong>{{ item.project.title }}</strong></p>
+          <p class="feed-project-desc">{{ item.project.description|truncatechars:100 }}</p>
+        </div>
+      {% endif %}
+      
       </div>
 
       <div class="feed-card-footer">

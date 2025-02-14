@@ -6140,3 +6140,334 @@ select.form-control,
     color: #005580;
     text-decoration: underline;
 }
+
+
+/* 🟦 General Layout */
+.training-container {
+    
+    display: flex;
+    gap: 20px; /* ⬅ Space things out more */
+    padding: 30px;
+    background: #f3f2ef;
+    min-height: 85vh;
+    width: 100%; /* ⬅ Ensure it stretches fully */
+    max-width: 1600px; /* ⬅ Proper max width */
+    margin: auto;
+    margin-left: 100px;
+}
+
+
+
+/* 🟦 Sidebar */
+.training-sidebar {
+    width: 200px;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 80px;
+    height: fit-content;
+}
+
+.training-sidebar-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.training-topic-list {
+    list-style: none;
+    padding: 0;
+}
+
+.training-topic-item {
+    padding: 8px;
+    border-radius: 6px;
+    transition: background 0.2s;
+}
+
+.training-topic-item a {
+    text-decoration: none;
+    color: #0073b1;
+    font-weight: bold;
+    display: block;
+}
+
+.training-topic-item:hover {
+    background: rgba(0, 115, 177, 0.1);
+}
+
+/* 🟦 Main Feed */
+.training-main-feed {
+    flex-grow: 1;
+    width: 100%; /* ⬅ THIS forces it to take up all available space */
+    max-width: 700px; /* ⬅ Set a proper max width */
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.training-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.training-topic-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.training-new-post-btn {
+    background: #0073b1;
+    color: white;
+    padding: 10px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    border: none;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+.training-new-post-btn:hover {
+    background: #005f8d;
+}
+
+/* 🟦 Post Cards */
+.training-post-card {
+    width: 100%; /* ⬅ Forces posts to stretch */
+    background: white;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+    transition: 0.2s ease-in-out;
+    border: 1px solid #0056b3;
+}
+
+
+.training-post-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Post Header */
+.training-post-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.training-user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.training-user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.training-post-date {
+    font-size: 0.9rem;
+    color: gray;
+}
+
+/* Post Content */
+.training-post-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 5px 0;
+}
+
+.training-post-content {
+    font-size: 1rem;
+    color: #333;
+}
+
+.training-post-link {
+    display: inline-block;
+    margin-top: 5px;
+    color: #0073b1;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.training-post-link:hover {
+    text-decoration: underline;
+}
+
+/* 🟦 Post Actions */
+.training-post-actions {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    gap: 15px;
+}
+
+.training-like-btn, .training-comment-toggle {
+    background: none;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+    color: #0073b1;
+}
+
+.training-like-btn:hover, .training-comment-toggle:hover {
+    text-decoration: underline;
+}
+
+/* 🟦 Comments Section */
+.training-comments-section {
+    margin-top: 10px;
+    padding: 10px;
+    background: #f9f9f9;
+    border-radius: 6px;
+}
+
+.training-comment {
+    padding: 5px 0;
+    font-size: 0.95rem;
+}
+
+.training-comment-form {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    gap: 8px;
+}
+
+.training-comment-input {
+    flex-grow: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.training-comment-submit-btn {
+    background: #0073b1;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.training-comment-submit-btn:hover {
+    background: #005f8d;
+}
+
+/* 🟦 Popup */
+.training-popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+    width: 400px;
+}
+
+.training-popup-content {
+    text-align: center;
+}
+
+.training-close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.training-popup-title {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.training-popup-input, .training-popup-textarea, .training-popup-link-input {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.training-popup-submit-btn {
+    background: #0073b1;
+    color: white;
+    padding: 10px 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.training-popup-submit-btn:hover {
+    background: #005f8d;
+}
+
+/* 🟦 No Posts Message */
+.training-no-posts {
+    text-align: center;
+    padding: 20px;
+    color: gray;
+    font-size: 1.1rem;
+}
+
+
+
+/* 🔹 Three-Dot Menu */
+.training-post-actions-menu {
+    position: relative;
+    margin-left: auto; /* Push to the right */
+}
+
+.training-menu-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #666;
+    padding: 5px;
+}
+
+.training-menu-dropdown {
+    display: none; /* Hide menu initially */
+    position: absolute;
+    right: 0;
+    top: 25px;
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    padding: 8px 0;
+    list-style: none;
+    min-width: 120px;
+    z-index: 10;
+}
+
+.training-menu-dropdown li {
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.training-menu-dropdown li:hover {
+    background: rgba(0, 0, 0, 0.05);
+}

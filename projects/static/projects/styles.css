@@ -744,8 +744,8 @@ span.devlink-logo {
 .custom-navbar-links {
     display: flex;
     gap: 30px; /* Space between links */
-    margin-left: 70px;
-    
+   
+    margin-right: 50px;
 }
 
 .custom-navbar-links a {
@@ -1848,18 +1848,19 @@ textarea::placeholder {
 
 .feed-page-container {
     display: grid;
-    grid-template-columns: 240px 1fr 260px; /* Left sidebar, main, right sidebar */
-    gap: 20px;
-    max-width: 1200px;
+    grid-template-columns: 240px 2fr 260px; /* Increase left and right sidebar width */
+    gap: 50px; /* Increase gap for spacing */
+    max-width: 1700px; /* Increase overall width */
     margin: 0 auto;
     padding: 20px;
     font-family: "Open Sans", sans-serif;
-  }
+}
+
   
   /* Adjust for smaller screens */
   @media (max-width: 992px) {
     .feed-page-container {
-      grid-template-columns: 1fr;
+      grid-template-columns: 2fr;
     }
     .feed-sidebar-left, .feed-sidebar-right {
       display: none;
@@ -2025,6 +2026,7 @@ textarea::placeholder {
     border-radius: 8px;
     padding: 15px;
     transition: box-shadow 0.2s ease;
+    min-width: 700px;
   }
   
   .feed-card:not(:last-child) {
@@ -2101,7 +2103,8 @@ textarea::placeholder {
     align-items: center;
     gap: 15px;
     border-top: 1px solid #eee;
-    padding-top: 10px;
+    padding-top: 2.5px;
+    height: 50px;
   }
   
   .like-form,
@@ -2109,6 +2112,22 @@ textarea::placeholder {
     display: inline-flex;
     align-items: center;
   }
+
+  .comment-input {
+    flex: 1;
+    height: 32px; /* Shorter input box */
+    background-color: white;
+    color: black;
+    border: 1px solid #ccc;
+    padding: 6px;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-top: 12px;
+}
+
+
+
+
   
   .btn-like {
     background: none;
@@ -2316,8 +2335,8 @@ textarea::placeholder {
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 16px 20px;
-    margin-top: 20px;  /* space below your About section */
     position: relative;
+    margin-top: 20px;  /* space below your About section */
     /* box-shadow: 0 1px 3px rgba(0,0,0,0.15);  (optional) */
   }
   
@@ -2829,34 +2848,8 @@ textarea::placeholder {
     margin-top: 10px;
 }
 
-.comment-input textarea {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: #eeeeee !important;
-    resize: none;
-    margin-bottom: 10px;
-}
 
 
-.comment-input {
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-
-}
-
-  
-.comment-input {
-    border: 1px solid #00e5ff;
-    padding: 5px 8px;
-    border-radius: 4px;
-    font-size: 0.9rem;
-    outline: none;
-    background-color: #00e5ff;
-  }
 
 
 
@@ -3318,12 +3311,7 @@ textarea::placeholder {
     width: 100%;
 }
 
-.page-container {
-    flex: 1; /* Allow the page container to grow and push the footer down */
-    padding: 40px 20px;
-    width: 100%;
-    margin: 0 auto;
-}
+
 
 .create-project-container {
     min-height: 60vh;
@@ -6371,4 +6359,86 @@ select.form-control,
 
 .training-menu-dropdown li:hover {
     background: rgba(0, 0, 0, 0.05);
+}
+
+
+/* ====== Unique Add Skill Modal Styling ====== */
+.qz9-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    justify-content: center;
+    align-items: center;
+}
+
+.qz9-modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.qz9-close-modal {
+    float: right;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+#qz9-newSkillInput {
+    width: 100%;
+    padding: 8px;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.qz9-modal-submit-btn {
+    width: 100%;
+    background: #0073b1;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.qz9-modal-submit-btn:hover {
+    background: #005a8c;
+}
+
+
+/* Set background color between sections */
+.qz9-profile-wrapper {
+    background-color: #f4f4f4; /* Light gray to create section separation */
+    padding: 20px 0; /* Add space between sections */
+}
+
+
+.qz9-top-card,
+.qz9-about-section,
+.skills-card-container,
+.qz9-portfolio-section {
+    background-color: white; /* Keep the sections white */
+    padding: 20px;
+    margin-bottom: 20px; /* Space between sections */
+    border-radius: 8px; /* Slightly rounded edges for a cleaner look */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+}
+
+.qz9-banner-img{
+    border-top-left-radius: 28px;
+    border-top-right-radius: 28px;
+}
+
+.qz9-banner-placeholder{
+    border-top-left-radius: 28px;
+    border-top-right-radius: 28px;
 }

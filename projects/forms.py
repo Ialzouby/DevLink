@@ -196,3 +196,10 @@ class MessageForm(forms.ModelForm):
         widgets = {
             'content': forms.Textarea(attrs={'rows': 3, 'placeholder': 'Type your message...'}),
         }
+
+
+class SkillForm(forms.Form):
+    new_skill = forms.CharField(
+        required=True,
+        widget=forms.TextInput(attrs={'placeholder': 'Enter a skill...'})
+    )

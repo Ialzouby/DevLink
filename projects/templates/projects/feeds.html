@@ -14,11 +14,13 @@
   <!-- Left Sidebar -->
   <aside class="feed-sidebar-left">
     <div class="sidebar-block">
-      <h3>Menu</h3>
+      <h3>Resources</h3>
+      <hr>
       <ul>
-        <li><a href="#">Dashboard</a></li>
-        <li><a href="#">My Projects</a></li>
-        <li><a href="#">Messages</a></li>
+        <li><a href="{% url 'projects' %}">Projects</a></li>
+        <li><a href="{% url 'training' %}">Training</a></li>
+        <li><a href="{% url 'active_conversations' %}">Messaging</a></li>
+        <li><a href="{% url 'training' %}">Competitions</a></li>
       </ul>
     </div>
   </aside>
@@ -82,7 +84,9 @@
         </div>
         <form method="POST" action="{% url 'comment_on_feed_item' item.id %}" class="comment-form">
           {% csrf_token %}
-          <input class="comment-input" type="text" name="content" placeholder="Add a comment..." required>
+          <input class="comment-input" type="text" name="content" placeholder="Add a comment..." required 
+    style="background-color: white; color: black; border: 1px solid #ccc; padding: 8px; border-radius: 5px;">
+
           <button class="btn-comment">Comment</button>
         </form>
       </div>
@@ -119,6 +123,7 @@
     <!-- 🔹 Recommended Projects (Fully Separate Block) -->
     <div class="recommended-projects-block">
         <h3>Recommended Projects</h3>
+        <hr>
         {% if recommended_projects %}
             {% for project in recommended_projects %}
                 <div class="recommended-project">
@@ -173,6 +178,10 @@
     if (!section) return;
     section.style.display = (section.style.display === 'none' || section.style.display === '') ? 'block' : 'none';
   }
+
+
+
 </script>
+
 
 {% endblock %}

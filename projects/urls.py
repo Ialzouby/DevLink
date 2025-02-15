@@ -7,7 +7,7 @@ from django.conf.urls.static import static
 from django.urls import path
 from .views import help_page
 from .views import settings_page, delete_account
-from .views import training, add_post, add_comment, like_post
+from .views import training, add_post, add_comment, like_post, add_skill, endorse_skill
 
 urlpatterns = [
     path('', landing_page, name='landing'),
@@ -29,7 +29,9 @@ urlpatterns = [
     path('notification/delete/<int:notification_id>/', views.delete_notification, name='delete_notification'),
     path('check-username-email/', views.check_username_email, name='check_username_email'),
     path('landing/', landing_page, name='landing'),
-    path('home/', views.home, name='home'),
+    path('home/', views.feed_view, name='home'),  # Now "home" loads the feed
+    path('projects/', views.home, name='projects'),  # New URL for projects
+
     path('project/<int:project_id>/toggle-status/', views.toggle_project_status, name='toggle_project_status'),
     path('project/<int:project_id>/edit/', views.edit_project, name='edit_project'),
     path('profile/<str:username>/', views.profile, name='profile'),
@@ -49,6 +51,9 @@ urlpatterns = [
     path("training/add_post/", add_post, name="add_post"),
     path("training/comment/<int:post_id>/", add_comment, name="add_comment"),
     path("training/like/<int:post_id>/", like_post, name="like_post"),
+    path('profile/<str:username>/add-skill/', add_skill, name='add_skill'),  # Add this line
+    path('profile/<str:username>/endorse-skill/', endorse_skill, name='endorse_skill'),
+    path("endorse-skill/<str:username>/", endorse_skill, name="endorse_skill"),
 
 ]
 

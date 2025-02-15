@@ -9,7 +9,8 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from cloudinary.models import CloudinaryField
 from django.utils import timezone
-
+from django.db import models
+from django.contrib.auth.models import User
 
 # UserProfile model
 class UserProfile(models.Model):
@@ -67,10 +68,19 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return f'{self.user.username} Profile'
+    
 
+class SkillEndorsement(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)  # Who endorsed
+    profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE)  # Whose profile
+    skill = models.CharField(max_length=100)  # Endorsed skill
 
-from django.db import models
-from django.contrib.auth.models import User
+    class Meta:
+        unique_together = ('user', 'profile', 'skill')  # Prevent duplicate endorsements
+
+    def __str__(self):
+        return f"{self.user.username} endorsed {self.skill} on {self.profile.user.username}'s profile"
+
 
 class Competition(models.Model):
     title = models.CharField(max_length=200)

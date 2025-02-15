@@ -28,7 +28,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.http import JsonResponse
 from django.contrib.auth.models import User
-from .forms import UserSettingsForm
+from .forms import UserSettingsForm, SkillForm
 from .models import UserProfile
 
 @login_required
@@ -88,19 +88,130 @@ def delete_account(request):
     return render(request, 'projects/settings.html')
 
 
+@login_required
+def add_skill(request, username):
+    profile_user = get_object_or_404(User, username=username).userprofile
+
+    if request.method == 'POST':
+        new_skill = request.POST.get('new_skill', '').strip()
+
+        if new_skill:
+            # Append new skill to the existing list if it's not already there
+            current_skills = profile_user.skills.split(",") if profile_user.skills else []
+            if new_skill not in current_skills:
+                current_skills.append(new_skill)
+                profile_user.skills = ",".join(current_skills)
+                profile_user.save()
+                return redirect('profile', username=username)
+
+    return JsonResponse({"error": "Invalid request"}, status=400)
+
+
+from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
+from .models import SkillEndorsement, UserProfile
+
+from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+from .models import SkillEndorsement, UserProfile
+import json
+
+from .models import Notification, FeedItem  # Import models
+
+@login_required
+def endorse_skill(request, username):
+    """Handles endorsing or unendorsing a skill."""
+    print(f"✅ Debug: Endorse request received for user: {username}")
+
+    if request.method == "POST":
+        try:
+            profile_user = get_object_or_404(UserProfile, user__username=username)
+            data = json.loads(request.body)
+            skill_name = data.get("skill", "").strip()
+
+            print(f"🔹 Skill to endorse: {skill_name}")
+
+            if not skill_name:
+                return JsonResponse({"error": "Invalid skill"}, status=400)
+
+            # Check if the skill exists in the user's skills list
+            if skill_name not in profile_user.skills.split(","):
+                return JsonResponse({"error": "Skill not found in user profile"}, status=400)
+
+            endorsement, created = SkillEndorsement.objects.get_or_create(
+                user=request.user,
+                profile=profile_user,
+                skill=skill_name
+            )
+
+            if not created:
+                endorsement.delete()  # Remove endorsement
+                endorsed = False
+            else:
+                endorsed = True
+
+                # ✅ 1️⃣ Create a Notification
+                Notification.objects.create(
+                    user=profile_user.user,  # The person who receives the notification
+                    content=f"{request.user.username} endorsed your skill: {skill_name}",
+                )
+
+                # ✅ 2️⃣ Create a Feed Post
+                FeedItem.objects.create(
+                    user=request.user,
+                    event_type="endorsement",
+                    content=f"{request.user.username} endorsed {profile_user.user.username}'s skill: {skill_name}",
+                )
+
+            endorsement_count = SkillEndorsement.objects.filter(profile=profile_user, skill=skill_name).count()
+
+            print(f"✅ New endorsement count: {endorsement_count}")
+
+            return JsonResponse({"endorsed": endorsed, "endorsement_count": endorsement_count})
+        except Exception as e:
+            print(f"❌ Error in endorsement: {e}")
+            return JsonResponse({"error": "Internal Server Error"}, status=500)
+
+
 # Profile view to display a user's profile
+from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.models import User
+from .models import UserProfile, SkillEndorsement
+from .forms import SkillForm
+
 def profile(request, username):
+    print(f"🟢 Debug: Entering profile view for {username}")  # Debugging
+
+    # Fetch user object correctly
     user = get_object_or_404(User, username=username)
-    # Ensure UserProfile exists
-    user_profile, created = UserProfile.objects.get_or_create(user=user)
-    skills_list = user_profile.skills.split(",") if user_profile.skills else []
-    # Debugging: Print profile fields
-    print(f"Profile Picture: {user_profile.profile_picture}")
-    print(f"Google Picture URL: {user_profile.profile_picture_url}")
+
+    # Ensure we have the correct user profile
+    profile_user, created = UserProfile.objects.get_or_create(user=user)
+
+    print(f"🟢 Debug: User object: {user}")  # Should be a User instance
+    print(f"🟢 Debug: Profile User: {profile_user}")  # Should be a UserProfile instance
+
+    skills_list = profile_user.skills.split(",") if profile_user.skills else []
+    
+    endorsements = {
+        skill: SkillEndorsement.objects.filter(profile=profile_user, skill=skill).count()
+        for skill in skills_list
+    }
+
+    user_endorsements = SkillEndorsement.objects.filter(user=request.user, profile=profile_user).values_list("skill", flat=True)
+
     return render(request, 'projects/profile.html', {
-        'profile_user': user,
+        'profile_user': user,  # ✅ Ensure this is a `User` instance
+        'user_profile': profile_user,  # ✅ Ensure this is a `UserProfile` instance
         'skills_list': skills_list,
+        'skill_form': SkillForm(),
+        'endorsements': endorsements,
+        'user_endorsements': list(user_endorsements),
     })
+
+
 
 from django.contrib import messages
 
@@ -125,7 +236,7 @@ def upload_banner(request, username):
 # Prevent logged-in users from accessing login and register pages
 def custom_login(request):
     if request.user.is_authenticated:
-        return redirect('home')
+        return redirect('feed')
     return auth_views.LoginView.as_view(template_name='projects/login.html')(request)
 
 @login_required
@@ -172,7 +283,7 @@ def register(request):
 
             # Log the user in
             login(request, user)
-            return redirect('home')  # Redirect to the home page or any other page
+            return redirect('feed')  # Redirect to the home page or any other page
         else:
             # Handle form errors and set the step accordingly
             if any(field in form.errors for field in ['first_name', 'last_name', 'username', 'email']):
@@ -693,6 +804,10 @@ from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from .models import FeedItem, Follow, FeedItemLike
 
+from django.core.paginator import Paginator
+from django.http import JsonResponse
+from django.db.models import Prefetch
+
 @login_required
 def feed_view(request):
     """
@@ -705,12 +820,13 @@ def feed_view(request):
     filter_mode = request.GET.get('filter_mode', 'global')  # Default to 'global'
     event_type_filter = request.GET.get('event_type', '')  # e.g. 'project_joined', 'comment_added'
 
-    # Base QuerySet (all feed items)
-    feed_queryset = FeedItem.objects.all().order_by('-created_at')
+    # ✅ Optimize QuerySet - Preload related objects to minimize DB queries
+    feed_queryset = FeedItem.objects.select_related('user', 'project') \
+        .prefetch_related('likes', 'feed_comments') \
+        .order_by('-created_at')
 
-    # 1) **Filter by 'global' or 'following' mode**
+    # ✅ Filter by 'following' mode
     if filter_mode == 'following':
-        # Get users the current user follows
         following_user_ids = Follow.objects.filter(
             follower=request.user
         ).values_list('following_id', flat=True)
@@ -719,60 +835,66 @@ def feed_view(request):
         user_ids = list(following_user_ids) + [request.user.id]
         feed_queryset = feed_queryset.filter(user__id__in=user_ids)
 
-    # 2) **Filter by event type if specified**
+    # ✅ Filter by event type
     if event_type_filter:
         feed_queryset = feed_queryset.filter(event_type=event_type_filter)
 
-    # 3) **Pagination for infinite scrolling**
+    # ✅ Load 5 items per request for **faster rendering**
     page_number = request.GET.get('page', 1)
-    paginator = Paginator(feed_queryset, 10)  # Show 10 feed items per page
+    paginator = Paginator(feed_queryset, 5)  # ✅ Reduced from 10 → 5 for speed
     page_obj = paginator.get_page(page_number)
 
-        # ✅ Fetch Recommended Users (Top 3 by points)
-    top_users = (
-        UserProfile.objects.all()
-        .order_by("-points")[:3]  # Ensure we get only top 3 users
-    )
+    # ✅ Fetch Recommended Users (Top 3 by points)
+    top_users = UserProfile.objects.all().order_by("-points")[:3]
 
-    # ✅ Fetch Recommended Projects (if applicable)
+    # ✅ Fetch Recommended Projects
     recommended_projects = Project.objects.filter(completed=False)[:3]
 
-
-    # 4) **Precompute user-like status to fix template issue**
+    # ✅ Precompute user-like status (avoid extra DB hits)
     for item in page_obj:
         item.user_liked = item.likes.filter(user=request.user).exists()
 
-    # 5) **Handle AJAX requests for infinite scroll**
+    # ✅ AJAX Infinite Scrolling
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        feed_data = []
-        for item in page_obj:
-            feed_data.append({
+        feed_data = [
+            {
                 'id': item.id,
-                'user': item.user.username,
+                'user': {
+                    'username': item.user.username,
+                    'profile_picture': item.user.userprofile.profile_picture.url if item.user.userprofile.profile_picture else "https://via.placeholder.com/55",
+                },
                 'event_type': item.event_type,
                 'content': item.content,
                 'created_at': item.created_at.strftime('%Y-%m-%d %H:%M:%S'),
-                'project_title': item.project.title if item.project else None,
+                'project': {
+                    'title': item.project.title,
+                    'description': item.project.description[:100],
+                    'id': item.project.id,
+                } if item.project else None,
                 'likes_count': item.likes.count(),
                 'comments_count': item.feed_comments.count(),
-                'user_liked': item.user_liked,  # Send user-like status to frontend
-            })
+                'user_liked': item.user_liked,
+            }
+            for item in page_obj
+        ]
+
         return JsonResponse({
             'feed_items': feed_data,
             'has_next': page_obj.has_next(),
+            'next_page': page_obj.next_page_number() if page_obj.has_next() else None,
         })
 
-    # 6) **Render the full template for normal page load**
-    # 6) **Render the full template for normal page load**
+    # ✅ Render Template for Full Page Load
     context = {
         'page_obj': page_obj,
         'filter_mode': filter_mode,
         'event_type_filter': event_type_filter,
-        'top_users': top_users,  # ✅ Pass recommended users to the template
-        'recommended_projects': recommended_projects,  # ✅ Pass recommended projects to the template
+        'top_users': top_users,
+        'recommended_projects': recommended_projects,
     }
 
     return render(request, 'projects/feeds.html', context)
+
 
 
 
@@ -872,3 +994,5 @@ def like_post(request, post_id):
         liked = True
 
     return JsonResponse({"liked": liked, "likes_count": post.likes.count()})
+
+

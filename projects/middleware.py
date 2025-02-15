@@ -19,7 +19,7 @@ class RedirectAuthenticatedMiddleware:
         ]
 
         if request.user.is_authenticated and request.path in restricted_paths:
-            return redirect('home')  # Redirect authenticated users to home
+            return redirect('feed')  # Redirect authenticated users to home
 
         return self.get_response(request)
 

@@ -3,7 +3,7 @@
 <head>
     {% load static %}
     {% load is_followed_by %}
-
+    {% load custom_filters %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DevLink Profile</title>
@@ -166,88 +166,69 @@
       </div>
 
       <!-- ========== SKILLS SECTION (LinkedIn-Style) ========== -->
-<div class="skills-card-container">
-  <!-- Header Row -->
-  <div class="skills-card-header">
-    <h2>Skills</h2>
+      <div class="skills-card-container">
+        <div class="skills-card-header">
+          <h2>Skills</h2>
+          {% if request.user == profile_user %}
+          <div class="skills-header-actions">
+            <button class="qz9-skills-add-btn" title="Add Skill">
+              <i class="fas fa-plus"></i>
+          </button>
+          
+            <button class="skills-edit-btn" title="Edit Skills"><i class="fas fa-pencil-alt"></i></button>
+          </div>
+          {% endif %}
+        </div>
+      
+        {% if skills_list %}
+        {% for skill in skills_list %}
+        <div class="skill-category-block">
+            <h3 class="skill-category-title">{{ skill }}</h3>
+            <p class="skill-detail-subtext">Endorsed by <span id="endorse-count-{{ skill }}">{{ endorsements|get_item:skill }}</span> people</p>
 
-    <!-- If it's *my* profile, show the + and pencil icons -->
-    {% if request.user == profile_user %}
-    <div class="skills-header-actions">
-      <!-- Add Skill (+) -->
-      <button class="skills-add-btn" title="Add Skill">
-        <i class="fas fa-plus"></i>
-      </button>
-      <!-- Edit Skills (pencil) -->
-      <button class="skills-edit-btn" title="Edit Skills">
-        <i class="fas fa-pencil-alt"></i>
-      </button>
-    </div>
-    {% endif %}
-  </div>
+            <p>Debug: Profile User: {{ profile_user.user.username }}</p>
 
-  <!-- First Skill Category (example: Software Development) -->
-  <div class="skill-category-block">
-    <h3 class="skill-category-title">Software Development</h3>
-    <div class="skill-detail-line">
-      <img 
-        src="https://via.placeholder.com/24" 
-        alt="UNC Charlotte Logo" 
-        class="skill-logo"
-      />
-      University of North Carolina at Charlotte
-    </div>
-    <div class="skill-detail-line">
-      <img 
-        src="https://via.placeholder.com/32" 
-        alt="Marlon Mejias" 
-        class="endorser-pic"
-      />
-      Endorsed by Marlon Mejias (mutual connection)
-    </div>
-    <p class="skill-detail-subtext">
-      Endorsed by 1 person in the last 6 months
-    </p>
-    <a href="#" class="show-details-link">Show all 4 details →</a>
+            {% if request.user != profile_user %}
+            <button 
+            class="endorse-btn {% if skill in user_endorsements %}unendorse{% endif %}" 
+            data-skill="{{ skill|default:"" }}">
+            {% if skill in user_endorsements %}Unendorse{% else %}Endorse{% endif %}
+        </button>
+        
+        
+        
+        
+        
+            {% endif %}
+        </div>
+        {% endfor %}
+        
+    
+        {% else %}
+          <p><em>No skills added yet.</em></p>
+        {% endif %}
+      
+        <div class="skills-footer-link">
+          <a href="#" class="show-all-skills-link">Show all skills →</a>
+        </div>
 
-    <!-- If it's another user's profile, show an Endorse button -->
-    {% if request.user != profile_user %}
-    <button class="endorse-btn">Endorse</button>
-    {% endif %}
-  </div>
-
-  <!-- Second Skill Category (example: Interpersonal Skills) -->
-  <div class="skill-category-block">
-    <h3 class="skill-category-title">Interpersonal Skills</h3>
-    <div class="skill-detail-line">
-      <img 
-        src="https://via.placeholder.com/24" 
-        alt="Company Logo" 
-        class="skill-logo"
-      />
-      4 experiences across Southeast Contracting and Restoration and 3 other companies
-    </div>
-    <div class="skill-detail-line">
-      <img 
-        src="https://via.placeholder.com/24" 
-        alt="School Logo" 
-        class="skill-logo"
-      />
-      3 educational experiences at University of North Carolina at Charlotte and 2 other schools
-    </div>
-    <a href="#" class="show-details-link">Show all 4 details →</a>
-
-    {% if request.user != profile_user %}
-    <button class="endorse-btn">Endorse</button>
-    {% endif %}
-  </div>
-
-  <!-- Footer: "Show all X skills →" link -->
-  <div class="skills-footer-link">
-    <a href="#" class="show-all-skills-link">Show all 22 skills →</a>
+        <!-- Add Skill Modal -->
+<!-- Add Skill Modal -->
+<div id="qz9-addSkillModal" class="qz9-modal">
+  <div class="qz9-modal-content">
+      <span class="qz9-close-modal">&times;</span>
+      <h2>Add a New Skill</h2>
+      <form id="qz9-addSkillForm" method="POST" action="{% url 'add_skill' profile_user.username %}">
+          {% csrf_token %}
+          {{ skill_form.as_p }}  <!-- This will render the SkillForm -->
+          <button type="submit" class="qz9-modal-submit-btn">Add Skill</button>
+      </form>
   </div>
 </div>
 
+
+      </div>
+      
 
       <div class="qz9-portfolio-section">
         <h2>Portfolio</h2>
@@ -384,6 +365,72 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".endorse-btn").forEach(button => {
+        button.addEventListener("click", function () {
+            let skill = this.getAttribute("data-skill").trim();
+            let username = window.location.pathname.split("/").filter(Boolean).pop(); // Extract username from URL
+
+            console.log("✅ Debug: Endorse button clicked!");
+            console.log(`🔹 Extracted username from URL: ${username}`);
+            console.log(`🔹 Extracted skill: ${skill}`);
+
+            if (!skill) {
+                console.error("❌ Error: Skill is missing for endorsement!");
+                return;
+            }
+
+            fetch(`/endorse-skill/${username}/`, {
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ skill: skill })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("✅ Server Response:", data);
+                let endorseCountSpan = document.getElementById(`endorse-count-${skill}`);
+
+                if (data.endorsed) {
+                    this.classList.add("unendorse");
+                    this.textContent = "Unendorse";
+                } else {
+                    this.classList.remove("unendorse");
+                    this.textContent = "Endorse";
+                }
+                endorseCountSpan.textContent = data.endorsement_count;
+            })
+            .catch(error => console.error("❌ Fetch Error:", error));
+        });
+    });
+});
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const modal = document.getElementById("qz9-addSkillModal");
+    const openModalBtn = document.querySelector(".qz9-skills-add-btn");
+    const closeModalBtn = document.querySelector(".qz9-close-modal");
+
+    openModalBtn.addEventListener("click", function () {
+        modal.style.display = "flex";
+    });
+
+    closeModalBtn.addEventListener("click", function () {
+        modal.style.display = "none";
+    });
+
+    window.addEventListener("click", function (e) {
+        if (e.target === modal) {
+            modal.style.display = "none";
+        }
+    });
+});
 
 
   </script>

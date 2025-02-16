@@ -308,3 +308,7 @@ def send_follow_notification(sender, instance, created, **kwargs):
         email.send()
 
 
+
+@receiver(social_account_added, sender=SocialAccount)
+def debug_google_data(sender, request, sociallogin, **kwargs):
+    print("🔹 extra_data:", sociallogin.account.extra_data)

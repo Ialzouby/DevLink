@@ -1,22 +1,9 @@
 from django.urls import path, include
 from . import views
 from .views import (
-    register,
-    profile,
-    network,
-    landing_page,
-    feed_view,
-    like_feed_item,
-    comment_on_feed_item,
-    help_page,
-    settings_page,
-    delete_account,
-    training,
-    add_post,
-    add_comment,
-    like_post,
-    add_skill,
-    endorse_skill,
+register, profile, network, landing_page, feed_view, like_feed_item,
+comment_on_feed_item, help_page,settings_page, delete_account, training,
+add_post, add_comment, like_post, add_skill, endorse_skill,
 )
 from django.contrib.auth import views as auth_views
 from django.conf import settings

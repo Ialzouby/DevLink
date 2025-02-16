@@ -434,10 +434,8 @@ def home(request, topic=None):
         'search_query': q,
     })
 
-# Network view to list all users
-def network(request):
-    users = User.objects.all()  # Fetch all users
-    return render(request, 'projects/network.html', {'users': users})
+
+
 
 
 @login_required
@@ -485,24 +483,32 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib.auth.models import User
 
+# Network view to list all users
 @login_required
 def network(request):
-    query = request.GET.get('q', '')  # Get search query
+    query = request.GET.get('q', '').strip()  # Get search query, if provided
     if query:
         users = User.objects.filter(
             Q(username__icontains=query) |
             Q(userprofile__grade_level__icontains=query) |
             Q(userprofile__concentration__icontains=query)
-        ).order_by('-userprofile__points')  # Filter and order users
+        ).order_by('-userprofile__points')
     else:
-        users = User.objects.all().order_by('-userprofile__points')  # Order users by points
+        users = User.objects.all().order_by('-userprofile__points')
 
-    # Split users into groups of 9
+    # Leaderboard: Top 6 users
+    leaderboard = users[:6]
+    
+    # Other users: Everyone after the top 6, grouped into chunks (e.g., groups of 9)
+    others = users[6:]
     group_size = 9
-    groups = [users[i:i + group_size] for i in range(0, len(users), group_size)]
+    groups = [others[i:i + group_size] for i in range(0, len(others), group_size)]
 
-    return render(request, 'projects/network.html', {'groups': groups})
-
+    return render(request, 'projects/network.html', {
+        'leaderboard': leaderboard,
+        'groups': groups,
+        'query': query,
+    })
 
 @login_required
 def edit_profile(request):

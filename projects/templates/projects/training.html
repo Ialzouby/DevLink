@@ -4,18 +4,35 @@
 <div class="training-container">
     <!-- Sidebar (Fixed on Left) -->
     <aside class="training-sidebar">
-        <h2 class="training-sidebar-title">Topics</h2>
-        <ul class="training-topic-list">
-            <li class="training-topic-item">
-                <a href="{% url 'training' %}">📌 Show All</a>
-            </li>
-            {% for topic in topics %}
+        <!-- Resources Block -->
+        <div class="sidebar-block">
+            <h3>Resources</h3>
+            <hr>
+            <ul>
+                <li><a href="{% url 'projects' %}">Projects</a></li>
+                <li><a href="{% url 'training' %}">Training</a></li>
+                <li><a href="{% url 'active_conversations' %}">Messaging</a></li>
+                <li><a href="{% url 'training' %}">Competitions</a></li>
+            </ul>
+        </div>
+    
+        <!-- Topics Block -->
+        <div class="sidebar-block">
+            <h2 class="training-sidebar-title">Topics</h2>
+            <ul class="training-topic-list">
                 <li class="training-topic-item">
-                    <a href="?topic={{ topic.id }}">{{ topic.name }}</a>
+                    <a href="{% url 'training' %}">📌 Show All</a>
                 </li>
-            {% endfor %}
-        </ul>
+                {% for topic in topics %}
+                    <li class="training-topic-item">
+                        <a href="?topic={{ topic.id }}">{{ topic.name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
     </aside>
+    
+    
 
     <!-- Main Content (Centered Feed) -->
     <main class="training-main-feed">

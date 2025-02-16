@@ -186,7 +186,7 @@
             <h3 class="skill-category-title">{{ skill }}</h3>
             <p class="skill-detail-subtext">Endorsed by <span id="endorse-count-{{ skill }}">{{ endorsements|get_item:skill }}</span> people</p>
 
-            <p>Debug: Profile User: {{ profile_user.user.username }}</p>
+            
 
             {% if request.user != profile_user %}
             <button 

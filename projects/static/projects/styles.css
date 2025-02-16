@@ -536,9 +536,10 @@ span.devlink-logo {
     display: grid;
     gap: 16px;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    margin-top: 10px;
 }
 .qz9-portfolio-card {
-    background: #f9f9f9;
+    background: #adacac;
     border-radius: 6px;
     padding: 15px;
 }
@@ -1717,7 +1718,7 @@ textarea::placeholder {
 /* User Info */
 .network-user-info {
     margin-left: 15px;
-    flex-grow: 1;
+    flex-grow: 1.5;
 }
 
 /* Ensure the grid is responsive */
@@ -1867,14 +1868,7 @@ textarea::placeholder {
     }
   }
   
-  /* ----- SIDEBARS ----- */
-  .feed-sidebar-left {
-    background-color: #fff;
-    border: 1px solid #e4e4e4;
-    border-radius: 8px;
-    padding: 20px;
-    height: fit-content;
-  }
+
   
   .sidebar-block {
     margin-bottom: 20px;
@@ -2080,7 +2074,7 @@ textarea::placeholder {
   }
   
   .feed-project-snippet {
-    background: #f8f8f8;
+    background: #eaeaea;
     border: 1px solid #eee;
     padding: 10px;
     border-radius: 6px;
@@ -4171,26 +4165,11 @@ p {
     color: #444;
 }
 
-.unique-left-sidebar {
-    width: 20vw;
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-
-    height: auto;  /* Adjusts height to fit content */
-    align-self: flex-start; /* Matches height of the right sidebar */
-}
-
-.unique-left-sidebar h3 {
-    text-align: center;
-    font-size: 18px;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 5px;
-    color: #444;
+.unique-right-sidebar {
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #ffffff; /* Light background for contrast */
 }
 
 
@@ -4213,7 +4192,28 @@ p {
     /* Light shadow */
 }
 
+.user-card-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .user-card-link,
+.user-card-link:link,
+.user-card-link:visited,
+.user-card-link:hover,
+.user-card-link:active {
+  text-decoration: none !important;
+}
+
+
 .user-card:hover {
+    text-decoration: none;
+    background: #e2e6ea;
+    transform: scale(1.02);
+}
+
+.user-card:hover a {
     text-decoration: none;
 }
 
@@ -4645,23 +4645,6 @@ footer p {
     text-align: center;
   }
   
-  /* User Card */
-  .recommended-user-card {
-    display: flex;
-    align-items: center;
-    background: #f8f9fa;
-    border-radius: 8px;
-    padding: 10px;
-    margin-bottom: 10px;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    color: inherit;
-  }
-  
-  .recommended-user-card:hover {
-    background: #e2e6ea;
-    transform: scale(1.02);
-  }
   
   /* Avatar Styling */
   .recommended-avatar {
@@ -4727,7 +4710,7 @@ footer p {
   
   /* 🔸 Recommended Projects Block */
   .recommended-projects-block {
-    background: #fff;
+    background: #eaeaea;
     border-radius: 10px;
     padding: 15px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -4780,7 +4763,7 @@ footer p {
   
   /* 🔸 Recommended Users Block */
   .recommended-users-block {
-    background: #fff;
+    background: #eaeaea;
     border-radius: 10px;
     padding: 15px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -4800,13 +4783,14 @@ footer p {
     gap: 10px;
   }
   
-  /* Each User Card */
-  .recommended-user-card {
+/* Recommended User Card */
+.recommended-user-card {
     display: flex;
-    align-items: center;
+    align-items: center;     /* Ensures image & text are on the same line */
     background: #f8f9fa;
     border-radius: 8px;
     padding: 10px;
+    margin-bottom: 10px;
     transition: all 0.3s ease;
     text-decoration: none;
     color: inherit;
@@ -4815,6 +4799,33 @@ footer p {
   .recommended-user-card:hover {
     background: #e2e6ea;
     transform: scale(1.02);
+    text-decoration: none; /* Remove underlines from text */
+}
+
+.recommended-user-card:hover a {
+    text-decoration: none; /* Ensure links within the card also have no underline */
+}
+  
+  /* Inner content wrapper (optional, if you want extra control) */
+  .recommended-user-content {
+    display: flex;
+    align-items: center;     /* Keep avatar & text vertically centered */
+  }
+  
+  /* Avatar */
+.recommended-avatar img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%; /* Ensures a circular shape */
+  object-fit: cover;  /* Scales and crops the image to fill the area */
+}
+
+  
+  /* Info Section (Name, grade, etc.) */
+  .recommended-info {
+    display: flex;
+    flex-direction: column;  /* Stack name & other text */
+    justify-content: center; /* Vertically center within the container */
   }
   
   /* Avatar Styling */
@@ -4863,8 +4874,25 @@ footer p {
     font-weight: bold;
     color: #000000;
     margin-bottom: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px; /* adjust as needed */
 }
 
+.recommended-project {
+    display: block;
+    text-decoration: none; /* Remove underline from text */
+    color: inherit; /* Inherit text color */
+}
+
+.recommended-project:hover a {
+    text-decoration: none; /* Ensure links within the card also have no underline */
+}
+
+.recommended-project:hover {
+    text-decoration: none; /* Ensure links within the card also have no underline */
+}
 .network-user-grade,
 .network-user-concentration {
     font-size: 14px;
@@ -4877,6 +4905,120 @@ footer p {
     text-align: right;
     width: 100%;
 }
+
+.feed-project-snippet-link {
+    display: block;
+    text-decoration: none; /* Remove underline if desired */
+    color: inherit; /* Inherit text color */
+}
+
+.feed-project-snippet-link:hover {
+    display: block;
+    text-decoration: none; /* Remove underline if desired */
+    border-radius: 10px;
+}
+
+.feed-project-snippet-link:hover {
+    background-color: #818181; /* Change this to your desired color */
+    transition: background-color 0.3s ease; /* Optional: smooth transition */
+}
+
+.feed-project-snippet:hover {
+    background-color: #818181; /* Change this to your desired color */
+    transition: background-color 0.3s ease; /* Optional: smooth transition */
+}
+
+/* Gold border for 1st place */
+.gold-border {
+    border: 2px solid #f2c217;
+    /* Optionally, add padding or other styles */
+    padding: 10px;
+    border-radius: 12px;
+}
+
+/* Silver border for 2nd place */
+.silver-border {
+    border: 2px solid silver;
+    padding: 10px;
+    border-radius: 12px;
+}
+
+/* Bronze border for 3rd place */
+.bronze-border {
+    border: 2px solid #cd7f32;  /* A bronze-like color */
+    padding: 10px;
+    border-radius: 12px;
+}
+
+.others-section {
+    margin-top: 20px;
+}
+
+
+.unique-left-sidebar {
+    width: 20vw;
+   
+    padding: 20px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    height: auto;  /* Adjusts height to fit content */
+    align-self: flex-start; /* Matches height of the right sidebar */
+}
+
+.unique-left-sidebar {
+    width: 20vw;
+   
+    padding: 20px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    height: auto;  /* Adjusts height to fit content */
+    align-self: flex-start; /* Matches height of the right sidebar */
+}
+
+.unique-left-sidebar h3 {
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+    color: #444;
+}
+
+.unique-left-sidebar .sidebar-block,
+.training-sidebar .sidebar-block,
+.unique-left-sidebar h3,
+.training-sidebar h2,
+.unique-left-sidebar ul,
+.training-sidebar ul {
+    margin-bottom: 20px; /* Adds space between blocks */
+}
+
+.unique-left-sidebar .user-card-link,
+.training-topic-list li {
+    margin-top: 10px; /* Ensures spacing between items inside blocks */
+}
+
+.unique-left-sidebar .sidebar-block, .sidebar-block {
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #ffffff; /* Light background for contrast */
+}
+
+.training-sidebar-title, .unique-left-sidebar h3 {
+    margin-top: 0;
+    padding-bottom: 5px;
+    border-bottom: 2px solid #ffffff; /* Adds a subtle divider */
+}
+
+
+
 
 /* ==========================================================================
    45 CARD LINKS AND HOVER EFFECTS
@@ -6042,28 +6184,12 @@ select.form-control,
     width: 100%; /* ⬅ Ensure it stretches fully */
     max-width: 1600px; /* ⬅ Proper max width */
     margin: auto;
-    margin-left: 100px;
+    margin-left: 150px;
 }
 
 
 
-/* 🟦 Sidebar */
-.training-sidebar {
-    width: 200px;
-    background: white;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-    position: sticky;
-    top: 80px;
-    height: fit-content;
-}
 
-.training-sidebar-title {
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
 
 .training-topic-list {
     list-style: none;
@@ -6162,6 +6288,7 @@ select.form-control,
 .training-user-info {
     display: flex;
     flex-direction: column;
+    color: #000000;
 }
 
 .training-post-date {

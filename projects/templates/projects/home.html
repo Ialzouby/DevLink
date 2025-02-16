@@ -24,11 +24,23 @@
     </div>
 -->
     
-    <div class="unique-left-sidebar">
+<div class="unique-left-sidebar">
+    <!-- Resources Block -->
+    <div class="sidebar-block">
+        <h3>Resources</h3>
+        <hr>
+        <ul>
+            <li><a href="{% url 'projects' %}">Projects</a></li>
+            <li><a href="{% url 'training' %}">Training</a></li>
+            <li><a href="{% url 'active_conversations' %}">Messaging</a></li>
+            <li><a href="{% url 'training' %}">Competitions</a></li>
+        </ul>
+    </div>
 
+    <!-- Recommended Users Block -->
+    <div class="sidebar-block">
         <h3>Recommended Users</h3>
         {% for user in top_users %}
-            <!-- Wrap the user-card div with an anchor tag -->
             <a href="{% url 'profile' user.user.username %}" class="user-card-link">
                 <div class="user-card">
                     <div class="user-avatar-container">
@@ -47,6 +59,9 @@
             </a>
         {% endfor %}
     </div>
+</div>
+
+
 
 <!-- Center Content for Projects -->
 

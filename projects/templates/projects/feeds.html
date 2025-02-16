@@ -47,8 +47,10 @@
             {% endif %}
           </a>
           <div class="feed-card-userinfo">
-            <a class="feed-card-username" href="{% url 'profile' item.user.username %}">{{ item.user.username }}</a>
-            <span class="feed-card-time">{{ item.created_at|timesince }} ago</span>
+            <a class="feed-card-username" href="{% url 'profile' item.user.username %}">
+              {{ item.user.first_name }} {{ item.user.last_name }}
+          </a>
+                      <span class="feed-card-time">{{ item.created_at|timesince }} ago</span>
           </div>
         {% endif %}
       </div>
@@ -59,12 +61,15 @@
         <div class="feed-training-snippet">
           <p class="feed-training-title"><strong>{{ item.content }}</strong></p>
         </div>
-      {% elif item.project %}
-        <div class="feed-project-snippet">
-          <p class="feed-project-title"><strong>{{ item.project.title }}</strong></p>
-          <p class="feed-project-desc">{{ item.project.description|truncatechars:100 }}</p>
-        </div>
+        {% elif item.project %}
+        <a href="{% url 'project' item.project.id %}" class="feed-project-snippet-link">
+          <div class="feed-project-snippet">
+            <p class="feed-project-title"><strong>{{ item.project.title }}</strong></p>
+            <p class="feed-project-desc">{{ item.project.description|truncatechars:100 }}</p>
+          </div>
+        </a>
       {% endif %}
+      
       
       </div>
 
@@ -94,8 +99,9 @@
       <div id="comments-section-{{ item.id }}" class="comments-dropdown">
         {% for comment in item.feed_comments.all %}
         <div class="single-comment">
-          <strong>{{ comment.user.username }}</strong>: <span>{{ comment.content }}</span>
-        </div>
+          <strong>{{ comment.user.first_name }} {{ comment.user.last_name }}</strong>: <span>{{ comment.content }}</span>
+      </div>
+      
         {% empty %}
         <div class="single-comment">No comments yet.</div>
         {% endfor %}
@@ -126,10 +132,11 @@
         <hr>
         {% if recommended_projects %}
             {% for project in recommended_projects %}
-                <div class="recommended-project">
-                    <p class="project-title"><strong>{{ project.title }}</strong></p>
-                    <a href="{% url 'project' project.id %}" class="btn-view">View</a>
-                </div>
+                <a href="{% url 'project' project.id %}" class="recommended-project">
+                    <div>
+                        <p class="project-title"><strong>{{ project.title }}</strong></p>
+                    </div>
+                </a>
             {% endfor %}
         {% else %}
             <p>No recommended projects yet.</p>

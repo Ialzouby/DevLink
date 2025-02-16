@@ -35,6 +35,52 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
+import requests
+
+def get_google_user_info(access_token):
+    url = "https://www.googleapis.com/oauth2/v1/userinfo"
+    params = {"alt": "json", "access_token": access_token}
+    response = requests.get(url, params=params)
+    if response.status_code == 200:
+        return response.json()
+    return {}
+
+@receiver(social_account_added, sender=SocialAccount)
+def populate_user_profile_from_google(sender, request, sociallogin, **kwargs):
+    user = sociallogin.user
+    # Get access token from sociallogin token data
+    access_token = sociallogin.token.token
+
+    # Retrieve user info from Google
+    google_data = get_google_user_info(access_token)
+    google_email = google_data.get("email")
+    google_first_name = google_data.get("given_name", "")
+    google_last_name = google_data.get("family_name", "")
+    google_picture = google_data.get("picture", "")
+
+    # Update user email if not already set
+    if google_email and not user.email:
+        user.email = google_email
+    if not user.first_name:
+        user.first_name = google_first_name
+    if not user.last_name:
+        user.last_name = google_last_name
+    user.save()
+
+    # Create or update the user profile
+    user_profile, created = UserProfile.objects.get_or_create(user=user)
+    if not user_profile.first_name:
+        user_profile.first_name = google_first_name
+    if not user_profile.last_name:
+        user_profile.last_name = google_last_name
+    if google_picture and not user_profile.profile_picture_url:
+        user_profile.profile_picture_url = google_picture
+    user_profile.save()
+
+    # Optionally send a welcome email only if the profile was just created
+    if created:
+        send_welcome_email(user=user)
+
 
 @receiver(social_account_added, sender=SocialAccount)
 def google_welcome_email_on_add(sender, request, sociallogin, **kwargs):

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>You've Got a New Follower!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 500px;
+            margin: auto;
+        }
+        h2 {
+            color: #333;
+        }
+        .username {
+            font-weight: bold;
+            color: #007bff;
+        }
+        .btn {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>You've Got a New Follower!</h2>
+        <p>Hey <span class="username">{{ followed_user.username }}</span>,</p>
+        <p><span class="username">{{ follower_user.username }}</span> just followed you on DevLink!</p>
+        <a href="https://devlink.up.railway.app/profile/{{ follower_user.username }}" class="btn">View Profile</a>
+    </div>
+</body>
+</html>

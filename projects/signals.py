@@ -211,10 +211,14 @@ def create_feeditem_for_training_post(sender, instance, created, **kwargs):
         )
 
 
-        from django.db.models.signals import post_save
-from django.dispatch import receiver
-from django.core.mail import send_mail
+
+
+from django.core.mail import send_mail, EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 from django.conf import settings
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from .models import Follow
 
 @receiver(post_save, sender=Follow)
@@ -224,9 +228,21 @@ def send_follow_notification(sender, instance, created, **kwargs):
         follower_user = instance.follower  # The user who followed them
 
         subject = "You've got a new follower!"
-        message = f"Hey {followed_user.username}, {follower_user.username} just followed you on DevLink!"
-        from_email = "DevLink <devlink.notifications@gmail.com>"  # Explicit sender name
-        recipient_list = [followed_user.email]  # Ensure users have valid emails
+        from_email = "DevLink <devlink.notifications@gmail.com>"
+        recipient_list = [followed_user.email]
+
+        # Load the HTML template
+        html_message = render_to_string("emails/follow_notification.html", {
+            "followed_user": followed_user,
+            "follower_user": follower_user,
+        })
+
+        # Convert HTML to plain text (fallback for email clients that don't support HTML)
+        plain_message = strip_tags(html_message)
+
+        # Create the email message object
+        email = EmailMultiAlternatives(subject, plain_message, from_email, recipient_list)
+        email.attach_alternative(html_message, "text/html")  # Attach the HTML version
 
         # Send the email
-        send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+        email.send()

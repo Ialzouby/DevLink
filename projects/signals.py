@@ -36,6 +36,8 @@ from django.utils.html import strip_tags
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 import requests
+import logging
+logger = logging.getLogger(__name__)
 
 def get_google_user_info(access_token):
     url = "https://www.googleapis.com/oauth2/v1/userinfo"
@@ -53,6 +55,8 @@ def populate_user_profile_from_google(sender, request, sociallogin, **kwargs):
 
     # Retrieve user info from Google
     google_data = get_google_user_info(access_token)
+    logger.info("Google Data: %s", google_data)  # Log the API response
+
     google_email = google_data.get("email")
     google_first_name = google_data.get("given_name", "")
     google_last_name = google_data.get("family_name", "")

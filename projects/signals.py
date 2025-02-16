@@ -82,6 +82,7 @@ def populate_user_profile_from_google(sender, request, sociallogin, **kwargs):
         send_welcome_email(user=user)
 
 
+
 @receiver(social_account_added, sender=SocialAccount)
 def google_welcome_email_on_add(sender, request, sociallogin, **kwargs):
     # This fires only once, when the user first links their Google account

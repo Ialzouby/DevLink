@@ -110,44 +110,6 @@ def send_google_welcome_email(user):
     email.attach_alternative(html_message, "text/html")
     email.send()
 
-@receiver(social_account_added, sender=SocialAccount)
-def populate_user_profile_from_google(sender, request, sociallogin, **kwargs):
-    user = sociallogin.user
-    account = sociallogin.account  # The SocialAccount instance
-    extra_data = account.extra_data
-
-    # Extract the email, first name, last name, and profile picture from Google data
-    google_email = extra_data.get("email")
-    google_first_name = extra_data.get("given_name", "")
-    google_last_name = extra_data.get("family_name", "")
-    google_profile_picture = extra_data.get("picture", "")
-
-    # Update user email if not already set
-    if google_email and not user.email:
-        user.email = google_email
-        user.save()
-
-    # Update user first and last name if not already set
-    if not user.first_name:
-        user.first_name = google_first_name
-    if not user.last_name:
-        user.last_name = google_last_name
-    user.save()
-
-    # Create or update the user profile
-    user_profile, created = UserProfile.objects.get_or_create(user=user)
-    if not user_profile.first_name:
-        user_profile.first_name = google_first_name
-    if not user_profile.last_name:
-        user_profile.last_name = google_last_name
-    if google_profile_picture and not user_profile.profile_picture_url:
-        user_profile.profile_picture_url = google_profile_picture
-    user_profile.save()
-
-    # Optionally send a welcome email only if the profile was just created
-    if created:
-        send_welcome_email(user=user)
-
 
 User = get_user_model()
 @receiver(post_save, sender=User)

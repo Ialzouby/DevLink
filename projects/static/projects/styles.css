@@ -1387,14 +1387,7 @@ textarea::placeholder {
     background-color: #0056b3;
 }
 
-.notifications-container {
-    display: flex;
-    justify-content: space-between; /* Align sidebars and main content */
-    padding: 20px;
-    gap: 20px; /* Space between sections */
-    max-width: 1400px; /* Limit the container width for large screens */
-    margin: 0 auto; /* Center the container */
-}
+
 
 .notifications-sidebar,
 .notifications-right-sidebar {
@@ -1459,29 +1452,9 @@ textarea::placeholder {
     color: #fff;
 }
 
-.notifications-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.notification-item {
-    background: #ffffff;
-    padding: 15px;
-    border-radius: 4px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-}
 .notification-content {
     display: flex;
     flex-direction: column;
-}
-
-.notification-timestamp {
-    color: #666;
-    font-size: 0.8rem;
 }
 
 .more-options-btn {
@@ -3092,12 +3065,7 @@ textarea::placeholder {
     flex: 1;
 }
 
-.notification-timestamp {
-    font-size: 12px;
-    color: #bbb;
-    text-align: right;
-    margin-left: 10px;
-}
+
 
 .delete-notification-btn {
     background: none;
@@ -3245,6 +3213,87 @@ textarea::placeholder {
     padding: 10px;
 }
 
+/* New notifications CSS by John-Luke */
+
+.unique-notifications-container {
+    width: 20vw;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    margin-top: 20px; /* Add space below Top Contributors */
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: auto;
+}
+
+.unique-notifications-container h3 {
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+    color: #444;
+}
+
+.notifications-container {
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-top: 20px;
+    border-radius: 5px;
+}
+
+.notifications-list {
+    list-style: none;
+    padding: 0;
+}
+
+.notifications-list li {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.notifications-list li:last-child {
+    border-bottom: none;
+}
+
+.notification-item {
+    background: #ddd;
+    padding: 15px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column; /* Ensure content stacks vertically */
+    justify-content: space-between;
+    align-items: flex-start;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    position: relative;
+    min-height: 80px; /* Ensure enough space for timestamp placement */
+}
+
+/* Footer container to align timestamp & delete button */
+.notification-footer {
+    display: flex;
+    justify-content: space-between; /* Pushes timestamp left, button right */
+    align-items: center;
+    width: 100%;
+    margin-top: auto; /* Pushes it to the bottom */
+}
+
+.notification-item p {
+    font-size: 12px;
+}
+
+.notification-timestamp {
+    color: #666;
+    font-size: 0.8rem;
+    text-align: left;
+}
 
 /* ==========================================================================
    14 Layout & Grid
@@ -4145,6 +4194,12 @@ p {
 /* ==========================================================================
    33 Sidebar & User Cards
    ========================================================================== */
+   .unique-right-section {
+    display: flex;
+    flex-direction: column; /* Stack Top Contributors above Notifications */
+    width: 20vw; /* Ensure it fits the sidebar width */
+}
+
 .unique-right-sidebar {
     width: 20vw;
     background-color: #ffffff;
@@ -4153,7 +4208,8 @@ p {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    height: 20%;
+    height:10%;
+    align-self: flex-start;
 }
 
 .unique-right-sidebar h3 {

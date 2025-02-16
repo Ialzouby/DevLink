@@ -399,6 +399,7 @@ def home(request, topic=None):
     concentration = request.GET.get('concentration')
 
     projects = Project.objects.all()
+    notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')[:5]  # Get latest 5
 
     if topic:
         projects = projects.filter(topic__icontains=topic)
@@ -432,6 +433,7 @@ def home(request, topic=None):
         'top_users': top_users,
         'selected_topic': topic,
         'search_query': q,
+        'notifications': notifications,  # ✅ Pass notifications to template
     })
 
 

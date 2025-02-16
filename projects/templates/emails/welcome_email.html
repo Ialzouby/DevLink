@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to DevLink!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 500px;
+            margin: auto;
+        }
+        h2 {
+            color: #333;
+        }
+        .btn {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Welcome to DevLink, {{ user.username }}! 🎉</h2>
+        <p>We’re excited to have you join our community of developers and innovators.</p>
+        <p>Start by exploring projects, following other users, and collaborating on amazing ideas.</p>
+        <a href="https://devlink.up.railway.app/feed" class="btn">Explore DevLink</a>
+    </div>
+</body>
+</html>

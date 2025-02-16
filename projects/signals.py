@@ -29,6 +29,37 @@ User = get_user_model()
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         UserProfile.objects.get_or_create(user=instance)
+
+
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.conf import settings
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.contrib.auth import get_user_model
+from .models import UserProfile
+
+@receiver(post_save, sender=User)
+def send_welcome_email(sender, instance, created, **kwargs):
+    if created:
+        print(f"🚀 Sending welcome email to: {instance.email}")  # Debugging output
+
+        user = instance
+        subject = "Welcome to DevLink!"
+        from_email = "DevLink <devlink.notifications@gmail.com>"
+        recipient_list = [user.email]
+
+        html_message = render_to_string("emails/welcome_email.html", {"user": user})
+        plain_message = strip_tags(html_message)
+
+        email = EmailMultiAlternatives(subject, plain_message, from_email, recipient_list)
+        email.attach_alternative(html_message, "text/html")
+
+        email.send()
+        print(f"✅ Welcome email sent successfully to {user.email}")  # Debugging output
+
+
 # Signal to add points when a user joins a project
 @receiver(m2m_changed, sender=Project.members.through)
 def update_points_on_project_joining(sender, instance, action, pk_set, **kwargs):
@@ -246,3 +277,5 @@ def send_follow_notification(sender, instance, created, **kwargs):
 
         # Send the email
         email.send()
+
+

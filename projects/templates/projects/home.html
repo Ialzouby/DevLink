@@ -163,31 +163,67 @@
 
     
     </div>
-</div>
 
-<!-- Right Sidebar -->
-<div class="unique-right-sidebar">
-    <h3>Top Contributors</h3>
-    {% for user in top_users %}
-        <!-- Wrap the user-card div with an anchor tag -->
-        <a href="{% url 'profile' user.user.username %}" class="user-card-link">
-            <div class="user-card">
-                <div class="user-avatar-container">
-                    {% if user.profile_picture %}
-                        <img src="{{ user.profile_picture|safe }}" alt="{{ user.user.username }}" class="user-avatar">
-                    {% else %}
-                        <img src="https://via.placeholder.com/50" alt="{{ user.user.username }}" class="user-avatar">
-                    {% endif %}
-                </div>
-                <div class="user-info">
-                    <h4>{{ user.user.first_name }} {{ user.user.last_name }}</h4>
-                    <p>Grade Level: {{ user.grade_level }}</p>
-                    <p>{{ user.concentration }}</p>
-                </div>
-            </div>
-        </a>
-    {% endfor %}
-</div>
+
+    <!-- Right Sidebar Section (New Parent Container) -->
+    <div class="unique-right-section">
+        
+        <!-- Top Contributors (Right Sidebar) -->
+        <div class="unique-right-sidebar">
+            <h3>Top Contributors</h3>
+            {% for user in top_users %}
+                <a href="{% url 'profile' user.user.username %}" class="user-card-link">
+                    <div class="user-card">
+                        <div class="user-avatar-container">
+                            {% if user.profile_picture %}
+                                <img src="{{ user.profile_picture|safe }}" alt="{{ user.user.username }}" class="user-avatar">
+                            {% else %}
+                                <img src="https://via.placeholder.com/50" alt="{{ user.user.username }}" class="user-avatar">
+                            {% endif %}
+                        </div>
+                        <div class="user-info">
+                            <h4>{{ user.user.first_name }} {{ user.user.last_name }}</h4>
+                            <p>Grade Level: {{ user.grade_level }}</p>
+                            <p>{{ user.concentration }}</p>
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+
+        <!-- Notifications Container -->
+        <div class="unique-notifications-container">
+            <h3>Notifications</h3>
+            {% if notifications %}
+                <ul class="notifications-list">
+                    {% for notification in notifications %}
+                        <li class="notification-item">
+                            <p>
+                                <strong>{{ notification.content|safe }}</strong>
+                            </p>
+
+                            <!-- New container for timestamp and delete button -->
+                            <div class="notification-footer">
+                                <span class="notification-timestamp">{{ notification.timestamp|timesince }} ago</span>
+                                <form action="{% url 'delete_notification' notification.id %}" method="post" class="delete-form">
+                                    {% csrf_token %}
+                                    <button type="submit" class="delete-btn">✖</button>
+                                </form>
+                            </div>
+                        </li>
+                    {% empty %}
+                        <li>No new notifications</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No notifications available.</p>
+            {% endif %}
+        </div>
+
+
+    </div>
+
+
 
     
 </div>

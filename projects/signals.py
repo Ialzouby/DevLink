@@ -47,22 +47,36 @@ def get_google_user_info(access_token):
         return response.json()
     return {}
 
+
+
+
+import requests
+from django.core.files.base import ContentFile
+import logging
+from allauth.socialaccount.models import SocialAccount
+from allauth.socialaccount.signals import social_account_added
+from django.dispatch import receiver
+from django.contrib.auth import get_user_model
+from .models import UserProfile
+# Ensure your get_google_user_info is defined
+
+logger = logging.getLogger(__name__)
+User = get_user_model()
+
 @receiver(social_account_added, sender=SocialAccount)
 def populate_user_profile_from_google(sender, request, sociallogin, **kwargs):
     user = sociallogin.user
-    # Get access token from sociallogin token data
     access_token = sociallogin.token.token
 
-    # Retrieve user info from Google
     google_data = get_google_user_info(access_token)
-    logger.info("Google Data: %s", google_data)  # Log the API response
+    logger.info("Google Data: %s", google_data)
 
     google_email = google_data.get("email")
     google_first_name = google_data.get("given_name", "")
     google_last_name = google_data.get("family_name", "")
     google_picture = google_data.get("picture", "")
 
-    # Update user email if not already set
+    # Update the User model
     if google_email and not user.email:
         user.email = google_email
     if not user.first_name:
@@ -71,17 +85,28 @@ def populate_user_profile_from_google(sender, request, sociallogin, **kwargs):
         user.last_name = google_last_name
     user.save()
 
-    # Create or update the user profile
+    # Get or create the UserProfile
     user_profile, created = UserProfile.objects.get_or_create(user=user)
     if not user_profile.first_name:
         user_profile.first_name = google_first_name
     if not user_profile.last_name:
         user_profile.last_name = google_last_name
-    if google_picture and not user_profile.profile_picture_url:
-        user_profile.profile_picture_url = google_picture
+
+    # Download and save the Google profile image into the ImageField
+    if google_picture and not user_profile.profile_picture:
+        try:
+            response = requests.get(google_picture)
+            if response.status_code == 200:
+                user_profile.profile_picture.save(
+                    f"{user.username}_google.jpg",
+                    ContentFile(response.content),
+                    save=False
+                )
+        except Exception as e:
+            logger.error("Error fetching Google profile image: %s", e)
+    
     user_profile.save()
 
-    # Optionally send a welcome email only if the profile was just created
     if created:
         send_welcome_email(user=user)
 

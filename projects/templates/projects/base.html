@@ -67,8 +67,8 @@
             <!-- Profile Dropdown -->
             <div class="unique-profile-dropdown">
                 <div class="unique-profile-trigger" id="uniqueProfileTrigger">
-                    <img src="{% if user.userprofile.profile_picture %}{{ user.userprofile.profile_picture|safe }}{% else %}https://via.placeholder.com/150{% endif %}" 
-                         alt="{{ user.username }}" class="unique-profile-image">
+                    <img src="{% if user.userprofile.profile_picture %}{{ user.userprofile.profile_picture|safe }}{% elif user.userprofile.profile_picture_url %}{{ user.userprofile.profile_picture_url }}{% else %}https://via.placeholder.com/150{% endif %}" alt="{{ user.username }}" class="unique-profile-image">
+
                 </div>
                 <div class="unique-profile-menu" id="uniqueProfileMenu">
                     <!-- Dropdown content -->

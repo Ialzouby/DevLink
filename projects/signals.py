@@ -209,3 +209,24 @@ def create_feeditem_for_training_post(sender, instance, created, **kwargs):
             event_type='training_posted',
             content=f"{instance.user.username} posted a new resource in training: '{instance.title}'",
         )
+
+
+        from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.core.mail import send_mail
+from django.conf import settings
+from .models import Follow
+
+@receiver(post_save, sender=Follow)
+def send_follow_notification(sender, instance, created, **kwargs):
+    if created:
+        followed_user = instance.following  # The user being followed
+        follower_user = instance.follower  # The user who followed them
+
+        subject = "You've got a new follower!"
+        message = f"Hey {followed_user.username}, {follower_user.username} just followed you on DevLink!"
+        from_email = settings.DEFAULT_FROM_EMAIL
+        recipient_list = [followed_user.email]  # Ensure users have valid emails
+
+        # Send the email
+        send_mail(subject, message, from_email, recipient_list, fail_silently=False)

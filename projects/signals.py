@@ -28,6 +28,40 @@ from allauth.socialaccount.models import SocialAccount
 from django.dispatch import receiver
 from django.contrib.auth import get_user_model
 from .models import UserProfile
+from allauth.socialaccount.signals import social_account_added, social_account_updated
+from allauth.socialaccount.models import SocialAccount
+from django.dispatch import receiver
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.core.mail import EmailMultiAlternatives
+from django.conf import settings
+
+@receiver(social_account_added, sender=SocialAccount)
+def google_welcome_email_on_add(sender, request, sociallogin, **kwargs):
+    # This fires only once, when the user first links their Google account
+    user = sociallogin.user
+    if sociallogin.account.provider == "google":
+        send_google_welcome_email(user)
+
+@receiver(social_account_updated, sender=SocialAccount)
+def google_welcome_email_on_update(sender, request, sociallogin, **kwargs):
+    # This fires each time the user re-logs in or updates their Google account
+    # If you only want it once, skip this. Or you can check if user is new somehow.
+    pass
+
+def send_google_welcome_email(user):
+    # Example logic to send your own email
+    subject = "Welcome to DevLink (Google Sign-up)!"
+    from_email = "DevLink <devlink.notifications@gmail.com>"
+    recipient_list = [user.email]  # Ensure user.email is set
+
+    # Render a dedicated Google template or reuse your normal one
+    html_message = render_to_string("emails/welcome_email.html", {"user": user})
+    plain_message = strip_tags(html_message)
+
+    email = EmailMultiAlternatives(subject, plain_message, from_email, recipient_list)
+    email.attach_alternative(html_message, "text/html")
+    email.send()
 
 @receiver(social_account_added, sender=SocialAccount)
 def populate_user_profile_from_google(sender, request, sociallogin, **kwargs):

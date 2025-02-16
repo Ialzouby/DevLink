@@ -225,7 +225,7 @@ def send_follow_notification(sender, instance, created, **kwargs):
 
         subject = "You've got a new follower!"
         message = f"Hey {followed_user.username}, {follower_user.username} just followed you on DevLink!"
-        from_email = settings.DEFAULT_FROM_EMAIL
+        from_email = "DevLink <devlink.notifications@gmail.com>"  # Explicit sender name
         recipient_list = [followed_user.email]  # Ensure users have valid emails
 
         # Send the email

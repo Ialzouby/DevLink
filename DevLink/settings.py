@@ -40,6 +40,8 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'devlink.notifications@gmail.com'
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = "DevLink <devlink.notifications@gmail.com>"
+
 
 
 # Quick-start development settings - unsuitable for production

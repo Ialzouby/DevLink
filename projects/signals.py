@@ -32,21 +32,25 @@ from .models import UserProfile
 @receiver(social_account_added, sender=SocialAccount)
 def populate_user_profile_from_google(sender, request, sociallogin, **kwargs):
     user = sociallogin.user
-    # If the user is brand-new from Google, user might not have a profile yet
+    account = sociallogin.account  # The SocialAccount instance
+    extra_data = account.extra_data
+
+    # Extract the email from extra_data (assuming it's under "email")
+    google_email = extra_data.get("email")
+
+    # If we found an email and the user doesn't have one, set it
+    if google_email and not user.email:
+        user.email = google_email
+        user.save()
+
+    # Also copy first/last name if needed
     user_profile, created = UserProfile.objects.get_or_create(user=user)
-    
-    # Copy the name fields from the user object to the profile
     user_profile.first_name = user.first_name
     user_profile.last_name = user.last_name
-    # Optionally store user.email in the profile if you want:
-    # user_profile.email = user.email
-
     user_profile.save()
 
-    # Optionally: Send your welcome email if the profile is new
+    # Optionally send welcome email
     if created:
-        # If you already have a function for sending email, call it here
-        # e.g., from .signals import send_welcome_email
         send_welcome_email(user=user)
 
 User = get_user_model()

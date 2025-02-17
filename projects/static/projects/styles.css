@@ -1822,24 +1822,17 @@ textarea::placeholder {
 
 .feed-page-container {
     display: grid;
-    grid-template-columns: 240px 2fr 260px; /* Increase left and right sidebar width */
-    gap: 50px; /* Increase gap for spacing */
-    max-width: 1700px; /* Increase overall width */
+    grid-template-columns: minmax(180px, 240px) minmax(500px, 2fr) minmax(200px, 260px); 
+    gap: 50px; /* Keeps consistent gap */
+    max-width: 100%;
+    width: 90vw; /* Adjusts dynamically */
     margin: 0 auto;
     padding: 20px;
     font-family: "Open Sans", sans-serif;
+    overflow-x: hidden;
 }
 
-  
-  /* Adjust for smaller screens */
-  @media (max-width: 992px) {
-    .feed-page-container {
-      grid-template-columns: 2fr;
-    }
-    .feed-sidebar-left, .feed-sidebar-right {
-      display: none;
-    }
-  }
+
   
 
   
@@ -1995,6 +1988,13 @@ textarea::placeholder {
     transition: box-shadow 0.2s ease;
     min-width: 700px;
   }
+
+  .feed-card {
+    width: 100%;  /* Ensures it shrinks with the middle section */
+    max-width: 95%;  /* Keeps it responsive */
+    min-width: 400px; /* Prevents it from getting too small */
+}
+
   
   .feed-card:not(:last-child) {
     margin-bottom: 10px;
@@ -2009,6 +2009,34 @@ textarea::placeholder {
     align-items: center;
     margin-bottom: 10px;
   }
+
+  @media (max-width: 1200px) {
+    .feed-page-container {
+        grid-template-columns: minmax(150px, 200px) minmax(400px, 2fr) minmax(180px, 220px);
+        gap: 40px; /* Reduce gap slightly */
+    }
+}
+
+@media (max-width: 992px) {
+    .feed-page-container {
+        grid-template-columns: 1fr 2fr;
+        gap: 30px;
+    }
+    .feed-sidebar-left {
+        display: none; /* Hide left sidebar first */
+    }
+}
+
+@media (max-width: 768px) {
+    .feed-page-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .feed-sidebar-right {
+        display: none; /* Hide right sidebar at smaller screens */
+    }
+}
+
   
   .avatar-img {
     width: 55px;
@@ -2071,8 +2099,9 @@ textarea::placeholder {
     gap: 15px;
     border-top: 1px solid #eee;
     padding-top: 2.5px;
-    height: 50px;
+    height: auto;
   }
+
   
   .like-form,
   .comment-form {
@@ -2080,16 +2109,12 @@ textarea::placeholder {
     align-items: center;
   }
 
-  .comment-input {
-    flex: 1;
-    height: 32px; /* Shorter input box */
-    background-color: white;
-    color: black;
-    border: 1px solid #ccc;
-    padding: 6px;
-    border-radius: 5px;
-    font-size: 14px;
-    margin-top: 12px;
+  @media (max-width: 768px) {
+    .comment-input {
+        font-size: 12px; /* Smaller font */
+        padding: 5px; /* Less padding */
+        max-width: 90%; /* Shrinks */
+    }
 }
 
 
@@ -2114,20 +2139,252 @@ textarea::placeholder {
     color: #0073b1;
   }
   
-  /* Comments info */
-  .feed-comments-info {
-    font-size: 0.9rem;
+/* ----- Footer Container ----- */
+.feed-card-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 10px;
+}
+
+/* ----- Action Buttons (Like, Comment, Repost, Send) ----- */
+.feed-actions {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 10px;
+    border-top: none !important; /* Remove any top border that may be causing a line */
+}
+
+
+.action-btn {
+    background: none;
+    border: none;
+    color: #555;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    transition: all 0.2s ease-in-out;
+}
+
+.action-btn i {
+    font-size: 16px;
+}
+
+.action-btn:hover {
+    color: #0073b1;
+}
+
+/* ----- Like Button (Highlighted if Liked) ----- */
+.like-btn .liked-icon {
+    color: #0073b1;
+}
+
+/* ----- Comment Section (Initially Hidden) ----- */
+.comment-section {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 10px;
+}
+
+/* ----- Quick Replies (Buttons) ----- */
+.quick-replies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.quick-reply-btn {
+    background: none;
+    border: 1px solid #ccc;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.quick-reply-btn:hover {
+    background: #eee;
+}
+
+/* ----- Comment Input Box ----- */
+.comment-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 8px 12px;
+    background: #f8f8f8;
+    width: 100%;
+}
+
+.comment-avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.comment-input {
+    flex-grow: 1;
+    border: none;
+    background: none;
+    font-size: 14px;
+    outline: none;
+    padding: 6px;
+}
+
+/* Emoji and Image Buttons */
+.emoji-btn, .image-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: #555;
+    transition: all 0.2s ease-in-out;
+}
+
+.emoji-btn:hover, .image-btn:hover {
+    color: #0073b1;
+}
+
+/* ----- Comment Submit Button (Hidden by Default) ----- */
+.comment-submit-btn {
+    background: #0073b1;
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    display: none;
+}
+
+.comment-submit-btn:disabled {
+    background: #cfcfcf;
+    cursor: not-allowed;
+}
+
+.comment-submit-btn:not(:disabled) {
+    display: block;
+}
+
+.comment-submit-btn:hover {
+    background: #005a87;
+}
+
+/* ----- Likes & Comments Summary ----- */
+.likes-comments-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    font-size: 14px;
     color: #666;
+    cursor: pointer;
+    border-bottom: none !important; /* Ensure no separator appears */
+}
+
+
+.likes-section, .comments-section {
     display: flex;
     align-items: center;
     gap: 5px;
-  }
-  
-  /* Comment input */
-  .comment-form {
-    margin-left: auto; /* push to the right */
-    gap: 5px;
-  }
+}
+
+.likes-section:hover, .comments-section:hover {
+    color: #0073b1;
+}
+
+/* ----- Likes Popup ----- */
+.likes-popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    padding: 15px;
+    z-index: 1000;
+}
+
+.likes-popup-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.likes-popup h3 {
+    margin: 0;
+    font-size: 18px;
+    text-align: center;
+}
+
+.likes-popup ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.likes-popup li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.likes-popup li:last-child {
+    border-bottom: none;
+}
+
+.popup-avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Close Button */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* ----- All Comments Section (Initially Hidden) ----- */
+.all-comments {
+    display: none;
+    padding-top: 10px;
+}
+
+.single-comment {
+    padding: 6px 0;
+    border-bottom: 1px solid #ddd;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    color: #000000;
+}
+
+
+/* Ensure the button does not shrink */
+.btn-comment {
+    white-space: nowrap; /* Prevents text from wrapping */
+    padding: 8px 14px; /* Keeps button size consistent */
+}
 
   
   .btn-comment {
@@ -6424,6 +6681,21 @@ select.form-control,
     border-radius: 6px;
 }
 
+.comment-input {
+    flex: 1;
+    width: 100%; /* Makes it responsive */
+    max-width: 95%; /* Ensures it shrinks */
+    height: 32px; /* Default height */
+    background-color: white;
+    color: black;
+    border: 1px solid #ccc;
+    padding: 6px;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-top: 12px;
+}
+
+
 .training-comment-submit-btn {
     background: #0073b1;
     color: white;
@@ -6625,3 +6897,5 @@ select.form-control,
     border-top-left-radius: 28px;
     border-top-right-radius: 28px;
 }
+
+

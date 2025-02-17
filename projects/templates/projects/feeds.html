@@ -72,29 +72,88 @@
       
       
       </div>
+<!-- Likes & Comments Summary (Above the Footer) -->
+<div class="likes-comments-summary">
+  <span class="likes-section" onclick="openLikesPopup('{{ item.id }}')">
+      <i class="fas fa-thumbs-up like-icon"></i> {{ item.likes.count }} likes
+  </span>
+  <span class="comments-section" onclick="toggleAllComments('{{ item.id }}')">
+      {{ item.feed_comments.count }} comments
+  </span>
+</div>
 
-      <div class="feed-card-footer">
-        <form method="POST" action="{% url 'like_feed_item' item.id %}" class="like-form">
+<!-- Likes Popup (Initially Hidden) -->
+<div id="likes-popup-{{ item.id }}" class="likes-popup">
+  <div class="likes-popup-content">
+      <span class="close-btn" onclick="closeLikesPopup('{{ item.id }}')">&times;</span>
+      <h3>Liked by</h3>
+      <ul>
+          {% for like in item.likes.all %}
+              <li>
+                  <img class="popup-avatar" src="{{ like.user.userprofile.profile_picture|default:'https://via.placeholder.com/40' }}" alt="{{ like.user.username }}">
+                  {{ like.user.first_name }} {{ like.user.last_name }}
+              </li>
+          {% endfor %}
+      </ul>
+  </div>
+</div>
+
+<!-- Feed Card Footer (Like, Comment, Repost, Send) -->
+<div class="feed-card-footer">
+  <div class="feed-actions">
+      <form method="POST" action="{% url 'like_feed_item' item.id %}" class="like-form">
           {% csrf_token %}
-          <button type="submit" class="btn-like">
-            {% if item.user_liked %}
-              <i class="fas fa-thumbs-up liked-icon"></i> <span>Unlike ({{ item.likes.count }})</span>
-            {% else %}
-              <i class="far fa-thumbs-up"></i> <span>Like ({{ item.likes.count }})</span>
-            {% endif %}
+          <button type="submit" class="action-btn like-btn">
+              {% if item.user_liked %}
+                  <i class="fas fa-thumbs-up liked-icon"></i> <span>Unlike ({{ item.likes.count }})</span>
+              {% else %}
+                  <i class="far fa-thumbs-up"></i> <span>Like ({{ item.likes.count }})</span>
+              {% endif %}
           </button>
-        </form>
-        <div class="feed-comments-info" onclick="toggleComments('comments-section-{{ item.id }}')">
-          <i class="far fa-comment"></i> <span>{{ item.feed_comments.count }} comments</span>
-        </div>
-        <form method="POST" action="{% url 'comment_on_feed_item' item.id %}" class="comment-form">
-          {% csrf_token %}
-          <input class="comment-input" type="text" name="content" placeholder="Add a comment..." required 
-    style="background-color: white; color: black; border: 1px solid #ccc; padding: 8px; border-radius: 5px;">
+      </form>
 
-          <button class="btn-comment">Comment</button>
-        </form>
+      <button class="action-btn comment-toggle" onclick="toggleCommentSection(this)">
+          <i class="far fa-comment"></i> Comment
+      </button>
+
+      <button class="action-btn"><i class="fas fa-retweet"></i> Repost</button>
+      <button class="action-btn"><i class="fas fa-paper-plane"></i> Send</button>
+  </div>
+
+  <!-- Comment Section (Initially Hidden) -->
+  <div class="comment-section">
+      <div class="quick-replies">
+          <button class="quick-reply-btn">Highly recommended</button>
+          <button class="quick-reply-btn">Worth attending</button>
+          <button class="quick-reply-btn">Thanks for sharing</button>
+          <button class="quick-reply-btn">Exciting</button>
       </div>
+
+      <!-- Comment Input Box -->
+      <form method="POST" action="{% url 'comment_on_feed_item' item.id %}" class="comment-form">
+          {% csrf_token %}
+          <div class="comment-box">
+            <img src="{% if user.userprofile.profile_picture %}{{ user.userprofile.profile_picture|safe }}{% elif user.userprofile.profile_picture_url %}{{ user.userprofile.profile_picture_url }}{% else %}https://via.placeholder.com/150{% endif %}" alt="{{ user.username }}" class="unique-profile-image">
+            <input type="text" class="comment-input" name="content" placeholder="Add a comment..." oninput="toggleCommentButton(this)">
+              <button type="button" class="emoji-btn"><i class="far fa-smile"></i></button>
+              <button type="button" class="image-btn"><i class="far fa-image"></i></button>
+              <button type="submit" class="comment-submit-btn" disabled>Comment</button>
+          </div>
+      </form>
+  </div>
+
+  <!-- All Comments Section (Initially Hidden) -->
+  <div id="all-comments-{{ item.id }}" class="all-comments">
+      {% for comment in item.feed_comments.all %}
+      <div class="single-comment">
+          <strong>{{ comment.user.first_name }} {{ comment.user.last_name }}</strong>: <span>{{ comment.content }}</span>
+      </div>
+      {% empty %}
+      <div class="single-comment">No comments yet.</div>
+      {% endfor %}
+  </div>
+</div>
+
 
       <div id="comments-section-{{ item.id }}" class="comments-dropdown">
         {% for comment in item.feed_comments.all %}
@@ -186,6 +245,44 @@
     section.style.display = (section.style.display === 'none' || section.style.display === '') ? 'block' : 'none';
   }
 
+  function toggleCommentSection(button) {
+    const commentSection = button.closest('.feed-card-footer').querySelector('.comment-section');
+    if (commentSection.style.display === 'none' || commentSection.style.display === '') {
+        commentSection.style.display = 'flex';
+    } else {
+        commentSection.style.display = 'none';
+    }
+}
+
+function toggleCommentButton(input) {
+    const submitButton = input.closest('.comment-box').querySelector('.comment-submit-btn');
+    if (input.value.trim() !== '') {
+        submitButton.style.display = 'block';
+        submitButton.disabled = false;
+    } else {
+        submitButton.style.display = 'none';
+        submitButton.disabled = true;
+    }
+}
+
+// Toggle the likes popup
+function openLikesPopup(postId) {
+    document.getElementById(`likes-popup-${postId}`).style.display = 'block';
+}
+
+function closeLikesPopup(postId) {
+    document.getElementById(`likes-popup-${postId}`).style.display = 'none';
+}
+
+// Toggle the full comments section
+function toggleAllComments(postId) {
+    const commentSection = document.getElementById(`all-comments-${postId}`);
+    if (commentSection.style.display === 'none' || commentSection.style.display === '') {
+        commentSection.style.display = 'block';
+    } else {
+        commentSection.style.display = 'none';
+    }
+}
 
 
 </script>

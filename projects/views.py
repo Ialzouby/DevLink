@@ -664,10 +664,12 @@ def mark_as_read(request, notification_id):
 @login_required
 @require_http_methods(["POST"])
 def delete_notification(request, notification_id):
+    """Deletes a notification by ID and refreshes the home page."""
     notification = get_object_or_404(Notification, id=notification_id, user=request.user)
     notification.delete()
-    messages.success(request, "Notification deleted successfully.")
-    return redirect('notifications_view')  # Redirect to notifications page
+
+    # Redirect back to the home page 
+    return redirect('projects')  
 
 def check_username_email(request):
     username = request.GET.get('username')

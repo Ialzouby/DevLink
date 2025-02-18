@@ -1,10 +1,9 @@
 {% extends "projects/base.html" %}
 
 {% block content %}
-<div class="chat-page-container">
+<div class="chat-page-container{% if recipient %} chat-active{% endif %}">
     <!-- Left: Conversation List -->
     <div class="conversation-list-container">
-
         <!-- Search Form -->
         <form method="get" action="{% url 'active_conversations' %}" class="custom-search-form">
             <input
@@ -34,37 +33,31 @@
         {% endif %}
 
         <!-- Active Conversations -->
- <!-- Active Conversations -->
-<h2>Your Active Conversations</h2>
-<ul class="list-group conversation-list">
-    {% for user in conversation_users %}
-    <li class="list-group-item conversation-item d-flex align-items-center">
-        <!-- Profile Picture -->
-        {% if user.userprofile.profile_picture %}
-        <img 
-            src="{{ user.userprofile.profile_picture|safe }}" 
-            alt="{{ user.username }}" 
-            class="conversation-profile-picture"
-        >
-        {% else %}
-        <img 
-            src="https://via.placeholder.com/100" 
-            alt="{{ user.username }}" 
-            class="conversation-profile-picture"
-        >
-        {% endif %}
-        <!-- User Name -->
-        <a href="?recipient={{ user.username }}" class="conversation-link">
-            {{ user.first_name }} {{ user.last_name }}
-        </a>
-    </li>
-    {% endfor %}
-</ul>
-
-
-
-
-
+        <h2>Your Active Conversations</h2>
+        <ul class="list-group conversation-list">
+            {% for user in conversation_users %}
+            <li class="list-group-item conversation-item d-flex align-items-center">
+                <!-- Profile Picture -->
+                {% if user.userprofile.profile_picture %}
+                <img 
+                    src="{{ user.userprofile.profile_picture|safe }}" 
+                    alt="{{ user.username }}" 
+                    class="conversation-profile-picture"
+                >
+                {% else %}
+                <img 
+                    src="https://via.placeholder.com/100" 
+                    alt="{{ user.username }}" 
+                    class="conversation-profile-picture"
+                >
+                {% endif %}
+                <!-- User Name -->
+                <a href="?recipient={{ user.username }}" class="conversation-link">
+                    {{ user.first_name }} {{ user.last_name }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
     </div>
 
     <!-- Right: Chat Container -->
@@ -72,7 +65,8 @@
         {% if recipient %}
             <div class="chat-header">
                 <h2>Chat with {{ recipient.username }}</h2>
-                <button onclick="window.history.back()" class="btn btn-secondary back-to-profile-btn">Go Back</button>
+                <!-- Use a link to go back to the conversations list on mobile -->
+                <a href="{% url 'active_conversations' %}" class="btn btn-secondary back-to-profile-btn">Go Back</a>
             </div>
 
             <div class="message-thread">
@@ -102,7 +96,10 @@
             </div>
         {% else %}
             <div class="unique-blank-chat-view">
-                <p><span id="unique-typing-text" class="unique-typing-effect"></span><span class="unique-cursor">.</span></p>
+                <p>
+                    <span id="unique-typing-text" class="unique-typing-effect"></span>
+                    <span class="unique-cursor">.</span>
+                </p>
             </div>
         {% endif %}
     </div>

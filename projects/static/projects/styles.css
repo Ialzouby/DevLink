@@ -279,6 +279,10 @@ body {
     flex-direction: column;
 }
 
+html, body {
+    overflow-x: hidden;
+  }
+  
 /* Custom Navbar Styling */
 
 /* Reset and base styles */
@@ -299,7 +303,59 @@ span.devlink-logo {
     font-size: 32px;
     font-weight: bold;
     color: #000000;
+    text-decoration: none;
 }
+
+.devlink-logo {
+    font-size: 32px;
+    font-weight: bold;
+    color: #000000;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.custom-navbar-logo a:hover .devlink-logo {
+    transform: scale(1.1); /* Increase size on hover */
+    color: #6f9dce;       /* Change color on hover */
+}
+
+
+.devlink-logo:hover a {
+    text-decoration: none;
+}
+
+.custom-navbar-logo a {
+    text-decoration: none;
+}
+
+/* Default layout (desktop view): both containers visible side by side */
+.chat-page-container {
+    display: flex;
+  }
+  
+  /* Ensure each container gets appropriate space on desktop */
+  .conversation-list-container,
+  .chat-container {
+    flex: 1;
+  }
+  
+  /* Mobile view: adjust layout for screens smaller than 768px */
+  @media (max-width: 768px) {
+    /* When a chat is active, hide the conversation list */
+    .chat-page-container.chat-active .conversation-list-container {
+      display: none;
+    }
+    /* When no chat is active, hide the chat container */
+    .chat-page-container:not(.chat-active) .chat-container {
+      display: none;
+    }
+    
+    /* Make the visible container take full width */
+    .chat-page-container.chat-active .chat-container,
+    .chat-page-container:not(.chat-active) .conversation-list-container {
+      width: 100%;
+    }
+  }
+  
 /* The outer wrapper for banner + content */
 .qz9-profile-wrapper {
     max-width: 1100px;
@@ -6899,3 +6955,98 @@ select.form-control,
 }
 
 
+
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    /* Navbar adjustments */
+
+  
+    /* Profile Banner & Profile Picture */
+    .qz9-profile-banner {
+      position: relative;
+    }
+    .qz9-banner-img,
+    .qz9-banner-placeholder {
+      width: 100%;
+      height: auto;
+    }
+    .qz9-banner-profile-pic {
+      width: 80px;
+      height: 80px;
+      border: 2px solid #fff;
+      position: absolute;
+      bottom: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .qz9-banner-profile-pic img {
+      width: 100%;
+      height: auto;
+    }
+  
+    /* Profile Wrapper & Top Card */
+    .qz9-profile-wrapper {
+      padding-top: 60px; /* Adjust to ensure content doesn't hide behind the banner */
+      margin: 0 10px;
+    }
+    .qz9-top-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .qz9-top-left,
+    .qz9-top-right {
+      width: 100%;
+      margin-top: 10px;
+    }
+    .qz9-user-name {
+      font-size: 240x;
+      text-align: left;
+    }
+    .qz9-user-headline {
+      font-size: 14px;
+      text-align: left;
+    }
+  
+    /* About Section */
+    .qz9-about-section {
+      padding: 15px;
+      font-size: 14px;
+    }
+  
+    /* Skills Section */
+    .skills-card-container {
+      padding: 15px;
+    }
+    .skill-category-block {
+      margin-bottom: 20px;
+    }
+  
+    /* Portfolio Grid */
+    .qz9-portfolio-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    .qz9-portfolio-card {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+  
+    /* Footer */
+    footer p {
+      font-size: 12px;
+      text-align: center;
+      margin: 15px 0;
+    }
+  
+    /* Modal adjustments */
+    .qz9-modal-content {
+      width: 90%;
+      margin: auto;
+    }
+  }
+  

@@ -47,7 +47,7 @@
                         <img src="{% if user.userprofile.profile_picture %}{{ user.userprofile.profile_picture|safe }}{% else %}https://via.placeholder.com/150{% endif %}" alt="{{ user.username }}" class="unique-profile-thumbnail">
                         <div class="unique-profile-info">
                             <h4>{{ user.first_name }} {{ user.last_name }}</h4> 
-                            <p>{{ profile_user.userprofile.grade_level }} studying {{ profile_user.userprofile.concentration }} | Skills: {{ skills_list|join:", " }}</p>
+                            <p>{{ profile_user.userprofile.grade_level }} studying {{ profile_user.userprofile.concentration }}</p>
                         </div>
                         <a href="{% url 'profile' user.username %}" class="unique-profile-view-button">View Profile</a>
                     </div>
@@ -135,7 +135,7 @@
       <div class="qz9-top-card">
         <div class="qz9-top-left">
           <h1 class="qz9-user-name">{{ profile_user.first_name }} {{ profile_user.last_name }}</h1>
-          <h3 class="qz9-user-headline">{{ profile_user.userprofile.grade_level }} studying {{ profile_user.userprofile.concentration }} | Skills: {{ skills_list|join:", " }}</h3>
+          <h3 class="qz9-user-headline">{{ profile_user.userprofile.grade_level }} studying {{ profile_user.userprofile.concentration }}</h3>
           <p class="qz9-user-follow-info">
             <span>{{ profile_user.followers.count }} Followers</span> |
             <span>{{ profile_user.following.count }} Following</span>

@@ -35,7 +35,15 @@
             {% for notification in notifications %}
                 <div class="notification-item">
                     <div class="notification-content">
-                        <p>{{ notification.content|safe }}</p>
+                        <p>
+                            {% if notification.content %}
+                                {{ notification.content|safe }}
+                            {% elif notification.related_message %}
+                                New Message: {{ notification.related_message.content|safe }}
+                            {% else %}
+                                No content available
+                            {% endif %}
+                        </p>
                         <span class="notification-timestamp">{{ notification.timestamp|timesince }} ago</span>
                     </div>
                     <button class="more-options-btn" onclick="toggleOptions('{{ notification.id }}')">

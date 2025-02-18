@@ -3526,7 +3526,7 @@ textarea::placeholder {
     padding: 10px;
 }
 
-/* New notifications CSS by John-Luke */
+/* New project page notifications CSS by John-Luke */
 
 .unique-notifications-container {
     width: 20vw;
@@ -3606,6 +3606,60 @@ textarea::placeholder {
     color: #666;
     font-size: 0.8rem;
     text-align: left;
+}
+
+/* New notifications page CSS by John-Luke */
+
+/* Ensure the main page layout pushes content to the right */
+.notifications-page-container {
+    background: #ffffff; /* Keep a clean background */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    margin-left: 60px;
+}
+
+/* Use CSS Grid to structure the page */
+.notifications-page {
+    display: grid;
+    grid-template-columns: 1fr 2fr; /* Sidebar takes 1fr, notifications take 2fr */
+    gap: 20px; /* Adds space between the sidebar and notifications */
+    min-height: 100vh;
+    width: 100%;
+    background: #f8f9fa; /* Light gray background */
+    padding: 20px;
+}
+
+/* Make sure notifications are positioned correctly */
+.notifications-page-main {
+    width: 100%;
+    
+    margin-left: auto; /* Push it to the right */
+}
+
+/* Style for the notifications list */
+.notifications-list {
+    width: 100%;
+    padding: 0;
+}
+
+/* Style the left sidebar */
+.notifications-sidebar-left {
+    background: #ffffff; /* Keep a clean background */
+    padding: 0;
+    border-radius: 8px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+    height: fit-content;
+    width: 20%;
+    max-width: 300px;
+    min-width: 200px;
+}
+
+.sidebar-block {
+    margin-bottom: 0px;
 }
 
 /* ==========================================================================

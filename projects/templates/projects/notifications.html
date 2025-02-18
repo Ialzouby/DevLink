@@ -3,9 +3,25 @@
 {% block title %}Notifications{% endblock %}
 
 {% block content %}
-<div class="notifications-container">
+<!-- Left Sidebar -->
+<aside class="notifications-sidebar-left">
+    <div class="sidebar-block">
+    <h3>Resources</h3>
+    <hr>
+    <ul>
+        <li><a href="{% url 'projects' %}">Projects</a></li>
+        <li><a href="{% url 'training' %}">Training</a></li>
+        <li><a href="{% url 'active_conversations' %}">Messaging</a></li>
+        <li><a href="{% url 'training' %}">Competitions</a></li>
+    </ul>
+    </div>
+</aside>
+
+<div class="notifications-page-container">
+    
+
     <!-- Main Notifications Section -->
-    <div class="notifications-main">
+    <div class="notifications-page-main">
         <!-- Filters Section -->
         <div class="notifications-filters">
             <button class="filter-btn active">All</button>
@@ -19,7 +35,18 @@
             {% for notification in notifications %}
                 <div class="notification-item">
                     <div class="notification-content">
-                        <p>{{ notification.content|safe }}</p>
+                        <p>
+                            {% if notification.content %}
+                                {{ notification.content|safe }}
+                            {% elif notification.related_message %}
+                                <a href="{% url 'active_conversations' %}?recipient={{ notification.related_message.sender.username }}" class="notification-link">
+                                    New Message from <strong>{{ notification.related_message.sender.username }}</strong>: 
+                                    <strong>{{ notification.related_message.content|safe }}</strong>
+                                </a>
+                            {% else %}
+                                No content available
+                            {% endif %}
+                        </p>
                         <span class="notification-timestamp">{{ notification.timestamp|timesince }} ago</span>
                     </div>
                     <button class="more-options-btn" onclick="toggleOptions('{{ notification.id }}')">

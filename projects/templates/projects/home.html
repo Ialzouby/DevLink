@@ -203,7 +203,10 @@
                                     {% if notification.content %}
                                         {{ notification.content|safe }}
                                     {% elif notification.related_message %}
-                                        New Message: {{ notification.related_message.content|safe }}
+                                        <a href="{% url 'active_conversations' %}?recipient={{ notification.related_message.sender.username }}" class="notification-link">
+                                            New Message from <strong>{{ notification.related_message.sender.username }}</strong>: 
+                                            <strong>{{ notification.related_message.content|safe }}</strong>
+                                        </a>
                                     {% else %}
                                         No content available
                                     {% endif %}

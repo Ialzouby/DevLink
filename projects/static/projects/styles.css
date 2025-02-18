@@ -3658,6 +3658,9 @@ textarea::placeholder {
     min-width: 200px;
 }
 
+.sidebar-block {
+    margin-bottom: 0px;
+}
 
 /* ==========================================================================
    14 Layout & Grid

@@ -3,9 +3,25 @@
 {% block title %}Notifications{% endblock %}
 
 {% block content %}
-<div class="notifications-container">
+<!-- Left Sidebar -->
+<aside class="notifications-sidebar-left">
+    <div class="sidebar-block">
+    <h3>Resources</h3>
+    <hr>
+    <ul>
+        <li><a href="{% url 'projects' %}">Projects</a></li>
+        <li><a href="{% url 'training' %}">Training</a></li>
+        <li><a href="{% url 'active_conversations' %}">Messaging</a></li>
+        <li><a href="{% url 'training' %}">Competitions</a></li>
+    </ul>
+    </div>
+</aside>
+
+<div class="notifications-page-container">
+    
+
     <!-- Main Notifications Section -->
-    <div class="notifications-main">
+    <div class="notifications-page-main">
         <!-- Filters Section -->
         <div class="notifications-filters">
             <button class="filter-btn active">All</button>

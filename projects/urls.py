@@ -3,7 +3,7 @@ from . import views
 from .views import (
 register, profile, network, landing_page, feed_view, like_feed_item,
 comment_on_feed_item, help_page,settings_page, delete_account, training,
-add_post, add_comment, like_post, add_skill, endorse_skill,
+add_post, add_comment, like_post, add_skill, endorse_skill, delete_training_post, edit_training_post,
 )
 from django.contrib.auth import views as auth_views
 from django.conf import settings
@@ -94,6 +94,8 @@ urlpatterns = [
     path("training/add_post/", add_post, name="add_post"),
     path("training/comment/<int:post_id>/", add_comment, name="add_comment"),
     path("training/like/<int:post_id>/", like_post, name="like_post"),
+    path('training/delete/<int:post_id>/', delete_training_post, name='delete_training_post'),
+    path('training/edit/<int:post_id>/', edit_training_post, name='edit_training_post'),
 
     # --------------------------------------------------
     # Skill Management

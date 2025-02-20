@@ -41,7 +41,7 @@ class UserProfile(models.Model):
     github = models.CharField(max_length=500, blank=True, null=True)
     bio = models.TextField(blank=True, null=True)
     profile_picture = models.ImageField(upload_to='profile_pics/', max_length=255, blank=True, null=True)
-    profile_picture_url = models.URLField(blank=True, null=True)
+    profile_picture_url = models.URLField(max_length=2048, blank=True, null=True)
     points = models.IntegerField(default=0)
     birthdate = models.DateField(null=True, blank=True)
     skills = models.CharField(max_length=255, blank=True, null=True) 
@@ -51,7 +51,7 @@ class UserProfile(models.Model):
         blank=True, 
         null=True
     )
-    banner_picture_url = models.URLField(blank=True, null=True)
+    banner_picture_url = models.URLField(max_length=2048, blank=True, null=True)
     def is_complete(self):
         required_fields = [
 
@@ -114,8 +114,8 @@ class Project(models.Model):
     members = models.ManyToManyField(User, related_name='joined_projects', blank=True)
     owner = models.ForeignKey(User, related_name='owned_projects', on_delete=models.CASCADE)  # New field for project owner
     skills_gained = models.CharField(max_length=200)
-    skill_requirements = models.CharField(max_length=200)
-    github_link = models.URLField(max_length=200)
+    skill_requirements = models.CharField(max_length=2000)
+    github_link = models.URLField(max_length=2000)
     topic = models.CharField(max_length=100, choices=TOPIC_CHOICES) 
     birthdate = models.DateField(null=True, blank=True)
     completed = models.BooleanField(default=False)  # New field to track project completion
@@ -216,33 +216,40 @@ EVENT_TYPE_CHOICES = (
     # Add more event types if needed
 )
 
+from django.db import models
+from django.contrib.auth.models import User
+from django.utils import timezone
+from .utils import get_link_metadata  # Ensure you have this function
+
 class FeedItem(models.Model):
     """
-    Represents one activity in the feed. 
-    For example:
-     - A user created a project
-     - A user joined a project
-     - A user completed a project
-     - A user commented on a project
-     - A user followed another user
+    Represents one activity in the feed.
     """
     user = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='feed_items'
+        User, on_delete=models.CASCADE, related_name="feed_items"
     )
-    event_type = models.CharField(
-        max_length=50, choices=EVENT_TYPE_CHOICES
-    )
-    # Link to a project if the event is project-related
+    event_type = models.CharField(max_length=50, choices=EVENT_TYPE_CHOICES)
     project = models.ForeignKey(
-        Project, null=True, blank=True, on_delete=models.SET_NULL
+        "Project", null=True, blank=True, on_delete=models.SET_NULL
     )
-    # Optionally store additional text describing the feed event
     content = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(default=timezone.now)
 
+    # New fields for link previews
+    link = models.URLField(blank=True, null=True)  # Store the URL
+    link_preview = models.JSONField(blank=True, null=True)  # Store metadata
+
+    def save(self, *args, **kwargs):
+        """Fetch metadata for the link when saving."""
+        if self.link:
+            metadata = get_link_metadata(self.link)
+            if metadata:
+                self.link_preview = metadata
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return f"FeedItem: {self.event_type} by {self.user.username} at {self.created_at}"
-    
+
 
 
 class FeedItemLike(models.Model):
@@ -294,7 +301,7 @@ class TrainingPost(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     content = models.TextField()
-    link = models.URLField(blank=True, null=True)
+    link = models.URLField(max_length=2048, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

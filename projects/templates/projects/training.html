@@ -9,10 +9,10 @@
             <h3>Resources</h3>
             <hr>
             <ul>
-                <li><a href="{% url 'projects' %}">Projects</a></li>
-                <li><a href="{% url 'training' %}">Training</a></li>
-                <li><a href="{% url 'active_conversations' %}">Messaging</a></li>
-                <li><a href="{% url 'training' %}">Competitions</a></li>
+                <li><a href="{% url 'training' %}">Return to Feed</a></li>
+                <li><a href="{% url 'projects' %}">View Projects</a></li>
+                <li><a href="{% url 'active_conversations' %}">Send a Message</a></li>
+                <li><a href="{% url 'training' %}">Start Competing</a></li>
             </ul>
         </div>
     
@@ -37,8 +37,14 @@
     <!-- Main Content (Centered Feed) -->
     <main class="training-main-feed">
         <div class="training-header">
-            <h2 class="training-topic-title">{{ selected_topic.name }}</h2>
-            <button class="training-new-post-btn" onclick="openTrainingPostForm()">+ Add Post</button>
+            <h2 class="training-topic-title">
+                {% if selected_topic %} 
+                    {{ selected_topic.name }} 
+                {% else %} 
+                    Training Content
+                {% endif %}
+            </h2>
+                        <button class="training-new-post-btn" onclick="openTrainingPostForm()">+ Add Post</button>
         </div>
 
         {% if posts %}
@@ -59,10 +65,11 @@
                         <button class="training-menu-btn" onclick="togglePostMenu('{{ post.id }}')">⋮</button>
                         <ul class="training-menu-dropdown" id="post-menu-{{ post.id }}">
                             {% if post.user == request.user %}
-                                <li onclick="editPost('{{ post.id }}')">✏ Edit</li>
+                            <li onclick="openEditModal('{{ post.id }}', '{{ post.title }}', '{{ post.content }}', '{{ post.link }}')">✏ Edit</li>
+
                                 <li onclick="deletePost('{{ post.id }}')">🗑 Delete</li>
                             {% else %}
-                                <li onclick="reportPost('{{ post.id }}')">⚠ Report</li>
+                                <li class="report-training-btn" onclick="reportPost('{{ post.id }}')">⚠ Report</li>
                             {% endif %}
                         </ul>
                     </div>
@@ -71,15 +78,35 @@
                 <!-- Post Content -->
                 <h3 class="training-post-title">{{ post.title }}</h3>
                 <p class="training-post-content">{{ post.content }}</p>
-                {% if post.link %}
-                    <a class="training-post-link" href="{{ post.link }}" target="_blank">🔗 Tutorial Link</a>
-                {% endif %}
-
-                <!-- Post Actions -->
-                <div class="training-post-actions">
-                    <button class="training-like-btn" data-post-id="{{ post.id }}" onclick="likeTrainingPost('{{ post.id }}')">👍 {{ post.likes.count }}</button>
-                    <button class="training-comment-toggle" onclick="toggleTrainingComments('{{ post.id }}')">💬 {{ post.comments.count }}</button>
+                {% if post.link_preview %}
+                <div class="training-link-preview">
+                    <a href="{{ post.link_preview.url }}" target="_blank">
+                        {% if post.link_preview.image %}
+                            <img src="{{ post.link_preview.image }}" alt="Preview Image" class="training-preview-img">
+                        {% endif %}
+                        <div class="training-preview-content">
+                            <h4 class="training-preview-title">{{ post.link_preview.title }}</h4>
+                            <p class="training-preview-description">{{ post.link_preview.description }}</p>
+                        </div>
+                    </a>
                 </div>
+            {% endif %}
+            
+            
+            
+            
+
+            <div class="training-post-actions">
+                <button class="training-like-btn" data-post-id="{{ post.id }}" onclick="likeTrainingPost('{{ post.id }}')">
+                    <i class="far fa-thumbs-up"></i> {{ post.likes.count }}
+                </button>
+                
+                <button class="training-comment-toggle" onclick="toggleTrainingComments('{{ post.id }}')">
+                    <i class="far fa-comment"></i> {{ post.comments.count }}
+                </button>
+            </div>
+            
+                
 
                 <!-- Comments (Hidden Initially) -->
                 <div class="training-comments-section" id="training-comments-{{ post.id }}" style="display: none;">
@@ -122,11 +149,37 @@
 
             <input type="text" name="title" placeholder="Post title" required class="training-popup-input">
             <textarea name="content" placeholder="Write something..." required class="training-popup-textarea"></textarea>
-            <input type="url" name="link" placeholder="Optional tutorial link" class="training-popup-link-input">
+            <input type="url" name="link" placeholder="Optional tutorial link" class="training-popup-link-input" maxlength="2048">
             <button type="submit" class="training-popup-submit-btn">Post</button>
         </form>
     </div>
 </div>
+
+<!-- Edit Post Popup Modal -->
+<div id="editPostModal" class="training-popup" style="display: none;">
+    <div class="training-popup-content">
+        <span class="training-close-btn" onclick="closeEditModal()">&times;</span>
+        <h2 class="training-popup-title">Edit Post</h2>
+
+        <form id="editPostForm" method="POST">
+            {% csrf_token %}
+
+            <input type="hidden" id="editPostId" name="post_id">
+
+            <label for="editTitle">Title:</label>
+            <input type="text" id="editTitle" name="title" required class="training-popup-input">
+
+            <label for="editContent">Content:</label>
+            <textarea id="editContent" name="content" required class="training-popup-textarea"></textarea>
+
+            <label for="editLink">Optional tutorial link:</label>
+            <input type="url" id="editLink" name="link" class="training-popup-link-input">
+
+            <button type="submit" class="training-popup-submit-btn">Save Changes</button>
+        </form>
+    </div>
+</div>
+
 
 <!-- ✅ JavaScript -->
 <script>
@@ -202,6 +255,53 @@ document.addEventListener("click", function (event) {
         });
     }
 });
+
+
+function openEditModal(postId, title, content, link) {
+    // Close the dropdown menu (if open)
+    let menu = document.getElementById("post-menu-" + postId);
+    if (menu) {
+        menu.style.display = "none";
+    }
+
+    // Fill the modal fields with the post data
+    document.getElementById("editPostId").value = postId;
+    document.getElementById("editTitle").value = title;
+    document.getElementById("editContent").value = content;
+    document.getElementById("editLink").value = link ? link : "";
+
+    // Show the edit popup modal
+    document.getElementById("editPostModal").style.display = "block";
+}
+
+
+function closeEditModal() {
+    document.getElementById("editPostModal").style.display = "none";
+}
+
+// Handle Edit Post Submission with AJAX
+document.getElementById("editPostForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent form from reloading the page
+
+    let postId = document.getElementById("editPostId").value;
+    let formData = new FormData(this);
+
+    fetch(`/training/edit/${postId}/`, {
+        method: "POST",
+        body: formData,
+        headers: { "X-CSRFToken": "{{ csrf_token }}" }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            location.reload(); // Refresh the page to show updates
+        } else {
+            alert("Error: " + data.error);
+        }
+    })
+    .catch(error => console.error("Error updating post:", error));
+});
+
 
     
 </script>

@@ -654,6 +654,60 @@ span.devlink-logo {
     font-weight: bold;
   }
 
+  .training-link-preview {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center-align content */
+    text-align: center; /* Center text */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 100%;
+    max-width: 600px; /* Adjust for layout */
+    margin: 15px auto;
+    background-color: #f9f9f9;
+    padding: 10px;
+}
+
+.training-link-preview:hover {
+    transform: scale(1.02);
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+
+
+.training-link-preview a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.training-preview-img {
+    width: 100%; /* Full width */
+    max-width: 600px; /* Keep a good aspect ratio */
+    max-height: 300px;
+    height: auto;
+    border-bottom: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.training-preview-content {
+    padding: 10px;
+}
+
+.training-preview-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.training-preview-description {
+    font-size: 14px;
+    color: #555;
+}
+
+
+
+
   /* Drop area */
   #drop-area {
     border: 2px dashed #ccc;
@@ -6680,7 +6734,7 @@ select.form-control,
 .training-post-card {
     width: 100%; /* ⬅ Forces posts to stretch */
     background: white;
-    padding: 20px;
+    padding: 10px;
     margin-bottom: 15px;
     border-radius: 8px;
     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
@@ -6689,10 +6743,6 @@ select.form-control,
 }
 
 
-.training-post-card:hover {
-    transform: scale(1.02);
-    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
-}
 
 /* Post Header */
 .training-post-header {
@@ -6920,7 +6970,14 @@ select.form-control,
     transition: background 0.2s;
     font-size: 14px;
     white-space: nowrap;
+    font-weight: bold;
+    color: #000000;
 }
+
+.report-training-btn {
+    color: #ff0000!important;
+}
+
 
 .training-menu-dropdown li:hover {
     background: rgba(0, 0, 0, 0.05);

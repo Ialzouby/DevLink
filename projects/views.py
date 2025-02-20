@@ -12,7 +12,7 @@ from django.contrib.auth import views as auth_views
 from .forms import RatingForm, CustomUserCreationForm, MessageForm, ProjectForm, UserProfileForm
 from .models import Project, Comment, UserProfile, JoinRequest, Message, User, Notification, Update
 from django.contrib.auth import logout
-
+from .utils import get_link_metadata
 from cloudinary.uploader import upload
 import cloudinary
 from django.http import JsonResponse
@@ -835,6 +835,14 @@ def feed_view(request):
         .prefetch_related('likes', 'feed_comments') \
         .order_by('-created_at')
 
+    # ✅ Fetch metadata for each feed item that has a link but no preview yet
+    for item in feed_queryset:
+        if item.link and not item.link_preview:  # Prevent duplicate API calls
+            metadata = get_link_metadata(item.link)
+            if metadata:
+                item.link_preview = metadata  # Save metadata in the model
+                item.save(update_fields=['link_preview'])  # Save only this field
+
     # ✅ Filter by 'following' mode
     if filter_mode == 'following':
         following_user_ids = Follow.objects.filter(
@@ -884,6 +892,7 @@ def feed_view(request):
                 'likes_count': item.likes.count(),
                 'comments_count': item.feed_comments.count(),
                 'user_liked': item.user_liked,
+                'link_preview': item.link_preview,  # ✅ Send preview to AJAX
             }
             for item in page_obj
         ]
@@ -904,7 +913,6 @@ def feed_view(request):
     }
 
     return render(request, 'projects/feeds.html', context)
-
 
 
 
@@ -947,6 +955,10 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from .models import TrainingTopic, TrainingPost, TrainingComment, TrainingLike
 
+from django.shortcuts import render, get_object_or_404
+from .models import TrainingTopic, TrainingPost
+from .utils import get_link_metadata 
+
 def training(request):
     """Renders the training forum with topics and posts."""
     topics = TrainingTopic.objects.all()
@@ -961,11 +973,57 @@ def training(request):
         selected_topic = None  # No single topic selected
         posts = TrainingPost.objects.all().order_by("-created_at") 
 
+    # Fetch metadata for each post link
+    for post in posts:
+        if post.link:
+            post.link_preview = get_link_metadata(post.link)
+
     return render(request, "projects/training.html", {
         "topics": topics,
         "selected_topic": selected_topic,
         "posts": posts,
     })
+
+
+@login_required
+def delete_training_post(request, post_id):
+    """Handles deleting a training post."""
+    post = get_object_or_404(TrainingPost, id=post_id)
+
+    if request.user != post.user:  # Ensure only the owner can delete
+        return JsonResponse({'error': 'Unauthorized'}, status=403)
+
+    post.delete()
+    
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return JsonResponse({'message': 'Post deleted successfully'})
+    
+    return redirect('training')  # Redirect back to training feed
+
+
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from .models import TrainingPost
+from .forms import TrainingPostForm  # You'll create this form next
+
+@login_required
+def edit_training_post(request, post_id):
+    """Handles updating a training post via AJAX."""
+    post = get_object_or_404(TrainingPost, id=post_id)
+
+    if request.user != post.user:
+        return JsonResponse({'error': 'Unauthorized'}, status=403)
+
+    if request.method == "POST":
+        post.title = request.POST.get("title", post.title)
+        post.content = request.POST.get("content", post.content)
+        post.link = request.POST.get("link", post.link)
+        post.save()
+
+        return JsonResponse({"success": True})
+
+    return JsonResponse({"error": "Invalid request"}, status=400)
+
 
 @login_required
 def add_post(request):

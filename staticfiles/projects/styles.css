@@ -279,6 +279,10 @@ body {
     flex-direction: column;
 }
 
+html, body {
+    overflow-x: hidden;
+  }
+  
 /* Custom Navbar Styling */
 
 /* Reset and base styles */
@@ -299,7 +303,59 @@ span.devlink-logo {
     font-size: 32px;
     font-weight: bold;
     color: #000000;
+    text-decoration: none;
 }
+
+.devlink-logo {
+    font-size: 32px;
+    font-weight: bold;
+    color: #000000;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.custom-navbar-logo a:hover .devlink-logo {
+    transform: scale(1.1); /* Increase size on hover */
+    color: #6f9dce;       /* Change color on hover */
+}
+
+
+.devlink-logo:hover a {
+    text-decoration: none;
+}
+
+.custom-navbar-logo a {
+    text-decoration: none;
+}
+
+/* Default layout (desktop view): both containers visible side by side */
+.chat-page-container {
+    display: flex;
+  }
+  
+  /* Ensure each container gets appropriate space on desktop */
+  .conversation-list-container,
+  .chat-container {
+    flex: 1;
+  }
+  
+  /* Mobile view: adjust layout for screens smaller than 768px */
+  @media (max-width: 768px) {
+    /* When a chat is active, hide the conversation list */
+    .chat-page-container.chat-active .conversation-list-container {
+      display: none;
+    }
+    /* When no chat is active, hide the chat container */
+    .chat-page-container:not(.chat-active) .chat-container {
+      display: none;
+    }
+    
+    /* Make the visible container take full width */
+    .chat-page-container.chat-active .chat-container,
+    .chat-page-container:not(.chat-active) .conversation-list-container {
+      width: 100%;
+    }
+  }
+  
 /* The outer wrapper for banner + content */
 .qz9-profile-wrapper {
     max-width: 1100px;
@@ -536,9 +592,10 @@ span.devlink-logo {
     display: grid;
     gap: 16px;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    margin-top: 10px;
 }
 .qz9-portfolio-card {
-    background: #f9f9f9;
+    background: #adacac;
     border-radius: 6px;
     padding: 15px;
 }
@@ -596,6 +653,60 @@ span.devlink-logo {
     cursor: pointer;
     font-weight: bold;
   }
+
+  .training-link-preview {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center-align content */
+    text-align: center; /* Center text */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 100%;
+    max-width: 600px; /* Adjust for layout */
+    margin: 15px auto;
+    background-color: #f9f9f9;
+    padding: 10px;
+}
+
+.training-link-preview:hover {
+    transform: scale(1.02);
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+
+
+.training-link-preview a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.training-preview-img {
+    width: 100%; /* Full width */
+    max-width: 600px; /* Keep a good aspect ratio */
+    max-height: 300px;
+    height: auto;
+    border-bottom: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.training-preview-content {
+    padding: 10px;
+}
+
+.training-preview-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.training-preview-description {
+    font-size: 14px;
+    color: #555;
+}
+
+
+
 
   /* Drop area */
   #drop-area {
@@ -744,8 +855,8 @@ span.devlink-logo {
 .custom-navbar-links {
     display: flex;
     gap: 30px; /* Space between links */
-    margin-left: 70px;
-    
+   
+    margin-right: 50px;
 }
 
 .custom-navbar-links a {
@@ -1386,14 +1497,7 @@ textarea::placeholder {
     background-color: #0056b3;
 }
 
-.notifications-container {
-    display: flex;
-    justify-content: space-between; /* Align sidebars and main content */
-    padding: 20px;
-    gap: 20px; /* Space between sections */
-    max-width: 1400px; /* Limit the container width for large screens */
-    margin: 0 auto; /* Center the container */
-}
+
 
 .notifications-sidebar,
 .notifications-right-sidebar {
@@ -1458,29 +1562,9 @@ textarea::placeholder {
     color: #fff;
 }
 
-.notifications-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.notification-item {
-    background: #ffffff;
-    padding: 15px;
-    border-radius: 4px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-}
 .notification-content {
     display: flex;
     flex-direction: column;
-}
-
-.notification-timestamp {
-    color: #666;
-    font-size: 0.8rem;
 }
 
 .more-options-btn {
@@ -1717,7 +1801,7 @@ textarea::placeholder {
 /* User Info */
 .network-user-info {
     margin-left: 15px;
-    flex-grow: 1;
+    flex-grow: 1.5;
 }
 
 /* Ensure the grid is responsive */
@@ -1848,33 +1932,19 @@ textarea::placeholder {
 
 .feed-page-container {
     display: grid;
-    grid-template-columns: 240px 2fr 260px; /* Increase left and right sidebar width */
-    gap: 50px; /* Increase gap for spacing */
-    max-width: 1700px; /* Increase overall width */
+    grid-template-columns: minmax(180px, 240px) minmax(500px, 2fr) minmax(200px, 260px); 
+    gap: 50px; /* Keeps consistent gap */
+    max-width: 100%;
+    width: 90vw; /* Adjusts dynamically */
     margin: 0 auto;
     padding: 20px;
     font-family: "Open Sans", sans-serif;
+    overflow-x: hidden;
 }
 
+
   
-  /* Adjust for smaller screens */
-  @media (max-width: 992px) {
-    .feed-page-container {
-      grid-template-columns: 2fr;
-    }
-    .feed-sidebar-left, .feed-sidebar-right {
-      display: none;
-    }
-  }
-  
-  /* ----- SIDEBARS ----- */
-  .feed-sidebar-left {
-    background-color: #fff;
-    border: 1px solid #e4e4e4;
-    border-radius: 8px;
-    padding: 20px;
-    height: fit-content;
-  }
+
   
   .sidebar-block {
     margin-bottom: 20px;
@@ -2026,8 +2096,15 @@ textarea::placeholder {
     border-radius: 8px;
     padding: 15px;
     transition: box-shadow 0.2s ease;
-    width: 100%;
+    min-width: 700px;
   }
+
+  .feed-card {
+    width: 100%;  /* Ensures it shrinks with the middle section */
+    max-width: 95%;  /* Keeps it responsive */
+    min-width: 400px; /* Prevents it from getting too small */
+}
+
   
   .feed-card:not(:last-child) {
     margin-bottom: 10px;
@@ -2042,6 +2119,34 @@ textarea::placeholder {
     align-items: center;
     margin-bottom: 10px;
   }
+
+  @media (max-width: 1200px) {
+    .feed-page-container {
+        grid-template-columns: minmax(150px, 200px) minmax(400px, 2fr) minmax(180px, 220px);
+        gap: 40px; /* Reduce gap slightly */
+    }
+}
+
+@media (max-width: 992px) {
+    .feed-page-container {
+        grid-template-columns: 1fr 2fr;
+        gap: 30px;
+    }
+    .feed-sidebar-left {
+        display: none; /* Hide left sidebar first */
+    }
+}
+
+@media (max-width: 768px) {
+    .feed-page-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .feed-sidebar-right {
+        display: none; /* Hide right sidebar at smaller screens */
+    }
+}
+
   
   .avatar-img {
     width: 55px;
@@ -2080,7 +2185,7 @@ textarea::placeholder {
   }
   
   .feed-project-snippet {
-    background: #f8f8f8;
+    background: #eaeaea;
     border: 1px solid #eee;
     padding: 10px;
     border-radius: 6px;
@@ -2104,8 +2209,9 @@ textarea::placeholder {
     gap: 15px;
     border-top: 1px solid #eee;
     padding-top: 2.5px;
-    height: 50px;
+    height: auto;
   }
+
   
   .like-form,
   .comment-form {
@@ -2113,16 +2219,12 @@ textarea::placeholder {
     align-items: center;
   }
 
-  .comment-input {
-    flex: 1;
-    height: 32px; /* Shorter input box */
-    background-color: white;
-    color: black;
-    border: 1px solid #ccc;
-    padding: 6px;
-    border-radius: 5px;
-    font-size: 14px;
-    margin-top: 12px;
+  @media (max-width: 768px) {
+    .comment-input {
+        font-size: 12px; /* Smaller font */
+        padding: 5px; /* Less padding */
+        max-width: 90%; /* Shrinks */
+    }
 }
 
 
@@ -2147,20 +2249,252 @@ textarea::placeholder {
     color: #0073b1;
   }
   
-  /* Comments info */
-  .feed-comments-info {
-    font-size: 0.9rem;
+/* ----- Footer Container ----- */
+.feed-card-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 10px;
+}
+
+/* ----- Action Buttons (Like, Comment, Repost, Send) ----- */
+.feed-actions {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 10px;
+    border-top: none !important; /* Remove any top border that may be causing a line */
+}
+
+
+.action-btn {
+    background: none;
+    border: none;
+    color: #555;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    transition: all 0.2s ease-in-out;
+}
+
+.action-btn i {
+    font-size: 16px;
+}
+
+.action-btn:hover {
+    color: #0073b1;
+}
+
+/* ----- Like Button (Highlighted if Liked) ----- */
+.like-btn .liked-icon {
+    color: #0073b1;
+}
+
+/* ----- Comment Section (Initially Hidden) ----- */
+.comment-section {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 10px;
+}
+
+/* ----- Quick Replies (Buttons) ----- */
+.quick-replies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.quick-reply-btn {
+    background: none;
+    border: 1px solid #ccc;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.quick-reply-btn:hover {
+    background: #eee;
+}
+
+/* ----- Comment Input Box ----- */
+.comment-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 8px 12px;
+    background: #f8f8f8;
+    width: 100%;
+}
+
+.comment-avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.comment-input {
+    flex-grow: 1;
+    border: none;
+    background: none;
+    font-size: 14px;
+    outline: none;
+    padding: 6px;
+}
+
+/* Emoji and Image Buttons */
+.emoji-btn, .image-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: #555;
+    transition: all 0.2s ease-in-out;
+}
+
+.emoji-btn:hover, .image-btn:hover {
+    color: #0073b1;
+}
+
+/* ----- Comment Submit Button (Hidden by Default) ----- */
+.comment-submit-btn {
+    background: #0073b1;
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    display: none;
+}
+
+.comment-submit-btn:disabled {
+    background: #cfcfcf;
+    cursor: not-allowed;
+}
+
+.comment-submit-btn:not(:disabled) {
+    display: block;
+}
+
+.comment-submit-btn:hover {
+    background: #005a87;
+}
+
+/* ----- Likes & Comments Summary ----- */
+.likes-comments-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    font-size: 14px;
     color: #666;
+    cursor: pointer;
+    border-bottom: none !important; /* Ensure no separator appears */
+}
+
+
+.likes-section, .comments-section {
     display: flex;
     align-items: center;
     gap: 5px;
-  }
-  
-  /* Comment input */
-  .comment-form {
-    margin-left: auto; /* push to the right */
-    gap: 5px;
-  }
+}
+
+.likes-section:hover, .comments-section:hover {
+    color: #0073b1;
+}
+
+/* ----- Likes Popup ----- */
+.likes-popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    padding: 15px;
+    z-index: 1000;
+}
+
+.likes-popup-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.likes-popup h3 {
+    margin: 0;
+    font-size: 18px;
+    text-align: center;
+}
+
+.likes-popup ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.likes-popup li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.likes-popup li:last-child {
+    border-bottom: none;
+}
+
+.popup-avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Close Button */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* ----- All Comments Section (Initially Hidden) ----- */
+.all-comments {
+    display: none;
+    padding-top: 10px;
+}
+
+.single-comment {
+    padding: 6px 0;
+    border-bottom: 1px solid #ddd;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    color: #000000;
+}
+
+
+/* Ensure the button does not shrink */
+.btn-comment {
+    white-space: nowrap; /* Prevents text from wrapping */
+    padding: 8px 14px; /* Keeps button size consistent */
+}
 
   
   .btn-comment {
@@ -3098,12 +3432,7 @@ textarea::placeholder {
     flex: 1;
 }
 
-.notification-timestamp {
-    font-size: 12px;
-    color: #bbb;
-    text-align: right;
-    margin-left: 10px;
-}
+
 
 .delete-notification-btn {
     background: none;
@@ -3251,6 +3580,141 @@ textarea::placeholder {
     padding: 10px;
 }
 
+/* New project page notifications CSS by John-Luke */
+
+.unique-notifications-container {
+    width: 20vw;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    margin-top: 20px; /* Add space below Top Contributors */
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: auto;
+}
+
+.unique-notifications-container h3 {
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+    color: #444;
+}
+
+.notifications-container {
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-top: 20px;
+    border-radius: 5px;
+}
+
+.notifications-list {
+    list-style: none;
+    padding: 0;
+}
+
+.notifications-list li {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.notifications-list li:last-child {
+    border-bottom: none;
+}
+
+.notification-item {
+    background: #ddd;
+    padding: 15px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column; /* Ensure content stacks vertically */
+    justify-content: space-between;
+    align-items: flex-start;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    position: relative;
+    min-height: 80px; /* Ensure enough space for timestamp placement */
+}
+
+/* Footer container to align timestamp & delete button */
+.notification-footer {
+    display: flex;
+    justify-content: space-between; /* Pushes timestamp left, button right */
+    align-items: center;
+    width: 100%;
+    margin-top: auto; /* Pushes it to the bottom */
+}
+
+.notification-item p {
+    font-size: 12px;
+}
+
+.notification-timestamp {
+    color: #666;
+    font-size: 0.8rem;
+    text-align: left;
+}
+
+/* New notifications page CSS by John-Luke */
+
+/* Ensure the main page layout pushes content to the right */
+.notifications-page-container {
+    background: #ffffff; /* Keep a clean background */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    margin-left: 60px;
+}
+
+/* Use CSS Grid to structure the page */
+.notifications-page {
+    display: grid;
+    grid-template-columns: 1fr 2fr; /* Sidebar takes 1fr, notifications take 2fr */
+    gap: 20px; /* Adds space between the sidebar and notifications */
+    min-height: 100vh;
+    width: 100%;
+    background: #f8f9fa; /* Light gray background */
+    padding: 20px;
+}
+
+/* Make sure notifications are positioned correctly */
+.notifications-page-main {
+    width: 100%;
+    
+    margin-left: auto; /* Push it to the right */
+}
+
+/* Style for the notifications list */
+.notifications-list {
+    width: 100%;
+    padding: 0;
+}
+
+/* Style the left sidebar */
+.notifications-sidebar-left {
+    background: #ffffff; /* Keep a clean background */
+    padding: 0;
+    border-radius: 8px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+    height: fit-content;
+    width: 20%;
+    max-width: 300px;
+    min-width: 200px;
+}
+
+.sidebar-block {
+    margin-bottom: 0px;
+}
 
 /* ==========================================================================
    14 Layout & Grid
@@ -3311,12 +3775,7 @@ textarea::placeholder {
     width: 100%;
 }
 
-.page-container {
-    flex: 1; /* Allow the page container to grow and push the footer down */
-    padding: 40px 20px;
-    width: 100%;
-    margin: 0 auto;
-}
+
 
 .create-project-container {
     min-height: 60vh;
@@ -4156,6 +4615,12 @@ p {
 /* ==========================================================================
    33 Sidebar & User Cards
    ========================================================================== */
+   .unique-right-section {
+    display: flex;
+    flex-direction: column; /* Stack Top Contributors above Notifications */
+    width: 20vw; /* Ensure it fits the sidebar width */
+}
+
 .unique-right-sidebar {
     width: 20vw;
     background-color: #ffffff;
@@ -4164,7 +4629,8 @@ p {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    height: 20%;
+    height:10%;
+    align-self: flex-start;
 }
 
 .unique-right-sidebar h3 {
@@ -4176,26 +4642,11 @@ p {
     color: #444;
 }
 
-.unique-left-sidebar {
-    width: 20vw;
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-
-    height: auto;  /* Adjusts height to fit content */
-    align-self: flex-start; /* Matches height of the right sidebar */
-}
-
-.unique-left-sidebar h3 {
-    text-align: center;
-    font-size: 18px;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 5px;
-    color: #444;
+.unique-right-sidebar {
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #ffffff; /* Light background for contrast */
 }
 
 
@@ -4218,7 +4669,28 @@ p {
     /* Light shadow */
 }
 
+.user-card-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .user-card-link,
+.user-card-link:link,
+.user-card-link:visited,
+.user-card-link:hover,
+.user-card-link:active {
+  text-decoration: none !important;
+}
+
+
 .user-card:hover {
+    text-decoration: none;
+    background: #e2e6ea;
+    transform: scale(1.02);
+}
+
+.user-card:hover a {
     text-decoration: none;
 }
 
@@ -4650,23 +5122,6 @@ footer p {
     text-align: center;
   }
   
-  /* User Card */
-  .recommended-user-card {
-    display: flex;
-    align-items: center;
-    background: #f8f9fa;
-    border-radius: 8px;
-    padding: 10px;
-    margin-bottom: 10px;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    color: inherit;
-  }
-  
-  .recommended-user-card:hover {
-    background: #e2e6ea;
-    transform: scale(1.02);
-  }
   
   /* Avatar Styling */
   .recommended-avatar {
@@ -4732,7 +5187,7 @@ footer p {
   
   /* 🔸 Recommended Projects Block */
   .recommended-projects-block {
-    background: #fff;
+    background: #eaeaea;
     border-radius: 10px;
     padding: 15px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -4785,7 +5240,7 @@ footer p {
   
   /* 🔸 Recommended Users Block */
   .recommended-users-block {
-    background: #fff;
+    background: #eaeaea;
     border-radius: 10px;
     padding: 15px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -4805,13 +5260,14 @@ footer p {
     gap: 10px;
   }
   
-  /* Each User Card */
-  .recommended-user-card {
+/* Recommended User Card */
+.recommended-user-card {
     display: flex;
-    align-items: center;
+    align-items: center;     /* Ensures image & text are on the same line */
     background: #f8f9fa;
     border-radius: 8px;
     padding: 10px;
+    margin-bottom: 10px;
     transition: all 0.3s ease;
     text-decoration: none;
     color: inherit;
@@ -4820,6 +5276,33 @@ footer p {
   .recommended-user-card:hover {
     background: #e2e6ea;
     transform: scale(1.02);
+    text-decoration: none; /* Remove underlines from text */
+}
+
+.recommended-user-card:hover a {
+    text-decoration: none; /* Ensure links within the card also have no underline */
+}
+  
+  /* Inner content wrapper (optional, if you want extra control) */
+  .recommended-user-content {
+    display: flex;
+    align-items: center;     /* Keep avatar & text vertically centered */
+  }
+  
+  /* Avatar */
+.recommended-avatar img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%; /* Ensures a circular shape */
+  object-fit: cover;  /* Scales and crops the image to fill the area */
+}
+
+  
+  /* Info Section (Name, grade, etc.) */
+  .recommended-info {
+    display: flex;
+    flex-direction: column;  /* Stack name & other text */
+    justify-content: center; /* Vertically center within the container */
   }
   
   /* Avatar Styling */
@@ -4868,8 +5351,25 @@ footer p {
     font-weight: bold;
     color: #000000;
     margin-bottom: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px; /* adjust as needed */
 }
 
+.recommended-project {
+    display: block;
+    text-decoration: none; /* Remove underline from text */
+    color: inherit; /* Inherit text color */
+}
+
+.recommended-project:hover a {
+    text-decoration: none; /* Ensure links within the card also have no underline */
+}
+
+.recommended-project:hover {
+    text-decoration: none; /* Ensure links within the card also have no underline */
+}
 .network-user-grade,
 .network-user-concentration {
     font-size: 14px;
@@ -4882,6 +5382,120 @@ footer p {
     text-align: right;
     width: 100%;
 }
+
+.feed-project-snippet-link {
+    display: block;
+    text-decoration: none; /* Remove underline if desired */
+    color: inherit; /* Inherit text color */
+}
+
+.feed-project-snippet-link:hover {
+    display: block;
+    text-decoration: none; /* Remove underline if desired */
+    border-radius: 10px;
+}
+
+.feed-project-snippet-link:hover {
+    background-color: #818181; /* Change this to your desired color */
+    transition: background-color 0.3s ease; /* Optional: smooth transition */
+}
+
+.feed-project-snippet:hover {
+    background-color: #818181; /* Change this to your desired color */
+    transition: background-color 0.3s ease; /* Optional: smooth transition */
+}
+
+/* Gold border for 1st place */
+.gold-border {
+    border: 2px solid #f2c217;
+    /* Optionally, add padding or other styles */
+    padding: 10px;
+    border-radius: 12px;
+}
+
+/* Silver border for 2nd place */
+.silver-border {
+    border: 2px solid silver;
+    padding: 10px;
+    border-radius: 12px;
+}
+
+/* Bronze border for 3rd place */
+.bronze-border {
+    border: 2px solid #cd7f32;  /* A bronze-like color */
+    padding: 10px;
+    border-radius: 12px;
+}
+
+.others-section {
+    margin-top: 20px;
+}
+
+
+.unique-left-sidebar {
+    width: 20vw;
+   
+    padding: 20px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    height: auto;  /* Adjusts height to fit content */
+    align-self: flex-start; /* Matches height of the right sidebar */
+}
+
+.unique-left-sidebar {
+    width: 20vw;
+   
+    padding: 20px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    height: auto;  /* Adjusts height to fit content */
+    align-self: flex-start; /* Matches height of the right sidebar */
+}
+
+.unique-left-sidebar h3 {
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+    color: #444;
+}
+
+.unique-left-sidebar .sidebar-block,
+.training-sidebar .sidebar-block,
+.unique-left-sidebar h3,
+.training-sidebar h2,
+.unique-left-sidebar ul,
+.training-sidebar ul {
+    margin-bottom: 20px; /* Adds space between blocks */
+}
+
+.unique-left-sidebar .user-card-link,
+.training-topic-list li {
+    margin-top: 10px; /* Ensures spacing between items inside blocks */
+}
+
+.unique-left-sidebar .sidebar-block, .sidebar-block {
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #ffffff; /* Light background for contrast */
+}
+
+.training-sidebar-title, .unique-left-sidebar h3 {
+    margin-top: 0;
+    padding-bottom: 5px;
+    border-bottom: 2px solid #ffffff; /* Adds a subtle divider */
+}
+
+
+
 
 /* ==========================================================================
    45 CARD LINKS AND HOVER EFFECTS
@@ -6047,28 +6661,12 @@ select.form-control,
     width: 100%; /* ⬅ Ensure it stretches fully */
     max-width: 1600px; /* ⬅ Proper max width */
     margin: auto;
-    margin-left: 100px;
+    margin-left: 150px;
 }
 
 
 
-/* 🟦 Sidebar */
-.training-sidebar {
-    width: 200px;
-    background: white;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-    position: sticky;
-    top: 80px;
-    height: fit-content;
-}
 
-.training-sidebar-title {
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
 
 .training-topic-list {
     list-style: none;
@@ -6136,7 +6734,7 @@ select.form-control,
 .training-post-card {
     width: 100%; /* ⬅ Forces posts to stretch */
     background: white;
-    padding: 20px;
+    padding: 10px;
     margin-bottom: 15px;
     border-radius: 8px;
     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
@@ -6145,10 +6743,6 @@ select.form-control,
 }
 
 
-.training-post-card:hover {
-    transform: scale(1.02);
-    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
-}
 
 /* Post Header */
 .training-post-header {
@@ -6167,6 +6761,7 @@ select.form-control,
 .training-user-info {
     display: flex;
     flex-direction: column;
+    color: #000000;
 }
 
 .training-post-date {
@@ -6245,6 +6840,21 @@ select.form-control,
     border: 1px solid #ddd;
     border-radius: 6px;
 }
+
+.comment-input {
+    flex: 1;
+    width: 100%; /* Makes it responsive */
+    max-width: 95%; /* Ensures it shrinks */
+    height: 32px; /* Default height */
+    background-color: white;
+    color: black;
+    border: 1px solid #ccc;
+    padding: 6px;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-top: 12px;
+}
+
 
 .training-comment-submit-btn {
     background: #0073b1;
@@ -6360,7 +6970,14 @@ select.form-control,
     transition: background 0.2s;
     font-size: 14px;
     white-space: nowrap;
+    font-weight: bold;
+    color: #000000;
 }
+
+.report-training-btn {
+    color: #ff0000!important;
+}
+
 
 .training-menu-dropdown li:hover {
     background: rgba(0, 0, 0, 0.05);
@@ -6447,3 +7064,100 @@ select.form-control,
     border-top-left-radius: 28px;
     border-top-right-radius: 28px;
 }
+
+
+
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    /* Navbar adjustments */
+
+  
+    /* Profile Banner & Profile Picture */
+    .qz9-profile-banner {
+      position: relative;
+    }
+    .qz9-banner-img,
+    .qz9-banner-placeholder {
+      width: 100%;
+      height: auto;
+    }
+    .qz9-banner-profile-pic {
+      width: 80px;
+      height: 80px;
+      border: 2px solid #fff;
+      position: absolute;
+      bottom: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .qz9-banner-profile-pic img {
+      width: 100%;
+      height: auto;
+    }
+  
+    /* Profile Wrapper & Top Card */
+    .qz9-profile-wrapper {
+      padding-top: 60px; /* Adjust to ensure content doesn't hide behind the banner */
+      margin: 0 10px;
+    }
+    .qz9-top-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .qz9-top-left,
+    .qz9-top-right {
+      width: 100%;
+      margin-top: 10px;
+    }
+    .qz9-user-name {
+      font-size: 240x;
+      text-align: left;
+    }
+    .qz9-user-headline {
+      font-size: 14px;
+      text-align: left;
+    }
+  
+    /* About Section */
+    .qz9-about-section {
+      padding: 15px;
+      font-size: 14px;
+    }
+  
+    /* Skills Section */
+    .skills-card-container {
+      padding: 15px;
+    }
+    .skill-category-block {
+      margin-bottom: 20px;
+    }
+  
+    /* Portfolio Grid */
+    .qz9-portfolio-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    .qz9-portfolio-card {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+  
+    /* Footer */
+    footer p {
+      font-size: 12px;
+      text-align: center;
+      margin: 15px 0;
+    }
+  
+    /* Modal adjustments */
+    .qz9-modal-content {
+      width: 90%;
+      margin: auto;
+    }
+  }
+  

@@ -203,3 +203,12 @@ class SkillForm(forms.Form):
         required=True,
         widget=forms.TextInput(attrs={'placeholder': 'Enter a skill...'})
     )
+
+
+from django import forms
+from .models import TrainingPost
+
+class TrainingPostForm(forms.ModelForm):
+    class Meta:
+        model = TrainingPost
+        fields = ['title', 'content', 'link']  # Include all editable fields

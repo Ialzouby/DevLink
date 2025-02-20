@@ -17,10 +17,10 @@
       <h3>Resources</h3>
       <hr>
       <ul>
-        <li><a href="{% url 'projects' %}">Projects</a></li>
-        <li><a href="{% url 'training' %}">Training</a></li>
-        <li><a href="{% url 'active_conversations' %}">Messaging</a></li>
-        <li><a href="{% url 'training' %}">Competitions</a></li>
+        <li><a href="{% url 'projects' %}">View Projects</a></li>
+        <li><a href="{% url 'training' %}">Explore Training</a></li>
+        <li><a href="{% url 'active_conversations' %}">Send a Message</a></li>
+        <li><a href="{% url 'training' %}">Start Competing</a></li>
       </ul>
     </div>
   </aside>
@@ -52,6 +52,21 @@
           </a>
                       <span class="feed-card-time">{{ item.created_at|timesince }} ago</span>
           </div>
+
+          {% if item.link_preview %}
+<div class="feed-link-preview">
+    <a href="{{ item.link_preview.url }}" target="_blank">
+        {% if item.link_preview.image %}
+            <img src="{{ item.link_preview.image }}" alt="Preview Image" class="feed-preview-img">
+        {% endif %}
+        <div class="feed-preview-content">
+            <h4 class="feed-preview-title">{{ item.link_preview.title }}</h4>
+            <p class="feed-preview-description">{{ item.link_preview.description }}</p>
+        </div>
+    </a>
+</div>
+{% endif %}
+
         {% endif %}
       </div>
 

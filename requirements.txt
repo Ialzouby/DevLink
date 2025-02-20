@@ -1,4 +1,6 @@
 annotated-types==0.7.0
+beautifulsoup4==4.13.0
+bs4==0.0.1
 anyio==4.6.2.post1
 asgiref==3.8.1
 certifi==2024.8.30

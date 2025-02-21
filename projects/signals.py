@@ -47,6 +47,66 @@ def get_google_user_info(access_token):
         return response.json()
     return {}
 
+from allauth.socialaccount.signals import social_account_added
+from django.dispatch import receiver
+from django.contrib.auth import get_user_model
+from allauth.socialaccount.models import SocialAccount
+from django.shortcuts import redirect
+import logging
+
+logger = logging.getLogger(__name__)
+
+@receiver(social_account_added)
+def link_social_account(sender, request, sociallogin, **kwargs):
+    """
+    When a social account is added, link it to the existing user account if the email exists.
+    If the Google account already exists for a user, handle it properly.
+    """
+    user = sociallogin.user
+    try:
+        existing_user = get_user_model().objects.get(email=user.email)
+        # Check if the Google account is already linked
+        if not SocialAccount.objects.filter(user=existing_user, provider='google', uid=sociallogin.account.uid).exists():
+            # Link the account if not already linked
+            sociallogin.connect(request, existing_user)
+            logger.debug(f"Linked Google account for existing user: {existing_user.username}")
+        else:
+            logger.debug(f"Google account already linked for user: {existing_user.username}")
+
+        # Redirect to home or wherever after linking
+        return redirect('/home/')  # Change this to your desired redirect
+
+    except get_user_model().DoesNotExist:
+        logger.error(f"No user found with email {user.email}")
+        # Handle case where user does not exist in the system (sign-up or other logic)
+
+from allauth.socialaccount.signals import pre_social_login
+from django.dispatch import receiver
+from django.contrib.auth import get_user_model
+from django.shortcuts import redirect
+
+from allauth.socialaccount.signals import pre_social_login
+from django.dispatch import receiver
+from allauth.socialaccount.models import SocialAccount
+from django.contrib.auth import get_user_model
+from django.shortcuts import redirect
+
+@receiver(pre_social_login)
+def handle_existing_user(request, sociallogin, **kwargs):
+    """
+    Before the social login happens, check if the user exists and link if needed.
+    """
+    user = sociallogin.user
+    try:
+        existing_user = get_user_model().objects.get(email=user.email)
+        
+        # Link the social account if it's not already linked
+        if not SocialAccount.objects.filter(user=existing_user, provider='google', uid=sociallogin.account.uid).exists():
+            sociallogin.connect(request, existing_user)
+            return redirect('/home/')  # Adjust as needed
+    except get_user_model().DoesNotExist:
+        # If user doesn't exist, proceed with the normal signup flow
+        return None  # Allauth will continue with the usual sign-up process
 
 
 import requests

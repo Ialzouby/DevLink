@@ -114,7 +114,6 @@ CACHES = {
     }
 }
 
-SITE_ID = 5  # Hardcoded to ensure it's set correctly
 
 #SITE_ID = 4
 AUTHENTICATION_BACKENDS = [

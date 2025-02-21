@@ -97,6 +97,7 @@ urlpatterns = [
     path("training/like/<int:post_id>/", like_post, name="like_post"),
     path('training/delete/<int:post_id>/', delete_training_post, name='delete_training_post'),
     path('training/edit/<int:post_id>/', edit_training_post, name='edit_training_post'),
+    
 
     # --------------------------------------------------
     # Skill Management

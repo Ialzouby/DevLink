@@ -1,10 +1,18 @@
 import requests
 from bs4 import BeautifulSoup
+from django.core.cache import cache
 
 def get_link_metadata(url):
     """
-    Fetches metadata (title, description, and image) from a given URL.
+    Fetches and caches metadata (title, description, and image) from a given URL.
     """
+
+    cache_key = f"link_metadata_{url}"
+    cached_data = cache.get(cache_key)
+
+    if cached_data:
+        return cached_data  # ✅ Return cached metadata if available
+
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
     }
@@ -38,12 +46,16 @@ def get_link_metadata(url):
         if og_image:
             image = og_image["content"]
 
-        return {
+        metadata = {
             "title": title.strip() if title else "No Title",
             "description": description.strip() if description else "No Description",
             "image": image.strip() if image else None,
             "url": url
         }
+
+        # ✅ Store in cache for 1 hour (3600 seconds)
+        cache.set(cache_key, metadata, timeout=3600)
+        return metadata
 
     except requests.exceptions.RequestException as e:
         print(f"⚠ Error fetching metadata for {url}: {e}")

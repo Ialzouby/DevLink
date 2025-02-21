@@ -413,3 +413,76 @@ def send_follow_notification(sender, instance, created, **kwargs):
         email.send()
 
 
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
+from django.core.cache import cache
+from .models import FeedItem, TrainingPost, TrainingLike, TrainingComment
+import json
+
+@receiver(post_save, sender=FeedItem)
+def update_feed_cache_on_create(sender, instance, created, **kwargs):
+    """Update cache when a new feed item is added, without deleting all cached data."""
+    if created:
+        cache_key = "feed_page_1"
+        cached_feed = cache.get(cache_key)
+
+        if cached_feed:
+            cached_feed = json.loads(cached_feed)  # Convert from JSON
+            cached_feed.insert(0, {
+                "id": instance.id,
+                "user": {
+                    "username": instance.user.username,
+                    "profile_picture": instance.user.userprofile.profile_picture.url if instance.user.userprofile.profile_picture else "https://via.placeholder.com/55",
+                },
+                "event_type": instance.event_type,
+                "content": instance.content,
+                "created_at": instance.created_at.strftime("%Y-%m-%d %H:%M:%S"),
+                "likes_count": instance.likes.count(),
+                "comments_count": instance.feed_comments.count(),
+            })
+
+            # Keep cache length fixed (avoid bloating cache)
+            cached_feed = cached_feed[:50]  # ✅ Only keep last 50 items in cache
+
+            # Save updated feed to cache
+            cache.set(cache_key, json.dumps(cached_feed), timeout=300)  # Cache for 5 minutes
+
+@receiver(post_save, sender=TrainingPost)
+def update_training_post_cache_on_create(sender, instance, created, **kwargs):
+    """Update cache when a new training post is added."""
+    if created:
+        cache_key = "feed_page_1"
+        cached_feed = cache.get(cache_key)
+
+        if cached_feed:
+            cached_feed = json.loads(cached_feed)
+            cached_feed.insert(0, {
+                "id": instance.id,
+                "user": {
+                    "username": instance.user.username,
+                    "profile_picture": instance.user.userprofile.profile_picture.url if instance.user.userprofile.profile_picture else "https://via.placeholder.com/55",
+                },
+                "event_type": "training_post",
+                "content": instance.content,
+                "created_at": instance.created_at.strftime("%Y-%m-%d %H:%M:%S"),
+                "likes_count": instance.likes.count(),
+                "comments_count": instance.comments.count(),
+            })
+
+            cached_feed = cached_feed[:50]
+            cache.set(cache_key, json.dumps(cached_feed), timeout=300)
+
+@receiver(post_delete, sender=FeedItem)
+@receiver(post_delete, sender=TrainingPost)
+def remove_deleted_post_from_cache(sender, instance, **kwargs):
+    """Remove deleted feed/training post from cache instead of clearing everything."""
+    cache_key = "feed_page_1"
+    cached_feed = cache.get(cache_key)
+
+    if cached_feed:
+        cached_feed = json.loads(cached_feed)
+        cached_feed = [item for item in cached_feed if item["id"] != instance.id]
+
+        cache.set(cache_key, json.dumps(cached_feed), timeout=300)
+
+

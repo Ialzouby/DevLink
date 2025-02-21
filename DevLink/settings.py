@@ -87,6 +87,13 @@ INSTALLED_APPS = [
     'cloudinary_storage', #important
 ]
 
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",  # Adjust the Redis URL if needed
+        "TIMEOUT": 600,  # Cache timeout (10 minutes)
+    }
+}
 
 
 #SITE_ID = 4

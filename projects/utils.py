@@ -1,26 +1,40 @@
-import requests
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
 from bs4 import BeautifulSoup
+import time
 
 def get_link_metadata(url):
+    """Fetch metadata using a headless browser."""
+    options = Options()
+    options.add_argument("--headless")  # Run Chrome in headless mode
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+
+    # Start headless Chrome
+    service = Service(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=service, options=options)
+
     try:
-        headers = {"User-Agent": "Mozilla/5.0"}
-        response = requests.get(url, headers=headers, timeout=5)
-        if response.status_code != 200:
-            return None
+        driver.get(url)
+        time.sleep(3)  # Wait for the page to load
+        soup = BeautifulSoup(driver.page_source, "html.parser")
 
-        soup = BeautifulSoup(response.text, "html.parser")
+        title = soup.find("title").text if soup.find("title") else "No Title"
+        description = soup.find("meta", attrs={"name": "description"})
+        description = description["content"] if description else "No Description"
 
-        # Extract Open Graph metadata
-        title = soup.find("meta", property="og:title") or soup.find("title")
-        title = title["content"] if title and title.has_attr("content") else title.text if title else "No Title"
+        driver.quit()  # Close browser
 
-        description = soup.find("meta", property="og:description") or soup.find("meta", attrs={"name": "description"})
-        description = description["content"] if description and description.has_attr("content") else "No Description"
+        return {
+            "title": title,
+            "description": description,
+            "image": None,
+            "url": url
+        }
 
-        image = soup.find("meta", property="og:image")
-        image = image["content"] if image and image.has_attr("content") else None
-
-        return {"title": title, "description": description, "image": image, "url": url}
     except Exception as e:
-        print("Error fetching metadata:", e)
+        driver.quit()
+        print(f"❌ Failed to fetch metadata for {url}: {e}")
         return None

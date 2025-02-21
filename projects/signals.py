@@ -342,22 +342,40 @@ def create_feeditem_for_follow(sender, instance, created, **kwargs):
         )
 
 
+import logging
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from .models import TrainingPost, FeedItem
+from .utils import get_link_metadata  # ✅ Ensure you have a function to fetch metadata
+
+logger = logging.getLogger(__name__)
 
 @receiver(post_save, sender=TrainingPost)
 def create_feeditem_for_training_post(sender, instance, created, **kwargs):
     """
     When a user posts in training, create a feed item
-    so it appears in the main feed.
+    so it appears in the main feed, including the post link preview.
     """
     if created:
-        FeedItem.objects.create(
+        content = f"{instance.user.username} posted a new resource in training: '{instance.title}'"
+        if instance.link:
+            content += f" <a href='{instance.link}' target='_blank' class='feed-training-link'>View Resource</a>"
+
+        # ✅ Fetch link metadata (title, description, image)
+        metadata = get_link_metadata(instance.link) if instance.link else None
+
+        logger.info(f"🔹 Training Post Created - Title: {instance.title}, Link: {instance.link}, Metadata: {metadata}")
+
+        # ✅ Create FeedItem with the link preview
+        feed_item = FeedItem.objects.create(
             user=instance.user,
             event_type='training_posted',
-            content=f"{instance.user.username} posted a new resource in training: '{instance.title}'",
+            content=content,
+            link=instance.link,
+            link_preview=metadata  # ✅ Store metadata (if available)
         )
 
-
+        logger.info(f"✅ FeedItem Created - Content: {feed_item.content}, Link: {feed_item.link}, Preview: {feed_item.link_preview}")
 
 
 from django.core.mail import send_mail, EmailMultiAlternatives

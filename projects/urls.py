@@ -4,6 +4,7 @@ from .views import (
 register, profile, network, landing_page, feed_view, like_feed_item,
 comment_on_feed_item, help_page,settings_page, delete_account, training,
 add_post, add_comment, like_post, add_skill, endorse_skill, delete_training_post, edit_training_post,
+fetch_link_metadata,
 )
 from django.contrib.auth import views as auth_views
 from django.conf import settings
@@ -103,6 +104,7 @@ urlpatterns = [
     path('profile/<str:username>/add-skill/', add_skill, name='add_skill'),
     path('profile/<str:username>/endorse-skill/', endorse_skill, name='endorse_skill'),
     path("endorse-skill/<str:username>/", endorse_skill, name="endorse_skill"),
+    path('fetch-link-metadata/', fetch_link_metadata, name='fetch_link_metadata'),
 ]
 
 if settings.DEBUG:

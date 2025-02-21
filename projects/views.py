@@ -835,14 +835,6 @@ def feed_view(request):
         .prefetch_related('likes', 'feed_comments') \
         .order_by('-created_at')
 
-    # ✅ Fetch metadata for each feed item that has a link but no preview yet
-    for item in feed_queryset:
-        if item.link and not item.link_preview:  # Prevent duplicate API calls
-            metadata = get_link_metadata(item.link)
-            if metadata:
-                item.link_preview = metadata  # Save metadata in the model
-                item.save(update_fields=['link_preview'])  # Save only this field
-
     # ✅ Filter by 'following' mode
     if filter_mode == 'following':
         following_user_ids = Follow.objects.filter(
@@ -892,7 +884,6 @@ def feed_view(request):
                 'likes_count': item.likes.count(),
                 'comments_count': item.feed_comments.count(),
                 'user_liked': item.user_liked,
-                'link_preview': item.link_preview,  # ✅ Send preview to AJAX
             }
             for item in page_obj
         ]
@@ -915,6 +906,22 @@ def feed_view(request):
     return render(request, 'projects/feeds.html', context)
 
 
+
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from .utils import get_link_metadata
+
+@csrf_exempt
+def fetch_link_metadata(request):
+    """
+    API endpoint to fetch metadata dynamically for a given URL.
+    """
+    url = request.GET.get("url")
+    if not url:
+        return JsonResponse({"error": "No URL provided"}, status=400)
+
+    metadata = get_link_metadata(url)  # Uses your existing function
+    return JsonResponse(metadata)
 
 # ----------------------------------------
 # FEED-ITEM LIKES & COMMENTS

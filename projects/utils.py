@@ -2,18 +2,49 @@ import requests
 from bs4 import BeautifulSoup
 
 def get_link_metadata(url):
-    """Fetch metadata using BeautifulSoup instead of Selenium."""
+    """
+    Fetches metadata (title, description, and image) from a given URL.
+    """
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+    }
+
     try:
-        response = requests.get(url, timeout=5)
-        response.raise_for_status()  # Ensure we got a valid response
+        response = requests.get(url, headers=headers, timeout=5)
+        response.raise_for_status()
         soup = BeautifulSoup(response.text, "html.parser")
 
-        title = soup.title.string if soup.title else "No Title"
-        description_tag = soup.find("meta", attrs={"name": "description"})
-        description = description_tag["content"] if description_tag else "No Description"
+        # Extract title
+        title = soup.title.string if soup.title else None
+        if not title:
+            og_title = soup.find("meta", property="og:title")
+            title = og_title["content"] if og_title else "No Title"
 
-        return {"title": title, "description": description, "url": url}
-    
-    except Exception as e:
-        print(f"❌ Failed to fetch metadata for {url}: {str(e)}")
-        return {"title": "Unknown", "description": "Could not fetch metadata", "url": url}
+        # Extract description
+        description = None
+        meta_description = soup.find("meta", attrs={"name": "description"})
+        og_description = soup.find("meta", property="og:description")
+
+        if meta_description:
+            description = meta_description["content"]
+        elif og_description:
+            description = og_description["content"]
+        else:
+            description = "No Description"
+
+        # Extract image
+        image = None
+        og_image = soup.find("meta", property="og:image")
+        if og_image:
+            image = og_image["content"]
+
+        return {
+            "title": title.strip() if title else "No Title",
+            "description": description.strip() if description else "No Description",
+            "image": image.strip() if image else None,
+            "url": url
+        }
+
+    except requests.exceptions.RequestException as e:
+        print(f"⚠ Error fetching metadata for {url}: {e}")
+        return {"title": "No Title", "description": "No Description", "image": None, "url": url}

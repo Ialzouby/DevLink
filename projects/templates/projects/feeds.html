@@ -17,10 +17,10 @@
       <h3>Resources</h3>
       <hr>
       <ul>
-        <li><a href="{% url 'projects' %}">View Projects</a></li>
-        <li><a href="{% url 'training' %}">Explore Training</a></li>
-        <li><a href="{% url 'active_conversations' %}">Send a Message</a></li>
-        <li><a href="{% url 'training' %}">Start Competing</a></li>
+        <li><a href="{% url 'projects' %}">Projects</a></li>
+        <li><a href="{% url 'training' %}">Training</a></li>
+        <li><a href="{% url 'active_conversations' %}">Messaging</a></li>
+        <li><a href="{% url 'training' %}">Competitions</a></li>
       </ul>
     </div>
   </aside>
@@ -56,32 +56,28 @@
       </div>
 
       <div class="feed-card-body">
-        <p class="feed-card-text">{{ item.content }}</p>
+        <p class="feed-card-text">{{ item.content|safe }}</p>
+        {% if item.link %}
+    <div class="feed-link-preview" data-url="{{ item.link }}">
+        <div class="feed-loading">Loading preview...</div>
+    </div>
+{% endif %}
+
         {% if item.event_type == "training_posted" %}
         <div class="feed-training-snippet">
-          <p class="feed-training-title"><strong>{{ item.content }}</strong></p>
         </div>
         {% elif item.project %}
         <a href="{% url 'project' item.project.id %}" class="feed-project-snippet-link">
           <div class="feed-project-snippet">
-            {% if post.link_preview %}
-            <div class="training-link-preview">
-                <a href="{{ post.link_preview.url }}" target="_blank">
-                    {% if post.link_preview.image %}
-                        <img src="{{ post.link_preview.image }}" alt="Preview Image" class="training-preview-img">
-                    {% endif %}
-                    <div class="training-preview-content">
-                        <h4 class="training-preview-title">{{ post.link_preview.title }}</h4>
-                        <p class="training-preview-description">{{ post.link_preview.description }}</p>
-                    </div>
-                </a>
-            </div>
-        {% endif %}
+
+
+            <p class="feed-project-title"><strong>{{ item.project.title }}</strong></p>
+            <p class="feed-project-desc">{{ item.project.description|truncatechars:100 }}</p>
           </div>
         </a>
       {% endif %}
-      
-      
+
+
       </div>
 <!-- Likes & Comments Summary (Above the Footer) -->
 <div class="likes-comments-summary">
@@ -171,7 +167,7 @@
         <div class="single-comment">
           <strong>{{ comment.user.first_name }} {{ comment.user.last_name }}</strong>: <span>{{ comment.content }}</span>
       </div>
-      
+
         {% empty %}
         <div class="single-comment">No comments yet.</div>
         {% endfor %}
@@ -250,6 +246,37 @@
 
 <!-- JavaScript -->
 <script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".feed-link-preview").forEach(async (previewContainer) => {
+            const url = previewContainer.getAttribute("data-url");
+            if (url) {
+                try {
+                    const response = await fetch(`/fetch-link-metadata/?url=${encodeURIComponent(url)}`);
+                    const metadata = await response.json();
+
+                    if (metadata.title && metadata.description) {
+                        previewContainer.innerHTML = `
+                            <a href="${metadata.url}" target="_blank" class="feed-preview-link">
+                                ${metadata.image ? `<img src="${metadata.image}" alt="Preview Image" class="feed-preview-img">` : ""}
+                                <div class="feed-preview-content">
+                                    <h4 class="feed-preview-title">${metadata.title}</h4>
+                                    <p class="feed-preview-description">${metadata.description}</p>
+                                </div>
+                            </a>
+                        `;
+                    } else {
+                        previewContainer.innerHTML = `<p class="feed-no-preview">No preview available.</p>`;
+                    }
+                } catch (error) {
+                    previewContainer.innerHTML = `<p class="feed-no-preview">Error loading preview.</p>`;
+                    console.error("Error fetching metadata:", error);
+                }
+            }
+        });
+    });
+
+
   function toggleComments(sectionId) {
     const section = document.getElementById(sectionId);
     if (!section) return;

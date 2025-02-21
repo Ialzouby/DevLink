@@ -33,9 +33,7 @@ LOGIN_REDIRECT_URL = '/home'
 
 LOGIN_URL = '/accounts/login/'
 
-
-
-
+SOCIAL_AUTH_GOOGLE_OAUTH2_REDIRECT_URI = 'https://www.campusdev.link/accounts/google/login/callback/'
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -59,6 +57,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'www.campusdev.link',
+    'campusdev.link',
     'devlink.up.railway.app', 
     'localhost',                                
     '127.0.0.1',                                

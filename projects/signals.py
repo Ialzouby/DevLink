@@ -48,7 +48,15 @@ def get_google_user_info(access_token):
     return {}
 
 
+User = get_user_model()
 
+@receiver(social_account_added)
+def auto_create_user_profile(request, sociallogin, **kwargs):
+    """ Automatically create user profile on social signup to prevent signup form """
+    user = sociallogin.user
+    if not user.username:
+        user.username = user.email.split("@")[0]  # Use email as default username
+        user.save()
 
 import requests
 from django.core.files.base import ContentFile

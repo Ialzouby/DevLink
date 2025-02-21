@@ -5,7 +5,9 @@ anyio==4.6.2.post1
 asgiref==3.8.1
 certifi==2024.8.30
 cffi==1.17.1
-redis
+django-redis==5.4.0
+redis==5.2.1
+
 charset-normalizer==2.0.12
 click==8.1.7
 cloudinary==1.41.0

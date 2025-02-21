@@ -93,7 +93,7 @@ INSTALLED_APPS = [
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": os.getenv("REDIS_URL"),  # Use the variable from Railway
+        "LOCATION": os.getenv("REDIS_URL", "redis://localhost:6379/1"),  # Use the variable from Railway
         "TIMEOUT": 600,
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",

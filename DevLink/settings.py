@@ -90,15 +90,23 @@ INSTALLED_APPS = [
 ]
 
 
+# Detect if running in production (Railway)
+IS_PRODUCTION = os.getenv("RAILWAY_ENVIRONMENT", False)
+
+if IS_PRODUCTION:
+    REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379/1")
+else:
+    REDIS_URL = "redis://localhost:6379/1"  # Local Redis server
+
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": os.getenv("REDIS_URL", "redis://localhost:6379/1"),  # Use the variable from Railway
-        "TIMEOUT": 600,
+        "LOCATION": REDIS_URL,
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            "PASSWORD": os.getenv("REDIS_PASSWORD", None),  # Optional authentication
-        }
+            "PASSWORD": os.getenv("REDIS_PASSWORD", None) if IS_PRODUCTION else None,
+        },
+        "TIMEOUT": 600,  
     }
 }
 

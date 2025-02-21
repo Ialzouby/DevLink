@@ -54,7 +54,7 @@ DEFAULT_FROM_EMAIL = "DevLink <devlink.notifications@gmail.com>"
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'campusdev.link',
+    'www.campusdev.link',
     'devlink.up.railway.app', 
     'localhost',                                
     '127.0.0.1',                                

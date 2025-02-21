@@ -234,9 +234,33 @@ def upload_banner(request, username):
         return redirect('profile', username=username)
     
 # Prevent logged-in users from accessing login and register pages
+from django.shortcuts import redirect
+from django.contrib.auth import views as auth_views
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+
+from django.contrib.auth import views as auth_views
+from django.shortcuts import redirect
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+
+# In your views.py (or wherever you define the social_redirect logic)
+from django.shortcuts import redirect
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def social_redirect(request):
+    # Redirect authenticated users to home
+    return redirect("/home/")
+
+
 def custom_login(request):
     if request.user.is_authenticated:
-        return redirect('feed')
+        # If the user is logged in, redirect them to the requested page (next parameter) or feed
+        next_url = request.GET.get('next', reverse('feed'))  # Default to 'feed' if no next parameter
+        return redirect(next_url)
+
+    # Proceed with the default login view if the user is not authenticated
     return auth_views.LoginView.as_view(template_name='projects/login.html')(request)
 
 @login_required

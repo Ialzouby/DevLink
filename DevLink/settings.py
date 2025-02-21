@@ -33,8 +33,9 @@ LOGIN_REDIRECT_URL = '/home'
 
 LOGIN_URL = '/accounts/login/'
 
+#SOCIAL_AUTH_GOOGLE_OAUTH2_REDIRECT_URI = 'https://www.campusdev.link/accounts/google/login/callback/'
+ACCOUNT_AUTHENTICATED_REDIRECT_URL = '/home/'
 SOCIAL_AUTH_GOOGLE_OAUTH2_REDIRECT_URI = 'https://www.campusdev.link/accounts/google/login/callback/'
-
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
@@ -129,6 +130,7 @@ SOCIALACCOUNT_PROVIDERS = {
         ]
     }
 }
+
 
 
 DATABASES = {

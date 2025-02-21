@@ -93,11 +93,11 @@ INSTALLED_APPS = [
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": os.getenv("REDIS_URL", "redis://localhost:6379/1"),
+        "LOCATION": os.getenv("REDIS_URL"),  # Use the variable from Railway
         "TIMEOUT": 600,
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            "PASSWORD": os.getenv("REDIS_PASSWORD", None),  # Only needed if Redis has auth
+            "PASSWORD": os.getenv("REDIS_PASSWORD", None),  # Optional authentication
         }
     }
 }

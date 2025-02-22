@@ -6743,6 +6743,12 @@ select.form-control,
     border: 3px solid white;
 }
 
+@media (max-width: 768px) {
+    .feed-page-container{
+        margin-top: -50px; 
+    }
+}
+
 .mobile-profile-view-button {
     display: inline-block;
     padding: 8px 16px;

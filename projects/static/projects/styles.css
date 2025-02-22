@@ -6647,6 +6647,188 @@ select.form-control,
         display: none;
     }
 }
+/* Hide main navigation on mobile */
+@media (max-width: 768px) {
+    .custom-navbar-links {
+        display: none;
+    }
+
+    /* Show hamburger menu only on mobile */
+    .hamburger-menu {
+        display: block;
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        font-size: 28px;
+        cursor: pointer;
+        z-index: 1100;
+        color: #000000;
+    }
+
+    /* Make sure the mobile navigation menu is hidden initially */
+    .mobile-nav-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.9);
+        color: white;
+        z-index: 1200;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+}
+
+
+/* Hide the full-screen mobile menu by default */
+.mobile-nav-overlay {
+    display: none; /* Initially hidden */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.9); /* Dark overlay */
+    color: white;
+    z-index: 1200; /* Ensure it appears on top */
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+/* Ensure the overlay appears when opened */
+.mobile-nav-overlay.show {
+    display: flex;
+}
+
+/* Close button (X) in the top-right corner */
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    font-size: 32px;
+    cursor: pointer;
+    color: white;
+    transition: color 0.3s;
+}
+
+.close-btn:hover {
+    color: #f0a500; /* Highlight effect */
+}
+
+/* Profile Section inside Mobile Menu */
+.mobile-profile-section {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.mobile-profile-section h4 {
+    color: white;
+}
+
+.mobile-profile-section p {
+    color: white!important;
+}
+
+.mobile-profile-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+    border: 3px solid white;
+}
+
+.mobile-profile-view-button {
+    display: inline-block;
+    padding: 8px 16px;
+    background: white;
+    color: black;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.mobile-profile-view-button:hover {
+    background: #f0a500; /* Gold hover effect */
+    color: white;
+}
+
+/* Navigation List Inside Mobile Menu */
+.mobile-nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    width: 100%;
+}
+
+.mobile-nav-list li {
+    margin: 15px 0;
+}
+
+.mobile-nav-list a {
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px 0;
+    display: block;
+    transition: color 0.3s;
+}
+
+.mobile-nav-list a i {
+    margin-right: 10px; /* Space between icon and text */
+}
+
+.mobile-nav-list a:hover {
+    color: #f0a500; /* Highlight effect */
+}
+
+/* Sign Out Button */
+.mobile-logout-button {
+    background: red;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    width: 80%;
+    text-align: center;
+    margin-top: 20px;
+    transition: background 0.3s;
+}
+
+.mobile-logout-button:hover {
+    background: darkred;
+}
+
+/* Ensure proper styling on mobile */
+@media (max-width: 768px) {
+    .custom-navbar-links {
+        display: none; /* Hide default navbar links on mobile */
+    }
+
+    /* Ensure hamburger menu appears */
+    .hamburger-menu {
+        display: block;
+        position: absolute;
+        right: 20px;
+        margin-top: -13px;
+        font-size: 38px;
+        cursor: pointer;
+        z-index: 1100;
+        color: black;
+    }
+}
+
 
 /* Adjust Navbar items for mobile */
 @media (max-width: 768px) {

@@ -623,7 +623,7 @@ def send_message(request, chat_id):
 # View to render notifications
 @login_required
 def notifications_view(request):
-    notifications = Notification.objects.select_related('user', 'user__userprofile').order_by('-timestamp')
+    notifications = Notification.objects.filter(user=request.user).select_related('user', 'user__userprofile').order_by('-timestamp')
     return render(request, 'projects/notifications.html', {'notifications': notifications})
 
 

@@ -152,7 +152,7 @@
                  alt="{{ user.username }}" class="mobile-profile-image">
             <h4>{{ user.first_name }} {{ user.last_name }}</h4>
             <p>{{ user.userprofile.grade_level }} studying {{ user.userprofile.concentration }}</p>
-            <a href="{% url 'profile' user.username %}" class="mobile-profile-view-button">View Profile</a>
+            <a href="{% if user.is_authenticated %}{% url 'profile' user.username %}{% else %}#{% endif %}" class="mobile-profile-view-button">View Profile</a>
         </div>
 
         <!-- Navigation Links -->

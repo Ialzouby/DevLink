@@ -681,6 +681,8 @@ span.devlink-logo {
     color: inherit;
 }
 
+
+
 .training-preview-img {
     width: 100%; /* Full width */
     max-width: 600px; /* Keep a good aspect ratio */
@@ -6463,6 +6465,200 @@ select.form-control,
         margin-bottom: -10px;
         vertical-align: middle;
         /* Align it with the DevLink text */
+    }
+}
+/* Show the navbar-toggler on mobile */
+@media (max-width: 768px) {
+    .navbar-toggler {
+        display: block; /* Ensure hamburger icon is visible */
+        background-color: transparent;
+        border: none;
+        font-size: 30px;
+        cursor: pointer;
+        z-index: 1100; /* Ensure it's above the collapse menu */
+    }
+
+    /* Collapse the navbar by default on mobile */
+    .navbar-collapse {
+        display: none; /* Initially hidden */
+    }
+
+    /* Show the collapse when the toggler is clicked */
+    .navbar-collapse.show {
+        display: flex; /* Display when expanded */
+        flex-direction: column;
+        text-align: center; /* Center-align the links */
+    }
+
+    /* Ensure icons are aligned properly on mobile */
+    .navbar-icons-container {
+        justify-content: flex-end; /* Align icons to the right */
+    }
+
+    .navbar-logo {
+        height: 70px; /* Adjust logo size */
+        margin-right: 10px;
+        margin-left: 0px;
+        margin-top: -10px;
+        margin-bottom: -10px;
+        vertical-align: middle; /* Align with text */
+    }
+}
+/* Adjust button container for mobile */
+@media (max-width: 768px) {
+    .btn-container {
+        flex-direction: row; /* Align buttons in a row on mobile */
+    }
+}
+
+@media (max-width: 480px) {
+    .btn-container {
+        flex-direction: column; /* Stack buttons on very small screens */
+    }
+}
+
+/* Make columns full width on mobile screens */
+@media (max-width: 768px) {
+    .col-md-6 {
+        width: 100%;
+    }
+}
+
+/* Adjust profile image size on small screens */
+@media (max-width: 768px) {
+    .col-md-3 img {
+        width: 120px; /* Smaller image */
+        height: 120px;
+    }
+}
+/* Hide left and right sidebars on mobile */
+@media (max-width: 768px) {
+    .unique-left-sidebar,
+    .unique-right-sidebar {
+        display: none; /* Hide sidebars */
+    }
+}
+/* Make the project list take full width */
+@media (max-width: 768px) {
+    .unique-project-list {
+        width: 100%;
+    }
+
+    /* Adjust project item styling for mobile */
+    .unique-project-item {
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    .unique-project-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .add-project-btn {
+        font-size: 20px;
+        padding: 5px 10px;
+    }
+
+    .search-btn {
+        font-size: 20px;
+        padding: 5px 10px;
+    }
+}
+/* Responsive grid for custom project layout */
+@media (max-width: 768px) {
+    .custom-project-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Responsive grid for small screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .custom-project-grid {
+        grid-template-columns: 1fr; /* Single column on very small screens */
+    }
+}
+/* Adjust profile image size and notifications for mobile */
+@media (max-width: 768px) {
+    .profile-img {
+        width: 40px;
+        height: 40px; /* Smaller profile image */
+    }
+
+    .notification-icon {
+        margin-right: 0px; /* Remove margin */
+    }
+
+    .notification-count {
+        margin-right: 0px; /* Remove margin */
+    }
+}
+/* Network user cards adjustments for mobile */
+@media (max-width: 768px) {
+    .network-user-list {
+        grid-template-columns: 1fr; /* Single column layout for user cards */
+        gap: 20px; /* Spacing between user cards */
+    }
+
+    .network-user-card {
+        width: 100%; /* Full width user cards on mobile */
+    }
+
+    .network-search-input {
+        font-size: 16px; /* Increase font size */
+        padding: 12px;
+    }
+
+    .network-search-btn,
+    .network-clear-btn {
+        padding: 12px 20px; /* Adjust button size */
+        font-size: 16px;
+    }
+
+    .network-profile-img {
+        width: 100px;
+        height: 100px; /* Adjust profile image size */
+    }
+}
+/* Hide the hamburger menu on larger screens */
+.hamburger-menu {
+    display: none; /* Hidden by default */
+    font-size: 28px;
+    cursor: pointer;
+    padding: 10px;
+    color: #333;
+}
+
+/* Show hamburger menu on mobile */
+@media (max-width: 768px) {
+    .hamburger-menu {
+        display: block; /* Show only on mobile */
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        z-index: 1050;
+    }
+    .custom-navbar-links {
+        display: none;
+    }
+    .unique-profile-dropdown {
+        display: none;
+    }
+}
+
+/* Adjust Navbar items for mobile */
+@media (max-width: 768px) {
+    .navbar-nav.d-flex.align-items-center {
+        justify-content: flex-end; /* Align items to the right */
+        margin-left: 0;
+    }
+
+    /* Ensure dropdowns align properly */
+    .profile-dropdown,
+    .notification-dropdown {
+        text-align: right; /* Align dropdown content to the right */
     }
 }
 

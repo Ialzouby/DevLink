@@ -158,18 +158,33 @@ class Update(models.Model):
     def __str__(self):
         return f'Update on {self.project.title}'
 
-# Message model
-class Message(models.Model):
-    sender = models.ForeignKey(User, related_name="sent_messages", on_delete=models.CASCADE)
-    recipient = models.ForeignKey(User, related_name="received_messages", on_delete=models.CASCADE)
-    content = models.TextField()
-    timestamp = models.DateTimeField(default=timezone.now)
+from django.db import models
+from django.contrib.auth.models import User
+from django.utils import timezone
 
-    class Meta:
-        ordering = ['-timestamp']
+class Chat(models.Model):
+    name = models.CharField(max_length=255, blank=True, null=True, default="General Chat")  # For project-based chats
+    participants = models.ManyToManyField(User, related_name="chats")
+    project = models.ForeignKey("Project", on_delete=models.CASCADE, null=True, blank=True)
+    last_message = models.TextField(blank=True, null=True)  # Stores preview of last message
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"Message from {self.sender} to {self.recipient} at {self.timestamp}"
+        return self.name or ", ".join([p.username for p in self.participants.all()])
+
+class Message(models.Model):
+    chat = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name="messages", null=True)
+    sender = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField()
+    timestamp = models.DateTimeField(default=timezone.now)
+    read = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.sender.username}: {self.content[:30]}"
+
+    class Meta:
+        ordering = ['timestamp']
+
     
 # Notification model
 class Notification(models.Model):

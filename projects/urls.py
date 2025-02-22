@@ -27,6 +27,7 @@ urlpatterns = [
     path('feed/', feed_view, name='feed'),
     path('projects/', views.home, name='projects'),  # New URL for projects
     path('topic/<str:topic>/', views.home, name='filtered_projects'),
+    path('messaging/', views.active_conversations, name='active_conversations'),
 
     # --------------------------------------------------
     # Project Related URLs
@@ -64,10 +65,16 @@ urlpatterns = [
     # --------------------------------------------------
     # Messaging and Conversations
     # --------------------------------------------------
-    path('messages/<str:username>/', views.message_thread, name='message_thread'),
-    path('messages/start/<str:username>/', views.message_thread, name='start_message'),
-    path('message-thread-partial/<str:recipient_username>/', views.message_thread_partial, name='message_thread_partial'),
+    #path('messages/<str:username>/', views.message_thread, name='message_thread'),
+    ##path('messages/start/<str:username>/', views.message_thread, name='start_message'),
+    #path('message-thread-partial/<str:recipient_username>/', views.message_thread_partial, name='message_thread_partial'),
+    #path('conversations/', views.active_conversations, name='active_conversations'),
+path('messaging/', views.active_conversations, name='active_conversations'),
+
+    path('messaging/chat/<int:chat_id>/send/', views.send_message, name='send_message'),
     path('conversations/', views.active_conversations, name='active_conversations'),
+    path('conversations/<int:chat_id>/messages/', views.load_chat_messages, name='load_chat_messages'),
+    path('conversations/<int:chat_id>/send/', views.send_message, name='send_message'),
 
     # --------------------------------------------------
     # Notifications

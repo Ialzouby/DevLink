@@ -579,94 +579,45 @@ def edit_profile(request):
         form = UserProfileForm(instance=user_profile)
 
     return render(request, 'projects/edit_profile.html', {'form': form})
+from django.shortcuts import render, get_object_or_404
+from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+from .models import Chat, Message
 
-
-# Message thread view for private messaging
-from django.shortcuts import get_object_or_404
-
-@login_required
-def message_thread(request, username):
-    # Fetch the recipient user object based on the username parameter
-    recipient = get_object_or_404(User, username=username)
-
-    # Fetch messages between the logged-in user and the recipient
-    messages = Message.objects.filter(
-        (Q(sender=request.user) & Q(recipient=recipient)) |
-        (Q(sender=recipient) & Q(recipient=request.user))
-    ).order_by('timestamp')
-
-    if request.method == 'POST':
-        form = MessageForm(request.POST)
-        if form.is_valid():
-            new_message = form.save(commit=False)
-            new_message.sender = request.user
-            new_message.recipient = recipient
-            new_message.save()
-            # Redirect to the same URL to avoid form resubmission issues
-            return redirect('message_thread', username=recipient.username)
-    else:
-        form = MessageForm()
-
-    return render(request, 'projects/message_thread.html', {
-        'messages': messages,
-        'recipient': recipient,
-        'form': form
-    })
-
-
-# View to display all active conversations
 @login_required
 def active_conversations(request):
-    sent_conversations = Message.objects.filter(sender=request.user).values('recipient').distinct()
-    received_conversations = Message.objects.filter(recipient=request.user).values('sender').distinct()
+    """Load the messaging page with active chats."""
+    chats = Chat.objects.filter(participants=request.user)
+    return render(request, 'messaging/active_conversations.html', {'chats': chats})
 
-    conversation_user_ids = set(
-        user['recipient'] for user in sent_conversations
-    ).union(
-        user['sender'] for user in received_conversations
-    )
+@login_required
+def load_chat_messages(request, chat_id):
+    """Fetch messages dynamically when a chat is selected."""
+    chat = get_object_or_404(Chat, id=chat_id)
+    messages = Message.objects.filter(chat=chat).order_by('timestamp')
 
-    conversation_users = User.objects.filter(id__in=conversation_user_ids)
-
-    # Handle search functionality
-    search_query = request.GET.get('q', '').strip()
-    search_results = []
-    if search_query:
-        search_results = User.objects.filter(
-        Q(username__icontains=search_query) |
-        Q(first_name__icontains=search_query) |
-        Q(last_name__icontains=search_query)
-    ).exclude(id=request.user.id)
-
-
-    recipient_username = request.GET.get('recipient')
-    recipient = None
-    messages = []
-    form = MessageForm()
-
-    if recipient_username:
-        recipient = get_object_or_404(User, username=recipient_username)
-        messages = Message.objects.filter(
-            (Q(sender=request.user) & Q(recipient=recipient)) |
-            (Q(sender=recipient) & Q(recipient=request.user))
-        ).select_related('sender', 'recipient').order_by('timestamp')[:50]  # Load the last 50 messages
-
-        if request.method == 'POST':
-            form = MessageForm(request.POST)
-            if form.is_valid():
-                new_message = form.save(commit=False)
-                new_message.sender = request.user
-                new_message.recipient = recipient
-                new_message.save()
-                return redirect(f'/conversations/?recipient={recipient.username}')
-
-    return render(request, 'projects/active_conversations.html', {
-        'conversation_users': conversation_users,
-        'recipient': recipient,
-        'messages': messages,
-        'form': form,
-        'search_results': search_results,  # Pass search results to template
+    return JsonResponse({
+        'messages': [
+            {'sender': msg.sender.username, 'content': msg.content, 'timestamp': msg.timestamp.strftime('%Y-%m-%d %H:%M')}
+            for msg in messages
+        ]
     })
+
+@login_required
+def send_message(request, chat_id):
+    """Send a message and update the chat in real-time."""
+    if request.method == 'POST':
+        chat = get_object_or_404(Chat, id=chat_id)
+        content = request.POST.get('content')
+
+        if content.strip():
+            message = Message.objects.create(chat=chat, sender=request.user, content=content)
+            return JsonResponse({
+                'success': True,
+                'message': {'sender': message.sender.username, 'content': message.content, 'timestamp': message.timestamp.strftime('%Y-%m-%d %H:%M')}
+            })
+
+    return JsonResponse({'success': False, 'error': 'Invalid request'})
 
 
 # View to render notifications

@@ -98,7 +98,15 @@
                         </form>
                     </div>
                 </div>
+
+
+
             </div>
+            <!-- Hamburger Menu (Mobile Only) -->
+<div class="hamburger-menu" id="hamburgerMenu">
+    <i class="fa fa-bars"></i> <!-- Hamburger icon -->
+</div>
+
         </div>
     </nav>
 {% else %}
@@ -131,37 +139,76 @@
         <!-- Page-specific content will go here -->
         {% endblock %}
     </div>
+
+    <!-- Full-Screen Mobile Menu -->
+<div class="mobile-nav-overlay" id="mobileNavOverlay">
+    <div class="mobile-nav-content">
+        <!-- Close Button -->
+        <span class="close-btn" id="closeMobileNav">&times;</span>
+
+        <!-- Profile Info -->
+        <div class="mobile-profile-section">
+            <img src="{% if user.userprofile.profile_picture %}{{ user.userprofile.profile_picture|safe }}{% else %}https://via.placeholder.com/150{% endif %}" 
+                 alt="{{ user.username }}" class="mobile-profile-image">
+            <h4>{{ user.first_name }} {{ user.last_name }}</h4>
+            <p>{{ user.userprofile.grade_level }} studying {{ user.userprofile.concentration }}</p>
+            <a href="{% url 'profile' user.username %}" class="mobile-profile-view-button">View Profile</a>
+        </div>
+
+        <!-- Navigation Links -->
+        <ul class="mobile-nav-list">
+            <li><a href="{% url 'home' %}"><i class="fa fa-home"></i> Home</a></li>
+            <li><a href="{% url 'network' %}"><i class="fa fa-users"></i> Network</a></li>
+            <li><a href="{% url 'active_conversations' %}"><i class="fa fa-comments"></i> Messaging</a></li>
+            <li><a href="{% url 'notifications_view' %}"><i class="fa fa-bell"></i> Notifications</a></li>
+            <li><a href="{% url 'edit_profile' %}"><i class="fa fa-user-edit"></i> Edit Profile</a></li>
+            <li><a href="{% url 'settings' %}"><i class="fa fa-cog"></i> Settings & Privacy</a></li>
+            <li><a href="{% url 'help' %}"><i class="fa fa-question-circle"></i> Help</a></li>
+        </ul>
+
+        <!-- Logout -->
+        <form method="POST" action="{% url 'account_logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="mobile-logout-button">Sign Out</button>
+        </form>
+    </div>
+</div>
+
     {% block footer %}
     <!-- Footer -->
     <footer>
         <p>&copy; 2024 DevLink. All rights reserved.</p>
     </footer>
-    <footer class="mobile-nav">
-        <ul class="nav-list">
-            <li class="nav-item">
-                <a class="nav-link-mobile" href="{% url 'home' %}">
-                    <i class="fa fa-home"></i> <!-- FontAwesome Home Icon -->
-                    <span>Projects</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link-mobile" href="{% url 'network' %}">
-                    <i class="fa fa-users"></i> <!-- FontAwesome Users Icon -->
-                    <span>Network</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link-mobile" href="{% url 'active_conversations' %}">
-                    <i class="fa fa-comments"></i> <!-- FontAwesome Comments Icon -->
-                    <span>Messaging</span>
-                </a>
-            </li>
-        </ul>
-    </footer>
+
     
     {% endblock %}
 
-    <script src="{% static 'projects/scripts.js' %}"></script>
+    <script src="{% static 'projects/scripts.js' %}">
+    </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const hamburger = document.getElementById("hamburgerMenu");
+        const mobileNav = document.getElementById("mobileNavOverlay");
+        const closeBtn = document.getElementById("closeMobileNav");
+
+        // Show mobile menu when hamburger is clicked
+        hamburger.addEventListener("click", function () {
+            mobileNav.style.display = "flex";
+        });
+
+        // Hide mobile menu when close button is clicked
+        closeBtn.addEventListener("click", function () {
+            mobileNav.style.display = "none";
+        });
+
+        // Close menu if clicked outside
+        mobileNav.addEventListener("click", function (event) {
+            if (event.target === mobileNav) {
+                mobileNav.style.display = "none";
+            }
+        });
+    });
+</script>
 
     <script>
         function getCookie(name) {

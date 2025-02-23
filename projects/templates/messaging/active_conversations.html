@@ -19,27 +19,22 @@
         <input type="text" class="search-bar-22" placeholder="Search...">
 
         <!-- Start Chat Dropdown -->
-
-
-        <!-- Start Chat Dropdown -->
-                <div class="dropdown start-chat">
-                    <button class="dropdown-btn" onclick="toggleStartChat(event)">Start Chat ➕</button>
-                    <div class="dropdown-content start-chat-dropdown" id="startChatDropdown">
-                        <div class="dropdown-section">
-                            <div class="dropdown-title">Projects</div>
-                            {% for project in projects %}
-                                <a href="#" onclick="startChat('{{ project.id }}')">{{ project.title }}</a>
-                            {% endfor %}
-                        </div>
-                        <div class="dropdown-section">
-                            <div class="dropdown-title">Friends</div>
-                            {% for user in friends %}
-                                <a href="#" onclick="startChat('{{ user.username }}')">{{ user.username }}</a>
-                            {% endfor %}
-                        </div>
-                    </div>
+        <div class="dropdown start-chat">
+            <button class="dropdown-btn" onclick="toggleStartChat(event)">Start Chat ➕</button>
+            <div class="dropdown-content start-chat-dropdown" id="startChatDropdown">
+                <!-- Projects Section (Dynamic) -->
+                <div class="dropdown-section">
+                    <div class="dropdown-title" onclick="showProjects()">Projects</div>
+                    <div class="dropdown-items" id="projectsList"></div>
+                </div>
+                <!-- Friends Section (Dynamic) -->
+                <div class="dropdown-section">
+                    <div class="dropdown-title" onclick="showFriends()">Friends</div>
+                    <div class="dropdown-items" id="friendsList" style="display: none;"></div>
                 </div>
             </div>
+        </div>
+    </div>
 
     <!-- Main Chat Layout -->
     <div class="chat-layout">
@@ -68,7 +63,6 @@
             <div class="message-input">
                 <button class="attach-btn">➕</button>
                 <button class="attach-btn">😀</button>
-
                 <input type="text" class="message-text2" placeholder="Type here...">
                 <button class="send-btn">➤</button>
             </div>
@@ -78,120 +72,103 @@
 
 <!-- JavaScript -->
 <script>
-function showStep(step) {
-    console.log('Showing step:', step);
-
-    // Ensure the element exists before applying styles
-    const stepElement = document.getElementById(`step-${step}`);
-    if (stepElement) {
-        // Hide all steps
-        document.querySelectorAll('.step').forEach(stepElement => {
-            stepElement.style.display = 'none';
-        });
-
-        // Show active step
-        stepElement.style.display = 'block';  // Only apply styles if the element exists
-    } else {
-        console.error(`Step element step-${step} not found.`);
-    }
-}
-
 document.addEventListener("DOMContentLoaded", function () {
     const startChatDropdown = document.getElementById("startChatDropdown");
+    const projectsList = document.getElementById("projectsList");
+    const friendsList = document.getElementById("friendsList");
 
+    function fetchUserData() {
+        console.log("Fetching user data...");
+        fetch("/get-user-data/")
+            .then(response => {
+                console.log("Response status:", response.status);
+                return response.json();
+            })
+            .then(data => {
+                console.log("Data received:", data);
+                // Populate Projects list
+                projectsList.innerHTML = "";
+                if (data.projects && data.projects.length > 0) {
+                    data.projects.forEach((project, index) => {
+                        const item = document.createElement("a");
+                        item.href = "#";
+                        item.textContent = project.title;
+                        item.onclick = () => {
+                            console.log("Project clicked:", project.id);
+                            startChat(project.id);
+                        };
+                        if (index < 5) projectsList.appendChild(item);
+                    });
+                } else {
+                    projectsList.innerHTML = "<p class='empty-message'>No projects found.</p>";
+                }
+
+                // Populate Friends list
+                friendsList.innerHTML = "";
+                if (data.friends && data.friends.length > 0) {
+                    data.friends.forEach((friend, index) => {
+                        const item = document.createElement("a");
+                        item.href = "#";
+                        item.innerHTML = `<img src="${friend.profile_picture}" class="friend-avatar"> ${friend.username}`;
+                        item.onclick = () => {
+                            console.log("Friend clicked:", friend.id);
+                            startChat(friend.id);
+                        };
+                        if (index < 5) friendsList.appendChild(item);
+                    });
+                } else {
+                    friendsList.innerHTML = "<p class='empty-message'>No friends found.</p>";
+                }
+            })
+            .catch(error => console.error("Error fetching user data:", error));
+    }
+
+    // Toggle dropdown visibility and fetch data if showing
     window.toggleStartChat = function (event) {
-        event.stopPropagation(); // Prevents event bubbling
-
-        // Close other open dropdowns
-        document.querySelectorAll(".dropdown-content").forEach(dropdown => {
-            if (dropdown !== startChatDropdown) {
-                dropdown.classList.remove("show");
-            }
-        });
-
-        // Toggle the visibility of the dropdown
+        event.stopPropagation();
+        console.log("toggleStartChat triggered");
+        startChatDropdown.classList.toggle("show");
+        console.log("Dropdown classes:", startChatDropdown.className);
         if (startChatDropdown.classList.contains("show")) {
-            startChatDropdown.classList.remove("show");
-        } else {
-            startChatDropdown.classList.add("show");
+            fetchUserData();
         }
     };
 
-    // Close dropdown when clicking outside
+    // Hide dropdown when clicking outside the start-chat container
     document.addEventListener("click", function (event) {
         if (!event.target.closest(".start-chat")) {
             startChatDropdown.classList.remove("show");
         }
     });
+
+    // Switch to show Projects list
+    window.showProjects = function () {
+        console.log("Showing Projects list");
+        projectsList.style.display = "block";
+        friendsList.style.display = "none";
+    };
+
+    // Switch to show Friends list
+    window.showFriends = function () {
+        console.log("Showing Friends list");
+        projectsList.style.display = "none";
+        friendsList.style.display = "block";
+    };
 });
 
-    document.addEventListener("DOMContentLoaded", function() {
-        const messagesContainer = document.getElementById("messagesContainer");
-        const messageInput = document.querySelector(".message-text2");
-        const sendButton = document.querySelector(".send-btn");
-
-        let activeChatId = null;
-
-        // Function to open a chat and load messages
-        window.openChat = function(chatId) {
-            console.log("Opening chat:", chatId);
-            activeChatId = chatId;
-
-            fetch(`/conversations/${chatId}/messages/`)
-                .then(response => response.json())
-                .then(data => {
-                    messagesContainer.innerHTML = ""; // Clear messages
-                    data.messages.forEach(msg => {
-                        const messageElement = document.createElement("div");
-                        messageElement.innerHTML = `<strong>${msg.sender}:</strong> ${msg.content} <small>${msg.timestamp}</small>`;
-                        messagesContainer.appendChild(messageElement);
-                    });
-                });
-        };
-
-        // Function to send a message
-        sendButton.addEventListener("click", function() {
-            if (!activeChatId || messageInput.value.trim() === "") return;
-
-            fetch(`/conversations/${activeChatId}/send/`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
-                    "X-CSRFToken": getCSRFToken()
-                },
-                body: `content=${encodeURIComponent(messageInput.value)}`
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    const messageElement = document.createElement("div");
-                    messageElement.innerHTML = `<strong>${data.message.sender}:</strong> ${data.message.content} <small>${data.message.timestamp}</small>`;
-                    messagesContainer.appendChild(messageElement);
-                    messageInput.value = ""; // Clear input
-                }
-            });
-        });
-
-        // Function to get CSRF token for Django POST requests
-        function getCSRFToken() {
-            const csrfToken = document.cookie.split("; ").find(row => row.startsWith("csrftoken="));
-            return csrfToken ? csrfToken.split("=")[1] : "";
-        }
-    });
 </script>
 
-
-
-
+<!-- CSS -->
 <style>
-    /* Prevent scrolling on the full page */
+    /* General Page Styling */
     html, body {
         margin: 0;
         padding: 0;
         height: 100vh;
         overflow: hidden;
-        font-family: Arial, sans-serif;
-        background: #F5F5F5;
+        font-family: 'Inter', sans-serif;
+        background: #F8F9FA;
+        color: #333;
     }
 
     /* Full Page Container */
@@ -204,89 +181,92 @@ document.addEventListener("DOMContentLoaded", function () {
         box-sizing: border-box;
         gap: 15px;
     }
-/* Fix: Remove overflow hidden */
-.messaging-container {
-    overflow: visible !important;
-}
 
-.chat-layout {
-    overflow: visible !important;
-}
-
-    /* Top Controls */
+    /* Keeps top-controls fixed */
     .top-controls {
         display: flex;
         justify-content: space-between;
         align-items: center;
         width: 100%;
-        gap: 15px;
-        margin-top: -45px;
+        padding: 10px 15px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        z-index: 10;
     }
 
+    /* Search Bar - Minimalistic Style */
+    .search-bar-22 {
+        width: 30%;
+        padding: 12px 15px;
+        border-radius: 20px;
+        border: 1px solid #ddd;
+        background: white;
+        outline: none;
+        font-size: 14px;
+        transition: all 0.3s ease;
+    }
+
+    .search-bar-22:focus {
+        border-color: #007BFF;
+        box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+    }
+
+    /* Filter Dropdown */
     .dropdown {
         position: relative;
         display: inline-block;
-        width: 22%;
-        min-width: 300px;
+        width: 20%;
+        min-width: 250px;
     }
 
     .dropdown-btn {
-        border: 2px solid rgb(174, 174, 174);
-        border-radius: 20px;
-        padding: 10px;
-        background: white;
-        cursor: pointer;
-        font-weight: bold;
         width: 100%;
+        padding: 12px;
+        border-radius: 20px;
+        border: 1px solid #ddd;
+        background: white;
+        font-weight: 500;
+        cursor: pointer;
         text-align: center;
+        transition: all 0.3s ease;
     }
 
-    .search-bar-22 {
-        border: 2px solid rgb(174, 174, 174);
-        background-color: white!important;
-        border-radius: 20px!important;
-        padding: 10px!important;
-        width: 22%!important;
-        text-align: center!important;
-        margin-top: 18px;
-
+    .dropdown-btn:hover {
+        background: #f0f0f0;
     }
 
     /* Chat Layout */
     .chat-layout {
         display: flex;
         width: 100%;
-        height: 70vh; /* Reduce height to avoid full-screen overflow */
+        height: calc(100vh - 90px);
         gap: 20px;
+        padding-top: 10px;
     }
 
     /* Sidebar */
     .chat-sidebar {
         width: 25%;
         background: white;
-        border-radius: 20px;
-        border: 2px solid rgb(174, 174, 174);
+        border-radius: 12px;
+        border: 1px solid #ddd;
         padding: 10px;
-        height: 70vh; /* Reduce height */
+        height: 100%;
         display: flex;
         flex-direction: column;
         overflow-y: auto;
-        box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     }
 
-    .chat-view {
-        width: 75%;
-        background: white;
-        border-radius: 20px;
-        border: 2px solid rgb(174, 174, 174);
-        display: flex;
-        flex-direction: column;
-        height: 70vh; /* Reduce height */
-        overflow: hidden;
-        box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+    /* Sidebar Title */
+    .sidebar-title {
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 10px;
     }
 
-    /* Sidebar Content */
+    /* Chat List */
     .chat-list {
         list-style: none;
         padding: 0;
@@ -294,21 +274,21 @@ document.addEventListener("DOMContentLoaded", function () {
         flex-grow: 1;
     }
 
+    /* Chat Item */
     .chat-item {
         display: flex;
         align-items: center;
-        padding: 10px;
-        border-bottom: 1px solid black;
-        cursor: pointer;
+        padding: 12px;
         border-radius: 10px;
-        margin-bottom: 5px;
+        cursor: pointer;
         transition: background 0.3s ease-in-out;
     }
 
     .chat-item:hover {
-        background: #EAEAEA;
+        background: #f0f0f0;
     }
 
+    /* Chat Avatar */
     .chat-avatar {
         width: 40px;
         height: 40px;
@@ -316,98 +296,160 @@ document.addEventListener("DOMContentLoaded", function () {
         margin-right: 10px;
     }
 
-    .chat-name {
-        font-weight: bold;
+    /* Chat Details */
+    .chat-details {
+        flex: 1;
     }
 
+    .chat-name {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    .chat-last-message {
+        font-size: 12px;
+        color: #777;
+    }
+
+    /* Chat View */
+    .chat-view {
+        width: 75%;
+        background: white;
+        border-radius: 12px;
+        border: 1px solid #ddd;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Chat Header */
+    .chat-header {
+        padding: 15px;
+        font-weight: bold;
+        border-bottom: 1px solid #ddd;
+    }
+
+    /* Messages Container */
     .messages-container {
         flex: 1;
-        padding: 10px;
+        padding: 15px;
         overflow-y: auto;
     }
 
-    /* Input Area */
+    /* Message Input */
     .message-input {
         display: flex;
-        padding: 10px;
-        border: 2px solid rgb(174, 174, 174);
-        background: rgb(166, 166, 166);
-        border-radius: 0 0 10 10px;
+        padding: 12px;
+        border-top: 1px solid #ddd;
+        background: #f8f8f8;
         align-items: center;
         gap: 10px;
-        max-height: 70px;
-    }
-
-    .attach-btn, .send-btn {
-        border: none;
-        background: black;
-        color: white;
-        padding: 10px;
-        border-radius: 50%;
-        cursor: pointer;
     }
 
     .message-text2 {
         flex: 1;
         padding: 10px;
-        border: 2px solid black;
-        border-radius: 20px!important;
-        background-color: white!important;
-        margin-top: 18px;
+        border: 1px solid #ddd;
+        border-radius: 20px;
+        outline: none;
+        background: white;
     }
-    /* Dropdown Fix: Ensures it appears over content */
-/* Fix dropdown positioning so it appears over content */
-.start-chat {
-    position: relative; /* Ensures dropdown stays anchored to this button */
-}
 
-.start-chat-dropdown {
-    position: absolute;
-    top: 100%; /* Ensures it appears right below the button */
-    left: 0;
-    width: 100%;
-    background: white;
-    border: 2px solid rgb(174, 174, 174);
-    border-radius: 20px;
-    z-index: 9999; /* Ensures dropdown appears above other content */
-    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
-    padding: 10px;
-    display: none; /* Hidden by default */
-}
+    .attach-btn, .send-btn {
+        border: none;
+        background: #007BFF;
+        color: white;
+        padding: 10px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
 
-/* Ensure dropdown becomes visible when the "show" class is added */
-.start-chat-dropdown.show {
-    display: block!important;
-}
+    .attach-btn:hover, .send-btn:hover {
+        background: #0056b3;
+    }
 
-/* Prevent content shifting */
-.dropdown-section {
-    padding: 10px;
-    border-bottom: 2px solid rgb(174, 174, 174);
-}
+    /* Dropdown Styling */
+    .start-chat {
+        position: relative;
+        display: inline-block;
+    }
 
-.dropdown-section:last-child {
-    border-bottom: none;
-}
+    /* Floating Dropdown */
+    .start-chat-dropdown {
+        position: absolute;
+        top: 45px;
+        left: 0;
+        width: 250px;
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+        display: none;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+        z-index: 9999;
+    }
 
-.dropdown-title {
-    font-weight: bold;
-    padding-bottom: 5px;
-    text-align: center;
-}
+    /* Dropdown Active */
+    .start-chat-dropdown.show {
+        display: block !important;
+        opacity: 1;
+    }
 
-.start-chat-dropdown a {
-    display: block;
-    padding: 8px;
-    border-radius: 10px;
-    transition: background 0.3s;
-    text-align: center;
-}
+    /* Dropdown Sections */
+    .dropdown-section {
+        padding: 10px;
+        border-bottom: 1px solid #eee;
+    }
 
-.start-chat-dropdown a:hover {
-    background: #f0f0f0;
-}
+    .dropdown-section:last-child {
+        border-bottom: none;
+    }
 
+    /* Clickable Titles */
+    .dropdown-title {
+        font-weight: bold;
+        padding: 8px;
+        cursor: pointer;
+        text-align: center;
+        color: #333;
+    }
+
+    /* Scrollable Dropdown Content */
+    .dropdown-items {
+        max-height: 200px;
+        overflow-y: auto;
+        padding-top: 5px;
+    }
+
+    /* Dropdown Items */
+    .start-chat-dropdown a {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        border-radius: 8px;
+        text-align: left;
+        color: #333;
+        transition: background 0.3s;
+        font-size: 14px;
+        text-decoration: none;
+    }
+
+    .start-chat-dropdown a:hover {
+        background: #f5f5f5;
+    }
+
+    /* Friend Avatar in Dropdown */
+    .friend-avatar {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
 </style>
 
 {% endblock %}

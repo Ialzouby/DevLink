@@ -1428,6 +1428,10 @@ textarea::placeholder {
     background-color: #1e7e34;
 }
 
+.modal {
+    justify-content: center;
+    align-items: center;
+}
 /* Filter Modal */
 .filter-modal {
     display: none; /* Hidden by default */
@@ -2565,8 +2569,20 @@ textarea::placeholder {
     border-radius: 8px;
     padding: 20px;
     position: relative;
+    justify-content: center!important;
+    align-items: center!important;
   }
   
+  .modal-content {
+    position: fixed;
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    margin-left: 37%;
+    margin-top: 25%;
+}
+
+
   .modal-content h3 {
     margin-top: 0;
   }
@@ -6712,7 +6728,7 @@ select.form-control,
     right: 25px;
     font-size: 32px;
     cursor: pointer;
-    color: white;
+    color: black;
     transition: color 0.3s;
 }
 
@@ -7278,7 +7294,10 @@ select.form-control,
     right: 15px;
     font-size: 1.5rem;
     cursor: pointer;
+    color: black;
 }
+
+
 
 .training-popup-title {
     font-size: 1.3rem;
@@ -7368,43 +7387,105 @@ select.form-control,
 }
 
 
+
 .feed-link-preview {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    background: #f9f9f9;
-    margin-top: 10px;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    transition: 0.3s ease-in-out;
+    border: none;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+    margin-top: 14px;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    cursor: pointer;
+    text-align: center;
+    width: 100%;
+    max-width: 700px; /* Increased slightly */
 }
 
 .feed-link-preview:hover {
-    background: #eef;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    background: #f5f8ff;
 }
 
 .feed-preview-img {
-    width: 100px;
-    height: 100px;
+    width: 100%;
+    height: 320px; /* About 1.5x larger */
     object-fit: cover;
-    border-right: 1px solid #ddd;
 }
 
 .feed-preview-content {
-    padding: 10px;
-    flex: 1;
+    padding: 16px;
+    width: 100%;
+    text-align: left;
 }
 
 .feed-preview-title {
-    font-size: 16px;
+    font-size: 20px; /* Slightly larger */
     font-weight: bold;
-    margin-bottom: 5px;
+    color: #333;
+    margin-bottom: 10px;
 }
 
 .feed-preview-description {
-    font-size: 14px;
-    color: #555;
+    font-size: 16px;
+    color: #666;
+    line-height: 1.5;
+    max-height: 70px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: wrap;
 }
+
+.feed-preview-description a{
+    color: #0073b1;
+    text-decoration: none!important;
+}
+
+.feed-preview-link {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    width: 100%;
+}
+
+
+.feed-preview-content a {
+    color: #000000;
+    text-decoration: none !important;
+}
+
+/* Prevent underline when hovering over the title and description */
+.feed-preview-content a:hover,
+.feed-preview-title a:hover,
+.feed-preview-description a:hover {
+    text-decoration: none !important;
+}
+
+/* Ensure title always looks like plain text */
+.feed-preview-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #000000;
+    text-decoration: none !important;
+}
+
+/* Ensure description never gets underlined */
+.feed-preview-description {
+    font-size: 16px;
+    color: #666;
+    line-height: 1.5;
+    max-height: 70px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: wrap;
+    text-decoration: none !important;
+}
+
 
 
 

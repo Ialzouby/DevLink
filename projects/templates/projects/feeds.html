@@ -10,6 +10,47 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
 
 <div class="feed-page-container">
+<!-- Filter Modal -->
+<!-- Filter Modal -->
+<!-- 🔹 Filter Modal -->
+<div id="filterModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeFilterModal()">&times;</span>
+        <h2>Filter Your Feed</h2>
+
+        <form id="filterForm" method="GET" action="{% url 'feed' %}">
+            <label for="feed-type">Feed Type:</label>
+            <select id="feed-type" name="filter_mode">
+                <option value="global" {% if filter_mode == "global" %}selected{% endif %}>Global Feed</option>
+                <option value="following" {% if filter_mode == "following" %}selected{% endif %}>Following</option>
+            </select>
+
+            <label for="concentration">Filter by Concentration:</label>
+            <select id="concentration" name="concentration">
+                <option value="">All</option>
+                <option value="Computer Science" {% if concentration_filter == "Computer Science" %}selected{% endif %}>Computer Science</option>
+                <option value="Data Science" {% if concentration_filter == "Data Science" %}selected{% endif %}>Data Science</option>
+                <option value="Cybersecurity" {% if concentration_filter == "Cybersecurity" %}selected{% endif %}>Cybersecurity</option>
+                <option value="Software Engineering" {% if concentration_filter == "Software Engineering" %}selected{% endif %}>Software Engineering</option>
+                <option value="Robotics" {% if concentration_filter == "Robotics" %}selected{% endif %}>Robotics</option>
+                <option value="Artificial Intelligence" {% if concentration_filter == "Artificial Intelligence" %}selected{% endif %}>Artificial Intelligence</option>
+            </select>
+
+            <label for="grade-level">Filter by Grade Level:</label>
+            <select id="grade-level" name="grade_level">
+                <option value="">All</option>
+                <option value="Freshman" {% if grade_filter == "Freshman" %}selected{% endif %}>Freshman</option>
+                <option value="Sophomore" {% if grade_filter == "Sophomore" %}selected{% endif %}>Sophomore</option>
+                <option value="Junior" {% if grade_filter == "Junior" %}selected{% endif %}>Junior</option>
+                <option value="Senior" {% if grade_filter == "Senior" %}selected{% endif %}>Senior</option>
+                <option value="Graduate" {% if grade_filter == "Graduate" %}selected{% endif %}>Graduate</option>
+            </select>
+
+            <button type="submit" class="filter-submit-btn">Apply Filters</button>
+        </form>
+    </div>
+</div>
+
 
   <!-- Left Sidebar -->
   <aside class="feed-sidebar-left">
@@ -322,6 +363,26 @@ function toggleAllComments(postId) {
     }
 }
 
+
+
+document.getElementById("openFilterModal").addEventListener("click", function () {
+    document.getElementById("filterModal").style.display = "block";
+});
+
+function closeFilterModal() {
+    document.getElementById("filterModal").style.display = "none";
+}
+
+// Handle filter form submission
+document.getElementById("filterForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+    
+    const formData = new FormData(this);
+    const queryString = new URLSearchParams(formData).toString();
+
+    // Reload the page with new filter parameters
+    window.location.href = `?${queryString}`;
+});
 
 </script>
 

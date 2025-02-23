@@ -603,6 +603,27 @@ def load_chat_messages(request, chat_id):
         ]
     })
 
+
+@login_required
+def get_user_data(request):
+    """
+    Fetches the user's projects and friends for the Start Chat dropdown.
+    """
+    user_profile = get_object_or_404(UserProfile, user=request.user)
+
+    # Fetch projects the user is a member of
+    user_projects = Project.objects.filter(members=request.user).values("id", "title")
+
+    # Fetch users the current user follows (assuming there's a ManyToMany field `following`)
+    user_friends = user_profile.following.all().values("id", "username", "profile_picture")
+
+    return JsonResponse({
+        "projects": list(user_projects),
+        "friends": list(user_friends),
+    })
+
+
+
 @login_required
 def send_message(request, chat_id):
     """Send a message and update the chat in real-time."""
@@ -777,24 +798,30 @@ def unfollow_user(request, username):
         ).delete()
     return redirect('profile', username=username)
 
+from django.core.paginator import Paginator
+from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.db.models import Q
+from .models import FeedItem, Follow, UserProfile, Project
+
 @login_required
 def feed_view(request):
     """
-    Display a feed of events based on either:
+    Display a feed filtered by:
       - 'global': all feed items
-      - 'following': feed items from the user itself + the users they follow
-      - filters by event_type if specified
-    Supports infinite scrolling with AJAX pagination.
+      - 'following': feed items from the user and followed users
+      - Filters by concentration and grade level if specified
     """
-    filter_mode = request.GET.get('filter_mode', 'global')  # Default to 'global'
-    event_type_filter = request.GET.get('event_type', '')  # e.g. 'project_joined', 'comment_added'
+    filter_mode = request.GET.get('filter_mode', 'global')  # Default: 'global'
+    concentration_filter = request.GET.get('concentration', '')  # e.g. 'Computer Science'
+    grade_filter = request.GET.get('grade_level', '')  # e.g. 'Freshman'
 
-    # ✅ Optimize QuerySet - Preload related objects to minimize DB queries
+    # Optimize QuerySet by preloading related objects
     feed_queryset = FeedItem.objects.select_related('user', 'project') \
         .prefetch_related('likes', 'feed_comments') \
         .order_by('-created_at')
 
-    # ✅ Filter by 'following' mode
+    # 🔹 Filter by 'Following' Mode
     if filter_mode == 'following':
         following_user_ids = Follow.objects.filter(
             follower=request.user
@@ -804,60 +831,34 @@ def feed_view(request):
         user_ids = list(following_user_ids) + [request.user.id]
         feed_queryset = feed_queryset.filter(user__id__in=user_ids)
 
-    # ✅ Filter by event type
-    if event_type_filter:
-        feed_queryset = feed_queryset.filter(event_type=event_type_filter)
+    # 🔹 Filter by Concentration
+    if concentration_filter:
+        feed_queryset = feed_queryset.filter(user__userprofile__concentration=concentration_filter)
 
-    # ✅ Load 5 items per request for **faster rendering**
+    # 🔹 Filter by Grade Level
+    if grade_filter:
+        feed_queryset = feed_queryset.filter(user__userprofile__grade_level=grade_filter)
+
+    # Load only 5 items per request (Pagination for performance)
     page_number = request.GET.get('page', 1)
-    paginator = Paginator(feed_queryset, 5)  # ✅ Reduced from 10 → 5 for speed
+    paginator = Paginator(feed_queryset, 5)
     page_obj = paginator.get_page(page_number)
 
-    # ✅ Fetch Recommended Users (Top 3 by points)
-    top_users = UserProfile.objects.all().order_by("-points")[:3]
+    # Fetch Recommended Users (Top 3 by points)
+    top_users = UserProfile.objects.order_by("-points")[:3]
 
-    # ✅ Fetch Recommended Projects
+    # Fetch Recommended Projects
     recommended_projects = Project.objects.filter(completed=False)[:3]
 
-    # ✅ Precompute user-like status (avoid extra DB hits)
+    # Precompute user-like status (avoid extra DB hits)
     for item in page_obj:
         item.user_liked = item.likes.filter(user=request.user).exists()
 
-    # ✅ AJAX Infinite Scrolling
-    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        feed_data = [
-            {
-                'id': item.id,
-                'user': {
-                    'username': item.user.username,
-                    'profile_picture': item.user.userprofile.profile_picture.url if item.user.userprofile.profile_picture else "https://via.placeholder.com/55",
-                },
-                'event_type': item.event_type,
-                'content': item.content,
-                'created_at': item.created_at.strftime('%Y-%m-%d %H:%M:%S'),
-                'project': {
-                    'title': item.project.title,
-                    'description': item.project.description[:100],
-                    'id': item.project.id,
-                } if item.project else None,
-                'likes_count': item.likes.count(),
-                'comments_count': item.feed_comments.count(),
-                'user_liked': item.user_liked,
-            }
-            for item in page_obj
-        ]
-
-        return JsonResponse({
-            'feed_items': feed_data,
-            'has_next': page_obj.has_next(),
-            'next_page': page_obj.next_page_number() if page_obj.has_next() else None,
-        })
-
-    # ✅ Render Template for Full Page Load
     context = {
         'page_obj': page_obj,
         'filter_mode': filter_mode,
-        'event_type_filter': event_type_filter,
+        'concentration_filter': concentration_filter,
+        'grade_filter': grade_filter,
         'top_users': top_users,
         'recommended_projects': recommended_projects,
     }

@@ -140,7 +140,7 @@
             {% csrf_token %}
             
             <!-- Topic Selection Dropdown -->
-            <label for="topic-select">Select Topic:</label>
+            <label for="topic-select" style="color: black; font-weight: bold;">Select Topic:</label>
             <select name="topic_id" id="topic-select" required class="training-popup-dropdown">
                 {% for topic in topics %}
                     <option value="{{ topic.id }}" {% if topic.id == selected_topic.id %}selected{% endif %}>{{ topic.name }}</option>

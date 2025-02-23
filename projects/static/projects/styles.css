@@ -6881,6 +6881,278 @@ select.form-control,
         flex-direction: column;
     }
 }
+/* General Styles */
+@media (max-width: 1024px) {
+    .hero-content {
+        text-align: center;
+        padding: 40px;
+    }
+    .hero-content h1 {
+        font-size: 28px;
+    }
+    .hero-content p {
+        font-size: 16px;
+    }
+    .hero-buttons {
+        flex-direction: column;
+        gap: 12px;
+    }
+}
+
+/* 🔹 Mobile (Tablet & Small Screens) */
+@media (max-width: 768px) {
+    .hero {
+        padding: 60px 20px;
+        text-align: center;
+        position: relative;
+    }
+    .hero-content h1 {
+        font-size: 24px;
+        line-height: 1.4;
+    }
+    .hero-content p {
+        font-size: 14px;
+    }
+    .hero-buttons {
+        flex-direction: column;
+    }
+
+    /* Floating Graphics: Scale down but keep them */
+    .floating-graphics img {
+        width: 35%;
+        max-width: 120px;
+        position: absolute;
+    }
+    .graphic1 {
+        top: 10%;
+        left: 10%;
+    }
+    .graphic2 {
+        top: 50%;
+        left: 70%;
+    }
+    .graphic3 {
+        top: 80%;
+        left: 20%;
+    }
+
+    .tabs {
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+    }
+    .tab-buttons {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .tab-button {
+        font-size: 14px;
+        padding: 8px 10px;
+    }
+    .tab-content img {
+        max-width: 80%;
+    }
+}
+
+/* 🔹 Mobile (Phones) */
+@media (max-width: 480px) {
+    .hero {
+        padding: 40px 10px;
+    }
+    .hero-content h1 {
+        font-size: 20px;
+    }
+    .hero-content p {
+        font-size: 12px;
+    }
+    .hero-buttons {
+        flex-direction: column;
+        gap: 8px;
+    }
+    .cta-button, .secondary-button {
+        font-size: 14px;
+        padding: 10px 16px;
+    }
+
+    /* Floating Graphics: Adjust positioning for small screens */
+    .floating-graphics img {
+        width: 30%;
+        max-width: 100px;
+    }
+
+
+    .tabs {
+        padding: 10px;
+    }
+    .tab-buttons {
+        flex-direction: column;
+        gap: 8px;
+    }
+    .tab-button {
+        font-size: 12px;
+        padding: 6px 8px;
+    }
+    .tab-content img {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+/* 🔹 Ultra Small Screens (Less than 360px) */
+@media (max-width: 360px) {
+    .hero-content h1 {
+        font-size: 18px;
+    }
+    .hero-content p {
+        font-size: 10px;
+    }
+    .cta-button, .secondary-button {
+        font-size: 12px;
+        padding: 8px 14px;
+    }
+
+    /* Floating Graphics: Slightly reduce size */
+    .floating-graphics img {
+        width: 25%;
+        max-width: 80px;
+    }
+    .graphic1 {
+        top: 5%;
+        left: 5%;
+    }
+    .graphic2 {
+        top: 40%;
+        left: 60%;
+    }
+    .graphic3 {
+        top: 70%;
+        left: 10%;
+    }
+
+    .tab-buttons {
+        flex-direction: column;
+        gap: 5px;
+    }
+    .tab-button {
+        font-size: 10px;
+        padding: 5px;
+    }
+}
+
+
+/* General Styles */
+@media (max-width: 1024px) {
+    .hero-content {
+        text-align: center;
+        padding: 40px;
+    }
+    .hero-content h1 {
+        font-size: 28px;
+    }
+    .hero-content p {
+        font-size: 16px;
+    }
+    .hero-buttons {
+        flex-direction: column;
+        gap: 12px;
+    }
+}
+
+/* 🔹 Mobile (Tablet & Small Screens) */
+@media (max-width: 768px) {
+    .hero {
+        padding: 60px 20px;
+        text-align: center;
+    }
+    .hero-content h1 {
+        font-size: 24px;
+        line-height: 1.4;
+    }
+    .hero-content p {
+        font-size: 14px;
+    }
+    .hero-buttons {
+        flex-direction: column;
+    }
+    .floating-graphics {
+        display: none; /* Hide floating graphics on small screens */
+    }
+    .tabs {
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+    }
+    .tab-buttons {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .tab-button {
+        font-size: 14px;
+        padding: 8px 10px;
+    }
+    .tab-content img {
+        max-width: 80%;
+    }
+}
+
+/* 🔹 Mobile (Phones) */
+@media (max-width: 480px) {
+    .hero {
+        padding: 40px 10px;
+    }
+    .hero-content h1 {
+        font-size: 20px;
+    }
+    .hero-content p {
+        font-size: 12px;
+    }
+    .hero-buttons {
+        flex-direction: column;
+        gap: 8px;
+    }
+    .cta-button, .secondary-button {
+        font-size: 14px;
+        padding: 10px 16px;
+    }
+    .tabs {
+        padding: 10px;
+    }
+    .tab-buttons {
+        flex-direction: column;
+        gap: 8px;
+    }
+    .tab-button {
+        font-size: 12px;
+        padding: 6px 8px;
+    }
+    .tab-content img {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+/* 🔹 Ultra Small Screens (Less than 360px) */
+@media (max-width: 360px) {
+    .hero-content h1 {
+        font-size: 18px;
+    }
+    .hero-content p {
+        font-size: 10px;
+    }
+    .cta-button, .secondary-button {
+        font-size: 12px;
+        padding: 8px 14px;
+    }
+    .tab-buttons {
+        flex-direction: column;
+        gap: 5px;
+    }
+    .tab-button {
+        font-size: 10px;
+        padding: 5px;
+    }
+}
+
 
 
 /* Hide the full-screen mobile menu by default */

@@ -510,22 +510,33 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib.auth.models import User
 
-# Network view to list all users
 @login_required
 def network(request):
-    query = request.GET.get('q', '').strip()  # Get search query, if provided
+    query = request.GET.get('q', '').strip()  # Search query
+    grade_filter = request.GET.get('grade', '')  # Grade Level filter
+    concentration_filter = request.GET.get('concentration', '')  # Concentration filter
+
+    users = User.objects.all().order_by('-userprofile__points')  # Default ordering by points
+
+    # Apply search query filter
     if query:
-        users = User.objects.filter(
+        users = users.filter(
             Q(username__icontains=query) |
             Q(userprofile__grade_level__icontains=query) |
             Q(userprofile__concentration__icontains=query)
-        ).order_by('-userprofile__points')
-    else:
-        users = User.objects.all().order_by('-userprofile__points')
+        )
+
+    # Apply grade level filter
+    if grade_filter:
+        users = users.filter(userprofile__grade_level=grade_filter)
+
+    # Apply concentration filter
+    if concentration_filter:
+        users = users.filter(userprofile__concentration=concentration_filter)
 
     # Leaderboard: Top 6 users
     leaderboard = users[:6]
-    
+
     # Other users: Everyone after the top 6, grouped into chunks (e.g., groups of 9)
     others = users[6:]
     group_size = 9
@@ -535,6 +546,8 @@ def network(request):
         'leaderboard': leaderboard,
         'groups': groups,
         'query': query,
+        'selected_grade': grade_filter,
+        'selected_concentration': concentration_filter
     })
 
 @login_required

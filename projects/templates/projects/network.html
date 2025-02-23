@@ -76,6 +76,111 @@
             {% endfor %}
         </div>
     </div>
+
+<!-- Filter Modal -->
+<div id="filterModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeFilterModal()">&times;</span>
+        <h3>Filter Users</h3>
+
+        <form method="GET" action="{% url 'network' %}" class="filter-form">
+            <!-- Grade Level Filter -->
+            <label for="grade">Grade Level:</label>
+            <select name="grade" id="grade">
+                <option value="">All</option>
+                <option value="Freshman" {% if selected_grade == "Freshman" %}selected{% endif %}>Freshman</option>
+                <option value="Sophomore" {% if selected_grade == "Sophomore" %}selected{% endif %}>Sophomore</option>
+                <option value="Junior" {% if selected_grade == "Junior" %}selected{% endif %}>Junior</option>
+                <option value="Senior" {% if selected_grade == "Senior" %}selected{% endif %}>Senior</option>
+                <option value="Graduate" {% if selected_grade == "Graduate" %}selected{% endif %}>Graduate</option>
+            </select>
+
+            <!-- Concentration Filter -->
+            <label for="concentration">Concentration:</label>
+            <select name="concentration" id="concentration">
+                <option value="">All</option>
+                <option value="Computer Science" {% if selected_concentration == "Computer Science" %}selected{% endif %}>Computer Science</option>
+                <option value="Information Technology" {% if selected_concentration == "Information Technology" %}selected{% endif %}>Information Technology</option>
+                <option value="Data Science" {% if selected_concentration == "Data Science" %}selected{% endif %}>Data Science</option>
+                <option value="Cybersecurity" {% if selected_concentration == "Cybersecurity" %}selected{% endif %}>Cybersecurity</option>
+                <option value="Software Engineering" {% if selected_concentration == "Software Engineering" %}selected{% endif %}>Software Engineering</option>
+                <option value="Robotics" {% if selected_concentration == "Robotics" %}selected{% endif %}>Robotics</option>
+                <option value="Artificial Intelligence" {% if selected_concentration == "Artificial Intelligence" %}selected{% endif %}>Artificial Intelligence</option>
+            </select>
+
+            <button type="submit" class="btn-apply-filter">Apply Filter</button>
+        </form>
+    </div>
+</div>
+
     
 </div>
+<style>
+    /* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 50%;
+    text-align: center;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.close {
+    float: right;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: red;
+}
+
+.btn-apply-filter {
+    margin-top: 10px;
+    background-color: #007bff;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.btn-apply-filter:hover {
+    background-color: #0056b3;
+}
+
+</style>
+<script>    
+    // Function to open the modal
+    function openFilterModal() {
+        document.getElementById("filterModal").style.display = "block";
+    }
+
+    function closeFilterModal() {
+        document.getElementById("filterModal").style.display = "none";
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+        var modal = document.getElementById("filterModal");
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    };
+
+</script>
 {% endblock %}

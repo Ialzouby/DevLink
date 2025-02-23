@@ -2,34 +2,102 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Landing Page</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'projects/styles.css' %}">
+    <style>
+        /* Invisible header styles */
+        .invisible-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            z-index: 10;
+        }
+
+        .invisible-header a {
+            text-decoration: none;
+            color: white;
+            font-weight: 1000;
+            transition: opacity 0.3s ease;
+        }
+
+        .invisible-header a:hover {
+            opacity: 0.8;
+        }
+
+        .login-button {
+            background: transparent;
+            border: 1px solid white;
+            padding: 8px 16px;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            text-decoration: none;
+            transition: background 0.3s ease, color 0.3s ease;
+            margin-right: 30px;
+        }
+
+        .login-button:hover {
+            background: white;
+            color: black;
+        }
+
+        .devlink-logo {
+            font-size: 34px;
+            font-weight: bold;
+            color: rgb(7, 7, 7);
+            text-decoration: none;
+            margin-left: 10px;
+        }
+
+        /* Responsive adjustments for mobile */
+        @media (max-width: 768px) {
+            .invisible-header {
+                padding: 15px;
+                font-size: 18px;
+            }
+            .login-button {
+                font-size: 14px;
+                padding: 6px 12px;
+            }
+        }
+    </style>
 </head>
 <body class="landing-page">
+    
+    <!-- Invisible Header -->
+    <header class="invisible-header">
+        <a class="devlink-logo">DevLink</a>
+        <a href="{% url 'account_login' %}" class="login-button">Login</a>
+    </header>
+
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-lighting"></div> <!-- Lighting effect -->
         <div class="hero-content">
-            <h1>Create and grow projects on a vibrant, collaborative platform.</h1>
-            <p>Connect with your community to bring your innovative ideas to life.</p>
+            <h1>Create and grow projects on a vibrant platform.</h1>
+            <p>Bring your innovative ideas to life.</p>
             <div class="hero-buttons">
                 <a href="{% url 'account_login' %}" class="cta-button">Try Devlink Connect</a>
                 <a href="{% url 'home' %}" class="secondary-button">Explore active projects</a>
-        
             </div>
         </div>
         <!-- Floating Graphics -->
         <div class="floating-graphics">
             <img src="{% static 'projects/images/1.png' %}" alt="Graphic 1" class="graphic graphic1">
-            <img src="{% static 'projects/images/2.png' %}" alt="Graphic 2" class="graphic graphic2">
+        <!--   <img src="{% static 'projects/images/2.png' %}" alt="Graphic 2" class="graphic graphic2"> -->
         </div>
     </section>
-    
-
 
     <!-- Tabs Section -->
     <section class="tabs">
@@ -59,48 +127,39 @@
         </div>
     </section>
 
-    <!-- Inline JavaScript -->
+    <!-- JavaScript for Tabs -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             // Tab switching logic
             const tabs = document.querySelectorAll(".tab-button");
             const tabPanes = document.querySelectorAll(".tab-pane");
-    
+
             tabs.forEach((tab) => {
                 tab.addEventListener("click", () => {
-                    // Remove active class from all tabs and panes
                     tabs.forEach((t) => t.classList.remove("active"));
                     tabPanes.forEach((pane) => pane.classList.remove("active"));
-    
-                    // Add active class to clicked tab and corresponding pane
+
                     tab.classList.add("active");
                     const target = tab.getAttribute("data-tab");
                     document.getElementById(`tab-${target}`).classList.add("active");
                 });
             });
-    
+
             // Scroll-based animations for the hero section
             const heroSection = document.querySelector(".hero");
-    
+
             window.addEventListener("scroll", () => {
                 const scrollPosition = window.scrollY;
                 const heroHeight = heroSection.offsetHeight;
-    
-                // Check if scroll position is more than half the hero height
+
                 if (scrollPosition > heroHeight / 3) {
-                    if (!heroSection.classList.contains("hidden")) {
-                        heroSection.classList.add("hidden");
-                    }
+                    heroSection.classList.add("hidden");
                 } else {
-                    if (heroSection.classList.contains("hidden")) {
-                        heroSection.classList.remove("hidden");
-                    }
+                    heroSection.classList.remove("hidden");
                 }
             });
         });
     </script>
-    
-    
 
 </body>
 </html>

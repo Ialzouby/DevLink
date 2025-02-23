@@ -30,6 +30,7 @@ from django.http import JsonResponse
 from django.contrib.auth.models import User
 from .forms import UserSettingsForm, SkillForm
 from .models import UserProfile
+from django.utils import timezone
 
 @login_required
 def settings_page(request):
@@ -342,17 +343,11 @@ def project(request, project_id):
     updates = list(Update.objects.filter(project=project).values('content', 'created_at'))
 
     # Add project creation date
-    updates.append({
-        'content': "Project created",
-        'created_at': project.created_at
-    })
+    updates.append({'content': "Project created", 'created_at': project.created_at})
 
     # Add user join events
     for member in project.members.all():
-        updates.append({
-            'content': f"{member.username} joined the project",
-            'created_at': member.date_joined  # Assuming you have a date_joined field
-        })
+        updates.append({'content': f"{member.username} joined the project", 'created_at': member.date_joined})
 
     # Sort updates by date
     updates.sort(key=lambda x: x['created_at'], reverse=True)
@@ -365,11 +360,14 @@ def project(request, project_id):
                 project.rating = (project.rating + rating) / 2
                 project.save()
                 return redirect('project', project_id=project_id)
+
         elif "comment" in request.POST:
             content = request.POST.get('comment')
             if content:
-                Comment.objects.create(project=project, user=request.user, content=content)
+                comment = Comment.objects.create(project=project, user=request.user, content=content)
+
                 return redirect('project', project_id=project_id)
+
         elif "join_project" in request.POST:
             if project.completed:
                 messages.error(request, "This project is completed and no longer accepting join requests.")
@@ -378,21 +376,23 @@ def project(request, project_id):
                 JoinRequest.objects.create(user=request.user, project=project)
                 messages.success(request, "Join request sent. Awaiting approval.")
                 return redirect('project', project_id=project_id)
+
         elif "approve_request" in request.POST:
             join_request_id = request.POST.get('approve_request')
             join_request = get_object_or_404(JoinRequest, pk=join_request_id, project=project)
             join_request.status = 'approved'
             join_request.save()
             project.members.add(join_request.user)
-            
+
             # Add update for user joining
             Update.objects.create(
                 project=project,
                 content=f"{join_request.user.username} joined the project"
             )
-            
+
             messages.success(request, f"{join_request.user.username} has been added to the project.")
             return redirect('project', project_id=project_id)
+
         elif "reject_request" in request.POST:
             join_request_id = request.POST.get('reject_request')
             join_request = get_object_or_404(JoinRequest, pk=join_request_id, project=project)
@@ -403,6 +403,7 @@ def project(request, project_id):
 
     form = RatingForm()
     is_pending_request = JoinRequest.objects.filter(user=request.user, project=project, status='pending').exists()
+    
     context = {
         'project': project,
         'comments': comments,
@@ -410,7 +411,7 @@ def project(request, project_id):
         'is_owner': project.members.filter(pk=request.user.pk).exists(),
         'is_pending_request': is_pending_request,
         'join_requests': join_requests if request.user == project.owner else None,
-        'updates': updates,  # Add updates to context
+        'updates': updates,
     }
     return render(request, 'projects/project.html', context)
 
@@ -644,7 +645,7 @@ def send_message(request, chat_id):
 # View to render notifications
 @login_required
 def notifications_view(request):
-    notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
+    notifications = Notification.objects.filter(user=request.user).select_related('user', 'user__userprofile').order_by('-timestamp')
     return render(request, 'projects/notifications.html', {'notifications': notifications})
 
 
@@ -758,7 +759,7 @@ from django.http import HttpResponseForbidden, JsonResponse
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
-from django.utils import timezone
+#from django.utils import timezone
 from django.contrib.auth import get_user_model
 
 from .models import (

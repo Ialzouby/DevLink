@@ -25,9 +25,9 @@
         <!-- Filters Section -->
         <div class="notifications-filters">
             <button class="filter-btn active">All</button>
-            <button class="filter-btn">Jobs</button>
-            <button class="filter-btn">My Posts</button>
-            <button class="filter-btn">Mentions</button>
+            <button class="filter-btn">Projects</button>
+            <button class="filter-btn">Messages</button>
+            <button class="filter-btn">Training</button>
         </div>
 
         <!-- Notifications List -->
@@ -35,6 +35,20 @@
             {% for notification in notifications %}
                 <div class="notification-item">
                     <div class="notification-content">
+                        {% if notification.user %}
+                            <a href="{% url 'profile' notification.user.username %}" class="notification-user-link">
+                                {% if notification.user.userprofile and notification.user.userprofile.profile_picture %}
+                                    <img class="avatar-img" src="{{ notification.user.userprofile.profile_picture|safe }}" alt="{{ item.user.username }}">
+                                {% elif notification.user.userprofile.profile_picture_url %}
+                                    <img class="avatar-img" src="{{ notification.user.userprofile.profile_picture_url }}" alt="{{ notification.user.username }}">
+                                {% else %}
+                                    <img class="avatar-img" src="https://via.placeholder.com/55" alt="Unknown User">
+                                {% endif %}
+                                <strong>{{ notification.user.first_name }} {{ notification.user.last_name }}</strong>
+                            </a>
+                        {% endif %}
+
+                        
                         <p>
                             {% if notification.content %}
                                 {{ notification.content|safe }}
@@ -47,12 +61,14 @@
                                 No content available
                             {% endif %}
                         </p>
+                        
                         <span class="notification-timestamp">{{ notification.timestamp|timesince }} ago</span>
                     </div>
+                    
                     <button class="more-options-btn" onclick="toggleOptions('{{ notification.id }}')">
                         <i class="fa fa-ellipsis-h"></i>
                     </button>
-                    <!-- Dropdown for more options -->
+                    
                     <div class="more-options" id="options-{{ notification.id }}" style="display: none;">
                         <form action="{% url 'delete_notification' notification.id %}" method="post">
                             {% csrf_token %}

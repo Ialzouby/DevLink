@@ -1761,7 +1761,6 @@ textarea::placeholder {
     width: 100%;
     max-width: 1200px;  /* Adjust as needed */
     margin: auto;
-    padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -3964,7 +3963,7 @@ textarea::placeholder {
     flex: 1;
     display: flex;
     justify-content: column;
-    padding: 40px 20px;
+    padding: 20px 20px;
     margin: 0 auto;
     width: 100%;
     margin-bottom: -20px!important;
@@ -5125,21 +5124,7 @@ footer p {
     width: 200%;
 }
 
-.network-search-input {
-    border-radius: 8px;
-    border: none;
-    background-color: #ffffff !important;
-    color: #000 !important;
-    font-size: 18px;
-    width: 200%;
-    margin-top: 13px;
-}
 
-.network-search-input::placeholder {
-    color: black;
-    opacity: 1;
-    /* Ensure the placeholder text is fully opaque */
-}
 
 .network-search-btn,
 .network-clear-btn {
@@ -5178,17 +5163,17 @@ footer p {
 }
 
 
-
-
   /* Center row with the input + three icon buttons */
   .network-search-bar {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 10px; /* space between form and filter button */
-    margin-bottom: 20px;
     margin-top: -15px;
+    width: 50%;
   }
+
+
   
   /* The form containing input + search + clear */
   .network-search-form {
@@ -5196,18 +5181,47 @@ footer p {
     align-items: center;
     gap: 8px;
     margin: 0; /* remove default spacing */
+    width: 100%;
   }
   
   /* Search Input styling */
   .network-search-input {
     width: 220px; /* adjust as needed */
-    padding: 8px 12px;
+    padding: 8px 10px;
     border: 1px solid #ccc;
     border-radius: 20px;
     font-size: 0.9rem;
     outline: none;
   }
+
+    
+  /* Search text input styling */
+  .network-search-input {
+    width: 240px;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    font-size: 0.9rem;
+    outline: none;
+  }
   
+  
+  .network-search-input {
+    border-radius: 20px!important;
+    border: none;
+    background-color: #ffffff !important;
+    color: #909090 !important;
+    font-size: 18px;
+    width: 300%;
+    margin-top: 13px;
+}
+
+.network-search-input::placeholder {
+    color: #909090;
+    opacity: 1;
+    /* Ensure the placeholder text is fully opaque */
+}
+
+
   /* "Search" button styling */
   .btn-search {
     background-color: #0B5F5D; /* modern teal-ish */
@@ -5273,17 +5287,7 @@ footer p {
     gap: 8px;
     margin: 0;
   }
-  
-  /* Search text input styling */
-  .network-search-input {
-    width: 240px;
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 0.9rem;
-    outline: none;
-  }
-  
+
   /* Make all three buttons look alike (round, blue border) */
   .btn-search, .btn-clear, .btn-filter {
     border: 1px solid #0073b1;   /* same color as your filter outline */

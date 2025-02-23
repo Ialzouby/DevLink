@@ -544,4 +544,15 @@ def remove_deleted_post_from_cache(sender, instance, **kwargs):
 
         cache.set(cache_key, json.dumps(cached_feed), timeout=300)
 
-
+@receiver(post_save, sender=Comment)
+def notify_project_owner_on_comment(sender, instance, created, **kwargs):
+    """
+    When a user comments on a project, notify the project owner.
+    """
+    if created and instance.user != instance.project.owner:  # Avoid self-notification
+        Notification.objects.create(
+            user=instance.project.owner,  # Project owner receives the notification
+            content=f"<a href='{reverse('profile', kwargs={'username': instance.user.username})}' class='username-link'>{instance.user.username}</a> commented on your project '<strong>{instance.project.title}</strong>'",
+            is_read=False,
+            timestamp=timezone.now()
+        )

@@ -5588,12 +5588,13 @@ footer p {
     display: block;
     text-decoration: none; /* Remove underline if desired */
     background-color: #e2e6ea;
+    border-radius: 12px;
 }
 
 .feed-project-snippet-link:hover {
     display: block;
     text-decoration: none; /* Remove underline if desired */
-    border-radius: 10px;
+    border-radius: 12px;
 }
 
 .feed-project-snippet-link:hover {

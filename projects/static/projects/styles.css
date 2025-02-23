@@ -1425,7 +1425,7 @@ textarea::placeholder {
 }
 
 .filter-btn:hover {
-    background-color: #1e7e34;
+    color: #0073b1;
 }
 
 .modal {
@@ -1555,12 +1555,13 @@ textarea::placeholder {
 }
 .filter-btn {
     padding: 10px 20px;
-    border: 1px solid #ffffff;
+    border: 1px solid #000000;
     background: #f9f9f9;
-    border-radius: 20px;
+    border-radius: 14px;
     cursor: pointer;
     flex: 1;
     text-align: center;
+    color:#000;
 }
 
 .filter-btn.active {
@@ -3648,17 +3649,18 @@ textarea::placeholder {
 }
 
 .notification-item {
-    background: #ddd;
+    background: #ffffff;
     padding: 15px;
-    border-radius: 4px;
+    border-radius: 8px;
     display: flex;
     flex-direction: column; /* Ensure content stacks vertically */
     justify-content: space-between;
     align-items: flex-start;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     margin-bottom: 10px;
     position: relative;
     min-height: 80px; /* Ensure enough space for timestamp placement */
+    border-color: #000;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Footer container to align timestamp & delete button */
@@ -3679,15 +3681,21 @@ textarea::placeholder {
     font-size: 0.8rem;
     text-align: left;
 }
+.notification-content p {
+    font-weight: 400;
+    font-size: 15.5px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
 
 /* New notifications page CSS by John-Luke */
 
 /* Ensure the main page layout pushes content to the right */
 .notifications-page-container {
-    background: #ffffff; /* Keep a clean background */
+    background: none; /* Keep a clean background */
     padding: 20px;
     border-radius: 8px;
-    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    
     display: flex;
     flex-direction: column;
     width: 70%;

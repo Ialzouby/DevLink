@@ -122,13 +122,14 @@
       </div>
 <!-- Likes & Comments Summary (Above the Footer) -->
 <div class="likes-comments-summary">
-  <span class="likes-section" onclick="openLikesPopup('{{ item.id }}')">
-      <i class="fas fa-thumbs-up like-icon"></i> {{ item.likes.count }} likes
-  </span>
-  <span class="comments-section" onclick="toggleAllComments('{{ item.id }}')">
-      {{ item.feed_comments.count }} comments
-  </span>
+    <span id="likes-count-{{ item.id }}" class="likes-section" onclick="openLikesPopup('{{ item.id }}')">
+        <i class="fas fa-thumbs-up like-icon"></i> <span>{{ item.likes.count }} likes</span>
+    </span>
+    <span id="comments-count-{{ item.id }}" class="comments-section" onclick="toggleAllComments('{{ item.id }}')">
+        <span>{{ item.feed_comments.count }} comments</span>
+    </span>
 </div>
+
 
 <!-- Likes Popup (Initially Hidden) -->
 <div id="likes-popup-{{ item.id }}" class="likes-popup">
@@ -149,16 +150,16 @@
 <!-- Feed Card Footer (Like, Comment, Repost, Send) -->
 <div class="feed-card-footer">
   <div class="feed-actions">
-      <form method="POST" action="{% url 'like_feed_item' item.id %}" class="like-form">
-          {% csrf_token %}
-          <button type="submit" class="action-btn like-btn">
-              {% if item.user_liked %}
-                  <i class="fas fa-thumbs-up liked-icon"></i> <span>Unlike ({{ item.likes.count }})</span>
-              {% else %}
-                  <i class="far fa-thumbs-up"></i> <span>Like</span>
-              {% endif %}
-          </button>
-      </form>
+    <form method="POST" action="{% url 'like_feed_item' item.id %}" class="like-form" data-post-id="{{ item.id }}">
+        {% csrf_token %}
+        <button type="submit" class="action-btn like-btn">
+            {% if item.user_liked %}
+                <i class="fas fa-thumbs-up liked-icon"></i> <span>Unlike ({{ item.likes.count }})</span>
+            {% else %}
+                <i class="far fa-thumbs-up"></i> <span>Like</span>
+            {% endif %}
+        </button>
+    </form>
 
       <button class="action-btn comment-toggle" onclick="toggleCommentSection(this)">
           <i class="far fa-comment"></i> Comment
@@ -178,8 +179,8 @@
       </div>
 
       <!-- Comment Input Box -->
-      <form method="POST" action="{% url 'comment_on_feed_item' item.id %}" class="comment-form">
-          {% csrf_token %}
+      <form method="POST" action="{% url 'comment_on_feed_item' item.id %}" class="comment-form" data-post-id="{{ item.id }}">
+        {% csrf_token %}
           <div class="comment-box">
             <img src="{% if user.userprofile.profile_picture %}{{ user.userprofile.profile_picture|safe }}{% elif user.userprofile.profile_picture_url %}{{ user.userprofile.profile_picture_url }}{% else %}https://via.placeholder.com/150{% endif %}" alt="{{ user.username }}" class="unique-profile-image">
             <input type="text" class="comment-input" name="content" placeholder="Add a comment..." oninput="toggleCommentButton(this)">
@@ -288,6 +289,82 @@
 
 <!-- JavaScript -->
 <script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+// AJAX for Liking a Post (Updates Likes Count)
+document.querySelectorAll(".like-form").forEach((form) => {
+    form.addEventListener("submit", function (event) {
+        event.preventDefault();  // Prevent page reload
+
+        const formData = new FormData(this);
+        const url = this.action;
+        const postId = this.dataset.postId;
+
+        fetch(url, {
+            method: "POST",
+            body: formData,
+            headers: {
+                "X-CSRFToken": formData.get("csrfmiddlewaretoken"),
+            },
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.liked) {
+                this.querySelector(".like-btn").innerHTML = `<i class="fas fa-thumbs-up liked-icon"></i> Unlike (${data.likes_count})`;
+            } else {
+                this.querySelector(".like-btn").innerHTML = `<i class="far fa-thumbs-up"></i> Like (${data.likes_count})`;
+            }
+
+            // ✅ Update Likes Count in Summary
+            document.querySelector(`#likes-count-${postId}`).textContent = `${data.likes_count} likes`;
+        })
+        .catch((error) => console.error("Error liking:", error));
+    });
+});
+
+// AJAX for Adding a Comment (Updates Comments Count)
+document.querySelectorAll(".comment-form").forEach((form) => {
+    form.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+        const url = this.action;
+        const postId = this.dataset.postId;
+        const commentInput = this.querySelector(".comment-input");
+        const commentText = commentInput.value.trim();
+
+        if (!commentText) return;
+
+        fetch(url, {
+            method: "POST",
+            body: formData,
+            headers: {
+                "X-CSRFToken": formData.get("csrfmiddlewaretoken"),
+            },
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.success) {
+                const commentSection = this.closest(".feed-card-footer").querySelector(".all-comments");
+                const newComment = document.createElement("div");
+                newComment.classList.add("single-comment");
+                newComment.innerHTML = `<strong>${data.comment.username}</strong>: ${data.comment.content}`;
+                
+                commentSection.appendChild(newComment);
+                commentInput.value = "";  // Clear input field
+                this.querySelector(".comment-submit-btn").disabled = true;
+
+                // ✅ Update Comments Count in Summary
+                document.querySelector(`#comments-count-${postId}`).textContent = `${data.comments_count} comments`;
+            }
+        })
+        .catch((error) => console.error("Error posting comment:", error));
+    });
+});
+
+});
+
 
     document.addEventListener("DOMContentLoaded", function () {
         document.querySelectorAll(".feed-link-preview").forEach(async (previewContainer) => {

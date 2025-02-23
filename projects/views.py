@@ -903,35 +903,63 @@ def fetch_link_metadata(request):
 # ----------------------------------------
 # FEED-ITEM LIKES & COMMENTS
 # ----------------------------------------
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
+from .models import FeedItem, FeedItemLike
+
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
+from .models import FeedItem, FeedItemComment, FeedItemLike
+
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
+from .models import FeedItem, FeedItemComment, FeedItemLike
+
 @login_required
 def like_feed_item(request, feed_item_id):
-    """
-    Toggle like on a feed item for the logged-in user.
-    If already liked, unlike it; else like it.
-    """
-    if request.method == 'POST':
+    """Handles liking and unliking a post."""
+    if request.method == "POST":
         feed_item = get_object_or_404(FeedItem, id=feed_item_id)
         existing_like = feed_item.likes.filter(user=request.user).first()
-        if existing_like:
-            existing_like.delete()  # user unlikes
-        else:
-            feed_item.likes.create(user=request.user)
-        return redirect('feed')  # or redirect back to next URL
-    return HttpResponseForbidden("Invalid request")
 
+        if existing_like:
+            existing_like.delete()  # Unlike
+            liked = False
+        else:
+            FeedItemLike.objects.create(user=request.user, feed_item=feed_item)
+            liked = True
+
+        return JsonResponse({
+            "liked": liked,
+            "likes_count": feed_item.likes.count(),  # ✅ Return updated like count
+            "comments_count": feed_item.feed_comments.count(),  # ✅ Return updated comment count
+        })
 
 @login_required
 def comment_on_feed_item(request, feed_item_id):
-    """
-    Post a comment on a feed item.
-    """
-    if request.method == 'POST':
+    """Handles adding a comment via AJAX."""
+    if request.method == "POST":
         feed_item = get_object_or_404(FeedItem, id=feed_item_id)
-        content = request.POST.get('content', '').strip()
+        content = request.POST.get("content", "").strip()
+
         if content:
-            feed_item.feed_comments.create(user=request.user, content=content)
-        return redirect('feed')  # or wherever you want to go after
-    return HttpResponseForbidden("Invalid request")
+            comment = FeedItemComment.objects.create(user=request.user, feed_item=feed_item, content=content)
+
+            return JsonResponse({
+                "success": True,
+                "comment": {
+                    "username": comment.user.username,
+                    "content": comment.content,
+                    "timestamp": comment.created_at.strftime("%b %d, %Y"),
+                },
+                "likes_count": feed_item.likes.count(),  # ✅ Keep likes count updated
+                "comments_count": feed_item.feed_comments.count(),  # ✅ Updated comments count
+            })
+    
+    return JsonResponse({"success": False, "error": "Comment cannot be empty"}, status=400)
 
 
 from django.shortcuts import render, get_object_or_404, redirect

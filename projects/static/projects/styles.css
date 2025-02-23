@@ -3776,7 +3776,7 @@ textarea::placeholder {
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
     height: fit-content;
     width: 20%;
-    max-width: 300px;
+    max-width: 200px;
     min-width: 200px;
 }
 
@@ -3982,9 +3982,10 @@ textarea::placeholder {
 }
 
 .project-container {
-    width: 100%;
-    max-width: 850px;
+    width: 90%;
+    max-width: 750px;
     margin: 0 auto;
+    margin-right: 10px;
     height: 100%;
 }
 
@@ -4694,13 +4695,17 @@ textarea {
     background-color: rgb(4, 92, 92);
 }
 
-
+.unique-project-item-links {
+    max-width: 90%;
+    max-width: 720px!important;
+}
 /* Project Items */
 .unique-project-item {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 15px;
-
+    max-width: 90%;
+    max-width: 720px!important;
     margin-bottom: 20px;
 
     align-items: flex-start;

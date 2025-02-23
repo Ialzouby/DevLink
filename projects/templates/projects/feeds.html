@@ -235,7 +235,7 @@
 
     <!-- 🔹 Recommended Projects (Fully Separate Block) -->
     <div class="recommended-projects-block">
-        <h3>Recommended Projects</h3>
+        <h3>Trending Projects 🚀</h3>
         <hr>
         {% if recommended_projects %}
             {% for project in recommended_projects %}
@@ -252,7 +252,8 @@
 
     <!-- 🔹 Recommended Users (Now a Fully Separate Block) -->
     <div class="recommended-users-block">
-        <h3>Recommended Users</h3>
+        <h3>Users You May Know 📩</h3>
+        <hr>
         {% if top_users %}
             <div class="recommended-users-list">
                 {% for user in top_users|slice:":3" %}  <!-- Only Top 3 Users -->

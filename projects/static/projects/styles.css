@@ -1904,27 +1904,69 @@ textarea::placeholder {
     display: inline-block;
     padding: 5px 10px;
     border-radius: 5px;
-    font-size: 14px;
+    font-size: 10px;
     font-weight: bold;
     color: #ffffff;
     margin-right: 5px;
 }
 
 .badge-topic {
-    background-color: #2e2e2e;
+    background-color: #fffdfd;
+    border: 2px solid #000000;
+    border-radius: 12px;
+}
+.badge-topic:hover {
+    background-color: #000000;
+    color: #ffffff;
 }
 
+.badge-topic span, p, h3, h4, h5, h6 {
+    color: rgb(87, 87, 87); /* Sets badge text color to black */
+}
+
+/* 🔹 Ensure all text inside the project item is black */
+.unique-project-item-link {
+    text-decoration: none; /* Remove underlines from links */
+    color: inherit; /* Inherit color from parent */
+}
+
+.unique-project-item {
+    color: rgb(87, 87, 87); /* Sets badge text color to black */
+}
+
+/* 🔹 Specific text elements */
+.unique-project-item .project-title,
+.unique-project-item .project-details-row span,
+.unique-project-item .project-description,
+.unique-project-item .posted-date {
+    color: rgb(87, 87, 87); /* Sets badge text color to black */
+}
+
+/* 🔹 Ensure badges are black (if necessary) */
+.badge-topic,
+.badge-closed,
+.badge-open,
+.badge-skills {
+    color: rgb(87, 87, 87); /* Sets badge text color to black */
+    border-radius: 12px;
+}
+
+
+
+
 .badge-open {
-    background-color: #35b951;
+    background-color: #ffffff;
+    border: 2px solid #35b951;
 }
 
 .badge-closed {
-    background-color: #d32f2f;
+    background-color: #ffffff;
+    border: 2px solid #d32f2f;
 }
 
 .badge-skills {
-    background-color: #2d9feb;
-    color: #ffffff;
+    background-color: #ffffff;
+    border: 2px solid #2d9feb;
 }
 
 .posted-date {
@@ -2192,7 +2234,7 @@ textarea::placeholder {
   }
   
   .feed-project-snippet {
-    background: #eaeaea;
+    background: #e2e6ea;
     border: 1px solid #eee;
     padding: 10px;
     border-radius: 6px;
@@ -3602,7 +3644,7 @@ textarea::placeholder {
 /* New project page notifications CSS by John-Luke */
 
 .unique-notifications-container {
-    width: 20vw;
+    width: 17vw;
     background-color: #ffffff;
     padding: 20px;
     border-radius: 5px;
@@ -3764,7 +3806,6 @@ textarea::placeholder {
     display: flex;
     justify-content: center; /* Center all content horizontally */
     gap: 20px; /* Optional: Space between sections (e.g., right sidebar) */
-    padding: 20px;
 }
 
 
@@ -3792,6 +3833,133 @@ textarea::placeholder {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
+/* 📌 Mobile: Adjust layout for screens smaller than 768px */
+@media (max-width: 768px) {
+    .unique-layout-container {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+    }
+
+    .unique-left-sidebar,
+    .unique-right-section {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .project-container {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .unique-project-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .search-and-add-container {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .search-form {
+        width: 100%;
+    }
+
+    .btn-filter {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .unique-right-sidebar,
+    .unique-notifications-container {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .search-and-add-container {
+        display: flex;
+        flex-direction: row; /* Ensures everything stays on the same line */
+        align-items: center; /* Aligns items vertically */
+        justify-content: space-between; /* Spreads out items */
+        flex-wrap: nowrap; /* Prevents items from stacking */
+        gap: 10px;
+        width: 100%;
+    }
+
+    .search-form {
+        flex-grow: 1; /* Allows search bar to expand */
+        display: flex;
+    }
+
+    .search-form input {
+        flex-grow: 1; /* Makes input take available space */
+        min-width: 120px;
+    }
+
+    .btn-filter,
+    .add-project-btn {
+        white-space: nowrap; /* Prevents text from breaking */
+        flex-shrink: 0; /* Ensures buttons don't shrink */
+    }
+}
+
+@media (max-width: 480px) {
+    .search-and-add-container {
+        gap: 5px;
+    }
+
+    .search-form input {
+        font-size: 14px;
+        padding: 6px;
+    }
+
+    .btn-filter,
+    .add-project-btn {
+        font-size: 14px;
+        padding: 8px;
+    }
+}
+
+
+/* 📌 Small Mobile Devices: Further adjust layout for screens smaller than 480px */
+@media (max-width: 480px) {
+    .project-title {
+        font-size: 16px;
+    }
+
+    .badge {
+        font-size: 10px;
+        padding: 4px 8px;
+    }
+
+    .search-form input {
+        font-size: 14px;
+        padding: 6px;
+    }
+
+    .search-btn {
+        padding: 6px 10px;
+    }
+
+    .unique-project-item {
+        padding: 10px;
+        border-radius: 12px;
+    }
+
+    .notification-content p {
+        font-size: 12px;
+    }
+
+    .delete-btn {
+        font-size: 12px;
+    }
+}
+
+
 .page-container {
     flex: 1;
     display: flex;
@@ -3799,6 +3967,7 @@ textarea::placeholder {
     padding: 40px 20px;
     margin: 0 auto;
     width: 100%;
+    margin-bottom: -20px!important;
 }
 
 
@@ -3831,7 +4000,7 @@ textarea::placeholder {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
-    margin-bottom: 20px;
+
 }
 
 .project-description h3 {
@@ -4538,6 +4707,7 @@ textarea {
     box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     min-height: 160px; /* Adjusted height */
+    border: 1px solid #c5c4c4;
 }
 
 #message-thread {
@@ -4644,19 +4814,20 @@ p {
    .unique-right-section {
     display: flex;
     flex-direction: column; /* Stack Top Contributors above Notifications */
-    width: 20vw; /* Ensure it fits the sidebar width */
+    width: 17vw; /* Ensure it fits the sidebar width */
 }
 
 .unique-right-sidebar {
-    width: 20vw;
+    width: 17vw;
     background-color: #ffffff;
     padding: 20px;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    height:10%;
+    height:11%;
     align-self: flex-start;
+    padding-bottom: 20px!important;
 }
 
 .unique-right-sidebar h3 {
@@ -4673,6 +4844,7 @@ p {
     border: 1px solid #ccc;
     border-radius: 8px;
     background-color: #ffffff; /* Light background for contrast */
+    padding-bottom: 20px!important;
 }
 
 
@@ -5213,10 +5385,11 @@ footer p {
   
   /* 🔸 Recommended Projects Block */
   .recommended-projects-block {
-    background: #eaeaea;
+    background: #ffffff;
     border-radius: 10px;
     padding: 15px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #CCCCCC;
   }
   
   .recommended-projects-block h3 {
@@ -5227,14 +5400,14 @@ footer p {
   }
   
   .recommended-project {
-    background: #f8f9fa;
+    background: #e2e6ea;
     border-radius: 8px;
     padding: 10px;
     transition: all 0.3s ease;
   }
   
   .recommended-project:hover {
-    background: #e2e6ea;
+    background: #DCE8ED;
   }
   
   .project-title {
@@ -5266,10 +5439,12 @@ footer p {
   
   /* 🔸 Recommended Users Block */
   .recommended-users-block {
-    background: #eaeaea;
+    background: #ffffff;
     border-radius: 10px;
     padding: 15px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #cccccc;
+
   }
   
   .recommended-users-block h3 {
@@ -5290,7 +5465,7 @@ footer p {
 .recommended-user-card {
     display: flex;
     align-items: center;     /* Ensures image & text are on the same line */
-    background: #f8f9fa;
+    background: #e2e6ea;
     border-radius: 8px;
     padding: 10px;
     margin-bottom: 10px;
@@ -5300,7 +5475,7 @@ footer p {
   }
   
   .recommended-user-card:hover {
-    background: #e2e6ea;
+    background: #DCE8ED;
     transform: scale(1.02);
     text-decoration: none; /* Remove underlines from text */
 }
@@ -5412,7 +5587,7 @@ footer p {
 .feed-project-snippet-link {
     display: block;
     text-decoration: none; /* Remove underline if desired */
-    color: inherit; /* Inherit text color */
+    background-color: #e2e6ea;
 }
 
 .feed-project-snippet-link:hover {
@@ -5427,7 +5602,7 @@ footer p {
 }
 
 .feed-project-snippet:hover {
-    background-color: #818181; /* Change this to your desired color */
+    background-color: #aaa; /* Change this to your desired color */
     transition: background-color 0.3s ease; /* Optional: smooth transition */
 }
 
@@ -5459,7 +5634,7 @@ footer p {
 
 
 .unique-left-sidebar {
-    width: 20vw;
+    width: 20vw!important;
    
     padding: 20px;
     border-radius: 5px;
@@ -5472,7 +5647,7 @@ footer p {
 }
 
 .unique-left-sidebar {
-    width: 20vw;
+    width: 20vw!important;
    
     padding: 20px;
     border-radius: 5px;
@@ -5512,6 +5687,7 @@ footer p {
     border: 1px solid #ccc;
     border-radius: 8px;
     background-color: #ffffff; /* Light background for contrast */
+    width: 17vw;
 }
 
 .training-sidebar-title, .unique-left-sidebar h3 {
@@ -6573,7 +6749,7 @@ select.form-control,
         padding: 10px;
         margin-bottom: 10px;
         border: 1px solid #ddd;
-        border-radius: 4px;
+        border-radius: 12px;
     }
 
     .unique-project-header {

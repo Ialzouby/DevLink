@@ -68,20 +68,21 @@
             </div>
 
             <!-- Comment Box -->
-            <div class="comment-box">
-                <!-- Display Comments -->
+            <div class="project-comment-box">
+                <!-- Header -->
                 <h4>Comments</h4>
-                <div class="comments">
+
+                <!-- Comments List -->
+                <div class="project-comments">
                     {% for comment in comments %}
-                        <div class="comment">
+                        <div class="project-comment">
                             <div class="comment-header">
                                 <a href="{% url 'profile' comment.user.username %}">
                                     <img src="{{ comment.user.userprofile.profile_picture|safe }}" alt="{{ comment.user.username }}" class="contributor-pic">
                                 </a>
                                 <p class="comment-username"><strong>{{ comment.user.username }}</strong> ({{ comment.created_at|timesince }} ago)</p>
                                 {% if comment.user == request.user %}
-                                    <!-- Delete button for user's own comment -->
-                                    <form action="{% url 'comment-delete' comment.id %}" method="post" style="display:inline;">
+                                    <form action="{% url 'comment-delete' comment.id %}" method="post">
                                         {% csrf_token %}
                                         <button type="submit" class="delete-btn">Delete</button>
                                     </form>
@@ -93,16 +94,17 @@
                         <p>No comments yet.</p>
                     {% endfor %}
                 </div>
-
-                <!-- Comment Input Section -->
-                <div class="comment-input">
+                
+                <!-- Comment Input Box -->
+                <div class="project-comment-input">
                     <h5>Leave a Comment</h5>
                     <form action="" method="post">
                         {% csrf_token %}
-                        <textarea name="comment" rows="4" placeholder="Type a comment..."></textarea>
+                        <textarea name="project-comment" rows="4" placeholder="Type a comment..."></textarea>
                         <button type="submit">Post Comment</button>
                     </form>
                 </div>
+
             </div>
         </div>
 

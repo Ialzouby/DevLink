@@ -7472,10 +7472,13 @@ select.form-control,
 }
 
 .live-update-item {
+    display: flex;
+    justify-content: space-between; /* Pushes update-time to the right */
+    align-items: center; /* Keeps everything aligned */
     background-color: #f9f9f9; /* Light background for each update */
     border: 1px solid #ddd; /* Light border */
     border-radius: 4px; /* Rounded corners */
-    padding: 10px; /* Padding inside each item */
+    padding: 15px; /* Padding inside each item */
     margin-bottom: 10px; /* Space between items */
     font-size: 14px; /* Font size */
     color: #333; /* Text color */
@@ -7484,7 +7487,7 @@ select.form-control,
 .update-time {
     font-size: 12px; /* Smaller font for time */
     color: #888; /* Lighter color for time */
-    float: right; /* Align time to the right */
+    white-space: nowrap; /* Prevents wrapping to a new line */
 }
 
 

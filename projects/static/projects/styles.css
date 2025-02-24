@@ -1339,8 +1339,8 @@ textarea {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    background-color: #333;
-    color: #f1f1f1;
+    background-color: #f1f1f1;
+    color: #000;
     margin-bottom: 15px;
 }
 
@@ -3349,11 +3349,74 @@ textarea::placeholder {
 }
 
 
+/* Project comments section styling */
+.project-comment-box {
+    width: 100%;
+    max-width: 820px; /* Adjust width as needed */
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
 
+.project-comments {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 300px; /* Limits height and makes scrolling available */
+    overflow-y: auto;
+    padding-right: 5px;
+}
 
+.project-comment {
+    background-color: #f8f8f8;
+    padding: 10px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border: 1px solid #ccc;
+}
 
+.project-comment-input {
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #ddd;
+}
 
-  .competitions-container {
+.project-comment-input h5 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.project-comment-input textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    background-color: #f8f8f8;
+    color: #000;
+}
+
+.project-comment-input button {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background-color: #007373ff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.project-comment-input button:hover {
+    background-color: #0056b3;
+}
+
+.competitions-container {
     max-width: 900px;
     margin: auto;
     padding: 20px;
@@ -7515,10 +7578,13 @@ select.form-control,
 }
 
 .live-update-item {
+    display: flex;
+    justify-content: space-between; /* Pushes update-time to the right */
+    align-items: center; /* Keeps everything aligned */
     background-color: #f9f9f9; /* Light background for each update */
     border: 1px solid #ddd; /* Light border */
     border-radius: 4px; /* Rounded corners */
-    padding: 10px; /* Padding inside each item */
+    padding: 15px; /* Padding inside each item */
     margin-bottom: 10px; /* Space between items */
     font-size: 14px; /* Font size */
     color: #333; /* Text color */
@@ -7527,7 +7593,7 @@ select.form-control,
 .update-time {
     font-size: 12px; /* Smaller font for time */
     color: #888; /* Lighter color for time */
-    float: right; /* Align time to the right */
+    white-space: nowrap; /* Prevents wrapping to a new line */
 }
 
 

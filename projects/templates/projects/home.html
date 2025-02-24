@@ -239,4 +239,78 @@
 
     
 </div>
+
+<style>
+    @media (max-width: 768px) {
+    /* Ensure container does not exceed screen width */
+    .project-container {
+        width: 100% !important; 
+        max-width: 100% !important;
+        padding: 10px !important; /* Adjust padding */
+        margin: 0 auto !important; /* Centering */
+    }
+
+    /* ✅ Make project cards fully responsive */
+    .unique-project-item {
+        width: 100% !important; /* Ensure it does not overflow */
+        max-width: 95% !important; /* Keep spacing */
+        padding: 12px !important;
+        margin: 10px auto !important; /* Centering */
+        box-sizing: border-box !important; /* Fix potential overflow */
+    }
+
+    /* ✅ Reduce spacing for better fit */
+    .project-details-row {
+        flex-wrap: wrap !important;
+        gap: 4px !important;
+        font-size: 14px !important;
+    }
+
+    .badge {
+        font-size: 12px !important;
+        padding: 5px 8px !important;
+    }
+
+    .project-description {
+        font-size: 14px !important;
+        line-height: 1.4 !important;
+    }
+
+    .posted-date {
+        font-size: 12px !important;
+    }
+
+    /* ✅ Reduce search bar size */
+    .project-search-bar {
+        width: 80% !important; /* Reduce width */
+        font-size: 14px !important;
+        padding: 6px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .unique-project-item {
+        width: 100% !important;
+        max-width: 95% !important;
+        padding: 10px !important;
+        font-size: 13px !important;
+    }
+
+    .project-details-row {
+        font-size: 12px !important;
+        gap: 3px !important;
+    }
+
+    .badge {
+        font-size: 11px !important;
+        padding: 4px 6px !important;
+    }
+
+    .project-description {
+        font-size: 13px !important;
+        line-height: 1.3 !important;
+    }
+}
+
+</style>
 {% endblock %}

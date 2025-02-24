@@ -11,7 +11,7 @@
     <script src="https://accounts.google.com/gsi/client" async defer></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="icon" href="/static/projects/images/original-logo.png" type="image/x-icon">
+    <link rel="icon" href="{% static 'projects/images/original-logo.png' %}" type="image/x-icon">
     <link rel="manifest" href="{% static 'manifest.json' %}">
 
     <!-- Bootstrap CSS -->
@@ -140,7 +140,7 @@
         {% endblock %}
     </div>
 
-    <!-- Full-Screen Mobile Menu -->
+<!-- Full-Screen Mobile Menu -->
 <div class="mobile-nav-overlay" id="mobileNavOverlay">
     <div class="mobile-nav-content">
         <!-- Close Button -->
@@ -151,7 +151,7 @@
             <img src="{% if user.userprofile.profile_picture %}{{ user.userprofile.profile_picture|safe }}{% else %}https://via.placeholder.com/150{% endif %}" 
                  alt="{{ user.username }}" class="mobile-profile-image">
             <h4>{{ user.first_name }} {{ user.last_name }}</h4>
-            <p>{{ user.userprofile.grade_level }} studying {{ user.userprofile.concentration }}</p>
+            <p>{{ user.userprofile.grade_level }} | {{ user.userprofile.concentration }}</p>
             <a href="{% if user.is_authenticated %}{% url 'profile' user.username %}{% else %}#{% endif %}" class="mobile-profile-view-button">View Profile</a>
         </div>
 
@@ -161,18 +161,21 @@
             <li><a href="{% url 'network' %}"><i class="fa fa-users"></i> Network</a></li>
             <li><a href="{% url 'active_conversations' %}"><i class="fa fa-comments"></i> Messaging</a></li>
             <li><a href="{% url 'notifications_view' %}"><i class="fa fa-bell"></i> Notifications</a></li>
+            <li><a href="{% url 'projects' %}"><i class="fa fa-folder"></i> Projects</a></li> <!-- ✅ Added -->
+            <li><a href="{% url 'training' %}"><i class="fa fa-chalkboard-teacher"></i> Training</a></li> <!-- ✅ Added -->
             <li><a href="{% url 'edit_profile' %}"><i class="fa fa-user-edit"></i> Edit Profile</a></li>
-            <li><a href="{% url 'settings' %}"><i class="fa fa-cog"></i> Settings & Privacy</a></li>
+            <li><a href="{% url 'settings' %}"><i class="fa fa-cog"></i> Settings</a></li>
             <li><a href="{% url 'help' %}"><i class="fa fa-question-circle"></i> Help</a></li>
         </ul>
 
-        <!-- Logout -->
+        <!-- Logout Button -->
         <form method="POST" action="{% url 'account_logout' %}">
             {% csrf_token %}
             <button type="submit" class="mobile-logout-button">Sign Out</button>
         </form>
     </div>
 </div>
+
 
     {% block footer %}
     <!-- Footer -->
@@ -182,10 +185,179 @@
 
     
     {% endblock %}
+    <style>
+
+/* 🔹 Mobile Navigation Overlay */
+.mobile-nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8); /* Dark semi-transparent */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+}
+
+/* 🔹 Mobile Navigation Container */
+.mobile-nav-content {
+    background: #ffffff;
+    width: 85%;
+    max-width: 400px;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    position: relative;
+}
+
+/* 🔹 Close Button */
+.close-btn {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #333;
+}
+
+/* 🔹 Profile Section */
+.mobile-profile-section {
+    text-align: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.mobile-profile-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 8px;
+}
+
+.mobile-profile-view-button {
+    display: inline-block;
+    background: #007bff;
+    color: #fff;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-top: 8px;
+    text-decoration: none;
+}
+
+/* 🔹 Mobile Nav Links */
+.mobile-nav-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 15px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* ✅ Fits more links */
+    gap: 8px;
+}
+
+.mobile-nav-list li a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f9fa;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+.mobile-nav-list li a i {
+    margin-right: 6px;
+    font-size: 16px;
+    color: #007bff;
+}
+
+.mobile-nav-list li a:hover {
+    background: #007bff;
+    color: #fff;
+}
+
+/* 🔹 Logout Button */
+.mobile-logout-button {
+    width: 100%;
+    background: #dc3545;
+    color: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 10px;
+    transition: background 0.3s ease;
+}
+
+.mobile-logout-button:hover {
+    background: #b02a37;
+}
+
+/* 🔹 Mobile Menu Open State */
+.mobile-nav-overlay.active {
+    transform: translateX(0);
+}
+
+/* 🔹 Mobile Responsive Adjustments */
+@media (max-width: 500px) {
+    .mobile-nav-content {
+        width: 90%;
+        max-width: 350px;
+    }
+}
+
+@media (max-width: 380px) {
+    .mobile-nav-list {
+        grid-template-columns: repeat(1, 1fr); /* Stack links */
+    }
+}
+
+.mobile-profile-section h4, .mobile-profile-section p {
+    color: #000000 !important;
+}
+
+
+    </style>
 
     <script src="{% static 'projects/scripts.js' %}">
     </script>
 <script>
+
+document.addEventListener("DOMContentLoaded", function () {
+    const hamburger = document.getElementById("hamburgerMenu");
+    const mobileNav = document.getElementById("mobileNavOverlay");
+    const closeBtn = document.getElementById("closeMobileNav");
+
+    // Show mobile menu when hamburger is clicked
+    hamburger.addEventListener("click", function () {
+        mobileNav.classList.add("active");
+    });
+
+    // Hide mobile menu when close button is clicked
+    closeBtn.addEventListener("click", function () {
+        mobileNav.classList.remove("active");
+    });
+
+    // Close menu if clicked outside the menu content
+    mobileNav.addEventListener("click", function (event) {
+        if (event.target === mobileNav) {
+            mobileNav.classList.remove("active");
+        }
+    });
+});
+
+
     document.addEventListener("DOMContentLoaded", function () {
         const hamburger = document.getElementById("hamburgerMenu");
         const mobileNav = document.getElementById("mobileNavOverlay");

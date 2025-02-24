@@ -2058,6 +2058,112 @@ textarea::placeholder {
     gap: 20px;
   }
   
+@media (max-width: 768px) {
+    .feed-main-section {
+        margin-top: 20px;
+    }
+}
+
+/* 📱 Mobile Styling for Notifications Page */
+@media (max-width: 768px) {
+    /* Hide left sidebar on mobile */
+    .notifications-sidebar-left {
+        display: none;
+    }
+
+    /* Make notifications page full-width */
+    .notifications-page-container {
+        padding: 10px;
+    }
+
+    /* Adjust filter buttons */
+    .notifications-filters {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 6px;
+        padding: 8px;
+    }
+
+    .filter-btn {
+        font-size: 12px;
+        padding: 6px 10px;
+        border-radius: 5px;
+    }
+
+    /* Adjust notification items */
+    .notification-item {
+        padding: 12px;
+        border-radius: 8px;
+        margin-bottom: 8px;
+        position: relative;
+    }
+
+    /* Profile picture size */
+    .notification-user-link .avatar-img {
+        width: 35px;
+        height: 35px;
+    }
+
+    /* Adjust text sizes */
+    .notification-content p {
+        font-size: 13px;
+    }
+
+    .notification-timestamp {
+        font-size: 11px;
+    }
+
+    /* More options button */
+    .more-options-btn {
+        font-size: 16px;
+    }
+
+    /* More options dropdown */
+    .more-options {
+        top: 25px;
+        right: 8px;
+    }
+
+    .delete-btn {
+        font-size: 12px;
+        padding: 5px 10px;
+    }
+    .notification-item, .notifications-list, .page-container, .notifications-page-container{
+        max-width: 1200px!important;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Further compact styles for very small screens */
+    .filter-btn {
+        font-size: 10px;
+        padding: 5px 8px;
+    }
+
+    .notification-item {
+        padding: 8px;
+    }
+
+    .notification-user-link .avatar-img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .notification-content p {
+        font-size: 12px;
+    }
+
+    .notification-timestamp {
+        font-size: 10px;
+    }
+
+    .more-options-btn {
+        font-size: 14px;
+    }
+}
+
+
   .feed-header-row {
     display: flex;
     align-items: center;
@@ -7532,7 +7638,7 @@ select.form-control,
     width: 100%; /* ⬅ Ensure it stretches fully */
     max-width: 1600px; /* ⬅ Proper max width */
     margin: auto;
-    margin-left: 150px;
+    margin-left: 70px;
 }
 
 

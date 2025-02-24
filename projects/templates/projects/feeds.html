@@ -287,6 +287,75 @@
 
 </div>
 
+<style>
+
+/* Fullscreen Dark Overlay */
+.modal {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: rgba(0, 0, 0, 0.5) !important; /* Semi-transparent background */
+    align-items: center !important;
+    justify-content: center !important;
+    z-index: 1000 !important;
+    transition: opacity 0.3s ease !important; /* Smooth fade-in */
+}
+
+/* Modal Content Box */
+.modal-content {
+    background: white !important;
+    padding: 20px !important;
+    border-radius: 10px !important;
+    width: 40vw !important; /* Make width dynamic */
+    max-width: 500px !important; /* Limit max width */
+    min-width: 280px !important; /* Ensure it doesn't get too small */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2) !important;
+    transition: all 0.3s ease-in-out !important; /* Smooth scaling */
+    margin-top: 15% !important;
+    margin-right: 0px !important;
+    margin-left: 29% !important;
+}
+
+/* Close Button */
+.close-btn {
+    position: absolute !important;
+    top: 10px !important;
+    right: 15px !important;
+    font-size: 24px !important;
+    cursor: pointer !important;
+    color: #333 !important;
+}
+
+/* Make it Adjust Dynamically on Small Screens */
+@media (max-width: 900px) {
+    .modal-content {
+        width: 60vw !important; /* Takes 60% of screen width */
+        max-width: 400px !important;
+    }
+}
+
+@media (max-width: 600px) {
+    .modal-content {
+        width: 80vw !important; /* Takes 80% of screen width */
+        max-width: 350px !important;
+        padding: 15px !important; /* Reduce padding */
+    }
+}
+
+/* Ensure it's Always in the Center */
+@media (max-width: 400px) {
+    .modal-content {
+        width: 90vw !important;
+        max-width: 300px !important;
+    }
+}
+
+
+
+</style>
+
 <!-- JavaScript -->
 <script>
 

@@ -181,6 +181,156 @@
 </div>
 
 
+<style>
+    /* 📱 Mobile Styling for Training Page */
+@media (max-width: 768px) {
+    /* Hide the sidebar on mobile */
+    .training-sidebar {
+        display: none;
+    }
+    .training-container{
+        margin-left: 0px !important;
+    }
+
+    /* Ensure the main feed takes up full width */
+    .training-main-feed {
+        width: 100%;
+        max-width: 100%;
+        padding: 10px;
+    }
+
+    /* ✅ Adjust post card layout */
+    .training-post-card {
+        width: 100%;
+        max-width: 95%;
+        padding: 12px;
+        margin: 10px auto;
+        border-radius: 8px;
+        box-sizing: border-box;
+    }
+
+    /* ✅ Make user info and avatars fit */
+    .training-post-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .training-user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
+
+    .training-user-info {
+        font-size: 14px;
+    }
+
+    /* ✅ Reduce text size for better fit */
+    .training-post-title {
+        font-size: 16px;
+        margin-top: 5px;
+    }
+
+    .training-post-content {
+        font-size: 14px;
+        line-height: 1.4;
+        word-wrap: break-word;
+    }
+
+    /* ✅ Adjust button sizes */
+    .training-like-btn, .training-comment-toggle {
+        font-size: 14px;
+        padding: 6px 10px;
+    }
+
+    /* ✅ Make the comments section readable */
+    .training-comments-section {
+        font-size: 13px;
+    }
+
+    .training-comment {
+        font-size: 13px;
+        padding: 6px;
+    }
+
+    .training-comment-input {
+        font-size: 14px;
+        padding: 6px;
+    }
+
+    /* ✅ Responsive dropdown */
+    .training-menu-dropdown {
+        width: 120px;
+        font-size: 13px;
+    }
+
+    /* ✅ Ensure link preview fits */
+    .training-link-preview {
+        width: 100%;
+        max-width: 95%;
+    }
+
+    .training-preview-img {
+        width: 100%;
+        max-height: 150px;
+    }
+
+    /* ✅ Popup forms */
+    .training-popup-content {
+        width: 90%;
+        max-width: 350px;
+        padding: 15px;
+    }
+
+    .training-popup-input, .training-popup-textarea {
+        font-size: 14px;
+    }
+
+    /* ✅ Reduce new post button size */
+    .training-new-post-btn {
+        font-size: 14px;
+        padding: 6px 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Further compact layout for small screens */
+    .training-post-card {
+        max-width: 90%;
+        padding: 10px;
+    }
+
+    .training-post-title {
+        font-size: 14px;
+    }
+
+    .training-post-content {
+        font-size: 13px;
+    }
+
+    .training-like-btn, .training-comment-toggle {
+        font-size: 13px;
+        padding: 5px 8px;
+    }
+
+    .training-user-avatar {
+        width: 35px;
+        height: 35px;
+    }
+
+    .training-comment {
+        font-size: 12px;
+    }
+
+    .training-popup-content {
+        max-width: 300px;
+        padding: 10px;
+    }
+}
+
+</style>
 
 <!-- ✅ JavaScript -->
 <script>

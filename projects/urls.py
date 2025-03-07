@@ -4,7 +4,7 @@ from .views import (
 register, profile, network, landing_page, feed_view, like_feed_item,
 comment_on_feed_item, help_page,settings_page, delete_account, training,
 add_post, add_comment, like_post, add_skill, endorse_skill, delete_training_post, edit_training_post,
-fetch_link_metadata,
+fetch_link_metadata, search_users2, start_chat, get_messages, send_message,
 )
 from django.contrib.auth import views as auth_views
 from django.conf import settings
@@ -75,6 +75,10 @@ path('messaging/', views.active_conversations, name='active_conversations'),
     path('conversations/', views.active_conversations, name='active_conversations'),
     path('conversations/<int:chat_id>/messages/', views.load_chat_messages, name='load_chat_messages'),
     path('conversations/<int:chat_id>/send/', views.send_message, name='send_message'),
+    path('search_users2/', search_users2, name='search_users2'),
+    path('start_chat/', start_chat, name='start_chat'),  # For starting a chat
+        path('get_messages/<int:chat_id>/', get_messages, name='get_messages'),
+    path('send_message/', send_message, name='send_message'),
 
     # --------------------------------------------------
     # Notifications

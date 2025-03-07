@@ -1339,8 +1339,8 @@ textarea {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    background-color: #333;
-    color: #f1f1f1;
+    background-color: #f1f1f1;
+    color: #000;
     margin-bottom: 15px;
 }
 
@@ -1425,9 +1425,13 @@ textarea::placeholder {
 }
 
 .filter-btn:hover {
-    background-color: #1e7e34;
+    color: #0073b1;
 }
 
+.modal {
+    justify-content: center;
+    align-items: center;
+}
 /* Filter Modal */
 .filter-modal {
     display: none; /* Hidden by default */
@@ -1551,12 +1555,13 @@ textarea::placeholder {
 }
 .filter-btn {
     padding: 10px 20px;
-    border: 1px solid #ffffff;
+    border: 1px solid #000000;
     background: #f9f9f9;
-    border-radius: 20px;
+    border-radius: 14px;
     cursor: pointer;
     flex: 1;
     text-align: center;
+    color:#000;
 }
 
 .filter-btn.active {
@@ -1756,7 +1761,6 @@ textarea::placeholder {
     width: 100%;
     max-width: 1200px;  /* Adjust as needed */
     margin: auto;
-    padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1899,27 +1903,69 @@ textarea::placeholder {
     display: inline-block;
     padding: 5px 10px;
     border-radius: 5px;
-    font-size: 14px;
+    font-size: 10px;
     font-weight: bold;
     color: #ffffff;
     margin-right: 5px;
 }
 
 .badge-topic {
-    background-color: #2e2e2e;
+    background-color: #fffdfd;
+    border: 2px solid #000000;
+    border-radius: 12px;
+}
+.badge-topic:hover {
+    background-color: #000000;
+    color: #ffffff;
 }
 
+.badge-topic span, p, h3, h4, h5, h6 {
+    color: rgb(87, 87, 87); /* Sets badge text color to black */
+}
+
+/* 🔹 Ensure all text inside the project item is black */
+.unique-project-item-link {
+    text-decoration: none; /* Remove underlines from links */
+    color: inherit; /* Inherit color from parent */
+}
+
+.unique-project-item {
+    color: rgb(87, 87, 87); /* Sets badge text color to black */
+}
+
+/* 🔹 Specific text elements */
+.unique-project-item .project-title,
+.unique-project-item .project-details-row span,
+.unique-project-item .project-description,
+.unique-project-item .posted-date {
+    color: rgb(87, 87, 87); /* Sets badge text color to black */
+}
+
+/* 🔹 Ensure badges are black (if necessary) */
+.badge-topic,
+.badge-closed,
+.badge-open,
+.badge-skills {
+    color: rgb(87, 87, 87); /* Sets badge text color to black */
+    border-radius: 12px;
+}
+
+
+
+
 .badge-open {
-    background-color: #35b951;
+    background-color: #ffffff;
+    border: 2px solid #35b951;
 }
 
 .badge-closed {
-    background-color: #d32f2f;
+    background-color: #ffffff;
+    border: 2px solid #d32f2f;
 }
 
 .badge-skills {
-    background-color: #2d9feb;
-    color: #ffffff;
+    background-color: #ffffff;
+    border: 2px solid #2d9feb;
 }
 
 .posted-date {
@@ -2012,6 +2058,112 @@ textarea::placeholder {
     gap: 20px;
   }
   
+@media (max-width: 768px) {
+    .feed-main-section {
+        margin-top: 20px;
+    }
+}
+
+/* 📱 Mobile Styling for Notifications Page */
+@media (max-width: 768px) {
+    /* Hide left sidebar on mobile */
+    .notifications-sidebar-left {
+        display: none;
+    }
+
+    /* Make notifications page full-width */
+    .notifications-page-container {
+        padding: 10px;
+    }
+
+    /* Adjust filter buttons */
+    .notifications-filters {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 6px;
+        padding: 8px;
+    }
+
+    .filter-btn {
+        font-size: 12px;
+        padding: 6px 10px;
+        border-radius: 5px;
+    }
+
+    /* Adjust notification items */
+    .notification-item {
+        padding: 12px;
+        border-radius: 8px;
+        margin-bottom: 8px;
+        position: relative;
+    }
+
+    /* Profile picture size */
+    .notification-user-link .avatar-img {
+        width: 35px;
+        height: 35px;
+    }
+
+    /* Adjust text sizes */
+    .notification-content p {
+        font-size: 13px;
+    }
+
+    .notification-timestamp {
+        font-size: 11px;
+    }
+
+    /* More options button */
+    .more-options-btn {
+        font-size: 16px;
+    }
+
+    /* More options dropdown */
+    .more-options {
+        top: 25px;
+        right: 8px;
+    }
+
+    .delete-btn {
+        font-size: 12px;
+        padding: 5px 10px;
+    }
+    .notification-item, .notifications-list, .page-container, .notifications-page-container{
+        max-width: 1200px!important;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Further compact styles for very small screens */
+    .filter-btn {
+        font-size: 10px;
+        padding: 5px 8px;
+    }
+
+    .notification-item {
+        padding: 8px;
+    }
+
+    .notification-user-link .avatar-img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .notification-content p {
+        font-size: 12px;
+    }
+
+    .notification-timestamp {
+        font-size: 10px;
+    }
+
+    .more-options-btn {
+        font-size: 14px;
+    }
+}
+
+
   .feed-header-row {
     display: flex;
     align-items: center;
@@ -2187,7 +2339,7 @@ textarea::placeholder {
   }
   
   .feed-project-snippet {
-    background: #eaeaea;
+    background: #e2e6ea;
     border: 1px solid #eee;
     padding: 10px;
     border-radius: 6px;
@@ -2565,8 +2717,20 @@ textarea::placeholder {
     border-radius: 8px;
     padding: 20px;
     position: relative;
+    justify-content: center!important;
+    align-items: center!important;
   }
   
+  .modal-content {
+    position: fixed;
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    margin-left: 37%;
+    margin-top: 25%;
+}
+
+
   .modal-content h3 {
     margin-top: 0;
   }
@@ -3185,11 +3349,74 @@ textarea::placeholder {
 }
 
 
+/* Project comments section styling */
+.project-comment-box {
+    width: 100%;
+    max-width: 820px; /* Adjust width as needed */
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
 
+.project-comments {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 300px; /* Limits height and makes scrolling available */
+    overflow-y: auto;
+    padding-right: 5px;
+}
 
+.project-comment {
+    background-color: #f8f8f8;
+    padding: 10px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border: 1px solid #ccc;
+}
 
+.project-comment-input {
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #ddd;
+}
 
-  .competitions-container {
+.project-comment-input h5 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.project-comment-input textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    background-color: #f8f8f8;
+    color: #000;
+}
+
+.project-comment-input button {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background-color: #007373ff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.project-comment-input button:hover {
+    background-color: #0056b3;
+}
+
+.competitions-container {
     max-width: 900px;
     margin: auto;
     padding: 20px;
@@ -3585,7 +3812,7 @@ textarea::placeholder {
 /* New project page notifications CSS by John-Luke */
 
 .unique-notifications-container {
-    width: 20vw;
+    width: 17vw;
     background-color: #ffffff;
     padding: 20px;
     border-radius: 5px;
@@ -3632,17 +3859,18 @@ textarea::placeholder {
 }
 
 .notification-item {
-    background: #ddd;
+    background: #ffffff;
     padding: 15px;
-    border-radius: 4px;
+    border-radius: 8px;
     display: flex;
     flex-direction: column; /* Ensure content stacks vertically */
     justify-content: space-between;
     align-items: flex-start;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     margin-bottom: 10px;
     position: relative;
     min-height: 80px; /* Ensure enough space for timestamp placement */
+    border-color: #000;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Footer container to align timestamp & delete button */
@@ -3663,15 +3891,21 @@ textarea::placeholder {
     font-size: 0.8rem;
     text-align: left;
 }
+.notification-content p {
+    font-weight: 400;
+    font-size: 15.5px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
 
 /* New notifications page CSS by John-Luke */
 
 /* Ensure the main page layout pushes content to the right */
 .notifications-page-container {
-    background: #ffffff; /* Keep a clean background */
+    background: none; /* Keep a clean background */
     padding: 20px;
     border-radius: 8px;
-    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    
     display: flex;
     flex-direction: column;
     width: 70%;
@@ -3710,7 +3944,7 @@ textarea::placeholder {
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
     height: fit-content;
     width: 20%;
-    max-width: 300px;
+    max-width: 200px;
     min-width: 200px;
 }
 
@@ -3740,7 +3974,6 @@ textarea::placeholder {
     display: flex;
     justify-content: center; /* Center all content horizontally */
     gap: 20px; /* Optional: Space between sections (e.g., right sidebar) */
-    padding: 20px;
 }
 
 
@@ -3768,13 +4001,141 @@ textarea::placeholder {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
+/* 📌 Mobile: Adjust layout for screens smaller than 768px */
+@media (max-width: 768px) {
+    .unique-layout-container {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+    }
+
+    .unique-left-sidebar,
+    .unique-right-section {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .project-container {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .unique-project-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .search-and-add-container {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .search-form {
+        width: 100%;
+    }
+
+    .btn-filter {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .unique-right-sidebar,
+    .unique-notifications-container {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .search-and-add-container {
+        display: flex;
+        flex-direction: row; /* Ensures everything stays on the same line */
+        align-items: center; /* Aligns items vertically */
+        justify-content: space-between; /* Spreads out items */
+        flex-wrap: nowrap; /* Prevents items from stacking */
+        gap: 10px;
+        width: 100%;
+    }
+
+    .search-form {
+        flex-grow: 1; /* Allows search bar to expand */
+        display: flex;
+    }
+
+    .search-form input {
+        flex-grow: 1; /* Makes input take available space */
+        min-width: 120px;
+    }
+
+    .btn-filter,
+    .add-project-btn {
+        white-space: nowrap; /* Prevents text from breaking */
+        flex-shrink: 0; /* Ensures buttons don't shrink */
+    }
+}
+
+@media (max-width: 480px) {
+    .search-and-add-container {
+        gap: 5px;
+    }
+
+    .search-form input {
+        font-size: 14px;
+        padding: 6px;
+    }
+
+    .btn-filter,
+    .add-project-btn {
+        font-size: 14px;
+        padding: 8px;
+    }
+}
+
+
+/* 📌 Small Mobile Devices: Further adjust layout for screens smaller than 480px */
+@media (max-width: 480px) {
+    .project-title {
+        font-size: 16px;
+    }
+
+    .badge {
+        font-size: 10px;
+        padding: 4px 8px;
+    }
+
+    .search-form input {
+        font-size: 14px;
+        padding: 6px;
+    }
+
+    .search-btn {
+        padding: 6px 10px;
+    }
+
+    .unique-project-item {
+        padding: 10px;
+        border-radius: 12px;
+    }
+
+    .notification-content p {
+        font-size: 12px;
+    }
+
+    .delete-btn {
+        font-size: 12px;
+    }
+}
+
+
 .page-container {
     flex: 1;
     display: flex;
     justify-content: column;
-    padding: 40px 20px;
+    padding: 20px 20px;
     margin: 0 auto;
     width: 100%;
+    margin-bottom: -20px!important;
 }
 
 
@@ -3789,9 +4150,10 @@ textarea::placeholder {
 }
 
 .project-container {
-    width: 100%;
-    max-width: 850px;
+    width: 90%;
+    max-width: 750px;
     margin: 0 auto;
+    margin-right: 10px;
     height: 100%;
 }
 
@@ -3807,7 +4169,7 @@ textarea::placeholder {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
-    margin-bottom: 20px;
+
 }
 
 .project-description h3 {
@@ -4393,19 +4755,17 @@ textarea {
     color: #333;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
-
+/*
 .send-message-btn {
     background-color: #007373ff;
     color: #ffffff;
     border: none;
     border-radius: 5px;
-    /* Soften border radius */
+
+   
     width: 44px;
-    /* Reduce size */
     height: 34px;
-    /* Reduce size */
     margin-left: 8px;
-    /* Reduce space between input and button */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -4413,11 +4773,12 @@ textarea {
     transition: background-color 0.2s;
 }
 
+
 .send-message-btn:hover {
     background-color: rgb(20, 161, 161);
 }
 
-
+*/
 /* ==========================================================================
    30 Reset & Base Styles
    ========================================================================== */
@@ -4501,19 +4862,24 @@ textarea {
     background-color: rgb(4, 92, 92);
 }
 
-
+.unique-project-item-links {
+    max-width: 90%;
+    max-width: 720px!important;
+}
 /* Project Items */
 .unique-project-item {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 15px;
-
+    max-width: 90%;
+    max-width: 720px!important;
     margin-bottom: 20px;
 
     align-items: flex-start;
     box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     min-height: 160px; /* Adjusted height */
+    border: 1px solid #c5c4c4;
 }
 
 #message-thread {
@@ -4620,19 +4986,20 @@ p {
    .unique-right-section {
     display: flex;
     flex-direction: column; /* Stack Top Contributors above Notifications */
-    width: 20vw; /* Ensure it fits the sidebar width */
+    width: 17vw; /* Ensure it fits the sidebar width */
 }
 
 .unique-right-sidebar {
-    width: 20vw;
+    width: 17vw;
     background-color: #ffffff;
     padding: 20px;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    height:10%;
+    height:11%;
     align-self: flex-start;
+    padding-bottom: 20px!important;
 }
 
 .unique-right-sidebar h3 {
@@ -4649,6 +5016,7 @@ p {
     border: 1px solid #ccc;
     border-radius: 8px;
     background-color: #ffffff; /* Light background for contrast */
+    padding-bottom: 20px!important;
 }
 
 
@@ -4924,21 +5292,7 @@ footer p {
     width: 200%;
 }
 
-.network-search-input {
-    border-radius: 8px;
-    border: none;
-    background-color: #ffffff !important;
-    color: #000 !important;
-    font-size: 18px;
-    width: 200%;
-    margin-top: 13px;
-}
 
-.network-search-input::placeholder {
-    color: black;
-    opacity: 1;
-    /* Ensure the placeholder text is fully opaque */
-}
 
 .network-search-btn,
 .network-clear-btn {
@@ -4977,17 +5331,17 @@ footer p {
 }
 
 
-
-
   /* Center row with the input + three icon buttons */
   .network-search-bar {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 10px; /* space between form and filter button */
-    margin-bottom: 20px;
     margin-top: -15px;
+    width: 50%;
   }
+
+
   
   /* The form containing input + search + clear */
   .network-search-form {
@@ -4995,18 +5349,47 @@ footer p {
     align-items: center;
     gap: 8px;
     margin: 0; /* remove default spacing */
+    width: 100%;
   }
   
   /* Search Input styling */
   .network-search-input {
     width: 220px; /* adjust as needed */
-    padding: 8px 12px;
+    padding: 8px 10px;
     border: 1px solid #ccc;
     border-radius: 20px;
     font-size: 0.9rem;
     outline: none;
   }
+
+    
+  /* Search text input styling */
+  .network-search-input {
+    width: 240px;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    font-size: 0.9rem;
+    outline: none;
+  }
   
+  
+  .network-search-input {
+    border-radius: 20px!important;
+    border: none;
+    background-color: #ffffff !important;
+    color: #909090 !important;
+    font-size: 18px;
+    width: 300%;
+    margin-top: 13px;
+}
+
+.network-search-input::placeholder {
+    color: #909090;
+    opacity: 1;
+    /* Ensure the placeholder text is fully opaque */
+}
+
+
   /* "Search" button styling */
   .btn-search {
     background-color: #0B5F5D; /* modern teal-ish */
@@ -5072,17 +5455,7 @@ footer p {
     gap: 8px;
     margin: 0;
   }
-  
-  /* Search text input styling */
-  .network-search-input {
-    width: 240px;
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 0.9rem;
-    outline: none;
-  }
-  
+
   /* Make all three buttons look alike (round, blue border) */
   .btn-search, .btn-clear, .btn-filter {
     border: 1px solid #0073b1;   /* same color as your filter outline */
@@ -5189,10 +5562,11 @@ footer p {
   
   /* 🔸 Recommended Projects Block */
   .recommended-projects-block {
-    background: #eaeaea;
+    background: #ffffff;
     border-radius: 10px;
     padding: 15px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #CCCCCC;
   }
   
   .recommended-projects-block h3 {
@@ -5203,14 +5577,14 @@ footer p {
   }
   
   .recommended-project {
-    background: #f8f9fa;
+    background: #e2e6ea;
     border-radius: 8px;
     padding: 10px;
     transition: all 0.3s ease;
   }
   
   .recommended-project:hover {
-    background: #e2e6ea;
+    background: #DCE8ED;
   }
   
   .project-title {
@@ -5242,10 +5616,12 @@ footer p {
   
   /* 🔸 Recommended Users Block */
   .recommended-users-block {
-    background: #eaeaea;
+    background: #ffffff;
     border-radius: 10px;
     padding: 15px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #cccccc;
+
   }
   
   .recommended-users-block h3 {
@@ -5266,7 +5642,7 @@ footer p {
 .recommended-user-card {
     display: flex;
     align-items: center;     /* Ensures image & text are on the same line */
-    background: #f8f9fa;
+    background: #e2e6ea;
     border-radius: 8px;
     padding: 10px;
     margin-bottom: 10px;
@@ -5276,7 +5652,7 @@ footer p {
   }
   
   .recommended-user-card:hover {
-    background: #e2e6ea;
+    background: #DCE8ED;
     transform: scale(1.02);
     text-decoration: none; /* Remove underlines from text */
 }
@@ -5388,13 +5764,14 @@ footer p {
 .feed-project-snippet-link {
     display: block;
     text-decoration: none; /* Remove underline if desired */
-    color: inherit; /* Inherit text color */
+    background-color: #e2e6ea;
+    border-radius: 12px;
 }
 
 .feed-project-snippet-link:hover {
     display: block;
     text-decoration: none; /* Remove underline if desired */
-    border-radius: 10px;
+    border-radius: 12px;
 }
 
 .feed-project-snippet-link:hover {
@@ -5403,7 +5780,7 @@ footer p {
 }
 
 .feed-project-snippet:hover {
-    background-color: #818181; /* Change this to your desired color */
+    background-color: #aaa; /* Change this to your desired color */
     transition: background-color 0.3s ease; /* Optional: smooth transition */
 }
 
@@ -5435,7 +5812,7 @@ footer p {
 
 
 .unique-left-sidebar {
-    width: 20vw;
+    width: 20vw!important;
    
     padding: 20px;
     border-radius: 5px;
@@ -5448,7 +5825,7 @@ footer p {
 }
 
 .unique-left-sidebar {
-    width: 20vw;
+    width: 20vw!important;
    
     padding: 20px;
     border-radius: 5px;
@@ -5488,6 +5865,7 @@ footer p {
     border: 1px solid #ccc;
     border-radius: 8px;
     background-color: #ffffff; /* Light background for contrast */
+    width: 17vw;
 }
 
 .training-sidebar-title, .unique-left-sidebar h3 {
@@ -5724,7 +6102,7 @@ footer p {
     color: white;
     text-align: center;
     padding-top: 100px;
-    padding-bottom: 200px;
+    padding-bottom: 100px;
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -5811,31 +6189,7 @@ footer p {
     /* Ensure it doesn't interfere with other elements */
 }
 
-/* Content Styling */
-.hero-content {
-    margin-top: 70px;
-    z-index: 2;
-    /* Ensure it's above graphics and lighting */
-    max-width: 800px;
-    text-align: center;
-}
 
-.hero h1 {
-    font-size: 2.8rem;
-    margin-bottom: 20px;
-    color: #fff;
-}
-
-.hero-content p{
-    color: #0ddbff!important;
-}
-
-.hero p {
-    font-size: 1.5rem;
-    margin-bottom: 30px;
-    line-height: 1.6;
-    color: #fff;
-}
 
 
 
@@ -6024,8 +6378,8 @@ footer p {
 }
 
 .graphic1 {
-    top: -60px;
-    left: -320px;
+    top: -20px;
+    left: -330px;
     animation-delay: 0s;
 }
 
@@ -6467,6 +6821,689 @@ select.form-control,
         /* Align it with the DevLink text */
     }
 }
+/* Show the navbar-toggler on mobile */
+@media (max-width: 768px) {
+    .navbar-toggler {
+        display: block; /* Ensure hamburger icon is visible */
+        background-color: transparent;
+        border: none;
+        font-size: 30px;
+        cursor: pointer;
+        z-index: 1100; /* Ensure it's above the collapse menu */
+    }
+
+    /* Collapse the navbar by default on mobile */
+    .navbar-collapse {
+        display: none; /* Initially hidden */
+    }
+
+    /* Show the collapse when the toggler is clicked */
+    .navbar-collapse.show {
+        display: flex; /* Display when expanded */
+        flex-direction: column;
+        text-align: center; /* Center-align the links */
+    }
+
+    /* Ensure icons are aligned properly on mobile */
+    .navbar-icons-container {
+        justify-content: flex-end; /* Align icons to the right */
+    }
+
+    .navbar-logo {
+        height: 70px; /* Adjust logo size */
+        margin-right: 10px;
+        margin-left: 0px;
+        margin-top: -10px;
+        margin-bottom: -10px;
+        vertical-align: middle; /* Align with text */
+    }
+}
+/* Adjust button container for mobile */
+@media (max-width: 768px) {
+    .btn-container {
+        flex-direction: row; /* Align buttons in a row on mobile */
+    }
+}
+
+@media (max-width: 480px) {
+    .btn-container {
+        flex-direction: column; /* Stack buttons on very small screens */
+    }
+}
+
+/* Make columns full width on mobile screens */
+@media (max-width: 768px) {
+    .col-md-6 {
+        width: 100%;
+    }
+}
+
+/* Adjust profile image size on small screens */
+@media (max-width: 768px) {
+    .col-md-3 img {
+        width: 120px; /* Smaller image */
+        height: 120px;
+    }
+}
+/* Hide left and right sidebars on mobile */
+@media (max-width: 768px) {
+    .unique-left-sidebar,
+    .unique-right-sidebar {
+        display: none; /* Hide sidebars */
+    }
+}
+/* Make the project list take full width */
+@media (max-width: 768px) {
+    .unique-project-list {
+        width: 100%;
+    }
+
+    /* Adjust project item styling for mobile */
+    .unique-project-item {
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        border-radius: 12px;
+    }
+
+    .unique-project-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .add-project-btn {
+        font-size: 20px;
+        padding: 5px 10px;
+    }
+
+    .search-btn {
+        font-size: 20px;
+        padding: 5px 10px;
+    }
+}
+/* Responsive grid for custom project layout */
+@media (max-width: 768px) {
+    .custom-project-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Responsive grid for small screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .custom-project-grid {
+        grid-template-columns: 1fr; /* Single column on very small screens */
+    }
+}
+/* Adjust profile image size and notifications for mobile */
+@media (max-width: 768px) {
+    .profile-img {
+        width: 40px;
+        height: 40px; /* Smaller profile image */
+    }
+
+    .notification-icon {
+        margin-right: 0px; /* Remove margin */
+    }
+
+    .notification-count {
+        margin-right: 0px; /* Remove margin */
+    }
+}
+/* Network user cards adjustments for mobile */
+@media (max-width: 768px) {
+    .network-user-list {
+        grid-template-columns: 1fr; /* Single column layout for user cards */
+        gap: 20px; /* Spacing between user cards */
+    }
+
+    .network-user-card {
+        width: 100%; /* Full width user cards on mobile */
+    }
+
+    .network-search-input {
+        font-size: 16px; /* Increase font size */
+        padding: 12px;
+    }
+
+    .network-search-btn,
+    .network-clear-btn {
+        padding: 12px 20px; /* Adjust button size */
+        font-size: 16px;
+    }
+
+    .network-profile-img {
+        width: 100px;
+        height: 100px; /* Adjust profile image size */
+    }
+}
+/* Hide the hamburger menu on larger screens */
+.hamburger-menu {
+    display: none; /* Hidden by default */
+    font-size: 28px;
+    cursor: pointer;
+    padding: 10px;
+    color: #333;
+}
+
+/* Show hamburger menu on mobile */
+@media (max-width: 768px) {
+    .hamburger-menu {
+        display: block; /* Show only on mobile */
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        z-index: 1050;
+    }
+    .custom-navbar-links {
+        display: none;
+    }
+    .unique-profile-dropdown {
+        display: none;
+    }
+}
+/* Hide main navigation on mobile */
+@media (max-width: 768px) {
+    .custom-navbar-links {
+        display: none;
+    }
+
+    /* Show hamburger menu only on mobile */
+    .hamburger-menu {
+        display: block;
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        font-size: 28px;
+        cursor: pointer;
+        z-index: 1100;
+        color: #000000;
+    }
+
+    /* Make sure the mobile navigation menu is hidden initially */
+    .mobile-nav-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.9);
+        color: white;
+        z-index: 1200;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+}
+
+
+.hero h1 {
+    font-size: 2.8rem;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.hero-content p{
+    color: #0ddbff!important;
+}
+
+/* Content Styling */
+.hero-content {
+    margin-top: 10px;
+    z-index: 2;
+    /* Ensure it's above graphics and lighting */
+    max-width: 800px;
+    text-align: center;
+}
+
+.hero p {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    line-height: 1.6;
+    color: #fff;
+}
+
+
+/* General Styles */
+@media (max-width: 1024px) {
+    .hero-content {
+        text-align: center;
+        padding: 40px;
+    }
+    .hero-content h1 {
+        font-size: 28px;
+    }
+    .hero-content p {
+        font-size: 16px;
+    }
+    .hero-buttons {
+        flex-direction: column;
+        gap: 12px;
+    }
+}
+
+/* 🔹 Mobile (Tablet & Small Screens) */
+@media (max-width: 768px) {
+    .hero {
+        padding: 60px 20px;
+        text-align: center;
+        position: relative;
+    }
+    .hero-content h1 {
+        font-size: 24px;
+        line-height: 1.4;
+    }
+    .hero-content p {
+        font-size: 14px;
+    }
+    .hero-buttons {
+        flex-direction: column;
+    }
+
+    /* Floating Graphics: Scale down but keep them */
+    .floating-graphics img {
+        width: 35%;
+        max-width: 120px;
+        position: absolute;
+    }
+    .graphic1 {
+        top: 10%;
+        left: 10%;
+    }
+    .graphic2 {
+        top: 50%;
+        left: 70%;
+    }
+    .graphic3 {
+        top: 80%;
+        left: 20%;
+    }
+
+    .tabs {
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+    }
+    .tab-buttons {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .tab-button {
+        font-size: 14px;
+        padding: 8px 10px;
+    }
+    .tab-content img {
+        max-width: 80%;
+    }
+}
+
+/* 🔹 Mobile (Phones) */
+@media (max-width: 480px) {
+    .hero {
+        padding: 40px 10px;
+    }
+    .hero-content h1 {
+        font-size: 20px;
+    }
+    .hero-content p {
+        font-size: 12px;
+    }
+    .hero-buttons {
+        flex-direction: column;
+        gap: 8px;
+    }
+    .cta-button, .secondary-button {
+        font-size: 14px;
+        padding: 10px 16px;
+    }
+
+    /* Floating Graphics: Adjust positioning for small screens */
+    .floating-graphics img {
+        width: 30%;
+        max-width: 100px;
+    }
+
+
+    .tabs {
+        padding: 10px;
+    }
+    .tab-buttons {
+        flex-direction: column;
+        gap: 8px;
+    }
+    .tab-button {
+        font-size: 12px;
+        padding: 6px 8px;
+    }
+    .tab-content img {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+/* 🔹 Ultra Small Screens (Less than 360px) */
+@media (max-width: 360px) {
+    .hero-content h1 {
+        font-size: 18px;
+    }
+    .hero-content p {
+        font-size: 10px;
+    }
+    .cta-button, .secondary-button {
+        font-size: 12px;
+        padding: 8px 14px;
+    }
+
+    /* Floating Graphics: Slightly reduce size */
+    .floating-graphics img {
+        width: 25%;
+        max-width: 80px;
+    }
+    .graphic1 {
+        top: 5%;
+        left: 5%;
+    }
+    .graphic2 {
+        top: 40%;
+        left: 60%;
+    }
+    .graphic3 {
+        top: 70%;
+        left: 10%;
+    }
+
+    .tab-buttons {
+        flex-direction: column;
+        gap: 5px;
+    }
+    .tab-button {
+        font-size: 10px;
+        padding: 5px;
+    }
+}
+
+
+/* General Styles */
+@media (max-width: 1024px) {
+    .hero-content {
+        text-align: center;
+        padding: 40px;
+    }
+    .hero-content h1 {
+        font-size: 28px;
+    }
+    .hero-content p {
+        font-size: 16px;
+    }
+    .hero-buttons {
+        flex-direction: column;
+        gap: 12px;
+    }
+}
+
+/* 🔹 Mobile (Tablet & Small Screens) */
+@media (max-width: 768px) {
+    .hero {
+        padding: 60px 20px;
+        text-align: center;
+    }
+    .hero-content h1 {
+        font-size: 24px;
+        line-height: 1.4;
+    }
+    .hero-content p {
+        font-size: 14px;
+    }
+    .hero-buttons {
+        flex-direction: column;
+    }
+    .floating-graphics {
+        display: none; /* Hide floating graphics on small screens */
+    }
+    .tabs {
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+    }
+    .tab-buttons {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .tab-button {
+        font-size: 14px;
+        padding: 8px 10px;
+    }
+    .tab-content img {
+        max-width: 80%;
+    }
+}
+
+/* 🔹 Mobile (Phones) */
+@media (max-width: 480px) {
+    .hero {
+        padding: 40px 10px;
+    }
+    .hero-content h1 {
+        font-size: 20px;
+    }
+    .hero-content p {
+        font-size: 12px;
+    }
+    .hero-buttons {
+        flex-direction: column;
+        gap: 8px;
+    }
+    .cta-button, .secondary-button {
+        font-size: 14px;
+        padding: 10px 16px;
+    }
+    .tabs {
+        padding: 10px;
+    }
+    .tab-buttons {
+        flex-direction: column;
+        gap: 8px;
+    }
+    .tab-button {
+        font-size: 12px;
+        padding: 6px 8px;
+    }
+    .tab-content img {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+/* 🔹 Ultra Small Screens (Less than 360px) */
+@media (max-width: 360px) {
+    .hero-content h1 {
+        font-size: 18px;
+    }
+    .hero-content p {
+        font-size: 10px;
+    }
+    .cta-button, .secondary-button {
+        font-size: 12px;
+        padding: 8px 14px;
+    }
+    .tab-buttons {
+        flex-direction: column;
+        gap: 5px;
+    }
+    .tab-button {
+        font-size: 10px;
+        padding: 5px;
+    }
+}
+
+
+
+/* Hide the full-screen mobile menu by default */
+.mobile-nav-overlay {
+    display: none; /* Initially hidden */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.9); /* Dark overlay */
+    color: white;
+    z-index: 1200; /* Ensure it appears on top */
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+/* Ensure the overlay appears when opened */
+.mobile-nav-overlay.show {
+    display: flex;
+}
+
+/* Close button (X) in the top-right corner */
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    font-size: 32px;
+    cursor: pointer;
+    color: black;
+    transition: color 0.3s;
+}
+
+.close-btn:hover {
+    color: #f0a500; /* Highlight effect */
+}
+
+/* Profile Section inside Mobile Menu */
+.mobile-profile-section {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.mobile-profile-section h4 {
+    color: white;
+}
+
+.mobile-profile-section p {
+    color: white!important;
+}
+
+.mobile-profile-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+    border: 3px solid white;
+}
+
+@media (max-width: 768px) {
+    .feed-page-container{
+        margin-top: -50px; 
+    }
+}
+
+.mobile-profile-view-button {
+    display: inline-block;
+    padding: 8px 16px;
+    background: white;
+    color: black;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.mobile-profile-view-button:hover {
+    background: #f0a500; /* Gold hover effect */
+    color: white;
+}
+
+/* Navigation List Inside Mobile Menu */
+.mobile-nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    width: 100%;
+}
+
+.mobile-nav-list li {
+    margin: 15px 0;
+}
+
+.mobile-nav-list a {
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px 0;
+    display: block;
+    transition: color 0.3s;
+}
+
+.mobile-nav-list a i {
+    margin-right: 10px; /* Space between icon and text */
+}
+
+.mobile-nav-list a:hover {
+    color: #f0a500; /* Highlight effect */
+}
+
+/* Sign Out Button */
+.mobile-logout-button {
+    background: red;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    width: 80%;
+    text-align: center;
+    margin-top: 20px;
+    transition: background 0.3s;
+}
+
+.mobile-logout-button:hover {
+    background: darkred;
+}
+
+/* Ensure proper styling on mobile */
+@media (max-width: 768px) {
+    .custom-navbar-links {
+        display: none; /* Hide default navbar links on mobile */
+    }
+
+    /* Ensure hamburger menu appears */
+    .hamburger-menu {
+        display: block;
+        position: absolute;
+        right: 20px;
+        margin-top: -13px;
+        font-size: 38px;
+        cursor: pointer;
+        z-index: 1100;
+        color: black;
+    }
+}
+
+
+/* Adjust Navbar items for mobile */
+@media (max-width: 768px) {
+    .navbar-nav.d-flex.align-items-center {
+        justify-content: flex-end; /* Align items to the right */
+        margin-left: 0;
+    }
+
+    /* Ensure dropdowns align properly */
+    .profile-dropdown,
+    .notification-dropdown {
+        text-align: right; /* Align dropdown content to the right */
+    }
+}
 
 .request-card {
     border: 1px solid #ddd; /* Light border for the card */
@@ -6540,10 +7577,13 @@ select.form-control,
 }
 
 .live-update-item {
+    display: flex;
+    justify-content: space-between; /* Pushes update-time to the right */
+    align-items: center; /* Keeps everything aligned */
     background-color: #f9f9f9; /* Light background for each update */
     border: 1px solid #ddd; /* Light border */
     border-radius: 4px; /* Rounded corners */
-    padding: 10px; /* Padding inside each item */
+    padding: 15px; /* Padding inside each item */
     margin-bottom: 10px; /* Space between items */
     font-size: 14px; /* Font size */
     color: #333; /* Text color */
@@ -6552,7 +7592,7 @@ select.form-control,
 .update-time {
     font-size: 12px; /* Smaller font for time */
     color: #888; /* Lighter color for time */
-    float: right; /* Align time to the right */
+    white-space: nowrap; /* Prevents wrapping to a new line */
 }
 
 
@@ -6663,7 +7703,7 @@ select.form-control,
     width: 100%; /* ⬅ Ensure it stretches fully */
     max-width: 1600px; /* ⬅ Proper max width */
     margin: auto;
-    margin-left: 150px;
+    margin-left: 70px;
 }
 
 
@@ -6896,7 +7936,10 @@ select.form-control,
     right: 15px;
     font-size: 1.5rem;
     cursor: pointer;
+    color: black;
 }
+
+
 
 .training-popup-title {
     font-size: 1.3rem;
@@ -6986,43 +8029,105 @@ select.form-control,
 }
 
 
+
 .feed-link-preview {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    background: #f9f9f9;
-    margin-top: 10px;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    transition: 0.3s ease-in-out;
+    border: none;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+    margin-top: 14px;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    cursor: pointer;
+    text-align: center;
+    width: 100%;
+    max-width: 700px; /* Increased slightly */
 }
 
 .feed-link-preview:hover {
-    background: #eef;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    background: #f5f8ff;
 }
 
 .feed-preview-img {
-    width: 100px;
-    height: 100px;
+    width: 100%;
+    height: 320px; /* About 1.5x larger */
     object-fit: cover;
-    border-right: 1px solid #ddd;
 }
 
 .feed-preview-content {
-    padding: 10px;
-    flex: 1;
+    padding: 16px;
+    width: 100%;
+    text-align: left;
 }
 
 .feed-preview-title {
-    font-size: 16px;
+    font-size: 20px; /* Slightly larger */
     font-weight: bold;
-    margin-bottom: 5px;
+    color: #333;
+    margin-bottom: 10px;
 }
 
 .feed-preview-description {
-    font-size: 14px;
-    color: #555;
+    font-size: 16px;
+    color: #666;
+    line-height: 1.5;
+    max-height: 70px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: wrap;
 }
+
+.feed-preview-description a{
+    color: #0073b1;
+    text-decoration: none!important;
+}
+
+.feed-preview-link {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    width: 100%;
+}
+
+
+.feed-preview-content a {
+    color: #000000;
+    text-decoration: none !important;
+}
+
+/* Prevent underline when hovering over the title and description */
+.feed-preview-content a:hover,
+.feed-preview-title a:hover,
+.feed-preview-description a:hover {
+    text-decoration: none !important;
+}
+
+/* Ensure title always looks like plain text */
+.feed-preview-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #000000;
+    text-decoration: none !important;
+}
+
+/* Ensure description never gets underlined */
+.feed-preview-description {
+    font-size: 16px;
+    color: #666;
+    line-height: 1.5;
+    max-height: 70px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: wrap;
+    text-decoration: none !important;
+}
+
 
 
 

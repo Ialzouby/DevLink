@@ -271,14 +271,18 @@ def update_points_for_profile_picture(sender, instance, **kwargs):
 @receiver(post_save, sender=Message)
 def create_message_notification(sender, instance, created, **kwargs):
     if created:
-        # Check if a notification for this message already exists
-        if not Notification.objects.filter(user=instance.recipient, related_message=instance).exists():
+        # Get recipient (the other user in the chat)
+        recipient = instance.chat.participants.exclude(id=instance.sender.id).first()
+        
+        if recipient and not Notification.objects.filter(user=recipient, related_message=instance).exists():
             Notification.objects.create(
-                user=instance.recipient,
+                user=recipient,
                 related_message=instance,
+                content=f"New message from {instance.sender.username}",
                 is_read=False,
                 timestamp=timezone.now()
             )
+
 
 # signals.py
 @receiver(post_save, sender=JoinRequest)

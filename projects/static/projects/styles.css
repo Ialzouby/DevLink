@@ -4696,20 +4696,6 @@ textarea {
     /* Reduce font size */
 }
 
-.sent-message {
-    background-color: rgb(20, 161, 161);
-    color: #ffffff;
-    align-self: flex-end;
-    border-radius: 16px 16px 0 16px;
-}
-
-.received-message {
-    background-color: #e4e6eb;
-    color: #000000;
-    align-self: flex-start;
-    border-radius: 16px 16px 16px 0;
-}
-
 .message-info {
     font-size: 11px;
     /* Reduce font size */
@@ -4755,19 +4741,17 @@ textarea {
     color: #333;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
-
+/*
 .send-message-btn {
     background-color: #007373ff;
     color: #ffffff;
     border: none;
     border-radius: 5px;
-    /* Soften border radius */
+
+   
     width: 44px;
-    /* Reduce size */
     height: 34px;
-    /* Reduce size */
     margin-left: 8px;
-    /* Reduce space between input and button */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -4775,11 +4759,12 @@ textarea {
     transition: background-color 0.2s;
 }
 
+
 .send-message-btn:hover {
     background-color: rgb(20, 161, 161);
 }
 
-
+*/
 /* ==========================================================================
    30 Reset & Base Styles
    ========================================================================== */

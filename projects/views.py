@@ -593,29 +593,65 @@ def edit_profile(request):
         form = UserProfileForm(instance=user_profile)
 
     return render(request, 'projects/edit_profile.html', {'form': form})
+
+
+    
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
-from .models import Chat, Message
+from django.db.models import Q
+from .models import Chat, Message, UserProfile
+from django.contrib.auth.models import User
 
 @login_required
 def active_conversations(request):
-    """Load the messaging page with active chats."""
-    chats = Chat.objects.filter(participants=request.user)
-    return render(request, 'messaging/active_conversations.html', {'chats': chats})
+    """Loads messaging page with chat list and participant details."""
+    chats = Chat.objects.filter(participants=request.user).order_by('-updated_at')
+
+    chat_list = []
+    for chat in chats:
+        other_participant = chat.participants.exclude(id=request.user.id).first()
+
+        chat_list.append({
+            'chat': chat,
+            'participant': other_participant,
+        })
+
+    return render(request, 'messaging/active_conversations.html', {'chat_list': chat_list})
+
 
 @login_required
 def load_chat_messages(request, chat_id):
-    """Fetch messages dynamically when a chat is selected."""
+    """Fetches messages dynamically when a chat is selected."""
     chat = get_object_or_404(Chat, id=chat_id)
     messages = Message.objects.filter(chat=chat).order_by('timestamp')
 
     return JsonResponse({
         'messages': [
-            {'sender': msg.sender.username, 'content': msg.content, 'timestamp': msg.timestamp.strftime('%Y-%m-%d %H:%M')}
+            {'sender': msg.sender.username, 
+             'content': msg.content, 
+             'timestamp': msg.timestamp.strftime('%Y-%m-%d %H:%M'),
+             'is_self': msg.sender == request.user}
             for msg in messages
         ]
     })
+
+import json
+from django.views.decorators.csrf import csrf_exempt
+
+@csrf_exempt
+@login_required
+def send_message(request):
+    """Send a message in an active chat."""
+    if request.method == "POST":
+        data = json.loads(request.body)
+        chat_id = data.get("chat_id")
+        message_content = data.get("message")
+
+        chat = get_object_or_404(Chat, id=chat_id, participants=request.user)
+        message = Message.objects.create(chat=chat, sender=request.user, content=message_content)
+
+        return JsonResponse({"success": True, "message_id": message.id})
 
 
 @login_required
@@ -629,30 +665,73 @@ def get_user_data(request):
     user_projects = Project.objects.filter(members=request.user).values("id", "title")
 
     # Fetch users the current user follows (assuming there's a ManyToMany field `following`)
-    user_friends = user_profile.following.all().values("id", "username", "profile_picture")
+    user_friends = user_profile.user.following.all().values("id", "username", "profile_picture")
 
     return JsonResponse({
         "projects": list(user_projects),
         "friends": list(user_friends),
     })
 
-
+from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 @login_required
-def send_message(request, chat_id):
-    """Send a message and update the chat in real-time."""
-    if request.method == 'POST':
-        chat = get_object_or_404(Chat, id=chat_id)
-        content = request.POST.get('content')
+def search_users2(request):
+    """Returns a list of users matching the search query."""
+    query = request.GET.get('q', '').strip()
 
-        if content.strip():
-            message = Message.objects.create(chat=chat, sender=request.user, content=content)
-            return JsonResponse({
-                'success': True,
-                'message': {'sender': message.sender.username, 'content': message.content, 'timestamp': message.timestamp.strftime('%Y-%m-%d %H:%M')}
-            })
+    if query:
+        users = User.objects.filter(username__icontains=query).exclude(id=request.user.id)[:5]
+        user_data = [
+            {
+                'id': user.id,
+                'username': user.username,
+                'profile_picture': user.userprofile.profile_picture.url if user.userprofile.profile_picture else '/static/images/default-avatar.png'
+            }
+            for user in users
+        ]
+        return JsonResponse({'users': user_data})
 
-    return JsonResponse({'success': False, 'error': 'Invalid request'})
+    return JsonResponse({'users': []})
+
+
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.models import User
+import json
+
+import json
+from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+from .models import Chat, Message, User
+
+@login_required
+def start_chat(request):
+    """Creates a chat between two users if it doesn't exist and sends the first message."""
+    if request.method == "POST":
+        data = json.loads(request.body)
+        recipient_id = data.get("recipient_id")
+        message_content = data.get("message")
+
+        if not recipient_id or not message_content:
+            return JsonResponse({"success": False, "error": "Invalid request data"})
+
+        recipient = get_object_or_404(User, id=recipient_id)
+
+        # Check if a chat already exists between these users
+        chat = Chat.objects.filter(participants=request.user).filter(participants=recipient).first()
+
+        if not chat:
+            chat = Chat.objects.create()
+            chat.participants.add(request.user, recipient)
+
+        # Create and save the message
+        message = Message.objects.create(chat=chat, sender=request.user, content=message_content)
+
+        return JsonResponse({"success": True, "chat_id": chat.id})
+
+    return JsonResponse({"success": False, "error": "Invalid request"})
 
 
 # View to render notifications
@@ -973,6 +1052,21 @@ def comment_on_feed_item(request, feed_item_id):
             })
     
     return JsonResponse({"success": False, "error": "Comment cannot be empty"}, status=400)
+
+
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
+from .models import Chat, Message
+
+@login_required
+def get_messages(request, chat_id):
+    """Fetch messages for a specific chat."""
+    chat = get_object_or_404(Chat, id=chat_id, participants=request.user)
+    messages = chat.messages.order_by("timestamp").values("sender_id", "content", "timestamp")
+
+    return JsonResponse({"messages": list(messages)})
+
 
 
 from django.shortcuts import render, get_object_or_404, redirect

@@ -774,6 +774,10 @@ def check_username_email(request):
 
 
 def landing_page(request):
+    # Redirect logged-in users to the home page
+    if request.user.is_authenticated:
+        return redirect('home')  # Ensure 'home' is the correct name for your home page URL pattern
+
     # Add any dynamic data to be passed to the template here
     context = {
         'title': 'Welcome to My Website',

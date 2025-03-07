@@ -842,6 +842,19 @@ span.devlink-logo {
     color: #00796b; /* Change text color on hover */
 }
 
+/* Container for the profile dropdown */
+/* Custom Navbar Styling */
+.custom-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: #ffffff;
+    border-bottom: 2px solid #ddd;
+    font-family: 'Merriweather', serif;
+    height: 70px;
+}
+
 
 .custom-navbar-container {
     display: flex;
@@ -1018,18 +1031,7 @@ span.devlink-logo {
 }
 
 
-/* Container for the profile dropdown */
-/* Custom Navbar Styling */
-.custom-navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 30px;
-    background-color: #ffffff;
-    border-bottom: 2px solid #ddd;
-    font-family: 'Merriweather', serif;
-    height: 80px;
-}
+
 
 .custom-profile-dropdown {
     position: relative;

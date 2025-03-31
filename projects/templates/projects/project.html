@@ -16,17 +16,24 @@
                 <span class="tag">Discussion</span>
             </div>
 
+            <!-- Contributors Section -->
             <div class="contributors-section">
-                <p>Contributors:</p>
+                <!-- Owner Section -->
+                <p><strong>Owner:</strong></p>
                 <div class="contributors-list">
                     <a href="{% url 'profile' project.owner.username %}">
                         <img src="{{ project.owner.userprofile.profile_picture|safe }}" alt="{{ project.owner.username }}" class="contributor-pic">
                     </a>
+                </div>
 
+                <p><strong>Contributors:</strong></p>
+                <div class="contributors-list">
                     {% for member in project.members.all %}
                         <a href="{% url 'profile' member.username %}">
                             <img src="{{ member.userprofile.profile_picture|safe }}" alt="{{ member.username }}" class="contributor-pic">
                         </a>
+                    {% empty %}
+                        <p>No contributors yet.</p>
                     {% endfor %}
                 </div>
             </div>

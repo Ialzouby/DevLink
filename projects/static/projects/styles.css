@@ -4338,6 +4338,7 @@ textarea::placeholder {
     display: flex;
     align-items: center;
     margin-top: 20px;
+    margin-bottom: 10px;
 }
 
 .contributors-section p {
@@ -7046,7 +7047,7 @@ select.form-control,
 
 .hero p {
     font-size: 1.5rem;
-    margin-bottom: 30px;
+    margin-bottom: 50px;
     line-height: 1.6;
     color: #fff;
 }

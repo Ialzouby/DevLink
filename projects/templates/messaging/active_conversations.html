@@ -27,6 +27,10 @@
 
     <!-- Chat Window -->
     <div class="chat-window-modern">
+        <div id="chat-window-title" class="chat-window-title">
+            <h2 id="chat-title-text">Select a conversation</h2>
+        </div>
+        
         <input type="hidden" id="current-user-id" value="{{ request.user.id }}">
         <div id="chat-header-modern"></div>
         <div id="chat-messages-modern"></div>
@@ -40,23 +44,40 @@
 </div>
 
 <!-- New Chat Popup -->
+<!-- New Chat Popup -->
 <div class="new-chat-popup" id="new-chat-popup">
     <div class="new-chat-container">
-        <div class="new-chat-header">
-            <span>Start New Chat</span>
-            <button id="close-new-chat">&times;</button>
-        </div>
-
-        <div class="search-container">
-            <input type="text" id="search-user" placeholder="Type username..." autocomplete="off">
-            <div id="search-results" class="search-results-dropdown"></div>
-        </div>
-
-        <div class="new-chat-input-area">
-            <input type="text" id="new-chat-message" placeholder="Type a message...">
-            <button id="start-chat-btn">Send</button>
-        </div>
+  
+    <div class="new-chat-header">
+        <span>Start New Chat</span>
+        <button id="close-new-chat">&times;</button>
     </div>
+
+    <!-- User Search -->
+    <div class="search-container">
+        <input type="text" id="search-user" placeholder="Type a name or username..." autocomplete="off">
+        <div id="search-results" class="search-results-dropdown"></div>
+    </div>
+
+    <!-- Project Selection -->
+    <div class="project-dropdown-container" style="margin-top: 15px;">
+        <select id="project-select" style="width: 100%; padding: 8px;">
+            <option disabled selected>Select a project</option>
+            {% if user_projects %}
+                {% for project in user_projects %}
+                    <option value="{{ project.id }}">{{ project.title }}</option>
+                {% endfor %}
+            {% else %}
+                <option disabled>No projects found</option>
+            {% endif %}
+        </select>
+    </div>
+
+    <!-- Next Button -->
+    <div style="margin-top: 20px;">
+        <button id="next-start-chat" class="new-chat-next-btn">Next</button>
+    </div>
+</div>
 </div>
 
 <style>
@@ -68,6 +89,124 @@ html, body {
     overflow: hidden;
     font-family: 'Arial', sans-serif;
 }
+
+html, body {
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 100% !important;
+  overflow: hidden !important;
+  font-family: Arial, sans-serif !important;
+}
+
+.chat-app-container {
+  display: flex !important;
+  flex-direction: row !important;
+  height: 100% !important;
+  width: 100% !important;
+  overflow: hidden !important;
+}
+
+.chat-sidebar-modern {
+  width: 25% !important;
+  height: 100vh !important;
+  background: #f4f4f4 !important;
+  border-right: 2px solid #ccc !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding: 15px !important;
+  box-sizing: border-box !important;
+  flex-shrink: 0 !important;
+}
+
+.chat-sidebar-modern::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-sidebar-modern::-webkit-scrollbar-thumb {
+  background-color: #999;
+  border-radius: 4px;
+}
+
+.chat-sidebar-modern::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+
+.chat-window-modern {
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  height: 90vh !important; /* ✅ Full viewport height */
+  overflow: hidden !important;
+  min-height: 0 !important; /* ✅ Allow flex children to shrink properly */
+}
+
+
+/* Messages area takes ALL space left above input */
+#chat-messages-modern {
+  flex: 1 !important;
+  overflow-y: auto !important;
+  padding: 15px !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+}
+
+/* Input stays fixed at bottom */
+.chat-input-container-modern {
+  display: flex;
+  padding: 10px;
+  background: white;
+  box-sizing: border-box;
+  border-top: 1px solid #ccc;
+  flex-shrink: 0; /* ✅ Keeps it pinned */
+}
+
+#message-box-modern {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+#send-message-btn-modern {
+  margin-left: 10px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Bubble styling */
+.sent-message, .received-message {
+  max-width: 70% !important;
+  padding: 10px !important;
+  border-radius: 15px !important;
+  word-wrap: break-word !important;
+  white-space: pre-wrap !important;
+}
+
+.sent-message {
+  align-self: flex-end !important;
+  background: #007bff !important;
+  color: white !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+.received-message {
+  align-self: flex-start !important;
+  background: #e9ecef !important;
+  color: black !important;
+  border-bottom-left-radius: 0 !important;
+}
+
 
 .messaging-container {
     height: 100%!important;
@@ -87,23 +226,9 @@ html, body {
     padding-bottom: 0px!important;
 }
 
-/* 🔹 Chat App Layout */
-.chat-app-container {
-    display: flex;
-    height: 90%;
-    width: 100%;
-    overflow: hidden;
-}
 
-/* 🔹 Sidebar */
-.chat-sidebar-modern {
-    width: 25%;
-    background: #f4f4f4;
-    border-right: 1px solid #ddd;
-    overflow-y: auto;
-    padding: 15px;
-    height: 100vh;
-}
+
+
 
 .chat-header-modern {
     display: flex;
@@ -161,51 +286,13 @@ html, body {
     color: gray;
 }
 
-/* 🔹 Chat Window */
-.chat-window-modern {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    background: #f9f9f9;
-    position: relative;
-}
 
-/* 🔹 Chat Messages */
-#chat-messages-modern {
-    flex-grow: 1;
-    padding: 15px;
-    overflow-y: auto;
-}
 
-/* 🔹 Chat Input */
-.chat-input-container-modern {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    border-top: 1px solid #ddd;
-    background: white;
-    position: relative;
-}
 
-#message-box-modern {
-    flex-grow: 1;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 20px;
-    font-size: 16px;
-    outline: none;
-}
 
-#send-message-btn-modern {
-    padding: 10px;
-    background: #007bff;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    font-size: 18px;
-    cursor: pointer;
-    margin-left: 10px;
-}
+
+
+
 
 /* 🔹 New Chat Popup */
 .new-chat-popup-modern {
@@ -338,6 +425,15 @@ html, body {
     cursor: pointer;
 }
 
+.chat-window-title {
+    padding: 15px;
+    font-size: 20px;
+    font-weight: bold;
+
+    border-bottom: 1px solid #ccc;
+}
+
+
 .sent-message{
     text-align: right;
     width: 100%;
@@ -372,15 +468,22 @@ html, body {
     border-bottom-left-radius: 0;
 }
 
-/* ✅ Flexbox container to align messages correctly */
-#chat-messages-modern {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 5px;
-    overflow-y: auto;
-    height: calc(100vh - 120px);
+
+.new-chat-next-btn {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
 }
+
+.new-chat-next-btn:hover {
+    background: #0056b3;
+}
+
+
 
 .sent-message {
     align-self: flex-end!important; /* ✅ Align sent messages to the right */
@@ -404,8 +507,31 @@ html, body {
 
 
 </style>
-
+<style>
+    footer {
+      display: none !important;
+    }
+  </style>
+  
 <script>
+let selectedUserId = null;
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+        const cookies = document.cookie.split(";");
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === name + "=") {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+
 document.addEventListener("DOMContentLoaded", function () {
     const openChatBtn = document.getElementById("open-new-chat");
     const newChatPopup = document.getElementById("new-chat-popup");
@@ -430,6 +556,9 @@ document.addEventListener("DOMContentLoaded", function () {
     chatItems.forEach(chat => {
         chat.addEventListener("click", function () {
             activeChatId = this.dataset.chatId;
+            const name = this.querySelector('.chat-username-modern')?.innerText || 'Chat';
+            document.getElementById("chat-title-text").textContent = name;
+
             chatMessages.innerHTML = "Loading...";
             fetch(`/get_messages/${activeChatId}/`)
                 .then(response => response.json())
@@ -466,31 +595,12 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-document.getElementById("start-chat-btn").addEventListener("click", function () {
-        let messageContent = document.getElementById("new-chat-message").value.trim();
 
-        if (selectedUserId && messageContent) {
-            fetch(/start_chat/, {
-                method: "POST",
-                headers: {
-                    "X-CSRFToken": getCookie("csrftoken"),
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ recipient_id: selectedUserId, message: messageContent })
-            }).then(response => response.json())
-              .then(data => {
-                  if (data.success) {
-                      location.reload();  // Refresh to load new chat
-                  }
-              });
-        }
-    });
 
 
     document.addEventListener("DOMContentLoaded", function () {
     const searchUserInput = document.getElementById("search-user");
     const searchResultsDiv = document.getElementById("search-results");
-    let selectedUserId = null; // ✅ Ensure we track the selected user
 
     if (!searchUserInput || !searchResultsDiv) {
         console.error("❌ Search input or results div not found.");
@@ -575,6 +685,55 @@ document.getElementById("start-chat-btn").addEventListener("click", function () 
     }
 });
 
+
+document.getElementById("next-start-chat").addEventListener("click", function () {
+    const selectedProject = document.getElementById("project-select").value;
+
+    if (!selectedUserId && (!selectedProject || selectedProject === "Select a project")) {
+        alert("Please select either a user or a project.");
+        return;
+    }
+
+    const payload = selectedUserId
+        ? { recipient_id: selectedUserId }
+        : { project_id: selectedProject };
+
+    fetch(`/get_or_create_chat/`, {
+        method: "POST",
+        headers: {
+            "X-CSRFToken": getCookie("csrftoken"),
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            window.location.replace(`/messaging/?chat_id=${data.chat_id}`);
+        } else {
+            alert("Failed to get chat: " + data.error);
+        }
+    })
+    .catch(err => console.error("❌ Error getting chat:", err));
+});
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const preselectedChatId = urlParams.get("chat_id");
+
+    if (preselectedChatId) {
+        const tryClick = () => {
+            const targetChat = document.querySelector(`.chat-item-modern[data-chat-id="${preselectedChatId}"]`);
+            if (targetChat) {
+                targetChat.click();
+            } else {
+                setTimeout(tryClick, 100); // wait and try again
+            }
+        };
+        tryClick();
+    }
+});
 
 
 </script>

@@ -10,7 +10,7 @@ from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
-
+from .views import get_or_create_chat
 urlpatterns = [
     # --------------------------------------------------
     # Authentication (Commented Out)
@@ -69,7 +69,8 @@ urlpatterns = [
     ##path('messages/start/<str:username>/', views.message_thread, name='start_message'),
     #path('message-thread-partial/<str:recipient_username>/', views.message_thread_partial, name='message_thread_partial'),
     #path('conversations/', views.active_conversations, name='active_conversations'),
-path('messaging/', views.active_conversations, name='active_conversations'),
+    path('messaging/', views.active_conversations, name='active_conversations'),
+    path('get_or_create_chat/', get_or_create_chat, name='get_or_create_chat'),
 
     path('messaging/chat/<int:chat_id>/send/', views.send_message, name='send_message'),
     path('conversations/', views.active_conversations, name='active_conversations'),

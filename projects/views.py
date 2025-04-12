@@ -589,7 +589,7 @@ def edit_profile(request):
             user_profile.skills = ",".join(
                 skill.strip() for skill in skills.split(",") if skill.strip()
             )
-            
+
             user_profile.cair_hackathon = form.cleaned_data.get('cair_hackathon', False)
 
             user_profile.save()
@@ -1260,4 +1260,54 @@ def like_post(request, post_id):
 
     return JsonResponse({"liked": liked, "likes_count": post.likes.count()})
 
+
+
+
+
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
+from .models import Chat, Project
+from django.contrib.auth.models import User
+import json
+
+@csrf_exempt
+def get_or_create_chat(request):
+    if request.method != "POST":
+        return JsonResponse({"success": False, "error": "Invalid request method"})
+
+    try:
+        data = json.loads(request.body)
+        recipient_id = data.get("recipient_id")
+        project_id = data.get("project_id")
+        user = request.user
+
+        # ✅ THIS IS THE LINE YOU ASKED ABOUT — it finds private chats
+        if recipient_id:
+            other_user = User.objects.get(id=recipient_id)
+            chat = Chat.objects.filter(
+                project__isnull=True,          # 🔥 means it's not a project chat
+                participants=user              # 🔥 you're one of the participants
+            ).filter(participants=other_user).first()  # 🔥 and so is the other person
+
+            if not chat:
+                chat = Chat.objects.create(project=None)  # 🔥 create new private chat
+                chat.participants.add(user, other_user)   # 🔥 add both users
+
+            return JsonResponse({"success": True, "chat_id": chat.id})
+
+        elif project_id:
+            project = Project.objects.get(id=project_id)
+            chat = Chat.objects.filter(project=project).first()
+            if not chat:
+                chat = Chat.objects.create(project=project)
+                for member in project.members.all():
+                    chat.participants.add(member)
+            return JsonResponse({"success": True, "chat_id": chat.id})
+
+        else:
+            return JsonResponse({"success": False, "error": "No recipient or project provided"})
+
+    except Exception as e:
+        return JsonResponse({"success": False, "error": str(e)})
 

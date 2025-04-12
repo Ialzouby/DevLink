@@ -586,7 +586,7 @@ def edit_profile(request):
                     messages.error(request, "There was an issue uploading your banner picture.")
 
             # Save skills in comma‐separated format
-            skills = form.cleaned_data.get('skills', '')
+            skills = form.cleaned_data.get('skills', '') or ''
             user_profile.skills = ",".join(
                 skill.strip() for skill in skills.split(",") if skill.strip()
             )
@@ -602,7 +602,7 @@ def edit_profile(request):
     else:
         form = UserProfileForm(instance=user_profile)
 
-    return render(request, 'projects/edit_profile.html', {'form': form})
+    return render(request, 'projects/edit_profile.html', {'form': form, 'hide_footer': True})
 
 
     

@@ -493,7 +493,8 @@ def create_project(request):
             project = form.save(commit=False)
             project.owner = request.user  # Set the owner to the logged-in user
             project.save()
-            return redirect('home')  # Redirect to home
+            return redirect('project_detail', pk=project.pk)
+
     else:
         form = ProjectForm()
     return render(request, 'projects/create_project.html', {'form': form})

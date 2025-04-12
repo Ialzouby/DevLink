@@ -195,13 +195,20 @@
     {% endblock %}
     <style>
 
+body.nav-locked {
+  overflow: hidden;
+  height: 100vh;
+  position: fixed;
+  width: 100vw;
+}
+
 /* 🔹 Mobile Navigation Overlay */
 .mobile-nav-overlay {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100vh;
+    height: 100vh;           /* Take full screen height */
+    width: 100vw;            /* Take full screen width */
     background: rgba(0, 0, 0, 0.8); /* Dark semi-transparent */
     display: flex;
     justify-content: center;
@@ -350,11 +357,13 @@ document.addEventListener("DOMContentLoaded", function () {
     // Show mobile menu when hamburger is clicked
     hamburger.addEventListener("click", function () {
         mobileNav.classList.add("active");
+        document.body.classList.add("nav-locked");
     });
 
     // Hide mobile menu when close button is clicked
     closeBtn.addEventListener("click", function () {
         mobileNav.classList.remove("active");
+        document.body.classList.remove("nav-locked");
     });
 
     // Close menu if clicked outside the menu content

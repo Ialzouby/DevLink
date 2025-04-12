@@ -302,7 +302,7 @@
 /* Sidebar left */
 .feed-sidebar-left {
   flex: 0 0 220px;
-  padding: 20px;
+
 
 }
 
@@ -366,21 +366,34 @@
     }
 }
 
-@media (max-width: 600px) {
-    .modal-content {
-        width: 80vw !important; /* Takes 80% of screen width */
-        max-width: 350px !important;
-        padding: 15px !important; /* Reduce padding */
-    }
+@media (max-width: 768px) {
+  .feed-main-section {
+    padding: 10px;
+  }
+
+  .feed-page-container {
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  .feed-sidebar-left,
+  .feed-sidebar-right {
+    display: none; /* Hide sidebars on mobile */
+  }
 }
 
-/* Ensure it's Always in the Center */
+
 @media (max-width: 400px) {
-    .modal-content {
-        width: 90vw !important;
-        max-width: 300px !important;
-    }
+  .feed-card {
+    padding: 10px;
+  }
+
+  .feed-actions .action-btn {
+    flex: 1 1 50%;
+    margin-bottom: 10px;
+  }
 }
+
 @media (max-width: 1024px) {
   .feed-page-container {
     flex-direction: column;

@@ -72,12 +72,12 @@
         <div class="unique-project-header">
             <h2>Projects</h2>
             <div class="search-and-add-container">
-                <form method="GET" action="{% url 'home' %}" class="search-form" style="display: flex; align-items: center;">
+      <!--          <form method="GET" action="{% url 'home' %}" class="search-form" style="display: flex; align-items: center;">
                     <input type="text" name="q" placeholder="Search projects..." class="project-search-bar" value="{{ request.GET.q }}">
                     <button type="submit" class="search-btn">
                         <i class="fa fa-search"></i>
                     </button>
-                </form>
+                </form> -->
                 <!-- Filter Button -->
                 <button class="btn-filter" onclick="openFilterModal()">
                     <i class="fa fa-filter"></i>
@@ -243,12 +243,101 @@
 
 <style>
 
+.unique-project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    margin-bottom: 20px;
+}
+
+.unique-project-header h2 {
+    color: black
+}
+
+
+.unique-project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+
+.unique-project-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: 0px;
+    /* Move right by 10px */
+}
+
+.search-and-add-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between the search form and the add-project button */
+}
+.unique-project-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 0 20px !important;
+    margin-bottom: 20px !important;
+    flex-wrap: wrap !important; /* helps when screen gets tight */
+}
+
+.unique-project-header h2 {
+    color: black !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+    /* ✅ Make the search container wrap safely on smaller screens */
+.search-and-add-container {
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+}
+
+/* ✅ Let the search bar shrink a little but not too much */
+.project-search-bar {
+  flex: 1 1 200px !important;
+  min-width: 180px !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.project-search-bar {
+    /* Adjust to make space for the button */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px 0 0 4px;
+    /* Rounded corners, only on left side */
+    box-sizing: border-box;
+    background-color: #b5b5b5 !important;
+}
+
+.project-search-bar::placeholder {
+    color: black;
+    opacity: 1;
+    /* Ensure the placeholder text is fully opaque */
+}
+
+
+
+
     /* MAIN PAGE WRAPPER */
     .page-wrapper {
     display: flex !important;
     justify-content: center !important;
     width: 100% !important;
     padding: 0 10px !important;
+}
+
+
+@media (max-width: 768px) {
+  .unique-right-section {
+    display: none !important;
+  }
 }
 
 /* FLEX LAYOUT CONTAINER */

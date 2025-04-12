@@ -4202,49 +4202,12 @@ textarea::placeholder {
    18 PROJECT SEARCH AND CONTAINER
    ========================================================================== */
 
-   .unique-project-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.search-and-add-container {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Space between the search form and the add-project button */
-}
 
 
 
 
 
 
-.project-search-bar {
-    /* Adjust to make space for the button */
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px 0 0 4px;
-    /* Rounded corners, only on left side */
-    box-sizing: border-box;
-    background-color: #b5b5b5 !important;
-    width: 300px !important;
-}
-
-.project-search-bar::placeholder {
-    color: black;
-    opacity: 1;
-    /* Ensure the placeholder text is fully opaque */
-}
-
-
-.unique-project-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-left: 0px;
-    /* Move right by 10px */
-}
 
 /* ==========================================================================
    19 PROJECT LIST
@@ -4255,9 +4218,7 @@ textarea::placeholder {
     overflow-y: auto;
 }
 
-.unique-project-header h2 {
-    color: black
-}
+
 
 
 
@@ -4782,13 +4743,7 @@ textarea {
     margin-bottom: 20px;
 }
 
-.unique-project-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
-    margin-bottom: 20px;
-}
+
 
 
 /* ==========================================================================

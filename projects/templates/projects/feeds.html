@@ -288,6 +288,50 @@
 
 <style>
 
+   /* ===== Left Sidebar Styling ===== */
+.feed-sidebar-left {
+  flex: 0 0 280px !important;
+  max-width: 280px !important;
+  min-width: 220px !important;
+  padding: 20px !important;
+  border-radius: 10px !important;
+  background-color: #ffffff !important;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.05) !important;
+  box-sizing: border-box !important;
+}
+
+/* Sidebar inner blocks (like .sidebar-block) */
+.feed-sidebar-left .sidebar-block {
+  background-color: #ffffff !important;
+  padding: 15px !important;
+  border-radius: 10px !important;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.08) !important;
+  margin-bottom: 20px !important;
+  width: 100% !important;
+}
+
+/* Sidebar title headers */
+.feed-sidebar-left h3 {
+  font-size: 18px !important;
+  margin-bottom: 10px !important;
+  padding-bottom: 5px !important;
+  color: #444 !important;
+  text-align: center !important;
+}
+
+/* Sidebar links */
+.feed-sidebar-left ul li {
+  margin: 8px 0 !important;
+}
+
+/* Responsive: hide on mobile */
+@media (max-width: 768px) {
+  .feed-sidebar-left {
+    display: none !important;
+  }
+}
+ 
+
 .feed-page-container {
   display: flex;
   align-items: flex-start;

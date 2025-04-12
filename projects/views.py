@@ -516,7 +516,14 @@ def network(request):
     grade_filter = request.GET.get('grade', '')  # Grade Level filter
     concentration_filter = request.GET.get('concentration', '')  # Concentration filter
 
-    users = User.objects.all().order_by('-userprofile__points')  # Default ordering by points
+
+    users = User.objects.filter(
+        ~Q(userprofile__profile_picture=''),  # Exclude empty string
+        userprofile__profile_picture__isnull=False  # Exclude NULL
+    ).order_by('-userprofile__points')
+
+
+
 
     # Apply search query filter
     if query:
@@ -582,6 +589,8 @@ def edit_profile(request):
             user_profile.skills = ",".join(
                 skill.strip() for skill in skills.split(",") if skill.strip()
             )
+            
+            user_profile.cair_hackathon = form.cleaned_data.get('cair_hackathon', False)
 
             user_profile.save()
 

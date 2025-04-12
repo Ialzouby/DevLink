@@ -44,6 +44,10 @@
                         <p class="network-user-grade">{{ user.userprofile.grade_level|default_if_none:"Not available" }}</p>
                         <p class="network-user-concentration">{{ user.userprofile.concentration|default_if_none:"Not available" }}</p>
                     </div>
+                        {% if user.userprofile.cair_hackathon %}
+        <div class="cair-badge">CAIR Hackathon</div>
+    {% endif %}
+
                 </div>
             </a>
             {% endfor %}
@@ -162,6 +166,20 @@
 .btn-apply-filter:hover {
     background-color: #0056b3;
 }
+
+.cair-badge {
+    display: inline-block;
+    margin-top: 5px;
+    background-color: #6D4CFF;
+    color: white;
+    font-size: 0.75rem;
+    font-weight: bold;
+    padding: 4px 8px;
+    border-radius: 999px;
+    text-align: center;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+}
+
 
 </style>
 <script>    

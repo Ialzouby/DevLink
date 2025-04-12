@@ -842,6 +842,33 @@ span.devlink-logo {
     color: #00796b; /* Change text color on hover */
 }
 
+/* Container for the profile dropdown */
+/* Custom Navbar Styling */
+.custom-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: #ffffff;
+    border-bottom: 2px solid #ddd;
+    font-family: 'Merriweather', serif;
+    height: 70px;
+}
+
+.custom-checkbox {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: #f1f1f1;
+}
+
+.custom-checkbox input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    accent-color: #6D4CFF; /* Soft purple */
+}
+
 
 .custom-navbar-container {
     display: flex;
@@ -1018,18 +1045,7 @@ span.devlink-logo {
 }
 
 
-/* Container for the profile dropdown */
-/* Custom Navbar Styling */
-.custom-navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 30px;
-    background-color: #ffffff;
-    border-bottom: 2px solid #ddd;
-    font-family: 'Merriweather', serif;
-    height: 80px;
-}
+
 
 .custom-profile-dropdown {
     position: relative;
@@ -4336,6 +4352,7 @@ textarea::placeholder {
     display: flex;
     align-items: center;
     margin-top: 20px;
+    margin-bottom: 10px;
 }
 
 .contributors-section p {
@@ -4694,20 +4711,6 @@ textarea {
     /* Reduce margin */
     font-size: 13px;
     /* Reduce font size */
-}
-
-.sent-message {
-    background-color: rgb(20, 161, 161);
-    color: #ffffff;
-    align-self: flex-end;
-    border-radius: 16px 16px 0 16px;
-}
-
-.received-message {
-    background-color: #e4e6eb;
-    color: #000000;
-    align-self: flex-start;
-    border-radius: 16px 16px 16px 0;
 }
 
 .message-info {
@@ -7058,7 +7061,7 @@ select.form-control,
 
 .hero p {
     font-size: 1.5rem;
-    margin-bottom: 30px;
+    margin-bottom: 50px;
     line-height: 1.6;
     color: #fff;
 }

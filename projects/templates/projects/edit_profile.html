@@ -27,14 +27,14 @@
 
                     <!-- LinkedIn Field -->
                     <div class="form-group mb-3">
-                        <label for="id_linkedin">*LinkedIn:</label>
-                        <input type="url" name="linkedin" id="id_linkedin" class="form-control" value="{{ form.linkedin.value }}">
+                        <label for="id_linkedin">LinkedIn:</label>
+                        <input type="url" name="linkedin" id="id_linkedin" class="form-control" value="{{ form.linkedin.value|default_if_none:'' }}">
                     </div>
 
                     <!-- GitHub Field -->
                     <div class="form-group mb-3">
-                        <label for="id_github">*GitHub:</label>
-                        <input type="url" name="github" id="id_github" class="form-control" value="{{ form.github.value }}">
+                        <label for="id_github">GitHub:</label>
+                        <input type="url" name="github" id="id_github" class="form-control" value="{{ form.github.value|default_if_none:'' }}">
                     </div>
                 </div>
 
@@ -43,13 +43,13 @@
                 <div class="form-column">
                     <!-- Bio Field -->
                     <div class="form-group mb-3">
-                        <label for="id_bio">*Bio:</label>
-                        <textarea name="bio" id="id_bio" class="form-control" rows="5">{{ form.bio.value }}</textarea>
+                        <label for="id_bio">Bio:</label>
+                        <textarea name="bio" id="id_bio" class="form-control" rows="5">{{ form.bio.value|default_if_none:'' }}</textarea>
                     </div>
 
                     <div class="form-group mb-3">
                         <label for="id_skills">Skills (comma-separated):</label>
-                        <input type="text" name="skills" id="id_skills" class="form-control" value="{{ form.skills.value }}">
+                        <input type="text" name="skills" id="id_skills" class="form-control" value="{{ form.skills.value|default_if_none:'' }}">
                     </div>
                     
                 
@@ -60,6 +60,16 @@
                     </div>
                 
                     <!-- Save Changes Button -->
+                     <!-- CAIR Hackathon Checkbox -->
+<div class="form-group custom-checkbox mb-3">
+    <label for="id_cair_hackathon" style="display: flex; align-items: center;">
+        <input type="checkbox" name="cair_hackathon" id="id_cair_hackathon"
+               style="width: 20px; height: 20px; margin-right: 10px; accent-color: #6D4CFF;"
+               {% if form.cair_hackathon.value %}checked{% endif %}>
+        <span style="color: #333;">Are you registering for the CAIR Hackathon?</span>
+    </label>
+</div>
+
                     <button type="submit" class="btn btn-primary mt-3 edit-profile-button">Save Changes</button>
                 </div>
             </div>

@@ -37,29 +37,6 @@
             <li><a href="{% url 'active_conversations' %}">Send a Message</a></li>
         </ul>
     </div>
-
-    <!-- Recommended Users Block -->
-    <div class="sidebar-block">
-        <h3>Recommended Users</h3>
-        {% for user in top_users %}
-            <a href="{% url 'profile' user.user.username %}" class="user-card-link">
-                <div class="user-card">
-                    <div class="user-avatar-container">
-                        {% if user.profile_picture %}
-                            <img src="{{ user.profile_picture|safe }}" alt="{{ user.user.username }}" class="user-avatar">
-                        {% else %}
-                            <img src="https://via.placeholder.com/50" alt="{{ user.user.username }}" class="user-avatar">
-                        {% endif %}
-                    </div>
-                    <div class="user-info">
-                        <h4>{{ user.user.first_name }} {{ user.user.last_name }}</h4>
-                        <p>Grade Level: {{ user.grade_level }}</p>
-                        <p>{{ user.concentration }}</p>
-                    </div>
-                </div>
-            </a>
-        {% endfor %}
-    </div>
 </div>
 
 
@@ -191,47 +168,6 @@
                 </a>
             {% endfor %}
         </div>
-
-        <!-- Notifications Container -->
-        <div class="unique-notifications-container">
-            <h3>Notifications</h3>
-            {% if notifications %}
-                <ul class="notifications-list">
-                    {% for notification in notifications %}
-                        <li class="notification-item">
-                            <div class="notification-content">
-                                <p>
-                                    {% if notification.content %}
-                                        {{ notification.content|safe }}
-                                    {% elif notification.related_message %}
-                                        <a href="{% url 'active_conversations' %}?recipient={{ notification.related_message.sender.username }}" class="notification-link">
-                                            New Message from <strong>{{ notification.related_message.sender.username }}</strong>: 
-                                            <strong>{{ notification.related_message.content|safe }}</strong>
-                                        </a>
-                                    {% else %}
-                                        No content available
-                                    {% endif %}
-                                </p>
-                            </div>
-
-                            <!-- New container for timestamp and delete button -->
-                            <div class="notification-footer">
-                                <span class="notification-timestamp">{{ notification.timestamp|timesince }} ago</span>
-                                <form action="{% url 'delete_notification' notification.id %}" method="post" class="delete-form">
-                                    {% csrf_token %}
-                                    <button type="submit" class="delete-btn">✖</button>
-                                </form>
-                            </div>
-                        </li>
-                    {% empty %}
-                        <li>No new notifications</li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <p>No notifications available.</p>
-            {% endif %}
-        </div>
-
 
     </div>
 

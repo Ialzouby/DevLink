@@ -3924,7 +3924,7 @@ textarea::placeholder {
 /* Make sure notifications are positioned correctly */
 .notifications-page-main {
     width: 100%;
-    
+    padding-top: 20px;
     margin-left: auto; /* Push it to the right */
 }
 

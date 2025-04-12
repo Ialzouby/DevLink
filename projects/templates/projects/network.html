@@ -74,6 +74,10 @@
                             <p class="network-user-grade">{{ user.userprofile.grade_level|default_if_none:"Not available" }}</p>
                             <p class="network-user-concentration">{{ user.userprofile.concentration|default_if_none:"Not available" }}</p>
                         </div>
+                        {% if user.userprofile.cair_hackathon %}
+    <div class="cair-badge">CAIR Hackathon</div>
+{% endif %}
+
                     </div>
                 </a>
                 {% endfor %}

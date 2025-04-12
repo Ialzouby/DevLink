@@ -288,6 +288,37 @@
 
 <style>
 
+.feed-page-container {
+  display: flex;
+  align-items: flex-start;
+  padding: 20px;
+  gap: 20px;
+  width: 100%;                 /* allow full width */
+  max-width: 100%;             /* remove hard limits */
+  box-sizing: border-box;
+}
+
+
+/* Sidebar left */
+.feed-sidebar-left {
+  flex: 0 0 220px;
+  padding: 20px;
+
+}
+
+/* Main feed */
+.feed-main-section {
+  flex: 1;
+  min-width: 0; /* Prevents flex item from overflowing */
+}
+
+/* Sidebar right */
+.feed-sidebar-right {
+  flex: 0 0 260px;
+
+}
+
+
 /* Fullscreen Dark Overlay */
 .modal {
     position: fixed !important;
@@ -349,6 +380,18 @@
         width: 90vw !important;
         max-width: 300px !important;
     }
+}
+@media (max-width: 1024px) {
+  .feed-page-container {
+    flex-direction: column;
+  }
+
+  .feed-sidebar-left,
+  .feed-sidebar-right {
+    flex: 1 1 100%;
+    border: none;
+    margin-bottom: 20px;
+  }
 }
 
 

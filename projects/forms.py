@@ -17,7 +17,7 @@ from .models import UserProfile
 class UserSettingsForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ['bio', 'linkedin', 'github', 'profile_picture']
+        fields = ['profile_picture']
 
         
 class CustomUserCreationForm(UserCreationForm):
@@ -100,6 +100,14 @@ class CustomUserCreationForm(UserCreationForm):
 
     profile_picture = forms.ImageField(required=True, max_length=255)
 
+    cair_hackathon = forms.BooleanField(
+        required=False,
+        label="Are you registering for the CAIR Hackathon?",
+        widget=forms.CheckboxInput(attrs={
+            'style': 'transform: scale(1.3); margin-left: 10px;'
+        })
+    )
+
 
     password1 = forms.CharField(
         widget=forms.PasswordInput(attrs={
@@ -137,7 +145,7 @@ class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = User
         fields = (
-            'username', 'first_name', 'last_name', 'email', 'grade_level', 'concentration', 'skills', 'linkedin', 'github', 'bio', 'password1', 'password2', 'profile_picture'
+            'username', 'first_name', 'last_name', 'email', 'grade_level', 'concentration', 'skills', 'linkedin', 'github', 'bio', 'password1', 'password2', 'profile_picture', 'cair_hackathon'
         )
 
     #validation that user uploaded required profile picture

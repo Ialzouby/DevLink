@@ -855,6 +855,20 @@ span.devlink-logo {
     height: 70px;
 }
 
+.custom-checkbox {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: #f1f1f1;
+}
+
+.custom-checkbox input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    accent-color: #6D4CFF; /* Soft purple */
+}
+
 
 .custom-navbar-container {
     display: flex;

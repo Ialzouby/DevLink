@@ -291,7 +291,7 @@ def register(request):
             user_profile.linkedin = form.cleaned_data.get('linkedin')
             user_profile.github = form.cleaned_data.get('github')
             user_profile.bio = form.cleaned_data.get('bio')
-
+            user_profile.cair_hackathon = form.cleaned_data.get('cair_hackathon', False)
             # Handle profile picture upload
             if 'profile_picture' in request.FILES:
                 try:

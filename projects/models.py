@@ -42,6 +42,8 @@ class UserProfile(models.Model):
     bio = models.TextField(blank=True, null=True)
     profile_picture = models.ImageField(upload_to='profile_pics/', max_length=255, blank=True, null=True)
     profile_picture_url = models.URLField(max_length=2048, blank=True, null=True)
+    cair_hackathon = models.BooleanField(default=False)
+
     points = models.IntegerField(default=0)
     birthdate = models.DateField(null=True, blank=True)
     skills = models.CharField(max_length=255, blank=True, null=True) 
@@ -57,7 +59,6 @@ class UserProfile(models.Model):
 
             self.grade_level,
             self.concentration,
-            self.bio,
         ]
         profile_picture_exists = self.profile_picture or self.profile_picture_url
 

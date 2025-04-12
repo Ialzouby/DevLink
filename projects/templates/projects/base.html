@@ -187,9 +187,52 @@
 
     {% block footer %}
     <!-- Footer -->
-    <footer>
-        <p>&copy; 2024 DevLink. All rights reserved.</p>
-    </footer>
+    <footer class="modern-footer">
+        <div class="footer-container">
+          <!-- Column 1: Logo and Tagline -->
+          <div class="footer-column">
+            <h2 class="footer-logo">DevLink</h2>
+            <p class="footer-tagline">Empowering developers to build and connect smarter.</p>
+          </div>
+      
+          <!-- Column 2: Quick Links -->
+          <div class="footer-column">
+            <h3>Explore</h3>
+            <ul>
+              <li><a href="{% url 'home' %}">Home</a></li>
+              <li><a href="{% url 'projects' %}">Projects</a></li>
+              <li><a href="{% url 'network' %}">Network</a></li>
+              <li><a href="{% url 'training' %}">Training</a></li>
+            </ul>
+          </div>
+      
+          <!-- Column 3: Resources -->
+          <div class="footer-column">
+            <h3>Resources</h3>
+            <ul>
+              <li><a href="{% url 'help' %}">Help Center</a></li>
+              <li><a href="{% url 'settings' %}">Account Settings</a></li>
+              <li><a href="{% url 'edit_profile' %}">Edit Profile</a></li>
+            </ul>
+          </div>
+      
+          <!-- Column 4: Contact -->
+          <div class="footer-column">
+            <h3>Contact</h3>
+            <p>Email: support@devlink.com</p>
+            <div class="footer-social-icons">
+              <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+              <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+              <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+            </div>
+          </div>
+        </div>
+      
+        <div class="footer-bottom">
+          <p>&copy; 2024 DevLink. All rights reserved.</p>
+        </div>
+      </footer>
+      
 
     
     {% endblock %}
@@ -201,6 +244,106 @@ body.nav-locked {
   position: fixed;
   width: 100vw;
 }
+
+/* Modern Footer Styles */
+.modern-footer {
+  background-color: #f8f9fa;
+  padding: 40px 20px 20px;
+  font-family: 'Merriweather', serif;
+  color: #333;
+  border-top: 1px solid #ddd;
+}
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.footer-column {
+  flex: 1 1 200px;
+  margin: 10px;
+}
+
+.footer-logo {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.footer-tagline {
+  font-size: 14px;
+  color: #666;
+}
+
+.footer-column h3 {
+  font-size: 16px;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-column ul li {
+  margin-bottom: 6px;
+}
+
+.footer-column ul li a {
+  text-decoration: none;
+  color: #007bff;
+  transition: color 0.2s ease-in-out;
+}
+
+.footer-column ul li a:hover {
+  color: #0056b3;
+}
+
+.footer-social-icons {
+  margin-top: 10px;
+}
+
+.footer-social-icons a {
+  display: inline-block;
+  margin-right: 10px;
+  font-size: 18px;
+  color: #007bff;
+  transition: color 0.2s ease;
+}
+
+.footer-social-icons a:hover {
+  color: #0056b3;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 20px;
+  border-top: 1px solid #ddd;
+  font-size: 13px;
+  color: #666;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-column {
+    margin: 20px 0;
+  }
+
+  .footer-social-icons {
+    justify-content: center;
+  }
+}
+
 
 /* 🔹 Mobile Navigation Overlay */
 .mobile-nav-overlay {

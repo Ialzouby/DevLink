@@ -612,21 +612,45 @@ from django.db.models import Q
 from .models import Chat, Message, UserProfile
 from django.contrib.auth.models import User
 
+from django.contrib.auth.models import User
+from django.shortcuts import redirect
+
 @login_required
 def active_conversations(request):
-    """Loads messaging page with chat list and participant details."""
-    chats = Chat.objects.filter(participants=request.user).order_by('-updated_at')
+    recipient_username = request.GET.get("recipient")
+    chat_id = request.GET.get("chat_id")
 
+    if recipient_username:
+        try:
+            other_user = User.objects.get(username=recipient_username)
+            # Look for existing private chat
+            chat = Chat.objects.filter(
+                project__isnull=True,
+                participants=request.user
+            ).filter(participants=other_user).first()
+
+            if not chat:
+                chat = Chat.objects.create(project=None)
+                chat.participants.add(request.user, other_user)
+
+            return redirect(f"/messaging/?chat_id={chat.id}")
+
+        except User.DoesNotExist:
+            pass  # You can handle error here if needed
+
+    # Default view if no recipient passed
+    chats = Chat.objects.filter(participants=request.user).order_by('-updated_at')
     chat_list = []
+
     for chat in chats:
         other_participant = chat.participants.exclude(id=request.user.id).first()
-
         chat_list.append({
             'chat': chat,
             'participant': other_participant,
         })
 
     return render(request, 'messaging/active_conversations.html', {'chat_list': chat_list})
+
 
 
 @login_required
@@ -685,24 +709,33 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
-@login_required
+from django.http import JsonResponse
+from django.contrib.auth.models import User
+from django.db.models import Q
+
 def search_users2(request):
-    """Returns a list of users matching the search query."""
-    query = request.GET.get('q', '').strip()
+    query = request.GET.get('q', '')
+    results = []
 
     if query:
-        users = User.objects.filter(username__icontains=query).exclude(id=request.user.id)[:5]
-        user_data = [
-            {
+        users = User.objects.filter(
+            Q(username__icontains=query) |
+            Q(first_name__icontains=query) |
+            Q(last_name__icontains=query)
+        ).exclude(id=request.user.id)[:10]  # Limit to top 10
+
+        for user in users:
+            results.append({
                 'id': user.id,
                 'username': user.username,
-                'profile_picture': user.userprofile.profile_picture.url if user.userprofile.profile_picture else '/static/images/default-avatar.png'
-            }
-            for user in users
-        ]
-        return JsonResponse({'users': user_data})
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'profile_picture': str(user.userprofile.profile_picture) if user.userprofile.profile_picture else 'https://via.placeholder.com/150'
 
-    return JsonResponse({'users': []})
+            })
+
+    return JsonResponse({'users': results})
+
 
 
 from django.views.decorators.csrf import csrf_exempt

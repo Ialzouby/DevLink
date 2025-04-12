@@ -505,6 +505,9 @@ html, body {
     color: #000000;
 }
 
+.search-result-item {
+  color: black !important;  /* ✅ This sets the text color */
+}
 
 </style>
 <style>
@@ -578,6 +581,27 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
         });
     });
+    function loadMessages(chatId) {
+    const chatMessages = document.getElementById("chat-messages-modern");
+    chatMessages.innerHTML = "Loading...";
+    fetch(`/get_messages/${chatId}/`)
+        .then(response => response.json())
+        .then(data => {
+            chatMessages.innerHTML = "";
+            data.messages.forEach(msg => {
+                let messageDiv = document.createElement("div");
+                messageDiv.classList.add(
+                    msg.sender_id === parseInt(document.getElementById("current-user-id").value)
+                        ? "sent-message"
+                        : "received-message"
+                );
+                messageDiv.innerHTML = `<p>${msg.content}</p>`;
+                chatMessages.appendChild(messageDiv);
+            });
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        });
+}
+
 
     sendButton.addEventListener("click", function () {
         let message = messageBox.value.trim();
@@ -624,7 +648,8 @@ document.addEventListener("DOMContentLoaded", function () {
                             div.dataset.userId = user.id;
                             div.innerHTML = `
                                 <img src="${user.profile_picture}" class="search-result-avatar">
-                                <span>${user.username}</span>
+                                <span>${user.first_name} ${user.last_name} (@${user.username})</span>
+
                             `;
                             div.addEventListener("click", function () {
                                 searchUserInput.value = user.username;

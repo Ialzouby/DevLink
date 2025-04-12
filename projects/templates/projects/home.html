@@ -3,6 +3,7 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
+<div class="page-wrapper">
 <div class="unique-layout-container">
     <!-- Left Sidebar -->
 
@@ -238,8 +239,380 @@
 
     
 </div>
+</div>
 
 <style>
+
+    /* MAIN PAGE WRAPPER */
+    .page-wrapper {
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+    padding: 0 10px !important;
+}
+
+/* FLEX LAYOUT CONTAINER */
+.unique-layout-container {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 40px !important;
+    width: 100% !important;
+    max-width: 1600px !important;
+    padding: 0 20px !important;
+    box-sizing: border-box !important;
+}
+
+/* LEFT SIDEBAR */
+.unique-left-sidebar {
+    flex: 0 0 300px !important;
+    max-width: 300px !important;
+    min-width: 240px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 20px !important;
+    padding: 20px !important;
+    border-radius: 10px !important;
+    background: #ffffff !important;
+    height: auto !important;
+    align-self: flex-start !important;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* LEFT SIDEBAR CONTENT BLOCKS */
+.sidebar-block {
+    background-color: #ffffff !important;
+    padding: 15px !important;
+    border-radius: 10px !important;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1) !important;
+    width: 100% !important;
+}
+
+/* CENTER PROJECT CONTAINER */
+.project-container {
+    flex: 1 1 auto !important;
+    padding: 0 10px !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* PROJECT CARDS */
+.unique-project-item {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 20px !important;
+    margin: 10px 0 !important;
+    background: #fff !important;
+    border-radius: 8px !important;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* RIGHT SIDEBAR */
+.unique-right-section {
+    flex: 0 0 300px !important;
+    max-width: 300px !important;
+    min-width: 240px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 20px !important;
+}
+
+/* RIGHT SIDEBAR BLOCKS */
+.unique-right-sidebar,
+.unique-notifications-container {
+    width: 100% !important;
+    padding: 20px !important;
+    border-radius: 10px !important;
+    background-color: #ffffff !important;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    height: auto !important;
+}
+
+/* SECTION HEADERS */
+.unique-left-sidebar h3,
+.unique-right-sidebar h3,
+.unique-notifications-container h3 {
+    text-align: center !important;
+    font-size: 18px !important;
+    margin-bottom: 10px !important;
+    border-bottom: 1px solid #ddd !important;
+    padding-bottom: 5px !important;
+    color: #444 !important;
+}
+
+/* NOTIFICATION ITEM FIXES */
+.notification-item {
+    padding: 10px 0 !important;
+    border-bottom: 1px solid #eee !important;
+}
+
+/* RESPONSIVE: SHRINK SIDE BARS ON MEDIUM SCREENS */
+@media (max-width: 1024px) {
+    .unique-left-sidebar,
+    .unique-right-section {
+        flex: 0 0 220px !important;
+        max-width: 220px !important;
+    }
+
+    .unique-layout-container {
+        gap: 24px !important;
+    }
+}
+
+/* RESPONSIVE: HIDE LEFT SIDEBAR ON MOBILE, SHRINK RIGHT */
+@media (max-width: 768px) {
+    .unique-left-sidebar {
+        display: none !important;
+    }
+
+    .unique-right-section {
+        flex: 0 0 180px !important;
+        max-width: 180px !important;
+    }
+
+    .unique-layout-container {
+        flex-direction: row !important;
+        align-items: stretch !important;
+        gap: 16px !important;
+        padding: 0 10px !important;
+    }
+
+    .project-container {
+        flex: 1 1 auto !important;
+        padding: 0 !important;
+    }
+
+    .unique-project-item {
+        padding: 15px !important;
+    }
+}
+
+/* EXTRA SMALL: STACK VIEW ON NARROW PHONES */
+@media (max-width: 480px) {
+    .unique-layout-container {
+        flex-direction: column !important;
+    }
+
+    .unique-right-section {
+        width: 100% !important;
+        flex: none !important;
+    }
+
+    .project-container {
+        width: 100% !important;
+    }
+
+    .unique-project-item {
+        font-size: 14px !important;
+        padding: 12px !important;
+    }
+
+    .badge {
+        font-size: 11px !important;
+        padding: 4px 6px !important;
+    }
+}
+
+
+.page-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding-left: 0;  /* ✅ reset any browser default */
+    padding-right: 0;
+    box-sizing: border-box;
+}
+
+.unique-layout-container {
+    display: flex;
+    gap: 40px;
+    width: 100%;
+    max-width: 1600px; /* ✅ feel free to raise this from 1400 */
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.unique-left-sidebar,
+.unique-right-section {
+    flex: 0 0 auto; /* ✅ fixed width sidebars */
+}
+
+.project-container {
+    flex: 1; /* ✅ elastic center */
+}
+
+
+.unique-project-item {
+    width: 100%;
+    max-width: 100%; /* ✅ Fill entire container */
+    margin: 10px auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+
+.project-container {
+    flex-grow: 1!important; /* ✅ Let it expand to take remaining space */
+    max-width: none!important; /* ❌ remove hard limits */
+    padding: 0 10px!important;
+    box-sizing: border-box!important;
+}
+
+@media (max-width: 768px) {
+    .unique-left-sidebar {
+        display: none !important; /* 🔒 force hidden on tablets & phones */
+    }
+}
+
+.unique-layout-container {
+    display: flex;
+    gap: 40px;
+    width: 100%;
+    max-width: 1400px;
+    padding: 0 20px; /* ✅ Balanced horizontal padding */
+    box-sizing: border-box;
+}
+
+.unique-left-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-width: 280px;
+    max-width: 350px;
+    width: 100%; /* match the right sidebar */
+    box-sizing: border-box;
+}
+
+
+.unique-left-sidebar {
+
+   
+    padding: 20px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    height: auto;  /* Adjusts height to fit content */
+    align-self: flex-start; /* Matches height of the right sidebar */
+}
+
+.unique-left-sidebar {
+
+   
+    padding: 20px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    height: auto;  /* Adjusts height to fit content */
+    align-self: flex-start; /* Matches height of the right sidebar */
+}
+
+.unique-left-sidebar h3 {
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+    color: #444;
+}
+
+.sidebar-block {
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    width: 100%; /* match parent */
+    box-sizing: border-box;
+}
+
+
+.unique-left-sidebar .sidebar-block,
+.training-sidebar .sidebar-block,
+.unique-left-sidebar h3,
+.training-sidebar h2,
+.unique-left-sidebar ul,
+.training-sidebar ul {
+    margin-bottom: 20px; /* Adds space between blocks */
+}
+
+.unique-left-sidebar .user-card-link,
+.training-topic-list li {
+    margin-top: 10px; /* Ensures spacing between items inside blocks */
+}
+
+.unique-left-sidebar .sidebar-block, .sidebar-block {
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #ffffff; /* Light background for contrast */
+
+}
+
+.training-sidebar-title, .unique-left-sidebar h3 {
+    margin-top: 0;
+    padding-bottom: 5px;
+    border-bottom: 2px solid #ffffff; /* Adds a subtle divider */
+}
+
+
+
+
+.unique-right-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px !important; /* ✅ consistent spacing between contributors and notifications */
+    min-width: 280px;
+    max-width: 350px;
+    width: 100%;
+}
+.unique-right-sidebar,
+.unique-notifications-container {
+    width: 100% !important; /* ✅ Match parent width */
+    box-sizing: border-box;
+}
+
+
+.unique-notifications-container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: auto;
+}
+
+.unique-notifications-container h3 {
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+    color: #444;
+}
+
+.unique-right-sidebar {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    height: auto;              /* ✅ allow natural height */
+    flex-grow: 0 !important;   /* ✅ don't force vertical stretch */
+    flex-shrink: 0;
+    margin-bottom: 0;          /* remove any extra margin if present */
+}
+
+
     @media (max-width: 768px) {
     /* Ensure container does not exceed screen width */
     .project-container {

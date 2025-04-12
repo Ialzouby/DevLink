@@ -3829,27 +3829,7 @@ textarea::placeholder {
 
 /* New project page notifications CSS by John-Luke */
 
-.unique-notifications-container {
-    width: 17vw;
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 5px;
-    margin-top: 20px; /* Add space below Top Contributors */
-    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    height: auto;
-}
 
-.unique-notifications-container h3 {
-    text-align: center;
-    font-size: 18px;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 5px;
-    color: #444;
-}
 
 .notifications-container {
     background: #f8f9fa;
@@ -3988,11 +3968,7 @@ textarea::placeholder {
    15 LAYOUT CONTAINERS
    ========================================================================== */
 /* Center the main content container */
-.unique-layout-container {
-    display: flex;
-    justify-content: center; /* Center all content horizontally */
-    gap: 20px; /* Optional: Space between sections (e.g., right sidebar) */
-}
+
 
 
 
@@ -4988,41 +4964,7 @@ p {
 /* ==========================================================================
    33 Sidebar & User Cards
    ========================================================================== */
-   .unique-right-section {
-    display: flex;
-    flex-direction: column; /* Stack Top Contributors above Notifications */
-    width: 17vw; /* Ensure it fits the sidebar width */
-}
 
-.unique-right-sidebar {
-    width: 17vw;
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    height:11%;
-    align-self: flex-start;
-    padding-bottom: 20px!important;
-}
-
-.unique-right-sidebar h3 {
-    text-align: center;
-    font-size: 18px;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 5px;
-    color: #444;
-}
-
-.unique-right-sidebar {
-    padding: 15px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #ffffff; /* Light background for contrast */
-    padding-bottom: 20px!important;
-}
 
 
 /* User Cards */
@@ -5814,71 +5756,6 @@ footer p {
 .others-section {
     margin-top: 20px;
 }
-
-
-.unique-left-sidebar {
-    width: 20vw!important;
-   
-    padding: 20px;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-
-    height: auto;  /* Adjusts height to fit content */
-    align-self: flex-start; /* Matches height of the right sidebar */
-}
-
-.unique-left-sidebar {
-    width: 20vw!important;
-   
-    padding: 20px;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-
-    height: auto;  /* Adjusts height to fit content */
-    align-self: flex-start; /* Matches height of the right sidebar */
-}
-
-.unique-left-sidebar h3 {
-    text-align: center;
-    font-size: 18px;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 5px;
-    color: #444;
-}
-
-.unique-left-sidebar .sidebar-block,
-.training-sidebar .sidebar-block,
-.unique-left-sidebar h3,
-.training-sidebar h2,
-.unique-left-sidebar ul,
-.training-sidebar ul {
-    margin-bottom: 20px; /* Adds space between blocks */
-}
-
-.unique-left-sidebar .user-card-link,
-.training-topic-list li {
-    margin-top: 10px; /* Ensures spacing between items inside blocks */
-}
-
-.unique-left-sidebar .sidebar-block, .sidebar-block {
-    padding: 15px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #ffffff; /* Light background for contrast */
-    width: 17vw;
-}
-
-.training-sidebar-title, .unique-left-sidebar h3 {
-    margin-top: 0;
-    padding-bottom: 5px;
-    border-bottom: 2px solid #ffffff; /* Adds a subtle divider */
-}
-
 
 
 
